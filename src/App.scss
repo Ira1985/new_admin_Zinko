@@ -1,0 +1,97 @@
+@import '~primereact/resources/themes/nova-dark/theme.css';
+@import '~primereact/resources/primereact.min.css';
+@import '~primeicons/primeicons.css';
+@import "~primeflex/primeflex.css";
+@import "styles/variables";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, LatoFont;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.p-tree-toggler-icon.pi.pi-fw.pi-caret-right:before{
+  content: "\e902";
+}
+
+.p-tree-toggler-icon.pi.pi-fw.pi-caret-down:before{
+  content: "\e903";
+}
+.p-treenode-content {
+  text-align: left;
+}
+.p-treenode-content.p-treenode-selectable:hover {
+  background-color: #393A40!important;
+  color: #FFFFFF!important;
+}
+.p-tree.p-component {
+  background-color: #303238;
+  height: calc(100vh - 80px);
+  border: none;
+  float: left;
+}
+.navigation-menu {
+  float: left;
+  height: 100vh;
+  background-color: #303238;
+  margin-right: 4px;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+}
+.p-tree-container {
+  color: #C2C2C4;
+  margin-top: 80px!important;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.logo-image {
+  margin: 15px;
+}
+
+.simplediv {
+  display: flex;
+  background-color: #212327;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
