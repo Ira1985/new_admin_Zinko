@@ -4,7 +4,8 @@ import {Tree} from "primereact/tree";
 import {history} from "../../../App";
 import {MenuService} from "../../../service/menu.service";
 import {ScrollPanel} from "primereact/scrollpanel";
-
+import {Sidebar} from "primereact/sidebar";
+import PropTypes, {instanceOf} from "prop-types";
 
 const menuItem = [
     {
@@ -61,7 +62,7 @@ const menuItem = [
                     { "key": "3-1-0", "label": "Категоризация", 'leaf': true },
                     { "key": "3-1-1", "label": "Модели", 'leaf': true }]
             },
-            { "key": "3-1", "label": "Каталог/Привязка моделей", 'leaf': true }]
+            { "key": "3-2", "label": "Каталог/Привязка моделей", 'leaf': true }]
     },
     {
         "key": "4",
@@ -86,9 +87,9 @@ class NavigationTreeMenu extends Component {
 
     constructor(props) {
         super(props);
-        /*this.state = {
-            nodes: menuItem
-        };*/
+        this.state = {
+            visible: true
+        };
     }
     componentDidMount() {
         //this.setState({nodes: this.menu.getMenu()})
@@ -101,11 +102,6 @@ class NavigationTreeMenu extends Component {
     }
 
     onExpandItem(e) {
-        console.log('onExpandItem');
-        console.log(e);
-        console.log(e.originalEvent.target);
-        console.log(e.originalEvent.target.parentElement);
-
         if(e?.originalEvent?.target?.parentElement?.parentElement) {
             e.originalEvent.target.classList.add("nav-tree-item-active");
             e.originalEvent.target.parentElement.parentElement.classList.add("nav-tree-item-active");
@@ -114,9 +110,6 @@ class NavigationTreeMenu extends Component {
     }
 
     onCollapseItem(e) {
-        console.log('onCollapseItem');
-        console.log(e);
-        console.log(e.originalEvent.target);
         if(e?.originalEvent?.target?.parentElement?.parentElement) {
             e.originalEvent.target.classList.remove("nav-tree-item-active");
             e.originalEvent.target.parentElement.parentElement.classList.remove("nav-tree-item-active");
@@ -124,15 +117,24 @@ class NavigationTreeMenu extends Component {
     }
 
     render() {
+        const {visible} = this.state;
+        const {show, onHide} = this.props;
         return <>
-                <div className='navigation-tree-menu'>
-                    <ScrollPanel style={{width: '100%', height: '100%'}} className='scroll-panel'>
+                {/*<div className='navigation-tree-menu'>*/}
+                <Sidebar visible={show} position="left" baseZIndex={0} dismissable={false}  showCloseIcon={false} closeOnEscape={false} className='navigation-tree-menu' onHide={onHide}>
+                    <ScrollPanel className='scroll-panel'>
                         <Tree className='nav-tree-menu' value={menuItem} selectionMode="single" onExpand={(e) => this.onExpandItem(e)} onCollapse={(e) => this.onCollapseItem(e)} onSelect={e => this.navigationMenu(e)}/>
                     </ScrollPanel>
-                </div>
+                </Sidebar>
+            {/*</div>*/}
             </>
         ;
     }
 }
+
+NavigationTreeMenu.propTypes = {
+    show: PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired
+};
 
 export default NavigationTreeMenu;

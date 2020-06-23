@@ -6,6 +6,7 @@
   background-color: $primary-block-back-color;
   margin-right: 2px;
   text-align: center;
+  z-index: 10001;
 
   hr {
     width: 38%;
@@ -85,7 +86,7 @@
       }
 
 
-      &:hover {
+      &:hover, &.active-item {
         background-color: $primary-menu-hover;
         color: $primary-text-color2;
         border-left: $primary-color-active 4px solid;

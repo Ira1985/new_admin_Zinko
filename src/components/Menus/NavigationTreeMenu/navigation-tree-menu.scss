@@ -7,13 +7,14 @@ $primary-tree-toggler-right-active: url("data:image/svg+xml,%3Csvg width='20' he
 $primary-tree-toggler-down-active: url("data:image/svg+xml,%3Csvg width='20' height='13' viewBox='0 0 20 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.12 13L10 5.12L17.88 13L20 10.88L10 0.88L-9.26681e-08 10.88L2.12 13Z' fill='%23806CE9'/%3E%3C/svg%3E%0A");
 
 .navigation-tree-menu {
-  display: block;
+  //display: block;
   height: 100%;
   width: 330px;
   background-color: $primary-block-back-color;
-  margin-left: 2px;
+  margin-left: 102px;
   text-align: center;
   overflow: hidden;
+  padding: 0px;
 
   .scroll-panel {
     width: 100%;

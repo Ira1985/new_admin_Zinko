@@ -22,15 +22,15 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nodes: null
-        }
-        this.menu = new MenuService();
+            activeTreeMenu: true,
+            hideTreeMenu: false
+        };
     }
 
     componentDidMount() {
         this.getTokenData("Admin", "1111").then(res => {
         });
-        this.setState({nodes: this.menu.getMenu()})
+        //this.setState({nodes: this.menu.getMenu()})
     }
 
     getTokenData(login, password) {
@@ -57,14 +57,24 @@ class App extends Component {
             });
     }
 
+    showTreeMenu() {
+        this.setState(prev => ({
+            activeTreeMenu: !prev.activeTreeMenu
+        }));
+    }
+
+    onHideTreeMenu() {
+        this.setState(prev => ({
+            hideTreeMenu: !prev.hideTreeMenu
+        }));
+    }
+
     render() {
+        const {activeTreeMenu, hideTreeMenu} = this.state;
         return (
             <div className='cs-admin-main'>
-
-                <NavigationBaseMenu />
-
-                <NavigationTreeMenu />
-
+                <NavigationBaseMenu activeTreeMenu={activeTreeMenu} baseMenuFunc={() => this.showTreeMenu()}/>
+                {!hideTreeMenu && <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>}
                 <Router history={history}>
                     <Switch>
                         {routes.map((route, idx) => {
