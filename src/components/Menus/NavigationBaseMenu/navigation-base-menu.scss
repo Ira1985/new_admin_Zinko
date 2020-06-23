@@ -8,31 +8,32 @@
   text-align: center;
 
   hr {
-    width: 45%;
+    width: 38%;
   }
 
   .logo-image {
-    margin: 15px 15px 20px 15px;
+    margin: 15px 15px 10px 15px;
     width: 67px;
     height: 44px;
   }
 
   .account-logo {
-    margin: 25px 15px;
+    margin: 14px 15px 12px 15px;
     border-radius: 50em;
     width: 48px;
     height: 48px;
   }
 
   .menu-items-block {
-    margin-top: 25px;
+    margin-top: 16px;
 
     .menu-item {
       height: 64px;
       width: calc(100% - 4px);
+      font-style: normal;
       font-weight: 500;
-      font-size: 12px;
-      line-height: 14px;
+      font-size: 11px;
+      line-height: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -48,7 +49,7 @@
 
       .menu-item-name {
         padding: 0px;
-        margin: 10px 0px 0px 0px;
+        margin: 4px 0px 0px 0px;
       }
 
       .messages-img {

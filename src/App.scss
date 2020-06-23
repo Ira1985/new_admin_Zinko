@@ -7,12 +7,7 @@
 html, body, #root {
   margin: 0;
   padding: 0;
-  /*font-family: 'LatoFont';*/
-  font-family: Lato;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 19px;
+  font-family: "LatoFont", "Roboto Light", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $primary-back-color;
@@ -22,7 +17,7 @@ html, body, #root {
 
 hr {
   color: $primary-hr-color;
-  border: 1px solid;
+  //border: 0.5px solid;
 }
 
 .cs-admin-main {
