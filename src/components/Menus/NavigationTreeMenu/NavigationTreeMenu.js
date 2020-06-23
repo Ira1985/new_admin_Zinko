@@ -3,6 +3,7 @@ import "./navigation-tree-menu.scss"
 import {Tree} from "primereact/tree";
 import {history} from "../../../App";
 import {MenuService} from "../../../service/menu.service";
+import {ScrollPanel} from "primereact/scrollpanel";
 
 
 const menuItem = [
@@ -125,7 +126,9 @@ class NavigationTreeMenu extends Component {
     render() {
         return <>
                 <div className='navigation-tree-menu'>
-                    <Tree className='nav-tree-menu' value={menuItem} selectionMode="single" onExpand={(e) => this.onExpandItem(e)} onCollapse={(e) => this.onCollapseItem(e)} onSelect={e => this.navigationMenu(e)}/>
+                    <ScrollPanel style={{width: '100%', height: '100%'}} className='scroll-panel'>
+                        <Tree className='nav-tree-menu' value={menuItem} selectionMode="single" onExpand={(e) => this.onExpandItem(e)} onCollapse={(e) => this.onCollapseItem(e)} onSelect={e => this.navigationMenu(e)}/>
+                    </ScrollPanel>
                 </div>
             </>
         ;

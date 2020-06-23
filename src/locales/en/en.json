@@ -1,0 +1,16 @@
+{
+  "leftSideMenu": {
+    "messages": "Messages",
+    "menu": "Menu",
+    "products": "Products",
+    "properties": "Properties",
+    "helps": "Helps"
+  },
+  "treeBaseMenu": {
+    "messages": "Messages",
+    "menu": "Menu",
+    "products": "Products",
+    "properties": "Properties",
+    "helps": "Helps"
+  }
+}

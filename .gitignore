@@ -1,5 +1,6 @@
-/public/
+/public/.idea/
 /node_modules/
-/.idea/
+/.idea/*
+/.idea/**
 /cs2-admin.iml
 /.idea/

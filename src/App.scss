@@ -7,13 +7,17 @@
 html, body, #root {
   margin: 0;
   padding: 0;
-  font-family: "LatoFont", "Roboto Light", serif;
+  font-family: 'LatoFamily', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $primary-back-color;
   width: 100%;
   height: 100%;
 }
+
+/*span, p {
+  font-family: 'Lato', sans-serif;
+}*/
 
 hr {
   color: $primary-hr-color;
