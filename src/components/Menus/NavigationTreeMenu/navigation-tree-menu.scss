@@ -15,6 +15,7 @@ $primary-tree-toggler-down-active: url("data:image/svg+xml,%3Csvg width='20' hei
   text-align: center;
   overflow: hidden;
   padding: 0px;
+  box-shadow: 5px 0 5px -5px $primary-back-color;
 
   .scroll-panel {
     width: 100%;

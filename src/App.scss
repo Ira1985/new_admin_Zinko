@@ -15,13 +15,17 @@ html, body, #root {
   height: 100%;
 }
 
-/*span, p {
-  font-family: 'Lato', sans-serif;
-}*/
+p, span, img, a, div {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently */
+}
 
 hr {
   color: $primary-hr-color;
-  //border: 0.5px solid;
 }
 
 .cs-admin-main {
@@ -30,6 +34,12 @@ hr {
   margin: 0;
   padding: 0;
   height: 100%;
+
+  .main-block {
+    padding: 15px 20px 15px 10px;
+    width: calc(100% - 130px);
+    height: auto;
+  }
 }
 
 

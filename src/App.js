@@ -75,7 +75,8 @@ class App extends Component {
             <div className='cs-admin-main'>
                 <NavigationBaseMenu activeTreeMenu={activeTreeMenu} baseMenuFunc={() => this.showTreeMenu()}/>
                 {!hideTreeMenu && <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>}
-                <Router history={history}>
+                <div className='main-block'>
+                    <Router history={history}>
                     <Switch>
                         {routes.map((route, idx) => {
                             return route.component ? (
@@ -92,6 +93,7 @@ class App extends Component {
                         <Redirect from="/" to="/dashboard"/>
                     </Switch>
                 </Router>
+                </div>
             </div>
         )
     };
