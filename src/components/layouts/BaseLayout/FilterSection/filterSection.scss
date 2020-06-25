@@ -52,4 +52,23 @@
       width: 85%;
     }
 
-  }
+    .filter-main {
+
+      .sec-header {
+
+        .filter-sec-button {
+          width: 21px;
+          height: 21px;
+          .filter-clear-ico:before {
+            content: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z' fill='%23806CE9'/%3E%3C/svg%3E%0A");
+          }
+
+          .filter-add-ico:before {
+            content: url("data:image/svg+xml,%3Csvg width='21' height='21' viewBox='0 0 21 21' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21 12H12V21H9V12H0V9H9V0H12V9H21V12Z' fill='%23C2C2C4'/%3E%3C/svg%3E%0A");
+          }
+        }
+
+      }
+
+    }
+}

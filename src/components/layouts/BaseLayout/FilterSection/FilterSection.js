@@ -10,7 +10,6 @@ class FilterSection extends Component {
         super(props);
         this.filterBlockRef = React.createRef();
         this.filterMainRef = React.createRef();
-        this.filterButtonCloseRef = React.createRef();
 
         this.state = {
             showHide: true
@@ -46,12 +45,16 @@ class FilterSection extends Component {
                 <div className='header'>
                     {showHide && <Button className='open-hide-button p-empty-button mini-filter-block' icon="button-close" onClick={() => this.showHideFilter()} tooltip={t('baseLayout.filterBlock.tooltips.showHideBlock')} tooltipOptions={{position: 'right'}} />}
                     {!showHide && <Button className='open-hide-button p-empty-button maxi-filter-block' icon="button-open" onClick={() => this.showHideFilter()} tooltip={t('baseLayout.filterBlock.tooltips.showHideBlock')} tooltipOptions={{position: 'right'}} />}
-                    {/*<a onClick={() => this.showHideFilter()}>
-                        <i  ref={this.filterButtonCloseRef} className='button-collapse'></i>
-                    </a>*/}
                 </div>
                 <hr/>
-                <div ref={this.filterMainRef} className='filter-main'></div>
+{/*                <div ref={this.filterMainRef} className='filter-main'>
+                    <div className='sec-header'>
+                        <span>{t('baseLayout.filterBlock.baseTitle')}</span>
+                        <span><Button className='filter-sec-button p-empty-button' icon="filter-clear-ico" onClick={() => this.showHideFilter()} tooltip={t('baseLayout.filterBlock.tooltips.showHideBlock')} tooltipOptions={{position: 'right'}} /></span>
+                        <span><Button className='filter-sec-button p-empty-button' icon="filter-add-ico" onClick={() => this.showHideFilter()} tooltip={t('baseLayout.filterBlock.tooltips.showHideBlock')} tooltipOptions={{position: 'right'}} /></span>
+                    </div>
+                    <hr/>
+                </div>*/}
             </div>
             </>;
     }
