@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./navigation-tree-menu.scss"
+import "./navigationTreeMenu.scss"
 import {Tree} from "primereact/tree";
 import {history} from "../../../App";
 import {MenuService} from "../../../service/menu.service";

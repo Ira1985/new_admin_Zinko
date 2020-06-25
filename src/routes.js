@@ -1,4 +1,4 @@
-import {Brands} from "./components/Brands/Brands";
+import Brands from "./components/Brands/Brands";
 import {Manufacturers} from "./components/Manufacturers/Manufacturers";
 import {Categories} from "./components/Categories/Categories";
 

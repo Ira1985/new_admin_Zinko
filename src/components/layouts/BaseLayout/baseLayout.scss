@@ -1,0 +1,25 @@
+@import "../../../styles/variables";
+
+.base-layout {
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+  .header {
+    height: 70px;
+    width: 100%;
+  }
+
+  .main-section {
+    flex-basis: auto;
+    flex-grow: 1;
+    /*width: auto;
+    height: 100%;*/
+
+    hr {
+      width: 96%;
+    }
+  }
+}

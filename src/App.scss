@@ -28,6 +28,13 @@ hr {
   color: $primary-hr-color;
 }
 
+.p-empty-button {
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  background: none;
+}
+
 .cs-admin-main {
   display: flex;
   flex-direction: row;
@@ -36,9 +43,11 @@ hr {
   height: 100%;
 
   .main-block {
-    padding: 15px 20px 15px 10px;
-    width: calc(100% - 130px);
+    padding: 0px 20px 0px 0px;
+    width: calc(100% - 120px);
     height: auto;
+    overflow: hidden;
+    overflow-x: auto;
   }
 }
 

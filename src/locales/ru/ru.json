@@ -5,5 +5,23 @@
     "products": "Товары",
     "properties": "Настройки",
     "helps": "Помощь"
+  },
+  "treeBaseMenu": {
+    "messages": "Messages",
+    "menu": "Menu",
+    "products": "Products",
+    "properties": "Properties",
+    "helps": "Helps"
+  },
+  "baseLayout": {
+    "filterBlock": {
+      "baseTitle": "Фильтры",
+
+      "tooltips": {
+        "showHideBlock": "Показть/Скрыть",
+        "addFilter": "Добавить фильтр",
+        "clearFilter": "Очистить"
+      }
+    }
   }
 }

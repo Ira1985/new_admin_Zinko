@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from "../../../assets/img/Rectangle.png";
-import "./navigation-base-menu.scss"
+import "./navigationBaseMenu.scss"
 import { withTranslation } from 'react-i18next';
 import PropTypes, {instanceOf} from "prop-types";
 
