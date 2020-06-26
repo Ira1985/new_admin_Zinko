@@ -5,6 +5,7 @@ import {SelectButton} from "primereact/selectbutton";
 import {Button} from "primereact/button";
 import {Sidebar} from "primereact/sidebar";
 import {ScrollPanel} from "primereact/scrollpanel";
+import PropTypes from "prop-types";
 
 class FilterSection extends Component {
 

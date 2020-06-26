@@ -12,9 +12,21 @@ class Brands extends Component {
         this.state = {};
     }
 
+    filters = [
+        {
+            title:'',
+            type:'text|number|select|multiSelect|checkbox',
+            filterField:'',
+            defaultVal:'',
+            required:'',
+            operations: []
+        }
+    ];
+
+
     render() {
         return (
-            <BaseLayout></BaseLayout>
+            <BaseLayout filterItems={}></BaseLayout>
         );
     }
 }

@@ -3,6 +3,7 @@ import {withTranslation} from "react-i18next";
 import './baseLayout.scss';
 import FilterSection from "./FilterSection/FilterSection";
 import MainSection from "./MainSection/MainSection";
+import PropTypes from "prop-types";
 
 class BaseLayout extends Component {
 
@@ -10,11 +11,16 @@ class BaseLayout extends Component {
         super(props);
     }
 
+    filterLoading = false;
+    fields= [
+
+    ];
+
     render() {
-        const {t} = this.props;
+        const {t, filterItems} = this.props;
         return <>
                 <div className='base-layout'>
-                    <FilterSection></FilterSection>
+                    <FilterSection filteringData={this.filterLoading} fields={filterItems}></FilterSection>
                     <MainSection></MainSection>
                 </div>
             </>;
@@ -23,7 +29,7 @@ class BaseLayout extends Component {
 }
 
 BaseLayout.propTypes = {
-
+    filterItems: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 
