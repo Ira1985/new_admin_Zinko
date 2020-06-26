@@ -28,11 +28,19 @@ hr {
   color: $primary-hr-color;
 }
 
+/* For all button only with images*/
 .p-empty-button {
   border: none;
   padding: 0px;
   margin: 0px;
   background: none;
+}
+
+/* For all scroll panel */
+.p-scrollpanel-bar {
+  background-color: $primary-color-scroll;
+  border-radius: 4px;
+  width: 5px;
 }
 
 .cs-admin-main {
