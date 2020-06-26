@@ -17,7 +17,8 @@ class FilterSection extends Component {
 
         this.state = {
             showHide: true,
-            addFilterBar: false
+            addFilterBar: false,
+            loading:true
         };
     }
 
@@ -60,8 +61,8 @@ class FilterSection extends Component {
     }
 
     render() {
-        const {t} = this.props;
-        const {showHide, addFilterBar} = this.state;
+        const {t, filteringData} = this.props;
+        const {showHide, addFilterBar, loading} = this.state;
         return <>
             <div ref={this.filterBlockRef} className='filter-section'>
                 <div className='header'>
@@ -103,8 +104,23 @@ class FilterSection extends Component {
 }
 
 FilterSection.propTypes = {
-
+    filteringData: PropTypes.bool.isRequired, // show then click filter and data loading
+    fields: PropTypes.arrayOf(PropTypes.object).isRequired // items for build filters
 };
+
+/****
+ * Fields:
+ *  {
+ *      title:'',
+ *      type:'text|number|select|multiSelect|checkbox',
+ *      filterField:'',
+ *      defaultVal:'',
+ *      required:'',
+ *      operations: []
+ *  }
+ *
+ *
+ */
 
 
 export default withTranslation()(FilterSection);
