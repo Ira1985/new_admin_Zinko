@@ -17,20 +17,21 @@ class BaseLayout extends Component {
     ];
 
     render() {
-        const {t, filterItems} = this.props;
+        const {t, filterItems, plurals, dopClass, breadcrumbs} = this.props;
         return <>
-                <div className='base-layout'>
+                <div className={'base-layout ' + (dopClass?dopClass:'')}>
                     <FilterSection filteringData={this.filterLoading} fields={filterItems}></FilterSection>
-                    <MainSection></MainSection>
+                    <MainSection breadcrumbs={breadcrumbs} plurals={plurals}></MainSection>
                 </div>
             </>;
     }
-
 }
 
 BaseLayout.propTypes = {
-    filterItems: PropTypes.arrayOf(PropTypes.object).isRequired
+    filterItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+    plurals: PropTypes.arrayOf(PropTypes.string),
+    dopClass: PropTypes.string,
+    breadcrumbs: PropTypes.arrayOf(PropTypes.object)
 };
-
 
 export default withTranslation()(BaseLayout);

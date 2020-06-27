@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import './brands.scss';
+import Brand from "../../models/Brand";
 
-const items = [
+const breadcrumbs = [
     { "label": "Бренды" }
 ]
+
+const plurals = ['брендов', 'бренд', 'бренда'];
+
+const filters =  Brand.buildFilters();
 
 class Brands extends Component {
 
@@ -12,21 +18,9 @@ class Brands extends Component {
         this.state = {};
     }
 
-    filters = [
-        {
-            title:'',
-            type:'text|number|select|multiSelect|checkbox',
-            filterField:'',
-            defaultVal:'',
-            required:'',
-            operations: []
-        }
-    ];
-
-
     render() {
         return (
-            <BaseLayout filterItems={}></BaseLayout>
+            <BaseLayout breadcrumbs={breadcrumbs} filterItems={filters} plurals={plurals} dopClass={'brands_main'}></BaseLayout>
         );
     }
 }
