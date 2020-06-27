@@ -1,6 +1,6 @@
-
 export const FilterType = {
     NONE: 'NONE',
+    IDS: 'IDS', // equals, in list, not_in
     TEXT: 'TEXT', // contains, start_with, end_with, is_empty, is_not_empty
     NUMBER: 'NUMBER', // equals, more_then, less_then, between, is_empty, is_not_empty
     LIST: 'LIST', // equals, in list, not_in, is_empty, is_not_empty //concat SELECT and MULTI (maybe not needed tow types)
@@ -27,6 +27,11 @@ export function gettingOperationsByType(type) {
     let operations = Array.of(FilterOperation.IS_EMPTY, FilterOperation.IS_NOT_EMPTY);
     if(type) {
         switch (type) {
+            case 'IDS': {
+                return Array.of(FilterOperation.EQUALS,
+                    FilterOperation.IN_LIST,
+                    FilterOperation.NOT_IN_LIST);
+            }
             case 'TEXT': {
                 return operations.concat(FilterOperation.CONTAINS,
                     FilterOperation.START_WITH,
@@ -55,8 +60,7 @@ export function gettingOperationsByType(type) {
     return operations;
 }
 
-export class FilterItem {
-
+export default class FilterItem {
     title = null;
     type = FilterType.NONE;
     filterField = null;
@@ -77,6 +81,10 @@ export class FilterItem {
         item.unit = unit;
         item.values = values;
         return item;
+    }
+
+    static buildIds(title, filterField, required) {
+        return FilterItem.build(title, FilterType.IDS, filterField, required, gettingOperationsByType(FilterType.IDS), null, null, null);
     }
 
     static buildText(title, filterField, required, defaultVal = null) {
@@ -102,5 +110,4 @@ export class FilterItem {
     static buildDate(title, filterField, required, defaultVal = null) {
         return FilterItem.build(title, FilterType.DATE, filterField, required, gettingOperationsByType(FilterType.DATE), defaultVal, null, null);
     }
-
 }

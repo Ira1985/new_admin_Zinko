@@ -1,39 +1,20 @@
 import * as Yup from "yup";
+import BaseEntity from "./base/BaseEntity";
 
-export default class Brand {
-    id = null;
-    name = '';
-    comment = '';
-    enabled = true;
-    deleted = false;
+export default class Brand extends BaseEntity {
 
     build(item) {
-        this.id = item['id'];
-        this.name = (item['name']?item['name']:this.name);
-        this.comment = (item['comment']?item['comment']:this.comment);
-        this.enabled = (item.hasOwnProperty('enabled')?item['enabled']:this.enabled);
-        this.deleted = (item.hasOwnProperty('deleted')?item['deleted']:this.deleted);
-        return this;
+        return super.build(item);
     }
 
-  /*  static buildFilters() {
-        return [
-            {
-                title: '',
-                type: 'text|number|select|multiSelect|checkbox',
-                filterField: '',
-                defaultVal: '',
-                required: '',
-                operations: []
-            }
-        ];
-
-        };*/
+  static buildFilters() {
+       return BaseEntity.buildFilters();
+  };
 }
 
 export const BrandSchema = Yup.object().shape({
     name: Yup.string()
-        .min(2,'Минимальная длинна 2 символа')
+        .min(2,'baseEntity.errors.min')
         .trim()
-        .required('Обязательное поле!')
+        .required('baseEntity.errors.required')
 });
