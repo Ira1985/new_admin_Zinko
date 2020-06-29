@@ -1,4 +1,4 @@
-/*і@import '~primereact/resources/themes/nova-dark/theme.css';*/
+// @import '~primereact/resources/themes/nova-dark/theme.css';
 @import '~primereact/resources/primereact.min.css';
 @import '~primeicons/primeicons.css';
 @import "~primeflex/primeflex.css";
@@ -44,6 +44,101 @@ hr {
   width: 5px;
 }
 
+.p-breadcrumb {
+  .p-menuitem-text {
+    color: $primary-text-color3;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .p-breadcrumb-chevron {
+    color: $primary-text-color3;
+  }
+}
+
+.p-button {
+  height: 36px;
+  min-width: 168px;
+  border-radius: 3px;
+  border: none;
+
+  .p-button-text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  &.button-dop {
+    background-color: $primary-button-color-dop;
+
+    &:hover {
+      background-color: $primary-button-color-dop-h;
+    }
+  }
+
+  &.button-success {
+    background-color: $primary-button-color-add;
+
+    &:hover {
+      background-color: $primary-button-color-add-h;
+    }
+  }
+
+  &.button-bottom-unload {
+    background-color: $primary-button-color;
+
+    &:hover {
+      background-color: $primary-button-color-h;
+    }
+  }
+
+  &.button-delete {
+    background-color: $primary-button-color-cancel;
+
+    &:hover {
+      background-color: $primary-button-color-cancel-h;
+    }
+  }
+
+}
+
+
+.p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.p-dialog {
+  background-color: $primary-block-back-color;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+
+  hr {
+    width: 85%;
+  }
+
+  .p-dialog-titlebar {
+    color: $primary-text-color3;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+    background-color: #292b30;  // !important my decision
+    border-radius: 10px 10px 0px 0px
+  }
+
+  .p-dialog-content {
+    color: $primary-text-color2;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
+
 .cs-admin-main {
   display: flex;
   flex-direction: row;
@@ -52,8 +147,8 @@ hr {
   height: 100%;
 
   .main-block {
-    padding: 0px 20px 0px 5px;
-    width: calc(100% - 120px);
+    padding: 0px 0px 0px 5px;
+    width: calc(100% - 100px);
     height: auto;
     overflow: hidden;
     overflow-x: auto;

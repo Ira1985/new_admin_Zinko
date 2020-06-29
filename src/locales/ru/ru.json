@@ -22,6 +22,42 @@
         "addFilter": "Добавить фильтр",
         "clearFilter": "Очистить"
       }
+    },
+    "main": {
+      "buttons": {
+        "buttonAdd": "Добавить",
+        "buttonButch": "Пакетная обработка",
+        "buttonSave": "Сохранить",
+        "buttonCancel": "Отменить",
+        "buttonUnload": "Выгрузить",
+        "buttonDel": "Удалить",
+        "buttonYesDel": "Да, удалить",
+
+        "tooltips": {
+
+        }
+      },
+      "approvals": {
+        "removeCheck": {
+          "title": "Удаление",
+          "msg": "Вы действительно хотите удалить"
+        },
+        "removeFilter": {
+          "title": "Удаление по фильтру",
+          "msg": "Вы действительно хотите удалить"
+        },
+        "unloadCheck": {
+          "title": "Выгрузка",
+          "msg": "Вы хотите выгрузить"
+        },
+        "unloadFilter": {
+          "title": "Выгрузка по фильтру",
+          "msg": "Вы хотите выгрузить"
+        }
+      },
+      "other": {
+        "checkedText": "Выбрано"
+      }
     }
   },
   "baseEntity": {
@@ -39,6 +75,13 @@
     }
   },
   "brands": {
-
+    "breadcrumbs": {
+      "name": "Бренды"
+    },
+    "plurals": {
+      "first": "брендов",
+      "second": "бренд",
+      "third": "бренда"
+    }
   }
 }

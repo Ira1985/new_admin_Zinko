@@ -9,19 +9,24 @@ class BaseLayout extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            checkedItems: new Map()
+        };
     }
 
     filterLoading = false;
-    fields= [
-
-    ];
 
     render() {
-        const {t, filterItems, plurals, dopClass, breadcrumbs} = this.props;
+        const {t, filterItems, plurals, dopClass, breadcrumbs, toolbarButtons, checkedButtons} = this.props;
+        const {checkedItems} = this.state;
+
         return <>
                 <div className={'base-layout ' + (dopClass?dopClass:'')}>
                     <FilterSection filteringData={this.filterLoading} fields={filterItems}></FilterSection>
-                    <MainSection breadcrumbs={breadcrumbs} plurals={plurals}></MainSection>
+                    <MainSection breadcrumbs={breadcrumbs}
+                                 plurals={plurals}
+                                 toolbarButtons={toolbarButtons}
+                                 checkedButtons={checkedButtons}></MainSection>
                 </div>
             </>;
     }
@@ -31,7 +36,9 @@ BaseLayout.propTypes = {
     filterItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     plurals: PropTypes.arrayOf(PropTypes.string),
     dopClass: PropTypes.string,
-    breadcrumbs: PropTypes.arrayOf(PropTypes.object)
+    breadcrumbs: PropTypes.arrayOf(PropTypes.object),
+    toolbarButtons: PropTypes.arrayOf(PropTypes.object),
+    checkedButtons: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default withTranslation()(BaseLayout);
