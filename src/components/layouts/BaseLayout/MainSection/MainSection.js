@@ -15,7 +15,7 @@ class MainSection extends Component {
             checkedItems: new Map(),
             showCheckedItemsMenu: false,
             showApprovalWin: false,
-            approve: {}
+            approveButton: {}
         };
     }
 
@@ -37,26 +37,38 @@ class MainSection extends Component {
             }));
     }
 
-    baseOnClick(button) {
-        if(button.hasOwnProperty('hasApproval') && button.hasApproval) {
-            /*
-            approval: {
-               title: 'baseLayout.main.approvals.removeCheck.title',
-                baseText: 'baseLayout.main.approvals.removeCheck.msg'
-            }
-             */
-            let approve = Object.assign({}, button.approval);
+    onClickChecked(button) {
+        if(button.hasOwnProperty('hasApproval') && button.hasApproval && button.approval) {
+
+            let approveButton = Object.assign({}, button);
+
+            console.log(button);
+
             this.setState({
-                approve: approve,
+                approveButton: approveButton,
                 showApprovalWin: true
             });
         } else
             button.onClick();
     }
 
-    closeApprovalWin() {
+    closeApprovalWin(approve) {
+        if(approve.hasOwnProperty('onCancel'))
+            approve.onCancel();
         this.setState({
-            approve: {},
+            approveButton: {},
+            showApprovalWin: false
+        });
+    }
+
+    approveApprovalWin(approveButton) {
+
+        if(approveButton.approval.hasOwnProperty('onApprove'))
+            approveButton.approval.onApprove();
+
+
+        this.setState({
+            approveButton: {},
             showApprovalWin: false
         });
     }
@@ -64,7 +76,7 @@ class MainSection extends Component {
 
     render() {
         const {t, breadcrumbs, toolbarButtons, checkedButtons} = this.props;
-        const {showCheckedItemsMenu, checkedItems, showApprovalWin, approve} = this.state;
+        const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton} = this.state;
 
         return <>
             <div className='main-section'>
@@ -86,21 +98,27 @@ class MainSection extends Component {
                 <div className='base-data-section'> {`test{&ryry}`}</div>
 
                 <div className={showCheckedItemsMenu? 'checked-toolbar-section show': 'checked-toolbar-section'}>
-                    <CheckedToolbarSection items={checkedItems} buttons={checkedButtons} show={showCheckedItemsMenu} baseOnClick={(button) => this.baseOnClick(button)}></CheckedToolbarSection>
+                    <CheckedToolbarSection items={checkedItems} buttons={checkedButtons} show={showCheckedItemsMenu} baseOnClick={(button) => this.onClickChecked(button)}></CheckedToolbarSection>
                 </div>
             </div>
 
             {/*<Dialog header="Header Text" footer={footer} iconsTemplate={myIcon} visible={this.state.visible} style={{width: '50vw'}} modal={true} onHide={this.onHide}>*/}
             { showApprovalWin &&
-                <Dialog header={(approve && approve.hasOwnProperty('title'))?t(approve.title):''}
+                <Dialog header={(approveButton && approveButton.approval && approveButton.approval.hasOwnProperty('title'))?t(approveButton.approval.title):''}
                         visible={showApprovalWin}
                         modal={true}
                         closeOnEscape={true}
-                        onHide={() => this.closeApprovalWin()}
+                        onHide={() => this.closeApprovalWin(approveButton.approval)}
                         closable={true}
-                        style={{width: '500px'}}>
+                        style={{width: '500px'}}
+                        footer={ (<div>
+                            <Button label={t(approveButton.approval.yes)} className="button-success" onClick={() => {}} />
+                            <Button label={t(approveButton.approval.cancel)} className="button-delete-cancel" onClick={() => this.closeApprovalWin(approveButton.approval)} />
+                        </div>)}
+                >
+
                     {/*<hr/>*/}
-                    <p>{(approve && approve.hasOwnProperty('baseText'))?t(approve.baseText):''}</p>
+                    <p>{(approveButton.approval && approveButton.approval.hasOwnProperty('baseText'))?t(approveButton.approval.baseText):''}</p>
                 </Dialog>
             }
 

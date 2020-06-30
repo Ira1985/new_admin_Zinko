@@ -32,17 +32,25 @@ const checkedButtons = [
         hasApproval: true,
         approval: {
             title: 'baseLayout.main.approvals.unloadCheck.title',
-            baseText: 'baseLayout.main.approvals.unloadCheck.msg'
+            baseText: 'baseLayout.main.approvals.unloadCheck.msg',
+            yes: "baseLayout.main.approvals.unloadCheck.yes",
+            cancel: "baseLayout.main.approvals.unloadCheck.cancel",
+            onCancel: () => {},
+            onApprove: () => {}
         }
     },
     {
         label: 'baseLayout.main.buttons.buttonDel',
-        className:'button-delete',
+        className:'button-delete-cancel',
         onClick: () => console.log('add button'),
         hasApproval: true,
         approval: {
             title: 'baseLayout.main.approvals.removeCheck.title',
-            baseText: 'baseLayout.main.approvals.removeCheck.msg'
+            baseText: 'baseLayout.main.approvals.removeCheck.msg',
+            yes: "baseLayout.main.approvals.removeCheck.yes",
+            cancel: "baseLayout.main.approvals.removeCheck.cancel",
+            onCancel: () => {},
+            onApprove: () => {}
         }
     }
 ];

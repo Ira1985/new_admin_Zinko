@@ -95,7 +95,7 @@ hr {
     }
   }
 
-  &.button-delete {
+  &.button-delete-cancel {
     background-color: $primary-button-color-cancel;
 
     &:hover {
@@ -104,7 +104,6 @@ hr {
   }
 
 }
-
 
 .p-component-overlay {
   background-color: rgba(0, 0, 0, 0.4);
@@ -161,6 +160,8 @@ hr {
 
 
 
+
+
 /*.App {
   text-align: center;
 }
@@ -208,14 +209,14 @@ hr {
 
 .logo-image {
   margin: 15px;
-}*/
+}
 
 .simplediv {
   display: flex;
   background-color: #212327;
 }
 
-/*@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
