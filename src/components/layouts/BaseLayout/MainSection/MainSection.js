@@ -7,6 +7,8 @@ import {Toolbar} from "primereact/toolbar";
 import CheckedToolbarSection from "../CheckedToolbarSection/CheckedToolbarSection";
 import {Dialog} from "primereact/dialog";
 import {pluralize} from "../../../../helpers/utils";
+import ApprovalWin from "../../../base/ApprovalWin/ApprovalWin";
+import PropTypes from "prop-types";
 
 class MainSection extends Component {
 
@@ -39,6 +41,7 @@ class MainSection extends Component {
         });
     }
 
+    //test
     testShowChecked() {
         this.setState((prev) => ({
             showCheckedItemsMenu: !prev.showCheckedItemsMenu
@@ -107,7 +110,7 @@ class MainSection extends Component {
     }
 
     render() {
-        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals} = this.props;
+        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals, children} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton} = this.state;
 
         return <>
@@ -127,33 +130,27 @@ class MainSection extends Component {
                 </div>
                 <hr/>
 
-                <div className='base-data-section'> {`test{&ryry}`}</div>
+                <div className='base-data-section'> {children}</div>
 
                 <div className={showCheckedItemsMenu? 'checked-toolbar-section show': 'checked-toolbar-section'}>
                     <CheckedToolbarSection items={checkedItems} buttons={checkedButtons} show={showCheckedItemsMenu} baseOnClick={(button) => this.onClickChecked(button)}></CheckedToolbarSection>
                 </div>
             </div>
 
-            {/*<Dialog header="Header Text" footer={footer} iconsTemplate={myIcon} visible={this.state.visible} style={{width: '50vw'}} modal={true} onHide={this.onHide}>*/}
             { showApprovalWin &&
-                <Dialog header={(approveButton && approveButton.approval && approveButton.approval.hasOwnProperty('title'))?t(approveButton.approval.title):''}
-                        visible={showApprovalWin}
-                        modal={true}
-                        closeOnEscape={true}
-                        onHide={() => this.closeApprovalWin(approveButton.approval,'checker')}
-                        closable={true}
-                        style={{width: '500px'}}
-                        footer={ (<div>
-                            <Button label={t(approveButton.approval.yes)} className="button-success" onClick={() => this.approveApprovalWin(approveButton, 'checker')} />
-                            <Button label={t(approveButton.approval.cancel)} className="button-delete-cancel" onClick={() => this.closeApprovalWin(approveButton.approval, 'checker')} />
-                        </div>)}
-                >
-                    <p>{(approveButton.approval && approveButton.approval.hasOwnProperty('baseText')) ?
-                            (t(approveButton.approval.baseText) + '  ' + (approveButton.approval.showCount?(checkedItems.size > 1?checkedItems.size + ' ' + t(pluralize(checkedItems.size, plurals)):'\''+checkedItems.get(1).name)+'\'':''))
-                        :''}</p>
-                </Dialog>
-
-
+                <ApprovalWin
+                    style={{width: '500px'}}
+                    baseText={(approveButton.approval && approveButton.approval.hasOwnProperty('baseText')) ?
+                            (t(approveButton.approval.baseText) + '  ' + (approveButton.approval.showCount?(checkedItems.size > 1 ?
+                                (checkedItems.size + ' ' + t(pluralize(checkedItems.size, plurals))):'\''+checkedItems.get(1).name)+'\''
+                                : ''))
+                        :''}
+                    header={(approveButton && approveButton.approval && approveButton.approval.hasOwnProperty('title'))?t(approveButton.approval.title):''}
+                    button={approveButton}
+                    show={showApprovalWin}
+                    onClose={() => this.closeApprovalWin(approveButton.approval, approveButton.type)}
+                    onApprove={() => this.approveApprovalWin(approveButton, approveButton.type)}
+                ></ApprovalWin>
             }
 
             </>;

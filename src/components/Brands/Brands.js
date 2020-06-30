@@ -76,7 +76,10 @@ class Brands extends Component {
                         plurals={plurals}
                         dopClass={'brands_main'}
                         toolbarButtons={toolbarButtons}
-                        checkedButtons={checkedButtons}></BaseLayout>
+                        checkedButtons={checkedButtons}>
+
+                {'sdfsdfsdgsdgdsgdsg sdgsd gsdghsdfhsdf hdfshdfsh dfh'}
+            </BaseLayout>
         );
     }
 }

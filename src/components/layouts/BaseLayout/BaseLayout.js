@@ -17,7 +17,7 @@ class BaseLayout extends Component {
     filterLoading = false;
 
     render() {
-        const {t, filterItems, plurals, dopClass, breadcrumbs, toolbarButtons, checkedButtons} = this.props;
+        const {t, filterItems, plurals, dopClass, breadcrumbs, toolbarButtons, checkedButtons, children} = this.props;
         const {checkedItems} = this.state;
 
         return <>
@@ -26,7 +26,9 @@ class BaseLayout extends Component {
                     <MainSection breadcrumbs={breadcrumbs}
                                  plurals={plurals}
                                  toolbarButtons={toolbarButtons}
-                                 checkedButtons={checkedButtons}></MainSection>
+                                 checkedButtons={checkedButtons}>
+                        {children}
+                    </MainSection>
                 </div>
             </>;
     }
