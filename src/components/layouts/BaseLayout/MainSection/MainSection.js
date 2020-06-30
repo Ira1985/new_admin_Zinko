@@ -6,13 +6,21 @@ import {Button} from "primereact/button";
 import {Toolbar} from "primereact/toolbar";
 import CheckedToolbarSection from "../CheckedToolbarSection/CheckedToolbarSection";
 import {Dialog} from "primereact/dialog";
+import {pluralize} from "../../../../helpers/utils";
 
 class MainSection extends Component {
 
     constructor(props) {
         super(props);
+        let mp = new Map();
+        mp.set(1, {name:'test'});
+        mp.set(2, {name:'test'});
+        mp.set(3, {name:'test'});
+        mp.set(4, {name:'test'});
+        mp.set(5, {name:'test'});
+
         this.state = {
-            checkedItems: new Map(),
+            checkedItems: mp,
             showCheckedItemsMenu: false,
             showApprovalWin: false,
             approveButton: {}
@@ -38,22 +46,20 @@ class MainSection extends Component {
     }
 
     onClickChecked(button) {
-        if(button.hasOwnProperty('hasApproval') && button.hasApproval && button.approval) {
-
+        if(button.hasOwnProperty('hasApproval')
+            && button.hasApproval && button.approval) {
             let approveButton = Object.assign({}, button);
-
-            console.log(button);
-
             this.setState({
                 approveButton: approveButton,
                 showApprovalWin: true
             });
         } else
-            button.onClick();
+            this.approveApprovalWin(button);
     }
 
     closeApprovalWin(approve) {
-        if(approve.hasOwnProperty('onCancel'))
+        if(approve.hasOwnProperty('onCancel')
+            && approve.onCancel instanceof Function)
             approve.onCancel();
         this.setState({
             approveButton: {},
@@ -61,21 +67,47 @@ class MainSection extends Component {
         });
     }
 
-    approveApprovalWin(approveButton) {
+    approveApprovalWin(button, checkOrFilter) {
+        let that = this;
+        const buttonClick = (btn) => {
+            if(btn.onClick && btn.onClick instanceof Function) {
+                new Promise((resolve, reject) => resolve(btn.onClick())).then(
+                    res => {
+                        console.log('approveApprovalWin - btn.onClick() ', res);
+                        that.setState({
+                            approveButton: {},
+                            showApprovalWin: false
+                        });
 
-        if(approveButton.approval.hasOwnProperty('onApprove'))
-            approveButton.approval.onApprove();
+                    },
+                    error => {
+                        console.log('error', error);
+                    }
+                );
+            } else
+                that.setState({
+                    approveButton: {},
+                    showApprovalWin: false
+                });
+        };
 
-
-        this.setState({
-            approveButton: {},
-            showApprovalWin: false
-        });
+        if(button.approval.hasOwnProperty('onApprove')
+            && button.approval.onApprove instanceof Function) {
+            new Promise((resolve, reject) => {resolve(button.approval.onApprove())}).then(
+                resA => {
+                    console.log('approveApprovalWin - button.approval.onApprove() - btn.onClick() ', resA);
+                    buttonClick(button);
+                },
+                errorA => {
+                    console.log('errorA', errorA);
+                }
+            );
+        } else
+            buttonClick(button);
     }
 
-
     render() {
-        const {t, breadcrumbs, toolbarButtons, checkedButtons} = this.props;
+        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton} = this.state;
 
         return <>
@@ -108,18 +140,20 @@ class MainSection extends Component {
                         visible={showApprovalWin}
                         modal={true}
                         closeOnEscape={true}
-                        onHide={() => this.closeApprovalWin(approveButton.approval)}
+                        onHide={() => this.closeApprovalWin(approveButton.approval,'checker')}
                         closable={true}
                         style={{width: '500px'}}
                         footer={ (<div>
-                            <Button label={t(approveButton.approval.yes)} className="button-success" onClick={() => {}} />
-                            <Button label={t(approveButton.approval.cancel)} className="button-delete-cancel" onClick={() => this.closeApprovalWin(approveButton.approval)} />
+                            <Button label={t(approveButton.approval.yes)} className="button-success" onClick={() => this.approveApprovalWin(approveButton, 'checker')} />
+                            <Button label={t(approveButton.approval.cancel)} className="button-delete-cancel" onClick={() => this.closeApprovalWin(approveButton.approval, 'checker')} />
                         </div>)}
                 >
-
-                    {/*<hr/>*/}
-                    <p>{(approveButton.approval && approveButton.approval.hasOwnProperty('baseText'))?t(approveButton.approval.baseText):''}</p>
+                    <p>{(approveButton.approval && approveButton.approval.hasOwnProperty('baseText')) ?
+                            (t(approveButton.approval.baseText) + '  ' + (approveButton.approval.showCount?(checkedItems.size > 1?checkedItems.size + ' ' + t(pluralize(checkedItems.size, plurals)):'\''+checkedItems.get(1).name)+'\'':''))
+                        :''}</p>
                 </Dialog>
+
+
             }
 
             </>;
@@ -128,6 +162,7 @@ class MainSection extends Component {
 }
 
 MainSection.propTypes = {
+
 
 };
 

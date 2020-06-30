@@ -28,29 +28,33 @@ const checkedButtons = [
     {
         label: 'baseLayout.main.buttons.buttonUnload',
         className:'button-bottom-unload',
-        onClick: () => console.log('dop button'),
+        onClick: () => {console.log('unload button');},
         hasApproval: true,
+        type: 'checked',
         approval: {
+            showCount: true,
             title: 'baseLayout.main.approvals.unloadCheck.title',
             baseText: 'baseLayout.main.approvals.unloadCheck.msg',
             yes: "baseLayout.main.approvals.unloadCheck.yes",
             cancel: "baseLayout.main.approvals.unloadCheck.cancel",
-            onCancel: () => {},
-            onApprove: () => {}
+            onCancel: () => console.log('unload onCancel'),
+            onApprove: () => {console.log('unload onApprove');}
         }
     },
     {
         label: 'baseLayout.main.buttons.buttonDel',
         className:'button-delete-cancel',
-        onClick: () => console.log('add button'),
+        onClick: () => {console.log('add button');},
         hasApproval: true,
+        type: 'checked',
         approval: {
+            showCount: true,
             title: 'baseLayout.main.approvals.removeCheck.title',
             baseText: 'baseLayout.main.approvals.removeCheck.msg',
             yes: "baseLayout.main.approvals.removeCheck.yes",
             cancel: "baseLayout.main.approvals.removeCheck.cancel",
-            onCancel: () => {},
-            onApprove: () => {}
+            onCancel: () => console.log('buttonDel onCancel'),
+            onApprove: () => {console.log('buttonDel onApprove');}
         }
     }
 ];
