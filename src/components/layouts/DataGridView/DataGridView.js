@@ -10,6 +10,7 @@ import {Button} from "primereact/button";
 import Paging from "../../../models/base/Paging";
 
 class  DataGridView extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -136,6 +137,7 @@ class  DataGridView extends Component {
 
     render() {
         const {t, location} = this.props;
+        const {columns, items, loading} = this.state;
 
         let total = this.state.totalRows + ' результатов';
 
@@ -150,13 +152,79 @@ class  DataGridView extends Component {
 
         return (<>
             <div className='data_grid_view'>
-                <MultiSelect value={this.state.selectedColumns} options={this.state.columns} optionLabel='header' onChange={this.onColumnToggle} style={{width:'250px'}}/>
+                {/*<MultiSelect value={this.state.selectedColumns} options={this.state.columns} optionLabel='header' onChange={this.onColumnToggle} style={{width:'250px'}}/>*/}
 
+                <table className="dgv_table">
+                    <thead style={{background: "#3e3e47"}}>
+                    <tr className="gv_header">
+                        <th className="gv_select-all">
+                            <img src={'/assets/img/icons/select_all2.png'} width="25" height="25" onClick={(event)=>{
+                                return this.addAllToChecked();
+                            }} style={{position:'relative',left: '-3px', width: '25px', height: '25px'}}/>
+                        </th>
+                        {fields.map(field =>
+                            <th key={field.name} name={field.name} style={field.style ? field.style:''}>
+                                <div className='header-name'>
+                                    <span className='gv_header_name'>{field.type == 'button'?'':field.title}</span>
+                                    {(field.sorting) &&
+                                    <React.Fragment>
+                                        {(sorter.name != field.name) && <span className="fa fa-sort" style={{width:'15px'}} onClick={()=>sorting(field.name, 'desc')}></span>}
+                                        {(sorter.name == field.name && sorter.directions == 'asc') && <span className="cui-sort-ascending"  style={{width:'15px'}} onClick={()=>sorting(field.name, 'desc')}></span>}
+                                        {(sorter.name == field.name && sorter.directions == 'desc') && <span className="cui-sort-descending" style={{width:'15px'}} onClick={()=>sorting(field.name, 'asc')}></span>}
+                                    </React.Fragment>
+                                    }
+                                </div>
+                            </th>
+                        )}
+                    </tr>
+                    </thead>
+                    <tbody className="gv_body" style={tbodyStyle?tbodyStyle:{}}>
+                    {loading ?
+                        <tr style={{display:'block',width:'100%'}}>
+                            <td colSpan={fields.length} style={{textAlign:'center',display:'block',width:'100%'}}>
+                                <LoadingSpiner/>
+                            </td>
+                        </tr>
+                        : <React.Fragment>
+                            {(values && values.length > 0) && values.map((val, index) =>
+                                <React.Fragment key={'frag-' + val.id}>
+                                    <tr key={val.id} className={checked.has(val.id)?'checked-list':''}>
+                                        {/*<td style={{width:'50px'}}><input className="form-check-input" type="checkbox" value=""/></td>*/}
+                                        <td className='for_product_finder_win'
+                                            style={{width: '50px', minWidth: '50px', verticalAlign: 'middle'}} onClick={(event) => {
+                                            if (event.target.classList.contains('for_product_finder_win')) {
+                                                //event.target.firstElementChild.parentElement.parentElement.classList.toggle('checked-list');
+                                                return this.addToChecked(val);
+                                            }
+                                        }}><input type="checkbox" checked={checked.has(val.id)}
+                                                  onChange={(event) => {
+                                                      return this.addToChecked(val);
+                                                  }}/></td>
+                                        {fields.map((field, index2) =>
+                                            <td style={field.style && field.style} key={val.id + '-' + index2}
+                                                onDoubleClick={() => {
+                                                    if(!disableEdit)
+                                                        editItem(val);
+                                                }}>{this.buildRowItem(val, field)}</td>
+                                        )}
+                                    </tr>
+                                </React.Fragment>
+                            )}
+                        </React.Fragment>
+                    }
+                    </tbody>
+                </table>
+
+
+
+
+
+                /*
                 <DataTable value={this.state.items}
-                    /*onRowDoubleClick={this.onSelect}*/
+                    onRowDoubleClick={this.onSelect}
                            scrollable={true}
-                           /*scrollHeight={"200px"}*/
-                    /*scrollHeight={scrollHeight}*/
+                           scrollHeight={"200px"}
+                           scrollHeight={scrollHeight}
                            currentPageReportTemplate={total}
                            paginatorRight={paginatorRight}
                            selection={this.state.selectedItems}
@@ -168,6 +236,8 @@ class  DataGridView extends Component {
                     <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
                     {columnComponents}
                 </DataTable>
+                */
+
             </div>
         </>);
     }

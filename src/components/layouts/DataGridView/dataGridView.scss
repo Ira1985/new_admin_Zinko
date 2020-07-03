@@ -2,9 +2,15 @@
 
 .data_grid_view {
 
+
+  table {
+
+  }
+
+
   .p-datatable table {
     width: 100%;
-    table-layout: auto;
+    table-layout: fixed;
   }
 
   .p-datatable-scrollable-wrapper {
