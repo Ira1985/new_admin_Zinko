@@ -138,6 +138,30 @@ hr {
   }
 }
 
+.p-checkbox {
+  border: 1px solid $primary-text-color3;
+  border-radius: 4px;
+
+  .p-checkbox-box {
+    &:hover {
+      background-color: $primary-color-active;
+    }
+    .p-checkbox-icon {
+      color: $primary-text-color3;
+    }
+  }
+}
+
+.p-tooltip {
+  .p-tooltip-arrow {
+    .p-tooltip-text {
+      background-color: $primary-block-back-color;
+      margin: 10px;
+      border-radius: 4px;
+    }
+  }
+}
+
 .cs-admin-main {
   display: flex;
   flex-direction: row;

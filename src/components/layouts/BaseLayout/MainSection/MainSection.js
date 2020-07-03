@@ -48,7 +48,14 @@ class MainSection extends Component {
             }));
     }
 
-    onClickChecked(button) {
+    clearChecked() {
+        this.setState((prev) => ({
+            checkedItems: new Map(),
+            showCheckedItemsMenu: !prev.showCheckedItemsMenu
+        }));
+    }
+
+    onClickCheckedToolbar(button) {
         if(button.hasOwnProperty('hasApproval')
             && button.hasApproval && button.approval) {
             let approveButton = Object.assign({}, button);
@@ -110,7 +117,7 @@ class MainSection extends Component {
     }
 
     render() {
-        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals, children} = this.props;
+        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals, children, gridView, treeView} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton} = this.state;
 
         return <>
@@ -128,12 +135,22 @@ class MainSection extends Component {
                         </div>
                     </Toolbar>
                 </div>
+
                 <hr/>
 
-                <div className='base-data-section'> {children}</div>
+                <div className='base-data-section'>
+                    {children}
+                    {/*{gridView && }*/}
+                    {/*{treeView && }*/}
+                </div>
 
                 <div className={showCheckedItemsMenu? 'checked-toolbar-section show': 'checked-toolbar-section'}>
-                    <CheckedToolbarSection items={checkedItems} buttons={checkedButtons} show={showCheckedItemsMenu} baseOnClick={(button) => this.onClickChecked(button)}></CheckedToolbarSection>
+                    <CheckedToolbarSection items={checkedItems}
+                                           buttons={checkedButtons}
+                                           show={showCheckedItemsMenu}
+                                           baseOnClick={(button) => this.onClickCheckedToolbar(button)}
+                                           clearChecked={() => this.clearChecked()}>
+                    </CheckedToolbarSection>
                 </div>
             </div>
 
@@ -159,9 +176,13 @@ class MainSection extends Component {
 }
 
 MainSection.propTypes = {
-
+    gridView: PropTypes.bool,
+    treeView: PropTypes.bool,
+    breadcrumbs: PropTypes.object,
+    toolbarButtons: PropTypes.arrayOf(PropTypes.object),
+    checkedButtons: PropTypes.arrayOf(PropTypes.object),
+    plurals: PropTypes.arrayOf(PropTypes.string),
 
 };
-
 
 export default withTranslation()(MainSection);

@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import './brands.scss';
 import Brand from "../../models/Brand";
 import {withTranslation} from "react-i18next";
+import BaseGridLayout from "../layouts/BaseGridLayout/BaseGridLayout";
 
 //const plurals = ['брендов', 'бренд', 'бренда'];
 const plurals = ['brands.plurals.first', 'brands.plurals.second', 'brands.plurals.third'];
@@ -71,7 +72,7 @@ class Brands extends Component {
         let  breadcrumbs = [{ "label": t('brands.breadcrumbs.name')}];
 
         return (
-            <BaseLayout breadcrumbs={breadcrumbs}
+            <BaseGridLayout breadcrumbs={breadcrumbs}
                         filterItems={filters}
                         plurals={plurals}
                         dopClass={'brands_main'}
@@ -79,7 +80,7 @@ class Brands extends Component {
                         checkedButtons={checkedButtons}>
 
                 {'sdfsdfsdgsdgdsgdsg sdgsd gsdghsdfhsdf hdfshdfsh dfh'}
-            </BaseLayout>
+            </BaseGridLayout>
         );
     }
 }

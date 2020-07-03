@@ -21,12 +21,15 @@ class BaseLayout extends Component {
         const {checkedItems} = this.state;
 
         return <>
-                <div className={'base-layout ' + (dopClass?dopClass:'')}>
+                <div className={'base-layout'}>
                     <FilterSection filteringData={this.filterLoading} fields={filterItems}></FilterSection>
                     <MainSection breadcrumbs={breadcrumbs}
                                  plurals={plurals}
                                  toolbarButtons={toolbarButtons}
-                                 checkedButtons={checkedButtons}>
+                                 checkedButtons={checkedButtons}
+                                 gridView={true}
+                                 treeView={false}
+                    >
                         {children}
                     </MainSection>
                 </div>
@@ -37,7 +40,7 @@ class BaseLayout extends Component {
 BaseLayout.propTypes = {
     filterItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     plurals: PropTypes.arrayOf(PropTypes.string),
-    dopClass: PropTypes.string,
+    //dopClass: PropTypes.string,
     breadcrumbs: PropTypes.arrayOf(PropTypes.object),
     toolbarButtons: PropTypes.arrayOf(PropTypes.object),
     checkedButtons: PropTypes.arrayOf(PropTypes.object)

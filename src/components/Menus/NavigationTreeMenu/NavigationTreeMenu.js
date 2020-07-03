@@ -88,7 +88,6 @@ class NavigationTreeMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: true
         };
     }
     componentDidMount() {
@@ -117,16 +116,16 @@ class NavigationTreeMenu extends Component {
     }
 
     render() {
-        const {visible} = this.state;
         const {show, onHide} = this.props;
         return <>
                 {/*<div className='navigation-tree-menu'>*/}
-                <Sidebar visible={show} position="left" baseZIndex={0} dismissable={false}  showCloseIcon={false} closeOnEscape={false} className='navigation-tree-menu' onHide={onHide}>
+            <div className={show?'navigation-tree-menu show':'navigation-tree-menu'}>
+                {/*<Sidebar visible={show} position="left" baseZIndex={0} dismissable={false}  showCloseIcon={false} closeOnEscape={false} className='navigation-tree-menu' onHide={onHide}>*/}
                     <ScrollPanel className='scroll-panel'>
                         <Tree className='nav-tree-menu' value={menuItem} selectionMode="single" onExpand={(e) => this.onExpandItem(e)} onCollapse={(e) => this.onCollapseItem(e)} onSelect={e => this.navigationMenu(e)}/>
                     </ScrollPanel>
-                </Sidebar>
-            {/*</div>*/}
+                {/*</Sidebar>*/}
+            </div>
             </>
         ;
     }

@@ -1,0 +1,43 @@
+@import "../../../styles/variables";
+
+.data_grid_view {
+
+  .p-datatable table {
+    width: 100%;
+    table-layout: auto;
+  }
+
+  .p-datatable-scrollable-wrapper {
+
+
+    .p-datatable-scrollable-header-table {
+
+      tr {
+        height: 40px;
+      }
+      th {
+        background-color: $primary-table-header !important;
+        border-right: 0.5px solid $primary-text-color1 !important;
+        border-radius: 0px !important;
+        color: $primary-text-color2 !important;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+
+        &:first-child {
+          border-top-left-radius: 5px !important;
+          border-bottom-left-radius: 5px !important;
+        }
+
+        &:last-child {
+          border-top-right-radius: 5px !important;
+          border-bottom-right-radius: 5px !important;
+          border-right: none !important;
+        }
+      }
+
+    }
+  }
+
+}

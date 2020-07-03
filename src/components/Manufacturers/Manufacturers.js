@@ -99,6 +99,7 @@ export class Manufacturers extends Component {
                 </div>
             </Toolbar>
             <MultiSelect value={this.state.selectedColumns} options={this.state.columns} optionLabel='header' onChange={this.onColumnToggle} style={{width:'250px'}}/>
+
             <DataTable value={this.state.items}
                        onRowDoubleClick={this.onSelect}
                        scrollable={true} scrollHeight={scrollHeight}
