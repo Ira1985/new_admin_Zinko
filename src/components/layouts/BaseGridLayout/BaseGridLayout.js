@@ -11,11 +11,15 @@ class BaseGridLayout extends Component {
         super(props);
 
         this.state = {
-
+            showSectionChecked: false
         };
-
     }
 
+    setSectionChecked(show) {
+        this.setState({
+            showSectionChecked: show
+        });
+    }
 
     render() {
         const {t, breadcrumbs, filters, plurals, toolbarButtons, checkedButtons, dopClass} = this.props;
@@ -27,7 +31,9 @@ class BaseGridLayout extends Component {
                                 filterItems={filters}
                                 plurals={plurals}
                                 toolbarButtons={toolbarButtons}
-                                checkedButtons={checkedButtons}>
+                                checkedButtons={checkedButtons}
+                                showSectionChecked={(show) => this.setSectionChecked(show)}
+                    >
 
                         <DataGridView></DataGridView>
 

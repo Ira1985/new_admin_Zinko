@@ -9,6 +9,7 @@ import {Dialog} from "primereact/dialog";
 import {pluralize} from "../../../../helpers/utils";
 import ApprovalWin from "../../../base/ApprovalWin/ApprovalWin";
 import PropTypes from "prop-types";
+import DataGridView from "../../DataGridView/DataGridView";
 
 class MainSection extends Component {
 
@@ -117,7 +118,7 @@ class MainSection extends Component {
     }
 
     render() {
-        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals, children, gridView, treeView} = this.props;
+        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals, children, gridView, treeView, apiService, location} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton} = this.state;
 
         return <>
@@ -139,8 +140,11 @@ class MainSection extends Component {
                 <hr/>
 
                 <div className='base-data-section'>
-                    {children}
-                    {/*{gridView && }*/}
+                    {/*{children}*/}
+                    {gridView && <DataGridView minimizeHeight={showCheckedItemsMenu}
+                                               apiService={apiService}
+                                               location={location}
+                                    ></DataGridView>}
                     {/*{treeView && }*/}
                 </div>
 
@@ -178,11 +182,12 @@ class MainSection extends Component {
 MainSection.propTypes = {
     gridView: PropTypes.bool,
     treeView: PropTypes.bool,
-    breadcrumbs: PropTypes.object,
+    breadcrumbs: PropTypes.arrayOf(PropTypes.object),
     toolbarButtons: PropTypes.arrayOf(PropTypes.object),
     checkedButtons: PropTypes.arrayOf(PropTypes.object),
     plurals: PropTypes.arrayOf(PropTypes.string),
-
+    apiService: PropTypes.any,
+    location: PropTypes.object
 };
 
 export default withTranslation()(MainSection);

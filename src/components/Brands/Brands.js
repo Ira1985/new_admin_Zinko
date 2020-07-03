@@ -4,6 +4,7 @@ import './brands.scss';
 import Brand from "../../models/Brand";
 import {withTranslation} from "react-i18next";
 import BaseGridLayout from "../layouts/BaseGridLayout/BaseGridLayout";
+import {brandService} from "../../service/brand.service";
 
 //const plurals = ['брендов', 'бренд', 'бренда'];
 const plurals = ['brands.plurals.first', 'brands.plurals.second', 'brands.plurals.third'];
@@ -72,15 +73,18 @@ class Brands extends Component {
         let  breadcrumbs = [{ "label": t('brands.breadcrumbs.name')}];
 
         return (
-            <BaseGridLayout breadcrumbs={breadcrumbs}
+            <BaseLayout breadcrumbs={breadcrumbs}
                         filterItems={filters}
                         plurals={plurals}
                         dopClass={'brands_main'}
                         toolbarButtons={toolbarButtons}
-                        checkedButtons={checkedButtons}>
+                        checkedButtons={checkedButtons}
+                        apiService={brandService}
+                        location={this.props.location}
+            >
 
                 {'sdfsdfsdgsdgdsgdsg sdgsd gsdghsdfhsdf hdfshdfsh dfh'}
-            </BaseGridLayout>
+            </BaseLayout>
         );
     }
 }

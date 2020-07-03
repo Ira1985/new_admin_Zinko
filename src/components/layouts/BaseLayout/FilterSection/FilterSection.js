@@ -107,8 +107,8 @@ class FilterSection extends Component {
 }
 
 FilterSection.propTypes = {
-    filteringData: PropTypes.bool.isRequired, // show then click filter and data loading
-    fields: PropTypes.arrayOf(PropTypes.object).isRequired // items for build filters
+    filteringData: PropTypes.bool, // show then click filter and data loading
+    fields: PropTypes.arrayOf(PropTypes.object) // items for build filters
 };
 
 /****
