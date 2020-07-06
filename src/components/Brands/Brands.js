@@ -5,6 +5,7 @@ import Brand from "../../models/Brand";
 import {withTranslation} from "react-i18next";
 import BaseGridLayout from "../layouts/BaseGridLayout/BaseGridLayout";
 import {brandService} from "../../service/brand.service";
+import PropTypes from "prop-types";
 
 //const plurals = ['брендов', 'бренд', 'бренда'];
 const plurals = ['brands.plurals.first', 'brands.plurals.second', 'brands.plurals.third'];
@@ -81,8 +82,10 @@ class Brands extends Component {
                         checkedButtons={checkedButtons}
                         apiService={brandService}
                         location={this.props.location}
+                        gridView={true}
+                        treeView={false}
+                        columns={Brand.buildColumns()}
             >
-
                 {'sdfsdfsdgsdgdsgdsg sdgsd gsdghsdfhsdf hdfshdfsh dfh'}
             </BaseLayout>
         );

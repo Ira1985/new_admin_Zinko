@@ -13,34 +13,54 @@ class  DataGridView extends Component {
 
     constructor(props) {
         super(props);
+        let columns = [], selectedColumns = [], coef = 1;
+
+        if(props.columns && props.columns.length > 0) {
+/*            props.columns.map((elem, index) => {
+                coef += elem.order;
+            });*/
+
+            let sums = 0;
+            props.columns.map((elem, index) => {
+                columns.push({field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order, default: elem.default});
+                //columns.push({field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order});
+                if(elem.default) {
+                    sums += elem.order;
+                    selectedColumns.push({
+                        field: elem.field,
+                        header: elem.header,
+                        style: elem.style,
+                        sortable: elem.sortable,
+                        order: elem.order,
+                        default: elem.default
+                    });
+                }
+            });
+            coef = (sums > 0? 100/sums: 1);
+        }
+
         this.state = {
             loading: true,
             items: [],
             totalRows: 0,
+            limit: 20,
+            currentPage: 1,
+            first: 0,
             selectedItems: [],
-            visibleAdd: false,
+            //visibleAdd: false,
             item: {},
-            scrollHeight: 0,
-            selectedColumns: [
-                {field: 'name', header: 'Имя', style:{width:'40%'}, sortable: true},
-                {field: 'comment', header: 'Коментарий', style:{width:'40%'}, sortable: false},
-                /*{field: 'description', header: 'Описание'},*/
-                {field: 'code', header: 'Код', style:{width:'20%'}, sortable: true}
-            ],
-            columns: [
-                {field: 'name', header: 'Имя', style:{width:'40%'},sortable: true},
-                {field: 'comment', header: 'Коментарий', style:{width:'40%'}, sortable: false},
-                /*{field: 'description', header: 'Описание'},*/
-                {field: 'code', header: 'Код', style:{width:'20%'}, sortable: true}
-            ],
+            //scrollHeight: 0,
+            selectedColumns: selectedColumns,
+            columns: columns,
+            columnCoef: coef,
+            sortField: '',
+            sortOrder: 0
         };
     }
 
     componentDidMount() {
         const {apiService} = this.props;
-
     }
-
 
     componentDidMount() {
         const {filters, sorter, paging} = this.state;
@@ -93,90 +113,118 @@ class  DataGridView extends Component {
        */
     }
 
-    getList(filtering, sorting, paging, changingPage) {
+    getList(filtering, sorting, paging) {
 
         this.setState({
             loading: true
         });
         this.props.apiService.getList(filtering, sorting, paging)
             .then(response => {
-                    if(changingPage) {
-                        let newPaging = new Paging();
-                        if(response) {
-                            //let newPaging = new Paging();
-                            newPaging = Object.assign({}, paging, {
-                                page: 1,
-                                count: response.totalRows,
-                                totalPages: response.totalPages
-                            });
-                        }
-                        this.setState({
-                            paging: newPaging
-                        });
-                    }
-
                     console.log(response ? response.pageItems : []);
-
                     this.setState({
                         items: response ? response.pageItems : [],
-                        loading: false
+                        loading: false,
+                        totalRows: response ? response.totalRows : 0
                     });
                 },
                 error => {
                     this.setState({
                         items: [],
                         loading: false,
-                        paging: new Paging(),
+                        totalRows: 0,
+                        currentPage: 1
                     });
                 });
     }
 
+    onColumnAdd(e) {
+        console.log('onColumnAdd');
+        console.log(e);
+    }
 
+    onPage(e) {
+        this.setState({
+            limit: e.rows,
+            currentPage: (e.page + 1),
+            first: (e.page * e.rows)
+        });
+    }
 
+    onSort(e) {
+        console.log(e);
 
+        this.setState({
+            sortField: e.sortField,
+            sortOrder: e.sortOrder
+        });
+    }
 
     render() {
         const {t, location} = this.props;
-        const {columns, items, loading} = this.state;
+        const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
+            totalRows, limit, currentPage, first, sortField, sortOrder} = this.state;
 
-        let total = this.state.totalRows + ' результатов';
+        console.log(currentPage);
+
 
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
 
-        const columnComponents = this.state.selectedColumns.map((col, index) => {
-            return <Column key={'data-table-col-' + index} field={col.field} header={col.header} sortable={col.sortable} style={col.style} />;
+        const columnComponents = selectedColumns.map((col, index) => {
+            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:(columnCoef*col.order)+'%'})} />;
         });
+
+
 
         return (<>
             <div className='data_grid_view'>
                 <MultiSelect
+                    maxSelectedLabels={columns.length}
                     className={'grid-add-column'}
                     placeholder={' '}
                     fixedPlaceholder={true}
-                    value={this.state.selectedColumns}
-                    options={this.state.columns}
+                    value={selectedColumns}
+                    options={columns}
+                    optionValue='field'
                     optionLabel='header'
-                    onChange={this.onColumnToggle}
-                    style={{width:'250px'}}
+                    itemTemplate={(option) => {return t(option.header);}}
+                    onChange={(e) => this.onColumnAdd(e)}
+                    /*style={{width:'250px'}}*/
                     tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
                     tooltipOptions={{position: 'left'}}
                 />
-                <DataTable value={this.state.items}
+
+                {/*rows	number	null	Number of rows to display per page.
+                totalRecords	number	null	Number of total records, defaults to length of value when not defined.
+                lazy	boolean	false	Defines if data is loaded and interacted with in lazy manner.
+                sortField	string	null	Name of the field to sort data by default.
+                sortOrder*/}
+
+                <DataTable value={items}
                     onRowDoubleClick={this.onSelect}
                            scrollable={true}
                            responsive={true}
                            resizableColumns={true}
+                           sortField={sortField}
+                           sortOrder={sortOrder}
                            /*scrollHeight={"100%"}*/
                            /*scrollHeight={scrollHeight}*/
-                           currentPageReportTemplate={total}
+                           /*currentPageReportTemplate={'{currentPage} of {totalPages}'}*/
+                           currentPageReportTemplate={'{totalPages} ' + t('baseLayout.main.other.totalItemsLabel')}
+                           totalRecords={totalRows}
+                           lazy={true}
+                           first={first}
+                           currentPage={currentPage}
+                           onPage={(e) => this.onPage(e)}
+                           onSort={(e) => this.onSort(e)}
+                           loading={loading}
                            paginatorRight={paginatorRight}
-                           selection={this.state.selectedItems}
+                           selection={selectedItems}
                            onSelectionChange={e => this.setState({selectedItems: e.value})}
-                           paginator
-                           rows={10}
+                           paginator={true}
+                           rows={limit}
                            paginatorPosition={'top'}
                            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}>
                     <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
@@ -192,7 +240,8 @@ class  DataGridView extends Component {
 DataGridView.propTypes = {
     minimizeHeight: PropTypes.bool,
     apiService: PropTypes.any,
-    location: PropTypes.object
+    location: PropTypes.object,
+    columns: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default withTranslation()(DataGridView);

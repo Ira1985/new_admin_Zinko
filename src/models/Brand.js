@@ -7,9 +7,13 @@ export default class Brand extends BaseEntity {
         return super.build(item);
     }
 
-  static buildFilters() {
-       return BaseEntity.buildFilters();
-  };
+    static buildFilters() {
+        return BaseEntity.buildFilters();
+    }
+
+    static buildColumns() {
+        return BaseEntity.buildColumns();
+    }
 }
 
 export const BrandSchema = Yup.object().shape({

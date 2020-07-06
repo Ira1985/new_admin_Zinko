@@ -18,7 +18,9 @@ class BaseLayout extends Component {
     filterLoading = false;
 
     render() {
-        const {t, filterItems, plurals, dopClass, breadcrumbs, toolbarButtons, checkedButtons, children, apiService, location} = this.props;
+        const {t, filterItems, plurals, dopClass,
+            breadcrumbs, toolbarButtons, checkedButtons,
+            children, apiService, location, gridView, treeView, columns} = this.props;
         const {checkedItems} = this.state;
 
         return <>
@@ -28,10 +30,11 @@ class BaseLayout extends Component {
                                  plurals={plurals}
                                  toolbarButtons={toolbarButtons}
                                  checkedButtons={checkedButtons}
-                                 gridView={true}
-                                 treeView={false}
+                                 gridView={gridView}
+                                 treeView={treeView}
                                  apiService={apiService}
                                  location={location}
+                                 columns={columns}
                     >
                         {children}
                     </MainSection>
@@ -51,7 +54,8 @@ BaseLayout.propTypes = {
     gridView: PropTypes.bool,
     treeView: PropTypes.bool,
     apiService: PropTypes.any,
-    location: PropTypes.object
+    location: PropTypes.object,
+    columns: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default withTranslation()(BaseLayout);

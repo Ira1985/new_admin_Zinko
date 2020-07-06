@@ -266,7 +266,7 @@
     border: none !important;
     position: absolute;
     z-index: 2 !important;
-    right: 24px;
+    right: 30px;
     top: 80px;
 
     .p-multiselect-label {
@@ -299,38 +299,51 @@
       left: auto !important;
       overflow-x: hidden;
       overflow-y: auto;
-      scrollbar-color: $primary-color-scroll $primary-block-back-color;
-      scrollbar-width: thin;
+      /*scrollbar-color: $primary-color-scroll $primary-table-body-active-h;
+      scrollbar-width: thin;*/
       padding: 5px 5px;
 
       .p-multiselect-header {
         display: none;
       }
 
-      .p-multiselect-items {
-        max-height: 170px;
-        max-width: 160px;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 14px;
-        color: $primary-text-color3;
-        padding: 0px;
+      .p-multiselect-items-wrapper {
+        max-height: 200px;
+        max-width: 200px;
+        scrollbar-color: $primary-color-scroll  $primary-table-body-active-h;
+        scrollbar-width: thin;
+        //width: 160px;
 
-        .p-multiselect-item {
-          height: 24px;
-          margin: 5px 0px;
+        .p-multiselect-items {
+          /*max-height: 220px;
+          max-width: 200px;
+          width: 160px;*/
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 14px;
+          color: $primary-text-color3;
+          padding: 0px;
+          /*scrollbar-color: $primary-color-scroll $primary-table-body-active-h;
+          scrollbar-width: thin;*/
 
-          .p-checkbox {
-            margin-right: 5px;
-            .p-checkbox-box {
-              width: 12px;
-              height: 12px;
+          .p-multiselect-item {
+            height: 24px;
+            margin: 5px 2px;
+            padding: 5px 25px 0px 0px;
+
+            .p-checkbox {
+              margin: 0px 5px;
+
+              .p-checkbox-box {
+                width: 12px;
+                height: 12px;
+              }
             }
-          }
 
-          &:hover {
-            background-color: $primary-table-body-active;
+            &:hover {
+              background-color: $primary-table-body-active;
+            }
           }
         }
       }

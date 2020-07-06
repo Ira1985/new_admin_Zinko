@@ -69,12 +69,13 @@
       },
       "other": {
         "checkedText": "Выбрано",
-        "disableChecked": "Отмена выбраного"
+        "disableChecked": "Отмена выбраного",
+        "totalItemsLabel": "результатов"
       }
     }
   },
   "baseEntity": {
-    "id": "Идентификатор",
+    "id": "Ид",
     "name": "Название",
     "comment": "Комментарий",
     "updatedAt": "Обновлен в",

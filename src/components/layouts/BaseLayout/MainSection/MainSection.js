@@ -118,7 +118,8 @@ class MainSection extends Component {
     }
 
     render() {
-        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals, children, gridView, treeView, apiService, location} = this.props;
+        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals,
+            children, gridView, treeView, apiService, location, columns} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton} = this.state;
 
         return <>
@@ -144,6 +145,7 @@ class MainSection extends Component {
                     {gridView && <DataGridView minimizeHeight={showCheckedItemsMenu}
                                                apiService={apiService}
                                                location={location}
+                                               columns={columns}
                                     ></DataGridView>}
                     {/*{treeView && }*/}
                 </div>
@@ -187,7 +189,8 @@ MainSection.propTypes = {
     checkedButtons: PropTypes.arrayOf(PropTypes.object),
     plurals: PropTypes.arrayOf(PropTypes.string),
     apiService: PropTypes.any,
-    location: PropTypes.object
+    location: PropTypes.object,
+    columns: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default withTranslation()(MainSection);
