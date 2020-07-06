@@ -13,7 +13,7 @@ class  DataGridView extends Component {
 
     constructor(props) {
         super(props);
-        let columns = [], selectedColumns = [], coef = 1;
+        let columns = new Map(), selectedColumns = new Map(), coef = 1;
 
         if(props.columns && props.columns.length > 0) {
 /*            props.columns.map((elem, index) => {
@@ -22,11 +22,12 @@ class  DataGridView extends Component {
 
             let sums = 0;
             props.columns.map((elem, index) => {
-                columns.push({field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order, default: elem.default});
+                columns.set(elem.field, {field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order, default: elem.default});
                 //columns.push({field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order});
                 if(elem.default) {
                     sums += elem.order;
-                    selectedColumns.push({
+                    selectedColumns.set(
+                        elem.field, {
                         field: elem.field,
                         header: elem.header,
                         style: elem.style,
@@ -138,8 +139,17 @@ class  DataGridView extends Component {
     }
 
     onColumnAdd(e) {
-        console.log('onColumnAdd');
-        console.log(e);
+        const {selectedColumns, columns} = this.state;
+        let newColumns = new Map();
+        if(e.value && e.value.length > 0) {
+            e.value.map((item,index) => {
+                if(columns.has(item))
+                    newColumns.set(item, columns.get(item));
+            });
+            this.setState({
+                selectedColumns: newColumns
+            });
+        }
     }
 
     onPage(e) {
@@ -172,7 +182,7 @@ class  DataGridView extends Component {
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
 
-        const columnComponents = selectedColumns.map((col, index) => {
+        const columnComponents = Array.from(selectedColumns.values()).map((col, index) => {
             return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:(columnCoef*col.order)+'%'})} />;
         });
 
@@ -181,16 +191,16 @@ class  DataGridView extends Component {
         return (<>
             <div className='data_grid_view'>
                 <MultiSelect
-                    maxSelectedLabels={columns.length}
+                    maxSelectedLabels={columns.size}
                     className={'grid-add-column'}
                     placeholder={' '}
                     fixedPlaceholder={true}
-                    value={selectedColumns}
-                    options={columns}
+                    value={Array.from(selectedColumns.keys())}
+                    options={Array.from(columns.values())}
                     optionValue='field'
                     optionLabel='header'
                     itemTemplate={(option) => {return t(option.header);}}
-                    onChange={(e) => this.onColumnAdd(e)}
+                    onChange={(e,e1,e2) => this.onColumnAdd(e,e1,e2)}
                     /*style={{width:'250px'}}*/
                     tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
                     tooltipOptions={{position: 'left'}}
