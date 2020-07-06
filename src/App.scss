@@ -45,12 +45,19 @@ hr {
 }
 
 .p-breadcrumb {
-  .p-menuitem-text {
-    color: $primary-text-color3;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 14px;
+  .p-menuitem-link {
+    .pi-home::before {
+      content: "\e925";
+      color: $primary-text-color3;
+    }
+
+    .p-menuitem-text {
+      color: $primary-text-color3;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 14px;
+    }
   }
 
   .p-breadcrumb-chevron {

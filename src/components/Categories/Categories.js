@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Button} from 'primereact/button';
 import {Toolbar} from 'primereact/toolbar';
 import {BreadCrumb} from 'primereact/breadcrumb';
-import '../../scss/simpleTable.scss';
+//import '../../scss/simpleTable.scss';
 import {DataTable} from 'primereact/datatable';
 import {TreeTable} from 'primereact/treetable';
 import {Column} from 'primereact/column';
