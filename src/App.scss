@@ -46,9 +46,16 @@ hr {
 
 .p-breadcrumb {
   .p-menuitem-link {
-    .pi-home::before {
-      content: "\e925";
+
+    .pi-home {
       color: $primary-text-color3;
+
+      &:before {
+        content: "\e925";
+      }
+      &:hover {
+        color: $primary-color-active;
+      }
     }
 
     .p-menuitem-text {
@@ -57,6 +64,10 @@ hr {
       font-weight: 500;
       font-size: 12px;
       line-height: 14px;
+
+      &:hover {
+        color: $primary-color-active;
+      }
     }
   }
 

@@ -34,7 +34,9 @@
         "buttonYesDel": "Да, удалить",
 
         "tooltips": {
-
+          "buttonUnload": "Выгрузить",
+          "buttonImport": "Импорт",
+          "gridColumnAdd": "Добавить столбец"
         }
       },
       "approvals": {

@@ -22,16 +22,16 @@ class  DataGridView extends Component {
             item: {},
             scrollHeight: 0,
             selectedColumns: [
-                {field: 'name', header: 'Имя'},
-                {field: 'comment', header: 'Коментарий'},
+                {field: 'name', header: 'Имя', style:{width:'40%'}, sortable: true},
+                {field: 'comment', header: 'Коментарий', style:{width:'40%'}, sortable: false},
                 /*{field: 'description', header: 'Описание'},*/
-                {field: 'code', header: 'Код'}
+                {field: 'code', header: 'Код', style:{width:'20%'}, sortable: true}
             ],
             columns: [
-                {field: 'name', header: 'Имя'},
-                {field: 'comment', header: 'Коментарий'},
+                {field: 'name', header: 'Имя', style:{width:'40%'},sortable: true},
+                {field: 'comment', header: 'Коментарий', style:{width:'40%'}, sortable: false},
                 /*{field: 'description', header: 'Описание'},*/
-                {field: 'code', header: 'Код'},
+                {field: 'code', header: 'Код', style:{width:'20%'}, sortable: true}
             ],
         };
     }
@@ -142,23 +142,33 @@ class  DataGridView extends Component {
         let total = this.state.totalRows + ' результатов';
 
         const paginatorRight = <div>
-            <Button icon="pi p-empty-button grid-download" style={{marginRight:'.25em'}}/>
-            <Button icon="pi p-empty-button grid-upload" />
+            <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
+            <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
 
         const columnComponents = this.state.selectedColumns.map((col, index) => {
-            return <Column key={'data-table-col-' + index} field={col.field} header={col.header} sortable />;
+            return <Column key={'data-table-col-' + index} field={col.field} header={col.header} sortable={col.sortable} style={col.style} />;
         });
 
         return (<>
             <div className='data_grid_view'>
-                {/*<MultiSelect value={this.state.selectedColumns} options={this.state.columns} optionLabel='header' onChange={this.onColumnToggle} style={{width:'250px'}}/>*/}
-
-
+                <MultiSelect
+                    className={'grid-add-column'}
+                    placeholder={' '}
+                    fixedPlaceholder={true}
+                    value={this.state.selectedColumns}
+                    options={this.state.columns}
+                    optionLabel='header'
+                    onChange={this.onColumnToggle}
+                    style={{width:'250px'}}
+                    tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
+                    tooltipOptions={{position: 'left'}}
+                />
                 <DataTable value={this.state.items}
                     onRowDoubleClick={this.onSelect}
                            scrollable={true}
                            responsive={true}
+                           resizableColumns={true}
                            /*scrollHeight={"100%"}*/
                            /*scrollHeight={scrollHeight}*/
                            currentPageReportTemplate={total}
