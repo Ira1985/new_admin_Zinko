@@ -11,6 +11,8 @@ import Paging from "../../../models/base/Paging";
 
 class  DataGridView extends Component {
 
+    //dataGridView = React.createRef();
+
     constructor(props) {
         super(props);
         let columns = new Map(), selectedColumns = new Map(), coef = 1;
@@ -50,7 +52,8 @@ class  DataGridView extends Component {
             limit: 20,
             currentPage: 1,
             first: 0,
-            selectedItems: [],
+            selectedItems: new Map(),
+            freezItems: new Map(),
             //visibleAdd: false,
             item: {},
             //scrollHeight: 0,
@@ -60,6 +63,8 @@ class  DataGridView extends Component {
             sortField: '',
             sortOrder: 0
         };
+
+        this.dataGridView = React.createRef();
     }
 
     componentDidMount() {
@@ -176,6 +181,26 @@ class  DataGridView extends Component {
         });
     }
 
+    selectItem(e) {
+        const {selectedItems} = this.state;
+        console.log('selectItem');
+        console.log(e);
+        console.log(arguments);
+
+        let newSelectedItems = new Map();
+        e.value.forEach(item => {
+            newSelectedItems.set(item.id, item);
+        });
+
+        this.setState({
+            selectedItems: newSelectedItems
+        });
+
+        /*e.originalEvent.stopPropagation();
+        e.originalEvent.preventDefault();*/
+
+    }
+
     render() {
         const {t, location, minimizeHeight} = this.props;
         const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
@@ -186,56 +211,67 @@ class  DataGridView extends Component {
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
 
+        const offset = (selectedColumns.size > 0)? 75/selectedColumns.size: 0;
+
         const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
-            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:(columnCoef*col.widthCoef)+'%'})} />;
+            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:('calc('+columnCoef*col.widthCoef)+'% - ' + offset + 'px)'})} />;
         });
 
         return (<>
-            <div className='data_grid_view'>
-                <MultiSelect
-                    maxSelectedLabels={columns.size}
-                    className={'grid-add-column'}
-                    placeholder={' '}
-                    fixedPlaceholder={true}
-                    value={Array.from(selectedColumns.keys())}
-                    options={Array.from(columns.values())}
-                    optionValue='field'
-                    optionLabel='header'
-                    itemTemplate={(option) => {return t(option.header);}}
-                    onChange={(e,e1,e2) => this.onColumnAdd(e,e1,e2)}
-                    /*style={{width:'250px'}}*/
-                    tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
-                    tooltipOptions={{position: 'left'}}
-                />
+            <div ref={this.dataGridView} className='data_grid_view'>
+
+
+                {/*
+                selection={this.state.selectedCar1} selectedItems
+                onSelectionChange={e => this.setState({selectedCar1: e.value})}
+                 */}
 
                 <DataTable value={items}
-                    onRowDoubleClick={this.onSelect}
+                    //onRowDoubleClick={this.onSelect}
                            scrollable={true}
-                           responsive={true}
+                           /*responsive={true}*/
                            className={minimizeHeight?'minimize-height-body': ''}
                            /*resizableColumns={true}*/
                            sortField={sortField}
                            sortOrder={sortOrder}
-                           /*scrollHeight={"100%"}*/
+                           scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
                            /*scrollHeight={scrollHeight}*/
                            /*currentPageReportTemplate={'{currentPage} of {totalPages}'}*/
                            currentPageReportTemplate={'{totalPages} ' + t('baseLayout.main.other.totalItemsLabel')}
                            totalRecords={totalRows}
                            lazy={true}
                            first={first}
-                           currentPage={currentPage}
                            onPage={(e) => this.onPage(e)}
                            onSort={(e) => this.onSort(e)}
                            loading={loading}
                            paginatorRight={paginatorRight}
-                           selection={selectedItems}
-                           onSelectionChange={e => this.setState({selectedItems: e.value})}
+                           selection={Array.from(selectedItems.values())}
+                           frozenValue={Array.from(selectedItems.values())}
+                           onSelectionChange={e => this.selectItem(e)}
                            paginator={true}
                            rows={limit}
                            paginatorPosition={'top'}
                            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}>
                     <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
                     {columnComponents}
+                    <Column header={
+                        <MultiSelect
+                            maxSelectedLabels={columns.size}
+                            className={'grid-add-column'}
+                            placeholder={' '}
+                            fixedPlaceholder={true}
+                            value={Array.from(selectedColumns.keys())}
+                            options={Array.from(columns.values())}
+                            optionValue='field'
+                            optionLabel='header'
+                            itemTemplate={(option) => {return t(option.header);}}
+                            onChange={(e) => this.onColumnAdd(e)}
+                            tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
+                            tooltipOptions={{position: 'left'}}
+                            /*appendTo={document.body}*/
+                            appendTo={this.dataGridView.current}
+                        />
+                    } style={{width:'20px'}} />
                 </DataTable>
 
             </div>
