@@ -177,7 +177,7 @@ class  DataGridView extends Component {
     }
 
     render() {
-        const {t, location} = this.props;
+        const {t, location, minimizeHeight} = this.props;
         const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
             totalRows, limit, currentPage, first, sortField, sortOrder} = this.state;
 
@@ -212,6 +212,7 @@ class  DataGridView extends Component {
                     onRowDoubleClick={this.onSelect}
                            scrollable={true}
                            responsive={true}
+                           className={minimizeHeight?'minimize-height-body': ''}
                            /*resizableColumns={true}*/
                            sortField={sortField}
                            sortOrder={sortOrder}
