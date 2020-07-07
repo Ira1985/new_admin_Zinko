@@ -38,13 +38,13 @@ export default class BaseEntity {
 
   static buildColumns() {
       return [
-          {field: 'id', header: 'baseEntity.id', style:{}, sortable: true, order: 1, default: false},
-          {field: 'name', header: 'baseEntity.name', style:{}, sortable: true, order: 3, default: true},
-          {field: 'comment', header: 'baseEntity.comment', style:{}, sortable: false, order: 3, default: true},
-          {field: 'createdAt', header: 'baseEntity.createdAt', style:{}, sortable: true, order: 1, default: false},
-          {field: 'updatedAt', header: 'baseEntity.updatedAt', style:{}, sortable: true, order: 1, default: false},
-          {field: 'createdBy', header: 'baseEntity.createdBy', style:{}, sortable: false, order: 1, default: false},
-          {field: 'updatedBy', header: 'baseEntity.updatedBy', style:{}, sortable: false, order: 1, default: false}
+          {field: 'id', header: 'baseEntity.id', style:{}, sortable: true, order: 1, default: false, widthCoef:1},
+          {field: 'name', header: 'baseEntity.name', style:{}, sortable: true, order: 2, default: true, widthCoef:3},
+          {field: 'comment', header: 'baseEntity.comment', style:{}, sortable: false, order: 3, default: true, widthCoef:3},
+          {field: 'createdAt', header: 'baseEntity.createdAt', style:{}, sortable: true, order: 20, default: false, widthCoef:1.5},
+          {field: 'updatedAt', header: 'baseEntity.updatedAt', style:{}, sortable: true, order: 22, default: false, widthCoef:1.5},
+          {field: 'createdBy', header: 'baseEntity.createdBy', style:{}, sortable: false, order: 21, default: false, width:1.5},
+          {field: 'updatedBy', header: 'baseEntity.updatedBy', style:{}, sortable: false, order: 23, default: false, widthCoef:1.5}
       ];
   }
 

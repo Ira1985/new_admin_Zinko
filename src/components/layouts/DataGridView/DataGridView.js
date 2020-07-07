@@ -20,12 +20,14 @@ class  DataGridView extends Component {
                 coef += elem.order;
             });*/
 
-            let sums = 0;
+            let sum = 0;
             props.columns.map((elem, index) => {
-                columns.set(elem.field, {field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order, default: elem.default});
+                columns.set(elem.field,
+                    {field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable,
+                        order: elem.order, default: elem.default, widthCoef: elem.widthCoef});
                 //columns.push({field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order});
                 if(elem.default) {
-                    sums += elem.order;
+                    sum += elem.widthCoef;
                     selectedColumns.set(
                         elem.field, {
                         field: elem.field,
@@ -33,11 +35,12 @@ class  DataGridView extends Component {
                         style: elem.style,
                         sortable: elem.sortable,
                         order: elem.order,
-                        default: elem.default
+                        default: elem.default,
+                        widthCoef: elem.widthCoef
                     });
                 }
             });
-            coef = (sums > 0? 100/sums: 1);
+            coef = (sum > 0? 100/sum: 1);
         }
 
         this.state = {
@@ -142,12 +145,17 @@ class  DataGridView extends Component {
         const {selectedColumns, columns} = this.state;
         let newColumns = new Map();
         if(e.value && e.value.length > 0) {
+            let sum = 0;
             e.value.map((item,index) => {
-                if(columns.has(item))
-                    newColumns.set(item, columns.get(item));
+                if(columns.has(item)) {
+                    let col = columns.get(item);
+                    newColumns.set(item, col);
+                    sum += col.widthCoef;
+                }
             });
             this.setState({
-                selectedColumns: newColumns
+                selectedColumns: newColumns,
+                columnCoef: (sum > 0? 100/sum: 1)
             });
         }
     }
@@ -162,7 +170,6 @@ class  DataGridView extends Component {
 
     onSort(e) {
         console.log(e);
-
         this.setState({
             sortField: e.sortField,
             sortOrder: e.sortOrder
@@ -174,19 +181,14 @@ class  DataGridView extends Component {
         const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
             totalRows, limit, currentPage, first, sortField, sortOrder} = this.state;
 
-        console.log(currentPage);
-
-
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
 
-        const columnComponents = Array.from(selectedColumns.values()).map((col, index) => {
-            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:(columnCoef*col.order)+'%'})} />;
+        const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
+            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:(columnCoef*col.widthCoef)+'%'})} />;
         });
-
-
 
         return (<>
             <div className='data_grid_view'>
@@ -206,17 +208,11 @@ class  DataGridView extends Component {
                     tooltipOptions={{position: 'left'}}
                 />
 
-                {/*rows	number	null	Number of rows to display per page.
-                totalRecords	number	null	Number of total records, defaults to length of value when not defined.
-                lazy	boolean	false	Defines if data is loaded and interacted with in lazy manner.
-                sortField	string	null	Name of the field to sort data by default.
-                sortOrder*/}
-
                 <DataTable value={items}
                     onRowDoubleClick={this.onSelect}
                            scrollable={true}
                            responsive={true}
-                           resizableColumns={true}
+                           /*resizableColumns={true}*/
                            sortField={sortField}
                            sortOrder={sortOrder}
                            /*scrollHeight={"100%"}*/
