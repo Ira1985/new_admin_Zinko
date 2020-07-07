@@ -1,4 +1,12 @@
 {
+  "loginLayout": {
+    "buttonLogIn": "ВОЙТИ",
+    "username": "Логин",
+    "password": "Пароль",
+    "enter": "Вход",
+    "enterSmall": "Войдите в Ваш аккаунт",
+    "forgotPassword": "Забыли пароль?"
+  },
   "leftSideMenu": {
     "messages": "Сообщения",
     "menu": "Меню",

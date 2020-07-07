@@ -179,20 +179,31 @@ hr {
     }
   }
 }
+.cs-admin {
+  width: 100vw;
+  height: 100vh;
 
-.cs-admin-main {
-  display: flex;
-  flex-direction: row;
-  margin: 0;
-  padding: 0;
-  height: 100%;
+  .cs-admin-main {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 
-  .main-block {
-    padding: 0px 0px 0px 5px;
-    width: calc(100% - 100px);
-    height: auto;
-    overflow: hidden;
-    overflow-x: auto;
+    .main-block {
+      padding: 0px 0px 0px 5px;
+      width: calc(100% - 100px);
+      height: auto;
+      overflow: hidden;
+      overflow-x: auto;
+    }
+  }
+  .cs-admin-login {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    height: 100%;
   }
 }
 

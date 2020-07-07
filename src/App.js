@@ -14,6 +14,7 @@ import { routes } from "./routes";
 import logo from '../src/assets/img/Rectangle.png';
 import NavigationBaseMenu from "./components/Menus/NavigationBaseMenu/NavigationBaseMenu";
 import NavigationTreeMenu from "./components/Menus/NavigationTreeMenu/NavigationTreeMenu";
+import Login from "./components/Login/Login";
 
 export const history = createBrowserHistory();
 
@@ -28,33 +29,9 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.getTokenData("Admin", "1111").then(res => {
-        });
+        //this.getTokenData("Admin", "1111").then(res => {
+        //});
         //this.setState({nodes: this.menu.getMenu()})
-    }
-
-    getTokenData(login, password) {
-        let obj = {
-            username: login,
-            password: password
-        }
-        return fetch('http://212.24.48.52:8080/content/auth', {
-            method: 'POST',
-            //credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(obj),
-        })
-            .then((res) => {
-                if (res.status === 200) {
-                    return res.json()
-                }
-                return Promise.reject();
-            }).then(res => {
-                sessionStorage.setItem('tokenData', res.token);
-            });
     }
 
     showTreeMenu() {
@@ -71,29 +48,41 @@ class App extends Component {
 
     render() {
         const {activeTreeMenu, hideTreeMenu} = this.state;
+        const token = sessionStorage.tokenData;
         return (
-            <div className='cs-admin-main'>
-                <NavigationBaseMenu activeTreeMenu={activeTreeMenu} baseMenuFunc={() => this.showTreeMenu()}/>
-                {!hideTreeMenu && <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>}
-                <div className='main-block'>
-                    <Router history={history}>
-                    <Switch>
-                        {routes.map((route, idx) => {
-                            return route.component ? (
-                                <Route
-                                    key={idx}
-                                    path={route.path}
-                                    exact={route.exact}
-                                    name={route.name}
-                                    render={props => (
-                                        <route.component {...props} />
-                                    )}/>
-                            ) : (null);
-                        })}
-                        <Redirect from="/" to="/dashboard"/>
-                    </Switch>
-                </Router>
-                </div>
+            <div className='cs-admin'>
+                {
+                    token === 'false' ? <div className='cs-admin-login'>
+                        <Router history={history}>
+                            <Switch>
+                                <Route exact path="/login" name="Страница входа" component={Login} />
+                                <Redirect from="/" to="/dashboard"/>
+                            </Switch>
+                        </Router>
+                    </div> : <div className='cs-admin-main'>
+                        <NavigationBaseMenu activeTreeMenu={activeTreeMenu} baseMenuFunc={() => this.showTreeMenu()}/>
+                        {!hideTreeMenu && <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>}
+                        <div className='main-block'>
+                            <Router history={history}>
+                                <Switch>
+                                    {routes.map((route, idx) => {
+                                        return route.component ? (
+                                            <Route
+                                                key={idx}
+                                                path={route.path}
+                                                exact={route.exact}
+                                                name={route.name}
+                                                render={props => (
+                                                    <route.component {...props} />
+                                                )}/>
+                                        ) : (null);
+                                    })}
+                                    <Redirect from="/" to="/dashboard"/>
+                                </Switch>
+                            </Router>
+                        </div>
+                    </div>
+                }
             </div>
         )
     };
