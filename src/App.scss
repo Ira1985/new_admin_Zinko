@@ -28,6 +28,10 @@ html, body, #root {
 
 }
 
+*{
+  outline: none; //for chrome agent
+}
+
 /* disabled select all text on site */
 p, span, img, a, div {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -94,7 +98,6 @@ hr {
   min-width: 168px;
   border-radius: 3px;
   border: none;
-  outline: none; //for chrome agent
 
   .p-button-text {
     font-style: normal;

@@ -67,6 +67,8 @@ class  DataGridView extends Component {
         this.dataGridView = React.createRef();
     }
 
+    //TODO: зробити onUpdate( перевірка списку вибору згори і чистка поточного)
+
     componentDidMount() {
         const {apiService} = this.props;
     }
@@ -183,6 +185,7 @@ class  DataGridView extends Component {
 
     selectItem(e) {
         const {selectedItems} = this.state;
+        let {updateChecked} = this.props;
         console.log('selectItem');
         console.log(e);
         console.log(arguments);
@@ -196,13 +199,15 @@ class  DataGridView extends Component {
             selectedItems: newSelectedItems
         });
 
+        updateChecked(newSelectedItems);
+
         /*e.originalEvent.stopPropagation();
         e.originalEvent.preventDefault();*/
 
     }
 
     render() {
-        const {t, location, minimizeHeight} = this.props;
+        const {t, location, minimizeHeight, checkedItems} = this.props;
         const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
             totalRows, limit, currentPage, first, sortField, sortOrder} = this.state;
 
@@ -245,8 +250,8 @@ class  DataGridView extends Component {
                            onSort={(e) => this.onSort(e)}
                            loading={loading}
                            paginatorRight={paginatorRight}
-                           selection={Array.from(selectedItems.values())}
-                           frozenValue={Array.from(selectedItems.values())}
+                           selection={Array.from(checkedItems.values())}
+                           frozenValue={Array.from(checkedItems.values())}
                            onSelectionChange={e => this.selectItem(e)}
                            paginator={true}
                            rows={limit}

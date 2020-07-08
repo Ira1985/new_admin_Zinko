@@ -15,19 +15,15 @@ class MainSection extends Component {
 
     constructor(props) {
         super(props);
-        let mp = new Map();
-        mp.set(1, {name:'test'});
-        mp.set(2, {name:'test'});
-        mp.set(3, {name:'test'});
-        mp.set(4, {name:'test'});
-        mp.set(5, {name:'test'});
 
         this.state = {
-            checkedItems: mp,
+            checkedItems: new Map(),
             showCheckedItemsMenu: false,
             showApprovalWin: false,
             approveButton: {}
         };
+
+        this.updateChecked = this.updateChecked.bind(this)
     }
 
     setChecked(items) {
@@ -53,6 +49,12 @@ class MainSection extends Component {
         this.setState((prev) => ({
             checkedItems: new Map(),
             showCheckedItemsMenu: !prev.showCheckedItemsMenu
+        }));
+    }
+    updateChecked(checkedElem) {
+        this.setState((prev) => ({
+            checkedItems: checkedElem,
+            showCheckedItemsMenu: checkedElem.size ? true : false
         }));
     }
 
@@ -146,6 +148,8 @@ class MainSection extends Component {
                                                apiService={apiService}
                                                location={location}
                                                columns={columns}
+                                               updateChecked={this.updateChecked}
+                                               checkedItems={checkedItems}
                                     ></DataGridView>}
                     {/*{treeView && }*/}
                 </div>
