@@ -15,6 +15,16 @@ html, body, #root {
   height: 100%;
   scrollbar-color: $primary-color-scroll  $primary-table-body-active-h;
   scrollbar-width: thin;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    background: $primary-block-back-color;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $primary-color-scroll;
+    -webkit-border-radius: 1ex;
+  }
 }
 
 /* disabled select all text on site */
