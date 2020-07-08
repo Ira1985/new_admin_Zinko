@@ -40,7 +40,7 @@ function getList(url, filters, sorter, paging, constRu = constsRu, constEn = con
     return API.get(url, {
         params: params
     }).then(res => {
-        if(res && res.status === 200 && res.data && res.data.success){
+        if(res && res.status === 200 && res.data && res.data.success) {
             return res.data;
         } else {
             console.log('Error getting list '+constEn[2]+':', res.data?res.data.error:res.status);

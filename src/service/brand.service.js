@@ -22,15 +22,17 @@ function getList(filters, sorter, paging) {
     return baseService.getList(BASE_API_URL, filters, sorter, paging)
         .then(res => {
             console.log(res);
-            if(res && res.success){
+            if(res && res.success) {
                 return res;
             } else {
-                console.log('Error getting list '+constsEn[2]+':', res? res.error:res.status);
+                //console.log('(then) Error getting list brand service '+constsEn[2]+':', res? res.error:res.status);
+
+                console.log('then Error');
                 //toast.error('Ошибка получения списка '+constsRu[2], toastConfig);
             }
             return null;
         }).catch(error => {
-            console.log('Error getting list '+constsEn[2]+':', error);
+            console.log('(catch) Error getting list brand service '+constsEn[2]+':', error);
             //toast.error('Ошибка получения списка '+constsRu[2], toastConfig);
             return null;
         });
