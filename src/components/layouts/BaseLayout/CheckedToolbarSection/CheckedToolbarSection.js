@@ -11,7 +11,7 @@ class CheckedToolbarSection extends  Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked: props.items.size > 0? true: false
+            checked: props.items.size? true: false
         };
     }
 
@@ -27,7 +27,7 @@ class CheckedToolbarSection extends  Component {
         return <>
             <div className={show?'checked-toolbar show':'checked-toolbar'}>
                 <div className='items-count-uncheck'>
-                    <Checkbox onChange={e => this.unSelect(e)} checked={checked} tooltip={t('baseLayout.main.other.disableChecked')} tooltipOptions={{position: 'top'}}></Checkbox>
+                    <Checkbox onChange={e => this.unSelect(e)} checked={true} tooltip={t('baseLayout.main.other.disableChecked')} tooltipOptions={{position: 'top'}}></Checkbox>
                 </div>
                 <div className='items-count'>{items.size + '  ' + t('baseLayout.main.other.checkedText')}</div>
                 <div className='items-buttons'>

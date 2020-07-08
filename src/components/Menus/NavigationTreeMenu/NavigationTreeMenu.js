@@ -95,8 +95,10 @@ class NavigationTreeMenu extends Component {
     }
 
     navigationMenu(e) {
+        const {onHide} = this.props;
         if (e.node.leaf) {
             history.push(e.node.path);
+            onHide();
         }
     }
 

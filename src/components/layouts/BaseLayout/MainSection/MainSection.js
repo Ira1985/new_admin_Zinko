@@ -41,7 +41,7 @@ class MainSection extends Component {
     //test
     testShowChecked() {
         this.setState((prev) => ({
-            showCheckedItemsMenu: !prev.showCheckedItemsMenu
+            //showCheckedItemsMenu: !prev.showCheckedItemsMenu
             }));
     }
 
