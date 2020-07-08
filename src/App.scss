@@ -25,6 +25,7 @@ html, body, #root {
     background: $primary-color-scroll;
     -webkit-border-radius: 1ex;
   }
+
 }
 
 /* disabled select all text on site */
@@ -93,6 +94,7 @@ hr {
   min-width: 168px;
   border-radius: 3px;
   border: none;
+  outline: none; //for chrome agent
 
   .p-button-text {
     font-style: normal;
