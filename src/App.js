@@ -24,7 +24,8 @@ class App extends Component {
         super(props);
         this.state = {
             activeTreeMenu: false,
-            hideTreeMenu: false
+            //hideTreeMenu: false,
+            loginPageVisible: false
         };
     }
 
@@ -34,6 +35,8 @@ class App extends Component {
         //this.setState({nodes: this.menu.getMenu()})
         if(history.location.pathname === '/dashboard') {
             this.setState({activeTreeMenu: true})
+        } else if(history.location.pathname === '/login') {
+            this.setState({loginPageVisible: true})
         }
     }
 
@@ -50,12 +53,12 @@ class App extends Component {
     }
 
     render() {
-        const {activeTreeMenu, hideTreeMenu} = this.state;
+        const {activeTreeMenu, hideTreeMenu, loginPageVisible} = this.state;
         const token = sessionStorage.tokenData;
         return (
             <div className='cs-admin'>
                 {
-                    token === 'false' ? <div className='cs-admin-login'>
+                    token === 'false' &&  loginPageVisible? <div className='cs-admin-login'>
                         <Router history={history}>
                             <Switch>
                                 <Route exact path="/login" name="Страница входа" component={Login} />
