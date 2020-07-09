@@ -1,15 +1,52 @@
-/public/.idea/
+HELP.md
+out/
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!*/src/main/*
+!*/src/test/*
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+### Aliex engine ###
+/vendor/
+
+
+###/public/.idea/
 /node_modules/
-/.idea/*
-/.idea/**
-/cs2-admin.iml
-/.idea/
-/.idea/
-/.idea/vcs.xml
-/.idea/misc.xml
-/.idea/workspace.xml
-/.idea/modules.xml
-/.idea/$PRODUCT_WORKSPACE_FILE$
-/.idea/codeStyles/codeStyleConfig.xml
-/.idea/.gitignore
-/.idea/codeStyles/
+###/.idea/*
+###/.idea/**
+###/cs2-admin.iml
+###/.idea/
+###/.idea/
+###/.idea/vcs.xml
+###/.idea/misc.xml
+###/.idea/workspace.xml
+###/.idea/modules.xml
+###/.idea/$PRODUCT_WORKSPACE_FILE$
+###/.idea/codeStyles/codeStyleConfig.xml
+###/.idea/.gitignore
+###/.idea/codeStyles/

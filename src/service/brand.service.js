@@ -1,6 +1,6 @@
 import {toast} from "react-toastify";
 import {toastConfig} from "../helpers/toastConfig";
-import {baseService} from "../helpers/BaseMethodApi";
+import {baseService} from "./base/BaseMethodApi";
 
 export const brandService = {
     getList,
@@ -15,8 +15,8 @@ export const brandService = {
 };
 
 const BASE_API_URL = '/brands/';
-const constsRu = [ 'бренд', 'бренда', 'брендов','бренды'];
-const constsEn = [ 'brand', 'brand', 'brands','brands'];
+/*const consts = ['бренд', 'бренда', 'брендов','бренды'];*/
+const consts = ['services.brands.obj', 'services.brands.objecta', 'services.brands.objectov', 'services.brands.objects'];
 
 function getList(filters, sorter, paging) {
     return baseService.getList(BASE_API_URL, filters, sorter, paging)

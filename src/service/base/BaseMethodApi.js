@@ -20,17 +20,12 @@ export const baseService = {
     //unload
 };
 
+const consts = ['services.base.consts.obj', 'services.base.consts.objecta', 'services.base.consts.objectov', 'services.base.consts.objects'];
 
-const constsRu = ['объект', 'объекта', 'объектов', 'объекты'];
-
-//const constsEn = ['object', 'object', 'objects', 'objects'];
-
-function getList(url, filters, sorter, paging, constRu = constsRu, constEn = constsEn) {
-
-    console.log(i18n.t('baseEntity.id'));
+function getList(url, filters, sorter, paging, consts = consts, showPageError = true) {
 
     let sorterNew = sorter?sorter: new Sorter().build('name', 'asc');
-    let pagingNew = paging?paging: new Paging().buildWithLimit(100);
+    let pagingNew = paging?paging: new Paging().buildWithLimit(20);
     const params = {
         sortName: sorterNew.name,
         sortDirect: sorterNew.directions,
@@ -46,16 +41,22 @@ function getList(url, filters, sorter, paging, constRu = constsRu, constEn = con
     return API.get(url, {
         params: params
     }).then(res => {
-        if(res && res.status === 200 && res.data && res.data.success) {
+        if(res && res.status === 200 && res.data) {
+            if(!res.data.success && showPageError) {
+                //const error = i18n.t('services.base.errors')+ ((res && res.status)?' - ' + res.status:'');
+                console.log(' Resposne - ' + res);
+                //toast.error(error, toastConfig);
+            }
             return res.data;
         } else {
-            console.log('Error getting list '+constEn[2]+':', res.data?res.data.error:res.status);
-            toast.error('Ошибка получения списка '+constRu[2], toastConfig);
-            return res.data;
+            const error = i18n.t('services.base.errors.E100000') + ((res && res.status)?' - ' + res.status:'');
+            console.log(error, ' Resposne - ' + res);
+            toast.error(error, toastConfig);
+            return null;
         }
     }).catch(error => {
-        console.log('Error getting list '+constEn[2]+':', error);
-        toast.error('Ошибка получения списка '+constRu[2], toastConfig);
+        console.log('Error getting list '+consts[2]+':', error);
+        toast.error('Ошибка получения списка '+consts[2], toastConfig);
         return null;
     });
 }
