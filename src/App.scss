@@ -161,7 +161,10 @@ hr {
     font-size: 16px;
     line-height: 19px;
     background-color: #292b30;  // !important my decision
-    border-radius: 10px 10px 0px 0px
+    border-radius: 10px 10px 0px 0px;
+    .p-dialog-titlebar-close-icon {
+      color: $primary-text-color3;
+    }
   }
 
   .p-dialog-content {
@@ -170,6 +173,16 @@ hr {
     font-weight: 900;
     font-size: 16px;
     line-height: 19px;
+    .p-inputtext {
+      background-color: $primary-color-input;
+      color: $primary-text-color3;
+      border: 0.5px solid $primary-color-input-border;
+      border-radius: 3px;
+      padding-left: 8px;
+    }
+    .p-disabled {
+      background-color: $primary-color-input-disabled;
+    }
   }
 }
 

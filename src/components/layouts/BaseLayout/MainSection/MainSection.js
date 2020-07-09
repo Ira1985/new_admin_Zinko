@@ -8,6 +8,7 @@ import CheckedToolbarSection from "../CheckedToolbarSection/CheckedToolbarSectio
 import {Dialog} from "primereact/dialog";
 import {pluralize} from "../../../../helpers/utils";
 import ApprovalWin from "../../../base/ApprovalWin/ApprovalWin";
+import EditWin from "../../../base/EditWin/EditWin";
 import PropTypes from "prop-types";
 import DataGridView from "../../DataGridView/DataGridView";
 
@@ -17,19 +18,30 @@ class MainSection extends Component {
         super(props);
 
         this.state = {
+            editedItem: null,
             checkedItems: new Map(),
             showCheckedItemsMenu: false,
             showApprovalWin: false,
+            showEditWin: false,
             approveButton: {}
         };
 
         this.updateChecked = this.updateChecked.bind(this)
+        this.getEditItem = this.getEditItem.bind(this)
+        this.onCloseEdit = this.onCloseEdit.bind(this)
     }
 
     setChecked(items) {
         this.setState({
             checkedItems: items
         });
+    }
+
+    getEditItem(item) {
+        this.setState((prev) => ({
+            editedItem: item,
+            showEditWin: !prev.showEditWin
+        }))
     }
 
     clearChecked() {
@@ -119,10 +131,23 @@ class MainSection extends Component {
             buttonClick(button);
     }
 
+    saveItem(item) {
+        console.log(item)
+        this.setState(prev => ({
+            showEditWin: !prev.showEditWin
+        }))
+    }
+    onCloseEdit() {
+        this.setState(prev=>({
+            showEditWin: !prev.showEditWin,
+            editedItem: null
+        }))
+    }
+
     render() {
         const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals,
-            children, gridView, treeView, apiService, location, columns} = this.props;
-        const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton} = this.state;
+            children, gridView, treeView, apiService, location, columns, editComponent, baseSchema, baseModel} = this.props;
+        const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem} = this.state;
 
         return <>
             <div className='main-section'>
@@ -134,7 +159,7 @@ class MainSection extends Component {
                         <div className="p-toolbar-group-right">
                             {(toolbarButtons && toolbarButtons.length > 0) &&
                                 toolbarButtons.map((button, index) =>
-                                    <Button key={'toolbar_but_' + index} label={t(button.label)} className={button.className}  onClick={(e) => this.testShowChecked()} tooltip={button.tooltip}/>
+                                    <Button key={'toolbar_but_' + index} label={t(button.label)} className={button.className}  onClick={(e) => button.onClick(e, this)} tooltip={button.tooltip}/>
                                 )}
                         </div>
                     </Toolbar>
@@ -149,6 +174,7 @@ class MainSection extends Component {
                                                location={location}
                                                columns={columns}
                                                updateChecked={this.updateChecked}
+                                               getEditItem={this.getEditItem}
                                                checkedItems={checkedItems}
                                     ></DataGridView>}
                     {/*{treeView && }*/}
@@ -178,6 +204,19 @@ class MainSection extends Component {
                     onClose={() => this.closeApprovalWin(approveButton.approval, approveButton.type)}
                     onApprove={() => this.approveApprovalWin(approveButton, approveButton.type)}
                 ></ApprovalWin>
+            }
+
+            {
+                showEditWin &&
+                <EditWin
+                    style={{width: '500px'}}
+                    show={showEditWin}
+                    onClose={() => this.onCloseEdit()}
+                    editItem={editedItem}
+                    editComponent={editComponent}
+                    saveItem={() => this.saveItem(editedItem)}
+                    baseSchema={baseSchema}
+                ></EditWin>
             }
 
             </>;
