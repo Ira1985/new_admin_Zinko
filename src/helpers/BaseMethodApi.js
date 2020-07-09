@@ -1,9 +1,10 @@
-import {API} from "../helpers/configAxios";
-import {objectToFormData} from "./configAxios";
-import Sorter from "../models/base/Sorter";
-import Paging from "../models/base/Paging";
+import {API} from "../../helpers/configAxios";
+import {objectToFormData} from "../../helpers/configAxios";
+import Sorter from "../../models/base/Sorter";
+import Paging from "../../models/base/Paging";
 import {toast} from "react-toastify";
-import {toastConfig} from "./toastConfig";
+import {toastConfig} from "../../helpers/toastConfig";
+import i18n from "../../i18n";
 
 export const baseService = {
     getList,
@@ -11,17 +12,22 @@ export const baseService = {
     remove,
     getItem,
     removeByList,
+    //removeByFilter,
     create,
     saveItem,
     getCombo,
-    dump
+    //upload,
+    //unload
 };
+
 
 const constsRu = ['объект', 'объекта', 'объектов', 'объекты'];
 
-const constsEn = ['object', 'object', 'objects', 'objects'];
+//const constsEn = ['object', 'object', 'objects', 'objects'];
 
 function getList(url, filters, sorter, paging, constRu = constsRu, constEn = constsEn) {
+
+    console.log(i18n.t('baseEntity.id'));
 
     let sorterNew = sorter?sorter: new Sorter().build('name', 'asc');
     let pagingNew = paging?paging: new Paging().buildWithLimit(100);
@@ -202,10 +208,10 @@ function getCombo(url, name, limit, constRu = constsRu, constEn = constsEn, ...o
             return res.data;
         }
     }).catch(error => {
-            console.log('Error getting combo '+constEn[2], error);
-            toast.error('Ошибка при получения списка '+constRu[2], toastConfig);
-            return null;
-        });
+        console.log('Error getting combo '+constEn[2], error);
+        toast.error('Ошибка при получения списка '+constRu[2], toastConfig);
+        return null;
+    });
 }
 
 function dump(url, filters, constRu = constsRu, constEn = constsEn) {

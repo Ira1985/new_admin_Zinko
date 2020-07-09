@@ -2,8 +2,8 @@ import * as axios from "axios";
 import {history} from "../App";
 
 export const API = axios.create({
-    baseURL: 'http://localhost:8080/content',
-    //baseURL: 'http://212.24.48.52:8080/content',
+    //baseURL: 'http://localhost:8080/content',
+    baseURL: 'http://212.24.48.52:8080/content',
     timeout: 1000000
 });
 
