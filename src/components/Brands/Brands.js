@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import './brands.scss';
-import Brand from "../../models/Brand";
+import Brand, {BrandSchema} from "../../models/Brand";
 import {withTranslation} from "react-i18next";
 import BaseGridLayout from "../layouts/BaseGridLayout/BaseGridLayout";
 import {brandService} from "../../service/brand.service";
+import BrandEditDialog from "./Edit/BrandEditDialog";
 import PropTypes from "prop-types";
 
 //const plurals = ['брендов', 'бренд', 'бренда'];
@@ -23,7 +24,9 @@ const toolbarButtons = [
     {
         label: 'baseLayout.main.buttons.buttonAdd',
         className:'button-success',
-        onClick: () => console.log('add button')
+        onClick: (e, thisEl) => {
+            console.log('add button', thisEl);
+        }
     }
 ];
 
@@ -69,6 +72,12 @@ class Brands extends Component {
         this.state = {};
     }
 
+    editComponent = (editItem, updateValue) => {
+        return (
+            <BrandEditDialog editedItem={editItem} updateValue={updateValue} />
+        );
+    }
+
     render() {
         const {t} = this.props;
         let  breadcrumbs = [{ "label": t('brands.breadcrumbs.name')}];
@@ -81,10 +90,12 @@ class Brands extends Component {
                         toolbarButtons={toolbarButtons}
                         checkedButtons={checkedButtons}
                         apiService={brandService}
+                        baseSchema={BrandSchema}
                         location={this.props.location}
                         gridView={true}
                         treeView={false}
                         columns={Brand.buildColumns()}
+                        editComponent={this.editComponent}
             >
                 {'sdfsdfsdgsdgdsgdsg sdgsd gsdghsdfhsdf hdfshdfsh dfh'}
             </BaseLayout>

@@ -24,7 +24,7 @@ class App extends Component {
         super(props);
         this.state = {
             activeTreeMenu: false,
-            //hideTreeMenu: false,
+            hideTreeMenu: false,
             loginPageVisible: false
         };
     }
@@ -34,7 +34,10 @@ class App extends Component {
         //});
         //this.setState({nodes: this.menu.getMenu()})
         if(history.location.pathname === '/dashboard') {
-            this.setState({activeTreeMenu: true})
+            this.setState({
+                activeTreeMenu: true,
+                hideTreeMenu: true
+            })
         } else if(history.location.pathname === '/login') {
             this.setState({loginPageVisible: true})
         }
@@ -42,13 +45,15 @@ class App extends Component {
 
     showTreeMenu() {
         this.setState(prev => ({
-            activeTreeMenu: !prev.activeTreeMenu
+            activeTreeMenu: !prev.activeTreeMenu,
+            hideTreeMenu: !prev.hideTreeMenu
         }));
     }
 
     onHideTreeMenu() {
         this.setState(prev => ({
-            activeTreeMenu: !prev.activeTreeMenu
+            activeTreeMenu: !prev.activeTreeMenu,
+            hideTreeMenu: !prev.hideTreeMenu
         }));
     }
 
@@ -58,7 +63,7 @@ class App extends Component {
         return (
             <div className='cs-admin'>
                 {
-                    token === 'false' &&  loginPageVisible? <div className='cs-admin-login'>
+                    token && loginPageVisible? <div className='cs-admin-login'>
                         <Router history={history}>
                             <Switch>
                                 <Route exact path="/login" name="Страница входа" component={Login} />
@@ -67,7 +72,7 @@ class App extends Component {
                         </Router>
                     </div> : <div className='cs-admin-main'>
                         <NavigationBaseMenu activeTreeMenu={activeTreeMenu} baseMenuFunc={() => this.showTreeMenu()}/>
-                        <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>
+                        {hideTreeMenu && <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>}
                         <div className='main-block'>
                             <Router history={history}>
                                 <Switch>

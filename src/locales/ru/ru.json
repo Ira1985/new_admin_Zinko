@@ -78,7 +78,9 @@
       "other": {
         "checkedText": "Выбрано",
         "disableChecked": "Отмена выбраного",
-        "totalItemsLabel": "результатов"
+        "totalItemsLabel": "результатов",
+        "edit": "Редактировать",
+        "add": "Добавить"
       }
     }
   },
@@ -86,6 +88,8 @@
     "id": "Ид",
     "name": "Название",
     "comment": "Комментарий",
+    "description": "Описание",
+    "code": "Код",
     "updatedAt": "Обновлен в",
     "createdAt": "Создан в",
     "updatedBy": "Обновлен кем",

@@ -206,8 +206,13 @@ class  DataGridView extends Component {
 
     }
 
+    onSelect(e, getEditItem) {
+        getEditItem(e.data);
+        //this.setState({item: e.data, visibleAdd: true})
+    }
+
     render() {
-        const {t, location, minimizeHeight, checkedItems} = this.props;
+        const {t, location, minimizeHeight, checkedItems, getEditItem} = this.props;
         const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
             totalRows, limit, currentPage, first, sortField, sortOrder} = this.state;
 
@@ -248,7 +253,7 @@ class  DataGridView extends Component {
                 />
 
                 <DataTable value={items}
-                    //onRowDoubleClick={this.onSelect}
+                    onRowDoubleClick={(e) => this.onSelect(e, getEditItem)}
                            scrollable={true}
                            responsive={true}
                            autoLayout={true}

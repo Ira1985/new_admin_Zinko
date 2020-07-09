@@ -18,11 +18,6 @@ class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
-        const login = 'false';
-        sessionStorage.setItem('tokenData', login)
-    }
-
     handleChange(e) {
         const { name, value } = e.target;
         this.setState({ [name]: value });
