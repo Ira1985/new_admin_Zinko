@@ -1,99 +1,51 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import './App.scss';
+import Loadable from 'react-loadable';
 //import 'primereact/resources/themes/nova-dark/theme.css';
 //import 'primereact/resources/primereact.min.css';
 //import 'primeicons/primeicons.css';
 //import "primeflex/primeflex.css"
-import {Tree} from 'primereact/tree';
 import {Redirect, Route, Switch, Router} from 'react-router-dom';
 import {createBrowserHistory} from "history";
-import { MenuService } from "./service/menu.service";
-import { routes } from "./routes";
-
-
-import logo from '../src/assets/img/Rectangle.png';
-import NavigationBaseMenu from "./components/Menus/NavigationBaseMenu/NavigationBaseMenu";
-import NavigationTreeMenu from "./components/Menus/NavigationTreeMenu/NavigationTreeMenu";
-import Login from "./components/Login/Login";
 
 export const history = createBrowserHistory();
+
+const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+
+const Login = Loadable({
+    loader: () => import('./components/Login/Login'),
+    loading
+});
+
+const DefaultLayout = Loadable({
+    loader: () => import('./containers/DefaultLayout/DefaultLayout'),
+    loading
+});
+
+export const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={props => (
+        sessionStorage.tokenData
+            ? <Component {...props} />
+            : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+    )} />);
 
 class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            activeTreeMenu: false,
-            hideTreeMenu: false,
-            loginPageVisible: false
-        };
+        this.state = {};
     }
 
-    componentDidMount() {
-        //this.getTokenData("Admin", "1111").then(res => {
-        //});
-        //this.setState({nodes: this.menu.getMenu()})
-        if(history.location.pathname === '/dashboard') {
-            this.setState({
-                activeTreeMenu: true,
-                hideTreeMenu: true
-            })
-        } else if(history.location.pathname === '/login') {
-            this.setState({loginPageVisible: true})
-        }
-    }
-
-    showTreeMenu() {
-        this.setState(prev => ({
-            activeTreeMenu: !prev.activeTreeMenu,
-            hideTreeMenu: !prev.hideTreeMenu
-        }));
-    }
-
-    onHideTreeMenu() {
-        this.setState(prev => ({
-            activeTreeMenu: !prev.activeTreeMenu,
-            hideTreeMenu: !prev.hideTreeMenu
-        }));
-    }
 
     render() {
-        const {activeTreeMenu, hideTreeMenu, loginPageVisible} = this.state;
-        const token = sessionStorage.tokenData;
         return (
             <div className='cs-admin'>
-                {
-                    token && loginPageVisible? <div className='cs-admin-login'>
-                        <Router history={history}>
-                            <Switch>
-                                <Route exact path="/login" name="Страница входа" component={Login} />
-                                <Redirect from="/" to="/dashboard"/>
-                            </Switch>
-                        </Router>
-                    </div> : <div className='cs-admin-main'>
-                        <NavigationBaseMenu activeTreeMenu={activeTreeMenu} baseMenuFunc={() => this.showTreeMenu()}/>
-                        {hideTreeMenu && <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>}
-                        <div className='main-block'>
-                            <Router history={history}>
-                                <Switch>
-                                    {routes.map((route, idx) => {
-                                        return route.component ? (
-                                            <Route
-                                                key={idx}
-                                                path={route.path}
-                                                exact={route.exact}
-                                                name={route.name}
-                                                render={props => (
-                                                    <route.component {...props} />
-                                                )}/>
-                                        ) : (null);
-                                    })}
-                                    <Redirect from="/" to="/dashboard"/>
-                                </Switch>
-                            </Router>
-                        </div>
-                    </div>
-                }
+                <Router history={history}>
+                    <Switch>
+                        <Route exact path="/login" name="Страница входа" component={Login} />
+                        <PrivateRoute path="/" name="Главная" component={DefaultLayout} />
+                    </Switch>
+                </Router>
             </div>
         )
     };

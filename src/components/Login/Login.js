@@ -65,7 +65,7 @@ class Login extends Component {
 
         return (
             <div className={'admin-login-block'}>
-                <div className={'admin-login-background'} style={{backgroundImage: `url(${back})`}}></div>
+                <div className={'admin-login-background'} style={{backgroundImage: `url(${back})`, backgroundSize: '100%'}}></div>
                 <div className={'admin-login-form'}>
                     <div className="p-inputgroup-text">
                         <p className={'big'}>{t("loginLayout.enter")}</p>
