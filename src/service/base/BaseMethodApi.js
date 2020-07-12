@@ -5,6 +5,7 @@ import Paging from "../../models/base/Paging";
 import {toast} from "react-toastify";
 import {toastConfig} from "../../helpers/toastConfig";
 import i18n from "../../i18n";
+import {capitalizeFirstLetter} from "../../helpers/utils";
 
 export const baseService = {
     getList,
@@ -12,15 +13,42 @@ export const baseService = {
     remove,
     getItem,
     removeByList,
-    //removeByFilter,
+    removeByFilter,
     create,
     saveItem,
     getCombo,
     //upload,
-    //unload
+    //dump
 };
 
 const consts = ['services.base.consts.obj', 'services.base.consts.objecta', 'services.base.consts.objectov', 'services.base.consts.objects'];
+
+// showPageError - if needed show errors in win
+function processResponse(res, showPageError, baseError, successMsg = null) {
+    if(res && res.status === 200 && res.data) {
+        if(!res.data.success && showPageError) {
+            const error = res.data.errors[0].error,
+                code = res.data.errors[0].code;
+            console.log('Error server - ' + code + ' - ' + error, res);
+            toast.error(error, toastConfig);
+        } else if(successMsg)
+            toast.success(successMsg, toastConfig);
+
+        return res.data;
+    } else {
+        //const error = i18n.t('services.base.errors.network') + ((res && res.status)?' - ' + res.status:'');
+        console.log(baseError + ' - ' + ((res && res.status)?' - ' + res.status:''), res);
+        toast.error(baseError, toastConfig);
+        return null;
+    }
+}
+
+function processCatch(error) {
+    const msg = i18n.t('services.base.errors.code');
+    console.log(msg, error);
+    toast.error(msg, toastConfig);
+    return null;
+}
 
 function getList(url, filters, sorter, paging, consts = consts, showPageError = true) {
 
@@ -41,154 +69,117 @@ function getList(url, filters, sorter, paging, consts = consts, showPageError = 
     return API.get(url, {
         params: params
     }).then(res => {
-        if(res && res.status === 200 && res.data) {
-            if(!res.data.success && showPageError) {
-                //const error = i18n.t('services.base.errors')+ ((res && res.status)?' - ' + res.status:'');
-                console.log(' Resposne - ' + res);
-                //toast.error(error, toastConfig);
-            }
-            return res.data;
-        } else {
-            const error = i18n.t('services.base.errors.E100000') + ((res && res.status)?' - ' + res.status:'');
-            console.log(error, ' Resposne - ' + res);
-            toast.error(error, toastConfig);
-            return null;
-        }
+        return processResponse(res, showPageError, (i18n.t('services.base.errors.list') + ' ' + consts[2]));
     }).catch(error => {
-        console.log('Error getting list '+consts[2]+':', error);
-        toast.error('Ошибка получения списка '+consts[2], toastConfig);
-        return null;
+        return processCatch(error);
     });
 }
 
-function getItem(url, id, constRu = constsRu, constEn = constsEn) {
+function getItem(url, id, consts = consts, showPageError = true) {
     return API.get(url + id)
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success) {
-                return res.data;
-            } else {
-                console.log('Error getting '+ constEn[1] +' with id:' + id, res.data?res.data.error:res.status);
-                toast.error('Ошибка получения '+constRu[1]+' с ид: ' + id, toastConfig);
-                //baseExceptionHandler(res.data, constRu, "emptyLink", context);
-                return res.data;
-            }
+            return processResponse(res, showPageError, (i18n.t('services.base.errors.item') + ' ' + consts[1]));
         })
         .catch(error => {
-            console.log('Error getting '+constEn[1]+': ' + id, error);
-            toast.error('Ошибка получения '+constRu[1]+' с id: '+ id, toastConfig);
-            return null;
+            return processCatch(error);
         });
 }
 
-function remove(url, id, constRu = constsRu, constEn = constsEn) {
+function remove(url, id, consts = consts, showPageError = true) {
     return API.delete(url + id)
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success) {
-                toast.success(+constRu[0]+' с ИД: ' + id + ' удален', toastConfig);
-            }else {
-                console.log('Error delete '+constEn[1]+' with id:'+id, res.data?res.data.error:res.status);
-                toast.error('Ошибка удаления '+constRu[1]+' с ид: ' + id, toastConfig);
-            }
-            return res.data;
+            //${constName} c ид: ${id} - удален
+            const constName = capitalizeFirstLetter(consts[0]);
+            let successMsgTpl = eval('`'+ i18n.t('services.base.successes.deleteItem') + '`');
+            return processResponse(res, showPageError, (i18n.t('services.base.errors.deleteItem') + ' ' + consts[1]), (String.raw, successMsgTpl));
         })
         .catch(error => {
-            console.log('Error delete '+constEn[1]+': '+ id, error);
-            toast.error('Ошибка удаления '+constRu[1]+' с id: '+ id, toastConfig);
-            return null;
+            return processCatch(error);
         });
 }
 
-function removeByList(url, ids, constRu = constsRu, constEn = constsEn) {
-    return API.delete(url, {params:{ids:ids}})
+function removeByList(url, ids, consts = consts, showPageError = true) {
+    return API.delete(url, {params: {ids:ids}})
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success) {
-                if(ids && ids.split(',').length > 1)
-                    toast.success('Выбранные '+constRu[3]+' удалены', toastConfig);
-                else
-                    toast.success('Выбранный '+constRu[0]+' удален', toastConfig);
+            if(ids && ids.split(',').length > 1) {
+                const constName = capitalizeFirstLetter(consts[3]);
+                let successMsgTpl = eval('`'+ i18n.t('services.base.successes.deleteList') + '`');
+                return processResponse(res, showPageError, (i18n.t('services.base.errors.deleteList') + ' ' + consts[2]), (String.raw, successMsgTpl));
             } else {
-                console.log('Error delete list '+constEn[2]+':', ids, res.data?res.data.error:res.status);
-                if(ids && ids.split(',').length > 1)
-                    toast.error('Ошибка удаления списка '+constRu[2], toastConfig);
-                else
-                    toast.error('Ошибка удаления '+constRu[0], toastConfig);
+                const id = ids[0];
+                const constName = capitalizeFirstLetter(consts[0]);
+                let successMsgTpl = eval('`'+ i18n.t('services.base.successes.deleteItem') + '`');
+                return processResponse(res, showPageError, (i18n.t('services.base.errors.deleteItem') + ' ' + consts[1]), (String.raw, successMsgTpl));
             }
-            return res.data;
         })
         .catch(error => {
-            console.log('Error delete '+constEn[2]+':', ids, error);
-            if(ids && ids.split(',').length > 1)
-                toast.error('Ошибка удаления списка '+constRu[2], toastConfig);
-            else
-                toast.error('Ошибка удаления '+constRu[0], toastConfig);
-            return null;
+            return processCatch(error);
         });
 }
 
-function saveItem(url, item, constRu = constsRu, constEn = constsEn) {
+function removeByFilter(url, filters, consts = consts, showPageError = true) {
+    return API.delete(url, {params: {filters:filters}})
+        .then(res => {
+            const constName = capitalizeFirstLetter(consts[3]);
+            let successMsgTpl = eval('`'+ i18n.t('services.base.successes.deleteFilter') + '`');
+            return processResponse(res, showPageError, (i18n.t('services.base.errors.deleteFilter') + ' ' + consts[2]), (String.raw, successMsgTpl));
+        })
+        .catch(error => {
+            return processCatch(error);
+        });
+}
+
+function saveItem(url, item, consts = consts, saveAsForm = false, showPageError = true) {
     if(item.id)
-        return this.update(url, item, constRu, constEn);
+        return this.update(url, item, consts = consts, saveAsForm, showPageError = true);
     else
-        return this.create(url, item, constRu, constEn);
+        return this.create(url, item, consts = consts, saveAsForm, showPageError = true);
 }
 
-function update(url, item, constRu = constsRu, constEn = constsEn, saveAsForm) {
-
-    console.log('start update');
-
-    let result = null;
-    if(saveAsForm)
-        return API.post(url, objectToFormData(item,'', ['updatedAt','createdAt']), { headers: {'Content-Type': 'multipart/form-data' }})
-            .then(res => {return updateHelper(res, constRu, constEn)})
+function update(url, item, consts = consts, saveAsForm = false, showPageError = true) {
+    const errorMsg = i18n.t('services.base.errors.update') + ' ' + consts[1];
+    const successMsg = capitalizeFirstLetter(consts[0]) + ' ' + i18n.t('services.base.successes.update');
+    if(saveAsForm) {
+        return API.post(url, objectToFormData(item, '', ['updatedAt', 'createdAt']), {headers: {'Content-Type': 'multipart/form-data'}})
+            .then(res => {
+                return processResponse(res, showPageError, errorMsg, successMsg);
+            })
             .catch(error => {
-                console.log('Error update '+constEn[1], error);
-                toast.error('Ошибка при сохранение '+constRu[1], toastConfig);
-                return null;
+                return processCatch(error);
             });
-    else
-        return API.post(url, JSON.stringify(item), { headers: {'Content-Type': 'application/json'} }).then(res => {return updateHelper(res, constRu, constEn)})
+    }else {
+        return API.post(url, JSON.stringify(item), {headers: {'Content-Type': 'application/json'}}).then(res => {
+            return processResponse(res, showPageError, errorMsg, successMsg);
+        })
             .catch(error => {
-                console.log('Error update '+constEn[1], error);
-                toast.error('Ошибка при сохранение '+constRu[1], toastConfig);
-                return null;
+                return processCatch(error);
             });
-}
-
-function updateHelper(res, constsRu, constsEn) {
-    if(res && res.status === 200 && res.data && res.data.success) {
-        toast.success('Изминение сохранены', toastConfig);
-    } else {
-        console.log('Error update '+constsEn[1], res.data?res.data.error:res.status);
-        toast.error('Ошибка при сохранение '+constsRu[1], toastConfig);
     }
-    return res.data;
 }
 
-
-function create(url, item, constRu = constsRu, constEn = constsEn, saveAsForm) {
-    let result = null;
-
-    console.log('start create');
-
-    if(saveAsForm)
-        return API.put(url, objectToFormData(item,'', ['updatedAt','createdAt']), { headers: {'Content-Type': 'multipart/form-data' }})
-            .then(res => {return updateHelper(res, constRu, constEn)})
+function create(url, item, consts = consts, saveAsForm = false, showPageError = true) {
+    const errorMsg = i18n.t('services.base.errors.create') + ' ' + consts[1];
+    const successMsg = capitalizeFirstLetter(consts[0]) + ' ' + i18n.t('services.base.successes.create');
+    if(saveAsForm) {
+        return API.put(url, objectToFormData(item, '', ['updatedAt', 'createdAt']), {headers: {'Content-Type': 'multipart/form-data'}})
+            .then(res => {
+                return processResponse(res, showPageError, errorMsg, successMsg);
+            })
             .catch(error => {
-                console.log('Error create '+constEn[1], error);
-                toast.error('Ошибка при сохранение '+constRu[1], toastConfig);
-                return null;
+                return processCatch(error);
             });
-    else
-        return  API.put(url, JSON.stringify(item), { headers: {'Content-Type': 'application/json'} })
-            .then(res => {return updateHelper(res, constRu, constEn)})
+    } else {
+        return API.put(url, JSON.stringify(item), {headers: {'Content-Type': 'application/json'}})
+            .then(res => {
+                return processResponse(res, showPageError, errorMsg, successMsg);
+            })
             .catch(error => {
-                console.log('Error create '+constEn[1], error);
-                toast.error('Ошибка при сохранение '+constRu[1], toastConfig);
-                return null;
+                return processCatch(error);
             });
+    }
 }
 
-function getCombo(url, name, limit, constRu = constsRu, constEn = constsEn, ...other) {
+function getCombo(url, name, limit = 100, consts = consts, showPageError = true, ...other) {
     let params = {
         name:name,
         limit:limit
@@ -198,31 +189,23 @@ function getCombo(url, name, limit, constRu = constsRu, constEn = constsEn, ...o
             params = Object.assign({}, params, item);
         });
     }
-    return API.get(url+"combo",{
+    return API.get(url+"combo", {
         params: params
     }).then(res => {
-        if(res && res.status === 200 && res.data && res.data.success) {
-            return res.data;
-        } else {
-            console.log('Error getting combo '+constEn[2], res.data?res.data.error:res.status);
-            toast.error('Ошибка при получения списка '+constRu[2], toastConfig);
-            return res.data;
-        }
+        return processResponse(res, showPageError, (i18n.t('services.base.errors.list') + ' ' + consts[2]));
     }).catch(error => {
-        console.log('Error getting combo '+constEn[2], error);
-        toast.error('Ошибка при получения списка '+constRu[2], toastConfig);
-        return null;
+        return processCatch(error);
     });
 }
 
-function dump(url, filters, constRu = constsRu, constEn = constsEn) {
+function dump(url, ids, filters, consts = consts, showPageError = true) {
     const params = {...filters};
 
     for (const key in params) {
         if (!params.hasOwnProperty(key)) continue;
         if ('' === params[key]) params[key] = null;
     }
-    return API.post(url + 'dump', params).then(res => {
+    /*return API.post(url + 'dump', params).then(res => {
         if (res && 200 === res.status && res.data && res.data.success) {
             toast.success('Запрос на выгрузку принят', toastConfig);
         } else {
@@ -232,5 +215,5 @@ function dump(url, filters, constRu = constsRu, constEn = constsEn) {
         return res.data;
     }).catch(error => {
         return error;
-    });
+    });*/
 }

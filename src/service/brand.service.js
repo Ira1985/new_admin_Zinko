@@ -8,6 +8,7 @@ export const brandService = {
     remove,
     getItem,
     removeByList,
+    removeByFilter,
     create,
     saveItem,
     getCombo,
@@ -15,167 +16,119 @@ export const brandService = {
 };
 
 const BASE_API_URL = '/brands/';
-/*const consts = ['бренд', 'бренда', 'брендов','бренды'];*/
 const consts = ['services.brands.obj', 'services.brands.objecta', 'services.brands.objectov', 'services.brands.objects'];
 
-function getList(filters, sorter, paging) {
-    return baseService.getList(BASE_API_URL, filters, sorter, paging)
-        .then(res => {
-            console.log(res);
-            if(res && res.success) {
-                return res;
-            } else {
-                //console.log('(then) Error getting list brand service '+constsEn[2]+':', res? res.error:res.status);
+function baseResponse(res) {
+    if(res && res.success)
+        return res;
+    else
+        return null;
+}
 
-                console.log('then Error');
-                //toast.error('Ошибка получения списка '+constsRu[2], toastConfig);
-            }
-            return null;
+function getList(filters, sorter, paging) {
+    return baseService.getList(BASE_API_URL, filters, sorter, paging, consts)
+        .then(res => {
+            return baseResponse(res);
         }).catch(error => {
-            console.log('(catch) Error getting list brand service '+constsEn[2]+':', error);
-            //toast.error('Ошибка получения списка '+constsRu[2], toastConfig);
+            console.log('Something wrong in brand service getList', error);
             return null;
         });
 }
 
 function getItem(id) {
-    return baseService.getItem(BASE_API_URL, id)
+    return baseService.getItem(BASE_API_URL, id, consts)
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success){
-                return res.data;
-            } else {
-                console.log('Error getting '+ constsEn[1] +' with id:' + id, res.data?res.data.error:res.status);
-                //toast.error('Ошибка получения '+constsRu[1]+' с ид: ' + id, toastConfig);
-            }
-            return null;
+            return baseResponse(res);
         })
         .catch(error => {
-            console.log('Error getting '+constsEn[1]+': ' + id, error);
-            //toast.error('Ошибка получения '+constsRu[1]+' с id: '+ id, toastConfig);
-            return error;
+            console.log('Something wrong in brand service getItem', error);
+            return null;
         });
 }
 
 function remove(id) {
-    return baseService.remove(BASE_API_URL, id)
+    return baseService.remove(BASE_API_URL, id, consts)
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success) {
-                //toast.success(+constsRu[0]+' с ИД: ' + id + ' удален', toastConfig);
-                return res.data;
-            }else {
-                console.log('Error delete '+constsEn[1]+' with id:'+id, res.data?res.data.error:res.status);
-                //toast.error('Ошибка удаления '+constsRu[1]+' с ид: ' + id, toastConfig);
-            }
-            return null;
+            return baseResponse(res);
         })
         .catch(error => {
-            console.log('Error delete '+constsEn[1]+': '+ id, error);
-            //toast.error('Ошибка удаления '+constsRu[1]+' с id: '+ id, toastConfig);
+            console.log('Something wrong in brand service remove', error);
             return null;
         });
 }
 
 function removeByList(ids) {
-    return baseService.removeByList(BASE_API_URL, ids)
+    return baseService.removeByList(BASE_API_URL, ids, consts)
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success) {
-                if(ids && ids.split(',').length > 1)
-                    toast.success('Выбранные '+constsRu[3]+' удалены', toastConfig);
-                else
-                    toast.success('Выбранный '+constsRu[0]+' удален', toastConfig);
-                return res.data;
-            } else {
-                console.log('Error delete list '+constsEn[2]+':', ids, res.data?res.data.error:res.status);
-                if(ids && ids.split(',').length > 1)
-                    toast.error('Ошибка удаления списка '+constsRu[2], toastConfig);
-                else
-                    toast.error('Ошибка удаления '+constsRu[0], toastConfig);
-            }
-            return null;
+            return baseResponse(res);
         })
         .catch(error => {
-            console.log('Error delete '+constsEn[2]+':', ids, error);
-            if(ids && ids.split(',').length > 1)
-                toast.error('Ошибка удаления списка '+constsRu[2], toastConfig);
-            else
-                toast.error('Ошибка удаления '+constsRu[0], toastConfig);
+            console.log('Something wrong in brand service removeByList', error);
+            return null;
+        });
+}
+
+function removeByFilter(filters) {
+    return baseService.removeByList(BASE_API_URL, filters, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in brand service removeByFilter', error);
             return null;
         });
 }
 
 function saveItem(item) {
-    if(item.id)
-        return this.update(item);
-    else
-        return this.create(item);
+    return baseService.saveItem(BASE_API_URL, item, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in brand service saveItem', error);
+            return null;
+        });
 }
 
 function update(item) {
-    return baseService.update(BASE_API_URL, item)
+    return baseService.update(BASE_API_URL, item, consts)
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success) {
-                toast.success('Изминение сохранены', toastConfig);
-                return res.data;
-            } else {
-                console.log('Error update '+constsEn[1], res.data?res.data.error:res.status);
-                toast.error('Ошибка при сохранение '+constsRu[1], toastConfig);
-            }
+            return baseResponse(res);
         })
         .catch(error => {
-            console.log('Error update '+constsEn[1], error);
-            toast.error('Ошибка при сохранение '+constsRu[1], toastConfig);
+            console.log('Something wrong in brand service update', error);
             return null;
         });
 }
 
 function create(item) {
-    return baseService.create(BASE_API_URL, item)
+    return baseService.create(BASE_API_URL, item, consts)
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success) {
-                toast.success('Изминение сохранены', toastConfig);
-                return res.data;
-            } else {
-                console.log('Error update '+constsEn[1], res.data?res.data.error:res.status);
-                toast.error('Ошибка при сохранение '+constsRu[1], toastConfig);
-            }
+            return baseResponse(res);
         })
         .catch(error => {
-            console.log('Error create '+constsEn[1], error);
-            toast.error('Ошибка при сохранение '+constsRu[1], toastConfig);
+            console.log('Something wrong in brand service create', error);
             return null;
         });
 }
 
 function getCombo(name, limit) {
-    return baseService.getCombo(BASE_API_URL, name, limit)
+    return baseService.getCombo(BASE_API_URL, name, limit, consts)
         .then(res => {
-            if(res && res.status === 200 && res.data && res.data.success) {
-                return res.data;
-            } else {
-                console.log('Error getting combo '+constsEn[2], res.data?res.data.error:res.status);
-                toast.error('Ошибка при получения списка '+constsRu[2], toastConfig);
-            }
-            return null;
+            return baseResponse(res);
         })
         .catch(error => {
-            console.log('Error getting combo '+constsEn[2], error);
-            toast.error('Ошибка при получения списка '+constsRu[2], toastConfig);
+            console.log('Something wrong in brand service getCombo', error);
             return null;
         });
 }
 
 function dump(filters) {
-    return baseService.dump(BASE_API_URL, filters)
+    return baseService.dump(BASE_API_URL, filters, consts)
         .then(res => {
-            if (res && 200 === res.status && res.data && res.data.success) {
-                toast.success('Запрос на выгрузку принят', toastConfig);
-                return res.data;
-            } else {
-                console.log('Error dump list '+constsEn[2], res.data?res.data.error:res.status);
-                toast.error('Ошибка выгрузки списка '+constsRu[2], toastConfig);
-            }
-            return null;
+            return baseResponse(res);
         }).catch(error => {
-            return error;
+            console.log('Something wrong in brand service dump', error);
+            return null;
         });
 }
