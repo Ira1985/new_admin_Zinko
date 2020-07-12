@@ -1,34 +1,28 @@
 import * as axios from "axios";
 import {history} from "../App";
 import {toast} from "react-toastify";
+import i18n from "../i18n";
 
 export const API = axios.create({
-     //baseURL: 'http://localhost:8080/content',
-    // baseURL: 'http://192.168.1.103:8080/content',
-     baseURL: 'http://212.24.48.52:8080/content',
+     baseURL: 'http://localhost:8080/content',
+     //baseURL: 'http://192.168.1.103:8080/content',
+     //baseURL: 'http://212.24.48.52:8080/content',
     timeout: 1000000
 });
 
 // Alter defaults after instance has been created
 //instance.defaults.headers.common['Authorization'] = 'JWT_TOKEN_HERE';
 API.defaults.headers.post['Content-Type'] = 'application/json';
+API.defaults.headers.post['Accept-Language'] = 'ru-RU';
 API.defaults.timeout = 1000000;
 API.interceptors.request.use(
     config => {
         if (!config.headers.Authorization) {
             //localStorage.setItem('cs_user', JSON.stringify(user))
-            let user = JSON.parse(localStorage.getItem("cs_user"));
+            let user = JSON.parse(localStorage.getItem("cs2_user"));
             if(user && user.token) {
-
-                /*
-
-
-Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOjMsImNyZWF0ZWQiOjE1OTQ1OTQ4NjgwMDAsImlzcyI6InJ1c2NsaW1hdF9jcyIsImV4cCI6MTU5NTE5OTY2OCwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSJ9.Hm9zJ4_R00uhWHRuH_QOJ4YIeZme8f_egkwIC3O1YuxtMJoEj1GPCxjzvPgOj_MqpxtWJAMywAlrADBSpp_Q0g
-                */
-
-
-                //config.headers.Authorization = `Bearer ${user.token}`;
-                config.headers.Authorization = `Bearer ${'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOjMsImNyZWF0ZWQiOjE1OTQ1OTQ4NjgwMDAsImlzcyI6InJ1c2NsaW1hdF9jcyIsImV4cCI6MTU5NTE5OTY2OCwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSJ9.Hm9zJ4_R00uhWHRuH_QOJ4YIeZme8f_egkwIC3O1YuxtMJoEj1GPCxjzvPgOj_MqpxtWJAMywAlrADBSpp_Q0g'}`;
+                config.headers.Authorization = `Bearer ${user.token}`;
+                //config.headers.Authorization = `Bearer ${'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOjMsImNyZWF0ZWQiOjE1OTQ1OTQ4NjgwMDAsImlzcyI6InJ1c2NsaW1hdF9jcyIsImV4cCI6MTU5NTE5OTY2OCwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSJ9.Hm9zJ4_R00uhWHRuH_QOJ4YIeZme8f_egkwIC3O1YuxtMJoEj1GPCxjzvPgOj_MqpxtWJAMywAlrADBSpp_Q0g'}`;
             }
         }
         return config;
@@ -38,83 +32,38 @@ Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOjMsImNyZWF0ZWQiOjE1OTQ1OTQ4NjgwMDAsImlzcyI6
 
 // Add a response interceptor
 API.interceptors.response.use(function (response) {
-    //console.log(' SDGSDGSDGDS GDSGSG SDGSDSD GSGSD SDGSDGSGS GS GDS GSDGDS GDSG DSG 1');
-    //console.log(response);
-
-    /*
-    console.log("All good", response);
-    if(response && response.data) {
-        let resPage = response.data;
-        if(resPage && !resPage.success && resPage.errors.length > 0) {
-            let hasBaseError = false;
-            for(let error of resPage.errors) {
-                switch(error.code) {
-                    case 1000:
-                    case 1001:
-                    case 1002: {
-                        hasBaseError = true;
-                        console.log("Error ", error);
-                        toast.info(error.error, {onClose:()=>{toast.dismiss()}});
-                        break;
-                    }
-                }
-            }
-            if (!hasBaseError)
-                return response;
-        } else
-            return response;
-    } else
-        return response;
-    */
-
-
-
     // Do something with response data
     return response;
 }, function (error) {
-    //console.log(' SDGSDGSDGDS GDSGSG SDGSDSD GSGSD SDGSDGSGS GS GDS GSDGDS GDSG DSG 2');
-    //console.log(error);
     if(error && error.response){
-        switch(error.response.status){
+        switch(error.response.status) {
             case 401:{
                 history.push('/login');
             break;}
             case 500:{
-                toast.info('Ошибка сервера, обратитесь к администратору', {onClose:()=>{toast.dismiss()}});
+                console.log(i18n.t('services.base.errors.server'), error);
+                toast.error(i18n.t('services.base.errors.server'), {onClose:()=>{toast.dismiss()}});
                 return Promise.reject(error);
                 break;}
             case 404:{
-                toast.info('Ошибка сервера, не найден такой путь', {onClose:()=>{toast.dismiss()}});
+                console.log(i18n.t('services.base.errors.pathNotFound'), error);
+                toast.error(i18n.t('services.base.errors.pathNotFound'), {onClose:()=>{toast.dismiss()}});
                 return Promise.reject(error);
                 break;}
             default:{
-                toast.info('Ошибка запроса', {onClose:()=>{toast.dismiss()}});
+                console.log(i18n.t('services.base.errors.network'), error);
+                toast.error(i18n.t('services.base.errors.network'), {onClose:()=>{toast.dismiss()}});
                 return Promise.reject(error);
             }
         }
     } else {
-        console.log('Данный путь не найден у Вас скорее всего 404');
+        console.log(i18n.t('services.base.errors.network'), error);
+        toast.error(i18n.t('services.base.errors.network'), {onClose:()=>{toast.dismiss()}});
         return Promise.reject(error);
     }
-        //toast.info('Сервер временно не доступен', {onClose:()=>{toast.dismiss()}});
-
     //return Promise.reject(error);
 });
 
-export function appendFormdata(FormData, data, name){
-    name = name || '';
-    if (typeof data === 'object') {
-       /* $.each(data, function(index, value){
-            if (name == ''){
-                appendFormdata(FormData, value, index);
-            } else {
-                appendFormdata(FormData, value, name + '['+index+']');
-            }
-        })*/
-    } else {
-        FormData.append(name, data);
-    }
-}
 
 export function objectToFormData(obj, rootName, ignoreList) {
     var formData = new FormData();

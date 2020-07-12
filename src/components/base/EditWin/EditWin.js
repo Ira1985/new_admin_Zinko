@@ -27,7 +27,7 @@ class EditWin extends Component {
 
     updateValue(e) {
         const {baseSchema} = this.props;
-        const {editItem} = this.state
+        const {editItem} = this.state;
         let name = e.target.id;
         let value = e.target.value;
         let direct = false;

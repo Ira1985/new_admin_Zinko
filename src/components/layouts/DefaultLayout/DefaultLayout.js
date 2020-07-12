@@ -1,9 +1,9 @@
 import React, { Component, lazy, Suspense } from 'react';
 import {Redirect, Route, Switch, Router} from 'react-router-dom';
 import {withTranslation} from "react-i18next";
-import NavigationBaseMenu from "../../components/Menus/NavigationBaseMenu/NavigationBaseMenu";
-import NavigationTreeMenu from "../../components/Menus/NavigationTreeMenu/NavigationTreeMenu";
-import {routes} from "../../routes";
+import NavigationBaseMenu from "../../Menus/NavigationBaseMenu/NavigationBaseMenu";
+import NavigationTreeMenu from "../../Menus/NavigationTreeMenu/NavigationTreeMenu";
+import {routes} from "../../../routes";
 
 class DefaultLayout extends Component {
 

@@ -20,7 +20,8 @@ class BaseLayout extends Component {
     render() {
         const {t, filterItems, plurals, dopClass,
             breadcrumbs, toolbarButtons, checkedButtons,
-            children, apiService, location, gridView, treeView, columns, editComponent, baseSchema, baseModel} = this.props;
+            children, apiService, location, gridView, treeView, columns, editComponent, baseSchema, baseModel,
+            initModelField, sorterInit, pagingInit, disableEdit} = this.props;
         const {checkedItems} = this.state;
 
         return <>
@@ -37,6 +38,12 @@ class BaseLayout extends Component {
                                  columns={columns}
                                  editComponent={editComponent}
                                  baseSchema={baseSchema}
+                                 baseModel={baseModel}
+                                 initModelField={initModelField}
+                                 sorterInit={sorterInit}
+                                 pagingInit={pagingInit}
+                                 disableEdit={disableEdit}
+
                     >
                         {children}
                     </MainSection>
@@ -50,14 +57,26 @@ BaseLayout.propTypes = {
     plurals: PropTypes.arrayOf(PropTypes.string),
     //dopClass: PropTypes.string,
     breadcrumbs: PropTypes.arrayOf(PropTypes.object),
-    toolbarButtons: PropTypes.arrayOf(PropTypes.object),
-    checkedButtons: PropTypes.arrayOf(PropTypes.object),
+    dopToolbarButtons: PropTypes.arrayOf(PropTypes.object),
+    dopCheckedButtons: PropTypes.arrayOf(PropTypes.object),
     showSectionChecked: PropTypes.func,
     gridView: PropTypes.bool,
     treeView: PropTypes.bool,
-    apiService: PropTypes.any,
+    apiService: PropTypes.any.isRequired,
+    baseModel: PropTypes.object.isRequired,
+    baseSchema: PropTypes.object.isRequired,
     location: PropTypes.object,
-    columns: PropTypes.arrayOf(PropTypes.object)
+    columns: PropTypes.arrayOf(PropTypes.object),
+    initModelField: PropTypes.object,
+    // may be needed after
+    //loadOnMountBefore: PropTypes.func,
+    //loadOnMount: PropTypes.func,
+    //loadOnUpdateValue: PropTypes.func,
+    //loadOnAddItem: PropTypes.func,
+    //loadOnEditItem: PropTypes.func,
+    sorterInit: PropTypes.object,
+    pagingInit: PropTypes.object,
+    disableEdit: PropTypes.bool
 };
 
 export default withTranslation()(BaseLayout);

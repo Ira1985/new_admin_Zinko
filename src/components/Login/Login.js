@@ -5,6 +5,7 @@ import back from '../../assets/img/szabo-viktor-rM_NWTFYUb4-unsplash.png'
 import {Button} from "primereact/button";
 import {InputText} from 'primereact/inputtext';
 import {history} from "../../App";
+import {accountService} from "../../service/account.service";
 
 class Login extends Component {
 
@@ -23,45 +24,25 @@ class Login extends Component {
         this.setState({ [name]: value });
     }
 
-    getTokenData(login, password) {
-        let obj = {
-            username: login,
-            password: password
-        }
-        return fetch('http://212.24.48.52:8080/content/auth', {
-            method: 'POST',
-            //credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(obj),
-        })
-            .then((res) => {
-                if (res.status === 200) {
-                    return res.json()
+    login() {
+        const {username, password} = this.state;
+        accountService.login(username, password).then(
+            response => {
+
+                console.log('login comp',response);
+
+                if(response) {
+                    history.push('/');
                 }
-                return Promise.reject();
-            }).then(res => {
-                sessionStorage.setItem('tokenData', res.token);
-            });
+            },
+            error => {}
+        );
     }
 
     render() {
 
-        const {t, breadcrumbs, toolbarButtons, checkedButtons, plurals,
-            children, gridView, treeView, apiService, location, columns} = this.props;
-
+        const {t} = this.props;
         const { username, password } = this.state;
-
-        const button = {
-            label: 'loginLayout.buttonLogIn',
-            className:'button-bottom-unload',
-            onClick: () => {
-                this.getTokenData(this.state.username, this.state.password);
-                history.push('/dashboard');
-            },
-        }
 
         return (
             <div className={'admin-login-block'}>
@@ -85,7 +66,7 @@ class Login extends Component {
                             </span>
                         <InputText type="password" placeholder={t("loginLayout.password")} name="password" value={password} onChange={this.handleChange} />
                     </div>
-                    <Button label={t(button.label)} className={button.className}  onClick={(e) => button.onClick()} tooltip={button.tooltip}/>
+                    <Button label={t('loginLayout.buttonLogIn')} className={'button-bottom-unload'}  onClick={(e) => this.login()} tooltip={''}/>
                     <div className="p-inputgroup-last">
                         <div>{t("loginLayout.forgotPassword")}</div>
                     </div>

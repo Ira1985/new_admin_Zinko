@@ -1,12 +1,13 @@
 import React, { Component, lazy, Suspense } from 'react';
 import './App.scss';
 import Loadable from 'react-loadable';
+import {Redirect, Route, Switch, Router} from 'react-router-dom';
+import {createBrowserHistory} from "history";
 //import 'primereact/resources/themes/nova-dark/theme.css';
 //import 'primereact/resources/primereact.min.css';
 //import 'primeicons/primeicons.css';
 //import "primeflex/primeflex.css"
-import {Redirect, Route, Switch, Router} from 'react-router-dom';
-import {createBrowserHistory} from "history";
+
 
 export const history = createBrowserHistory();
 
@@ -18,13 +19,13 @@ const Login = Loadable({
 });
 
 const DefaultLayout = Loadable({
-    loader: () => import('./containers/DefaultLayout/DefaultLayout'),
+    loader: () => import('./components/layouts/DefaultLayout/DefaultLayout'),
     loading
 });
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
-        sessionStorage.tokenData
+        localStorage.getItem('cs2_user')
             ? <Component {...props} />
             : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     )} />);

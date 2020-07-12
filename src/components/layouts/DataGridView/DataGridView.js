@@ -8,20 +8,15 @@ import {Column} from "primereact/column";
 import BaseLayout from "../BaseLayout/BaseLayout";
 import {Button} from "primereact/button";
 import Paging from "../../../models/base/Paging";
+import Sorter from "../../../models/base/Sorter";
 
 class  DataGridView extends Component {
-
-    //dataGridView = React.createRef();
 
     constructor(props) {
         super(props);
         let columns = new Map(), selectedColumns = new Map(), coef = 1;
 
         if(props.columns && props.columns.length > 0) {
-/*            props.columns.map((elem, index) => {
-                coef += elem.order;
-            });*/
-
             let sum = 0;
             props.columns.map((elem, index) => {
                 columns.set(elem.field,
@@ -45,13 +40,16 @@ class  DataGridView extends Component {
             coef = (sum > 0? 100/sum: 1);
         }
 
+
         this.state = {
             loading: true,
             items: [],
-            totalRows: 0,
+
+            /*totalRows: 0,
             limit: 20,
             currentPage: 1,
-            first: 0,
+            first: 0,*/
+
             selectedItems: new Map(),
             freezItems: new Map(),
             //visibleAdd: false,
@@ -60,8 +58,11 @@ class  DataGridView extends Component {
             selectedColumns: selectedColumns,
             columns: columns,
             columnCoef: coef,
-            sortField: '',
-            sortOrder: 0
+            /*sortField: '',
+            sortOrder: 0,*/
+
+            sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
+            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging()
         };
 
         this.dataGridView = React.createRef();
@@ -70,80 +71,45 @@ class  DataGridView extends Component {
     //TODO: зробити onUpdate( перевірка списку вибору згори і чистка поточного)
 
     componentDidMount() {
-        const {apiService} = this.props;
-    }
-
-    componentDidMount() {
         const {filters, sorter, paging} = this.state;
-        const {location, loadOnMountBefore, loadOnMount} = this.props;
-        let id;
-        let name;
-        let params = location.search.substring(1);
-        if(params) {
-            let vars = params.split("&");
-            vars.map((elem, index) => {
-                if(elem.includes('id')) {
-                    id = +elem.slice(3);
-                } else if(elem.includes('name')) {
-                    name = decodeURI(elem.slice(5));
-                }
-            });
-        }
-
-        if(loadOnMountBefore && loadOnMountBefore instanceof Function) {
-            loadOnMountBefore()
-                .then(
-                    response => {
-                        if(response) {
-                            this.startOnStartUp(filters, sorter, paging, id, name);
-                            if(loadOnMount && loadOnMount instanceof Function) {
-                                loadOnMount();
-                            }
-                        }
-                    }
-                );
-        } else {
-            this.startOnStartUp(filters, sorter, paging, id, name);
-            if(loadOnMount && loadOnMount instanceof Function) {
-                loadOnMount();
-            }
-        }
-    }
-
-    startOnStartUp(filters, sorter, paging, id, name) {
         this.getList(filters, sorter, paging, true);
-        /*
-        if(id == 0) {
-            this.addItem(name?{name: name}:null);
-            //if(name)
-            //   this.editItem({name: name});
-            //else
-            //    this.addItem();
-        } else if(id > 0)
-            this.editItem({id: id});
-       */
     }
 
-    getList(filtering, sorting, paging) {
+    getList(filtering, sorting, paging, changingPage) {
 
         this.setState({
-            loading: true
+            loading: true,
+            items: []
         });
         this.props.apiService.getList(filtering, sorting, paging)
             .then(response => {
                     console.log(response ? response.pageItems : []);
-                    this.setState({
-                        items: response ? response.pageItems : [],
-                        loading: false,
-                        totalRows: response ? response.totalRows : 0
-                    });
+                    if(changingPage) {
+                        let newPaging = new Paging();
+                        if(response) {
+                            //let newPaging = new Paging();
+                            newPaging = Object.assign({}, paging, {
+                                //page: 1,
+                                count: response.totalRows,
+                                totalPages: response.totalPages
+                            });
+                        }
+                        this.setState({
+                            paging: newPaging,
+                            items: response ? response.pageItems : [],
+                            loading: false
+                        });
+                    } else
+                        this.setState({
+                            items: response ? response.pageItems : [],
+                            loading: false
+                        });
                 },
                 error => {
                     this.setState({
                         items: [],
                         loading: false,
-                        totalRows: 0,
-                        currentPage: 1
+                        paging: new Paging()
                     });
                 });
     }
@@ -168,53 +134,54 @@ class  DataGridView extends Component {
     }
 
     onPage(e) {
-        this.setState({
-            limit: e.rows,
-            currentPage: (e.page + 1),
-            first: (e.page * e.rows)
+        const {filters, sorter, paging} = this.state;
+        let newPaging =  Object.assign({}, paging, {
+            page: (e.page + 1),
+            limit:e.rows
         });
+        this.setState({
+            paging: newPaging
+        });
+        this.getList(filters, sorter, newPaging, true);
     }
 
     onSort(e) {
-        console.log(e);
+        const {filters, sorter, paging} = this.state;
+
+        let newSorter = new Sorter().build(e.sortField,e.sortOrder === 1?'desc':'asc');
         this.setState({
+            sorter: newSorter
+        });
+        /*this.setState({
             sortField: e.sortField,
             sortOrder: e.sortOrder
-        });
+        });*/
+        this.getList(filters, newSorter, paging, false);
     }
 
     selectItem(e) {
-        const {selectedItems} = this.state;
         let {updateChecked} = this.props;
-        console.log('selectItem');
-        console.log(e);
-        console.log(arguments);
-
         let newSelectedItems = new Map();
         e.value.forEach(item => {
             newSelectedItems.set(item.id, item);
         });
-
         this.setState({
             selectedItems: newSelectedItems
         });
-
         updateChecked(newSelectedItems);
-
-        /*e.originalEvent.stopPropagation();
-        e.originalEvent.preventDefault();*/
-
     }
 
-    onSelect(e, getEditItem) {
-        getEditItem(e.data);
+    onDoubleClick(e) {
+        const {editItem} = this.props;
+        editItem(e.data);
         //this.setState({item: e.data, visibleAdd: true})
     }
 
     render() {
-        const {t, location, minimizeHeight, checkedItems, getEditItem} = this.props;
+        const {t, location, minimizeHeight, checkedItems} = this.props;
+
         const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
-            totalRows, limit, currentPage, first, sortField, sortOrder} = this.state;
+            totalRows, limit, currentPage, first, sortField, sortOrder, paging, sorter} = this.state;
 
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
@@ -253,22 +220,26 @@ class  DataGridView extends Component {
                 />
 
                 <DataTable value={items}
-                    onRowDoubleClick={(e) => this.onSelect(e, getEditItem)}
+                    onRowDoubleClick={(e) => this.onDoubleClick(e)}
                            scrollable={true}
                            responsive={true}
                            autoLayout={true}
                            resizableColumns={true}
                            className={minimizeHeight?'minimize-height-body': ''}
                            /*resizableColumns={true}*/
-                           sortField={sortField}
-                           sortOrder={sortOrder}
+                           //sortField={sortField}
+                           sortField={sorter.name}
+                           //sortOrder={sortOrder}
+                           sortOrder={sorter.directions == 'desc'?1:0}
                            scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
                            /*scrollHeight={scrollHeight}*/
                            /*currentPageReportTemplate={'{currentPage} of {totalPages}'}*/
-                           currentPageReportTemplate={'{totalPages} ' + t('baseLayout.main.other.totalItemsLabel')}
-                           totalRecords={totalRows}
+                           currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
+                           //totalRecords={totalRows}
+                           totalRecords={paging.count}
                            lazy={true}
-                           first={first}
+                           //first={first}
+                           first={(paging.page - 1) * paging.limit}
                            onPage={(e) => this.onPage(e)}
                            onSort={(e) => this.onSort(e)}
                            loading={loading}
@@ -277,7 +248,8 @@ class  DataGridView extends Component {
                            /*frozenValue={Array.from(checkedItems.values())}*/
                            onSelectionChange={e => this.selectItem(e)}
                            paginator={true}
-                           rows={limit}
+                           //rows={limit}
+                           rows={paging.limit}
                            paginatorPosition={'top'}
                            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}>
                     <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
@@ -294,7 +266,9 @@ class  DataGridView extends Component {
 DataGridView.propTypes = {
     minimizeHeight: PropTypes.bool,
     apiService: PropTypes.any,
-    location: PropTypes.object,
+    //location: PropTypes.object,
+    editItem: PropTypes.func,
+    checkedItems: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.shape(
         {
             field: PropTypes.string.isRequired,
@@ -305,7 +279,11 @@ DataGridView.propTypes = {
             default: PropTypes.bool.isRequired,
             widthCoef: PropTypes.number.isRequired
         }
-    ))
+    )),
+    sorterInit: PropTypes.object,
+    pagingInit: PropTypes.object,
+    disableEdit: PropTypes.bool
+
 };
 
 export default withTranslation()(DataGridView);
