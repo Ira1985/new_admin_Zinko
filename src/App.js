@@ -3,11 +3,6 @@ import './App.scss';
 import Loadable from 'react-loadable';
 import {Redirect, Route, Switch, Router} from 'react-router-dom';
 import {createBrowserHistory} from "history";
-//import 'primereact/resources/themes/nova-dark/theme.css';
-//import 'primereact/resources/primereact.min.css';
-//import 'primeicons/primeicons.css';
-//import "primeflex/primeflex.css"
-
 
 export const history = createBrowserHistory();
 

@@ -4,6 +4,7 @@ import {Button} from "primereact/button";
 import {pluralize} from "../../../helpers/utils";
 import {Dialog} from "primereact/dialog";
 import PropTypes from "prop-types";
+import './editWin.scss';
 
 class EditWin extends Component {
 
@@ -44,21 +45,25 @@ class EditWin extends Component {
     }
 
     render() {
-        const {t, show, style, onClose, saveItem, editComponent} = this.props;
+        const {t, show, style, onClose, saveItem, editComponent, className} = this.props;
         const {validForms, editItem} = this.state;
 
         return (
-            <Dialog header={editItem.id?t('baseLayout.main.other.edit'):t('baseLayout.main.other.add')}
-                    visible={show}
-                    modal={true}
-                    closeOnEscape={true}
-                    onHide={() => onClose()}
-                    closable={true}
-                    style={style}
-                    footer={ (<div>
-                        <Button disabled={!validForms} label={t('baseLayout.main.buttons.buttonAdd')} className="button-success" onClick={() => saveItem()} />
-                        <Button label={t('baseLayout.main.buttons.buttonCancel')} className="button-delete-cancel" onClick={() => onClose()} />
-                    </div>)}
+
+            <Dialog
+                className={'main-edit-win ' + className}
+                header={editItem.id?t('baseLayout.main.other.edit'):t('baseLayout.main.other.add')}
+                visible={show}
+                modal={true}
+                closeOnEscape={true}
+                onHide={() => onClose()}
+                closable={true}
+                style={style}
+                footer={
+                    (<div>
+                    <Button disabled={!validForms} label={t('baseLayout.main.buttons.buttonAdd')} className="button-success" onClick={() => saveItem()} />
+                    <Button label={t('baseLayout.main.buttons.buttonCancel')} className="button-delete-cancel" onClick={() => onClose()} />
+                </div>)}
             >
                 {editComponent(editItem, this.updateValue)}
             </Dialog>

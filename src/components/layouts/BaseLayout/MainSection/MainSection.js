@@ -307,7 +307,7 @@ class MainSection extends Component {
 
             {showEditWin &&
                 <EditWin
-                    style={{minWidth: '500px', width:'500px', maxWidth:'80%'}}
+                    style={{width:'620px'}}
                     show={showEditWin}
                     onClose={() => this.onCloseEdit()}
                     editItem={editedItem}

@@ -162,28 +162,65 @@ hr {
     line-height: 19px;
     background-color: #292b30;  // !important my decision
     border-radius: 10px 10px 0px 0px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+
     .p-dialog-titlebar-close-icon {
       color: $primary-text-color3;
     }
   }
 
   .p-dialog-content {
+    padding: 10px 24px;
     color: $primary-text-color2;
     font-style: normal;
     font-weight: 900;
     font-size: 16px;
     line-height: 19px;
+
+    label {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+    }
+
     .p-inputtext {
       background-color: $primary-color-input;
       color: $primary-text-color3;
-      border: 0.5px solid $primary-color-input-border;
+      border: 0.3px solid $primary-color-input-border;
       border-radius: 3px;
       padding-left: 8px;
+      min-height: 32px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
     }
     .p-disabled {
       background-color: $primary-color-input-disabled;
     }
   }
+
+  .p-dialog-footer {
+    padding: 20px 24px;
+
+    div:first-child {
+      padding: 0px;
+      margin: 0px;
+
+      .p-button {
+        margin-right: 0px;
+        margin-left: 16px;
+
+        &.button-delete-cancel {
+          color:$primary-text-color3;
+        }
+      }
+
+    }
+  }
+
 }
 
 .p-checkbox {
