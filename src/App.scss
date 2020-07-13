@@ -215,8 +215,8 @@ hr {
 }
 
 .cs-admin {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 
   .cs-admin-main {
     display: flex;
@@ -233,13 +233,7 @@ hr {
       overflow-x: auto;
     }
   }
-  .admin-login-block {
-    display: flex;
-    flex-direction: row;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
+
 }
 
 
