@@ -39,7 +39,7 @@ const menuItem = [
         "label": "Номерклатура",
         'leaf': false,
         "children": [
-            { "key": "1-0", "label": "Посмотреть", 'leaf': true },
+            { "key": "1-0", "label": "Посмотреть", 'leaf': true, "path":'/catalog' },
             { "key": "1-1", "label": "Создать", 'leaf': true }]
     },
     {
