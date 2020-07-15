@@ -1,0 +1,177 @@
+@import "../../../styles/variables";
+
+.base-layout {
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: relative;
+
+  .header {
+    //height: 70px;
+    height: calc(70px - 25px);
+    margin: 0px auto;
+    display: table;
+    padding-top: 25px;
+    width: 100%;
+  }
+
+  .main-section {
+    flex-basis: auto;
+    flex-grow: 1;
+    /*width: auto;
+    height: 100%;*/
+
+    hr {
+      width: 96%;
+    }
+    .base-data-section {
+      height: 100%;
+      flex-grow: 2;
+    }
+
+    .p-scrollpanel.p-component {
+      height: 100%;
+      width: 96%;
+      margin: 0 auto;
+      .p-scrollpanel-wrapper {
+        background-color: $primary-block-back-color;
+        margin: 0 auto;
+        width: 100%;
+        height: calc(100% - 90px);
+        border-radius: 10px;
+        padding: 20px;
+        .product-details {
+          height: 100%;
+        }
+        .preview-container {
+          display: flex;
+          padding-bottom: 20px;
+          .clascat-grid {
+            width: 33%;
+            margin-right: 20px;
+            color: $primary-text-color3;
+            .p-toolbar-group-left {
+              margin-bottom: 15px;
+            }
+            hr {
+              width: 100%;
+            }
+            .code-product {
+              padding-left: 40px;
+              font-family: Lato;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 14px;
+              line-height: 17px;
+              margin-bottom: 20px;
+              margin-top: 20px;
+              div {
+                margin-bottom: 20px;
+                span {
+                  span {
+                    font-weight: bold;
+                  }
+                }
+              }
+            }
+            .p-toolbar.p-component {
+              font-family: Lato;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 19px;
+              height: 50px;
+            }
+          }
+          .character-grid {
+            width: 100%;
+            .p-unselectable-text {
+              border: 1px solid $primary-color-input-border;
+              border-bottom: none;
+              .p-tabview-title {
+                color: $primary-text-color3;
+              }
+            }
+            .p-unselectable-text.p-highlight {
+              background-color: $primary-hr-color;
+            }
+            .p-tabview-panels {
+              border: 1px solid $primary-color-input-border;
+              .p-rowgroup-header {
+                color: $primary-text-color5;
+                text-transform: uppercase;
+                font-family: Lato;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 19px;
+                .p-row-toggler-icon.pi.pi-fw.p-clickable.pi-chevron-down:before {
+                  content: '\e90f';
+                  color: $primary-text-color5;
+                }
+                .p-row-toggler-icon.pi.pi-fw.p-clickable.pi-chevron-right:before {
+                  content: '\e90d';
+                  color: $primary-text-color5;
+                }
+              }
+              .p-datatable-row {
+                color: $primary-text-color3;
+                font-family: Lato;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 17px;
+                td {
+                  padding-left: 50px;
+                }
+              }
+              .p-datatable-thead {
+                display: none;
+              }
+              td {
+                border: none;
+              }
+            }
+          }
+          .image-grid {
+            width: 185px;
+            height: 214px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+              max-height: 100%;
+              max-width: 100%;
+            }
+          }
+          .p-grid {
+            width: calc(100% - 185px);
+            margin-top: 0px;
+            padding-left: 20px;
+            color: $primary-text-color3;
+            display: flex;
+            flex-direction: column;
+            .full-name-product {
+              font-family: Lato;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 24px;
+              line-height: 29px;
+              margin-bottom: 20px;
+            }
+            .code-product {
+              font-family: Lato;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 17px;
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
