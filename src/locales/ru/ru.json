@@ -105,6 +105,45 @@
       "categories": "Категории",
       "accessories": "АКСЕССУАРЫ",
       "productCharacteristics": "ХАРАКТЕРИСТИКИ ТОВАРА"
+    },
+    "editProduct" : {
+      "basic": "Основные",
+      "content": "Контент",
+      "card": "Карточка",
+      "history": "История изменений",
+      "creator": "Создатель",
+      "editor": "Редактор",
+      "dateEdit": "Дата редактирования",
+      "dateCreate": "Дата создания",
+      "required": "Обязательные",
+      "key": "Ключевые",
+      "attributes": "Атрибуты",
+      "attribute": "Атрибут",
+      "value": "Значение",
+      "unit": "Юнит",
+      "edit": "Редактировать",
+      "comment": "Комментарий",
+      "delete": "Удалить",
+      "name": "Имя",
+      "fullName": "Полное имя",
+      "type": "Тип",
+      "view": "Просмотр",
+      "image": "ФОТО",
+      "marketingImage": "МАРКЕТИНГОВОЕ ФОТО",
+      "certificate": "СЕРТИФИКАТ",
+      "instruction" : "ИНСТРУКЦИЯ",
+      "video": "ВИДЕО",
+      "view360": "ОБЗОРНОЕ ВИДЕО",
+      "htmlContent": "HTML КОНТЕНТ",
+      "pictogram": "ПИКТОГРАММА",
+      "manufacturer": "Производитель",
+      "categories": "Категоризация",
+      "barcode": "Штрихкод",
+      "englishName": "Наименование Англ.",
+      "ean": "EAN",
+      "tnved": "ТНВЭД",
+      "crpt": "ЦРПТ",
+      "productStatus": "Статус продукта"
     }
   },
   "baseEntity": {
@@ -146,6 +185,11 @@
   "catalogPreview": {
     "breadcrumbs": {
       "name": "Просмотр товара"
+    }
+  },
+  "catalogEdit": {
+    "breadcrumbs": {
+      "name": "Редактирование товара"
     }
   },
   "services": {

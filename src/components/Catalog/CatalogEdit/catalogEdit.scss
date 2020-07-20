@@ -1,0 +1,91 @@
+@import "../../../styles/variables";
+
+.base-layout {
+  height: 100%;
+  width: auto;
+  display: flex;
+  //flex-direction: column;
+  align-items: stretch;
+  position: relative;
+
+  .navigation-add-menu {
+    height: 100%;
+    width: 17%;
+    background-color: $primary-block-back-color;
+    ul {
+      margin-top: 100px;
+      padding-left: 0px;
+      li {
+        list-style-type: none;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 19px;
+        color: $primary-text-color2;
+        width: calc(100% - 7px);
+        height: 40px;
+        padding-top: 20px;
+        padding-left: 5px;
+      }
+      .selected-li {
+        color: $primary-text-color3;
+        background-color: $primary-menu-hover;
+        border-left: 4px solid $primary-color-border;
+      }
+      li:hover {
+        color: $primary-text-color3;
+        background-color: $primary-menu-hover;
+        border-left: 4px solid $primary-color-border;
+      }
+    }
+
+  }
+
+  .header {
+    //height: 70px;
+    height: calc(70px - 25px);
+    margin: 0px auto;
+    display: table;
+    padding-top: 25px;
+    width: 100%;
+  }
+
+  .main-section {
+    flex-basis: auto;
+    flex-grow: 1;
+    /*width: auto;
+    height: 100%;*/
+
+    hr {
+      width: 96%;
+    }
+
+    .base-data-section {
+      height: 100%;
+
+      .edit-grid-footer {
+        border-top: 1px solid $primary-text-color3;
+        width: 98%;
+        margin: 0 auto;
+        padding: 20px 0px 20px 0px;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: $primary-text-color2;
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 2;
+        div {
+          margin-right: 50px;
+          span {
+            font-weight: bold;
+            color: $primary-text-color3;
+          }
+        }
+      }
+    }
+  }
+}
