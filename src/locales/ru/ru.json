@@ -25,6 +25,22 @@
     "filterBlock": {
       "baseTitle": "Фильтры",
 
+      "buttonFilter": "Отфильтровать",
+
+      "operations": {
+        "equals": "равно",
+        "contains": "содержит",
+        "isEmpty": "присутствует",
+        "isNotEmpty": "отсутствует",
+        "startWith": "начинается с",
+        "endWith": "заканчивается на",
+        "moreThen": "больше чем",
+        "lessThen": "меньше чем",
+        "between": "между",
+        "inList": "в списке",
+        "notInList": "нет в списке"
+      },
+
       "tooltips": {
         "showHideBlock": "Показть/Скрыть",
         "addFilter": "Добавить фильтр",

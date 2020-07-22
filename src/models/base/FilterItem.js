@@ -23,21 +23,39 @@ export const FilterOperation = {
     NOT_IN_LIST: 'NOT_IN_LIST'
 };
 
+export function getAFilterOperation(type){
+    switch (type) {
+        case FilterOperation.NONE: return '';
+        case FilterOperation.EQUALS: return 'baseLayout.filterBlock.operations.equals';
+        case FilterOperation.CONTAINS: return 'baseLayout.filterBlock.operations.contains';
+        case FilterOperation.IS_EMPTY: return 'baseLayout.filterBlock.operations.isEmpty';
+        case FilterOperation.IS_NOT_EMPTY: return 'baseLayout.filterBlock.operations.isNotEmpty';
+        case FilterOperation.START_WITH: return 'baseLayout.filterBlock.operations.startWith';
+        case FilterOperation.END_WITH: return 'baseLayout.filterBlock.operations.endWith';
+        case FilterOperation.MORE_THEN: return 'baseLayout.filterBlock.operations.moreThen';
+        case FilterOperation.LESS_THEN: return 'baseLayout.filterBlock.operations.lessThen';
+        case FilterOperation.BETWEEN: return 'baseLayout.filterBlock.operations.between';
+        case FilterOperation.IN_LIST: return 'baseLayout.filterBlock.operations.inList';
+        case FilterOperation.NOT_IN_LIST: return 'baseLayout.filterBlock.operations.notInList';
+        default: return type;
+    }
+}
+
 export function gettingOperationsByType(type) {
     let operations = Array.of(FilterOperation.IS_EMPTY, FilterOperation.IS_NOT_EMPTY);
     if(type) {
         switch (type) {
-            case 'IDS': {
+            case 'IDS': { //textarea
                 return Array.of(FilterOperation.EQUALS,
                     FilterOperation.IN_LIST,
                     FilterOperation.NOT_IN_LIST);
             }
-            case 'TEXT': {
+            case 'TEXT': { // textfield
                 return operations.concat(FilterOperation.CONTAINS,
                     FilterOperation.START_WITH,
                     FilterOperation.END_WITH);
             }
-            case 'NUMBER': {
+            case 'NUMBER': { //numberfield
                 return operations.concat(FilterOperation.EQUALS,
                     FilterOperation.MORE_THEN,
                     FilterOperation.LESS_THEN,
@@ -45,12 +63,12 @@ export function gettingOperationsByType(type) {
             }
             case 'LIST':
             case 'SELECT':
-            case 'MULTI': {
+            case 'MULTI': {//combobox
                 return operations.concat(FilterOperation.EQUALS,
                     FilterOperation.IN_LIST,
                     FilterOperation.NOT_IN_LIST);
             }
-            case 'DATE': {
+            case 'DATE': {//calendar
                 return operations.concat(FilterOperation.MORE_THEN,
                     FilterOperation.LESS_THEN,
                     FilterOperation.BETWEEN);
