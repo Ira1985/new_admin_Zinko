@@ -98,6 +98,11 @@ hr {
   min-width: 168px;
   border-radius: 3px;
   border: none;
+  color: $primary-back-color;
+
+  .loading {
+    color: $primary-back-color;
+  }
 
   .p-button-text {
     font-style: normal;
@@ -124,6 +129,11 @@ hr {
 
   &.button-bottom-unload {
     background-color: $primary-button-color;
+    color: $primary-text-color3;
+
+    .loading {
+      color: $primary-text-color3;
+    }
 
     &:hover {
       background-color: $primary-button-color-h;
@@ -132,6 +142,11 @@ hr {
 
   &.button-delete-cancel {
     background-color: $primary-button-color-cancel;
+    color: $primary-text-color3;
+
+    .loading {
+      color: $primary-text-color3;
+    }
 
     &:hover {
       background-color: $primary-button-color-cancel-h;
