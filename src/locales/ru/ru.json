@@ -26,6 +26,7 @@
       "baseTitle": "Фильтры",
 
       "buttonFilter": "Отфильтровать",
+      "buttonApply": "Применить",
 
       "operations": {
         "equals": "равно",
@@ -100,7 +101,30 @@
         "disableChecked": "Отмена выбраного",
         "totalItemsLabel": "результатов",
         "edit": "Редактировать",
-        "add": "Добавить"
+        "add": "Добавить",
+        "monthNames": {
+          "january": "Январь",
+          "february": "Февраль",
+          "march": "Март",
+          "april": "Апрель",
+          "may": "Май",
+          "june": "Июнь",
+          "july": "Июль",
+          "august": "Август",
+          "september": "Сентябрь",
+          "october": "Октябрь",
+          "november": "Ноябрь",
+          "december": "Декабрь"
+        },
+        "dayNamesMin": {
+          "monday": "Пн",
+          "tuesday": "Вт",
+          "wednesday": "Ср",
+          "thursday": "Чт",
+          "friday": "Пт",
+          "saturday": "Сб",
+          "sunday": "Вс"
+        }
       }
     },
     "previewProduct" : {

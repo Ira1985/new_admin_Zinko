@@ -5,6 +5,11 @@ import {SelectButton} from "primereact/selectbutton";
 import {Button} from "primereact/button";
 import {Sidebar} from "primereact/sidebar";
 import {InputText} from 'primereact/inputtext';
+import {Calendar} from 'primereact/calendar';
+import {InputNumber} from 'primereact/inputnumber';
+import {Inplace,InplaceDisplay,InplaceContent} from 'primereact/inplace';
+import {InputTextarea} from 'primereact/inputtextarea';
+import {MultiSelect} from 'primereact/multiselect';
 import {Dropdown} from 'primereact/dropdown';
 import {ScrollPanel} from "primereact/scrollpanel";
 import {Checkbox} from "primereact/checkbox";
@@ -26,10 +31,18 @@ class FilterSection extends Component {
             showHide: true,
             addFilterBar: false,
             loading:true,
-            operations: []
+            operations: [],
+            textValues: [],
+            dateValues: [],
+            numValues: [],
+            listValues: []
         };
 
         this.onOperationChange = this.onOperationChange.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
+        this.onDateChange = this.onDateChange.bind(this);
+        this.onNumChange = this.onNumChange.bind(this);
+        this.onListChange = this.onListChange.bind(this);
     }
 
     showHideFilter() {
@@ -77,9 +90,55 @@ class FilterSection extends Component {
         this.setState({operations: operation});
     }
 
+    onTextChange(e) {
+        let {textValues} = this.state;
+        let textValue = textValues.slice(0);
+        textValue[e.target.name] = e.value;
+        this.setState({textValues: textValue});
+    }
+
+    onDateChange(e) {
+        let {dateValues} = this.state;
+        let dateValue = dateValues.slice(0);
+        dateValue[e.target.name] = e.value;
+        this.setState({dateValues: dateValue});
+    }
+
+    onNumChange(e) {
+        let {numValues} = this.state;
+        let numValue = numValues.slice(0);
+        numValue[e.target.name] = e.value;
+        this.setState({numValues: numValue});
+    }
+
+    onListChange(e) {
+        let {listValues} = this.state;
+        let listValue = listValues.slice(0);
+        listValue[e.target.name] = e.value;
+        this.setState({listValues: listValue});
+    }
+
     render() {
         const {t, filteringData} = this.props;
-        const {showHide, addFilterBar, loading, operations, fields} = this.state;
+        const {showHide, addFilterBar, loading, operations, textValues, dateValues, numValues, listValues, fields} = this.state;
+
+        const ru = {
+            firstDayOfWeek: 1,
+            dayNamesMin: [t("baseLayout.main.other.dayNamesMin.sunday"), t("baseLayout.main.other.dayNamesMin.monday"), t("baseLayout.main.other.dayNamesMin.tuesday"), t("baseLayout.main.other.dayNamesMin.wednesday"), t("baseLayout.main.other.dayNamesMin.thursday"), t("baseLayout.main.other.dayNamesMin.friday"), t("baseLayout.main.other.dayNamesMin.saturday")],
+            monthNames: [t("baseLayout.main.other.monthNames.january"), t("baseLayout.main.other.monthNames.february"), t("baseLayout.main.other.monthNames.march"), t("baseLayout.main.other.monthNames.april"), t("baseLayout.main.other.monthNames.may"), t("baseLayout.main.other.monthNames.june"), t("baseLayout.main.other.monthNames.july"), t("baseLayout.main.other.monthNames.august"), t("baseLayout.main.other.monthNames.september"), t("baseLayout.main.other.monthNames.october"), t("baseLayout.main.other.monthNames.november"), t("baseLayout.main.other.monthNames.december")],
+        };
+
+        const values = [
+            {label: 'Values1', value: 'Values1'},
+            {label: 'Values2', value: 'Values2'},
+            {label: 'Values3', value: 'Values3'},
+            {label: 'Values4', value: 'Values4'},
+            {label: 'Values5', value: 'Values5'},
+            {label: 'Values6', value: 'Values6'},
+            {label: 'Values7', value: 'Values7'},
+            {label: 'Values8', value: 'Values8'},
+            {label: 'Values9', value: 'Values9'}
+        ];
         return <>
             <div ref={this.filterBlockRef} className='filter-section'>
                 <div className='header'>
@@ -98,10 +157,10 @@ class FilterSection extends Component {
                     <hr/>
                     <div className='filter-items-main'>
                         <div ref={this.filterBaseItems} className='filter-items'>
+                            <div className='scroll-panel-button'>
+                                <Button label={t("baseLayout.filterBlock.buttonFilter")} className={"button-bottom-unload"}  onClick={(e) => console.log('aaaaaaa', fields)}/>
+                            </div>
                             <ScrollPanel className='scroll-panel'>
-                                <div className='scroll-panel-button'>
-                                    <Button label={t("baseLayout.filterBlock.buttonFilter")} className={"button-bottom-unload"}  onClick={(e) => console.log('aaaaaaa', fields)}/>
-                                </div>
                                 {fields && fields.map((field, index) => {
                                     let arr = field.operations.map(operation => t(getAFilterOperation(operation)))
                                     return field.required ?
@@ -110,7 +169,29 @@ class FilterSection extends Component {
                                                 <span>{t(field.title)}</span>
                                                 <Dropdown value={operations[index]} name={index} options={arr} onChange={this.onOperationChange} style={{width: '12em'}}/>
                                             </div>
-                                            <InputText id="in" value={this.state.value} onChange={(e) => this.setState({value: e.target.value})} />
+                                            {
+                                                field.type === 'TEXT' ?
+                                                    <InputText name={index} value={textValues[index]} onChange={this.onTextChange} /> :
+                                                    field.type === 'DATE' ?
+                                                        <Calendar name={index} value={dateValues[index]} onChange={this.onDateChange} selectionMode={operations[index] === t("baseLayout.filterBlock.operations.between") ? "range" : "single"} locale={ru} dateFormat="dd/mm/yy"  /> :
+                                                        field.type === 'NUMBER' ?
+                                                            <InputNumber name={index} value={numValues} onChange={this.onNumChange} mode="decimal" minFractionDigits={2} /> :
+                                                            field.type === 'IDS' ?
+                                                                <Inplace>
+                                                                    <InplaceDisplay>
+                                                                        <InputText name={index} value={textValues[index]} onChange={this.onTextChange} />
+                                                                    </InplaceDisplay>
+                                                                    <InplaceContent>
+                                                                        <InputTextarea rows={5} cols={30} value={this.state.value} onChange={(e) => this.setState({value: e.target.value})} />
+                                                                        <div>
+                                                                            <Button label={t("baseLayout.filterBlock.buttonApply")} className={"button-success"}/>
+                                                                        </div>
+                                                                    </InplaceContent>
+                                                                </Inplace> :
+                                                                field.type === 'MULTI' || field.type === 'LIST' || field.type === 'SELECT' ?
+                                                                    <MultiSelect name={index} value={listValues[index]} options={values} onChange={this.onListChange} style={{minWidth:'15em'}} /> :
+                                                                    null
+                                            }
                                         </div>
                                         : null
                                 })}
