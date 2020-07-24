@@ -170,6 +170,7 @@ class Categories extends Component {
                             name: lazyNode.data.name + ' - 0',
                             size: Math.floor(Math.random() * 1000) + 1 + 'kb',
                             comment: 'File',
+                            presenceAttributes: "No",
                             parent: lazyNode.key
                         },
                         leaf: false
@@ -252,8 +253,17 @@ class Categories extends Component {
         }
     }
 
-    countBodyTemplate(rowData) {
-        return <span className={classNames('customer-badge', 'status-' + rowData.status)}>{rowData.status}</span>;
+    countBodyTemplate(rowData, body) {
+        return <span className={rowData.data[body] !== "No" ? 'count' : "attr"}>{rowData.data[body]}</span>;
+    }
+
+    butBodyTemplate() {
+        return <div className={'column-button'}>
+            <Button icon="pi p-empty-button case-ico"/>
+            <Button icon="pi p-empty-button plus-ico"/>
+            <Button icon="pi p-empty-button times-ico"/>
+            <Button icon="pi p-empty-button chain-ico"/>
+        </div>
     }
 
     render(){
@@ -282,8 +292,7 @@ class Categories extends Component {
 
 
         const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
-            console.log(col)
-            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})} expander={col.expander} body={col.body ? this.countBodyTemplate:""} />;
+            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})} expander={col.expander} body={col.body ? e => this.countBodyTemplate(e, col.body) : ""} />;
         });
 
         return (<div className={'base-layout'}>
@@ -330,6 +339,7 @@ class Categories extends Component {
                                onExpand={this.onExpand} loading={this.state.loading}
                                scrollable scrollHeight='calc(100vh - 225px)'>
                         {columnComponents}
+                        <Column style={{width:'120px'}} body={this.butBodyTemplate} />
                         <Column style={{width:'30px'}} />
                     </TreeTable>
                 </div>
