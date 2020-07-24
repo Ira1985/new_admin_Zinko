@@ -51,6 +51,7 @@
     "main": {
       "buttons": {
         "buttonAdd": "Добавить",
+        "buttonSearch": "Поиск",
         "buttonEdit": "Редактирование",
         "buttonPreview": "Просмотр",
         "buttonClone": "Клонировать",
@@ -196,6 +197,9 @@
     "createdAt": "Создан в",
     "updatedBy": "Обновлен кем",
     "createdBy": "Создан кем",
+    "layout": "Макет",
+    "count": "Количество продуктов",
+    "presenceAttributes": "Наличие аттрибутов",
     "errors": {
       "min": "Минимальная длинна 2 символа",
       "max": "Максимальная длинна 1000 символов",
@@ -230,6 +234,12 @@
   "catalogEdit": {
     "breadcrumbs": {
       "name": "Редактирование товара"
+    }
+  },
+
+  "categories": {
+    "breadcrumbs": {
+      "name": "Категоризация"
     }
   },
   "services": {

@@ -5,6 +5,7 @@ const Brands = React.lazy(() => import('./components/Brands/Brands'));
 const Catalog = React.lazy(() => import('./components/Catalog/Catalog'));
 const CatalogPreview = React.lazy(() => import('./components/Catalog/CatalogPreview/CatalogPreview'));
 const CatalogEdit = React.lazy(() => import('./components/Catalog/CatalogEdit/CatalogEdit'));
+const Categories = React.lazy(() => import('./components/Categories/Categories'));
 
 export const routes = [
     { path: '/', name: 'Главная', component: DefaultLayout },
@@ -13,5 +14,5 @@ export const routes = [
     { path: '/catalog/:id/preview', exact: true, name: 'Просмотр товара', component: CatalogPreview },
     { path: '/catalog/:id/edit', exact: true, name: 'Просмотр товара', component: CatalogEdit },
     //{ path: '/manufacturers', name: 'Производители', component: Manufacturers },
-    //{ path: '/categories', name: 'Производители', component: Categories },
+    { path: '/categories', name: 'Категории', component: Categories },
 ];

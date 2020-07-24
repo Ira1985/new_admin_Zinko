@@ -1,23 +1,61 @@
 import React, { Component } from 'react';
+import {withTranslation} from "react-i18next";
 import {Button} from 'primereact/button';
 import {Toolbar} from 'primereact/toolbar';
 import {BreadCrumb} from 'primereact/breadcrumb';
+import Category from "../../models/Category";
 //import '../../scss/simpleTable.scss';
+import './categories.scss'
 import {DataTable} from 'primereact/datatable';
 import {TreeTable} from 'primereact/treetable';
 import {Column} from 'primereact/column';
 import {categoryService} from "../../service/category.service";
 import {Dialog} from 'primereact/dialog';
 import {MultiSelect} from 'primereact/multiselect';
+import DataGridView from "../layouts/DataGridView/DataGridView";
+import CheckedToolbarSection from "../layouts/BaseLayout/CheckedToolbarSection/CheckedToolbarSection";
+import ApprovalWin from "../base/ApprovalWin/ApprovalWin";
+import {pluralize} from "../../helpers/utils";
+import EditWin from "../base/EditWin/EditWin";
+import classNames from 'classnames';
 
 const items = [
     { "label": "Категоризация" }
 ]
 
-export class Categories extends Component {
+class Categories extends Component {
 
     constructor(props) {
         super(props);
+
+        let columns = new Map(), selectedColumns = new Map(), coef = 1;
+
+        let column = Category.buildColumns();
+        if(column && column.length > 0) {
+            let sum = 0;
+            column.map((elem, index) => {
+                columns.set(elem.field,
+                    {field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable,
+                        order: elem.order, default: elem.default, widthCoef: elem.widthCoef});
+                //columns.push({field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order});
+                if(elem.default) {
+                    sum += elem.widthCoef;
+                    selectedColumns.set(
+                        elem.field, {
+                            field: elem.field,
+                            header: elem.header,
+                            style: elem.style,
+                            sortable: elem.sortable,
+                            expander: elem.expander,
+                            order: elem.order,
+                            default: elem.default,
+                            widthCoef: elem.widthCoef,
+                            body: elem.body
+                        });
+                }
+            });
+            coef = (sum > 0? 100/sum: 1);
+        }
         this.state = {
             items: [],
             totalRows: 0,
@@ -25,153 +63,279 @@ export class Categories extends Component {
             visibleAdd: false,
             item: {},
             scrollHeight: 0,
-            selectedColumns: [],
-            columns: [
-                {field: 'name', header: 'Имя'},
-                {field: 'comment', header: 'Коментарий'},
-                {field: 'description', header: 'Описание'},
-                {field: 'code', header: 'Код'},
-            ],
             loading: true,
             expandedTree: new Map(),
+            selectedColumns: selectedColumns,
+            columns: columns,
+            columnCoef: coef,
         }
         this.onSelect = this.onSelect.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
-        this.onColumnToggle = this.onColumnToggle.bind(this);
         this.onExpand = this.onExpand.bind(this);
+        this.countBodyTemplate = this.countBodyTemplate.bind(this);
+
+        this.dataGridView = React.createRef();
     }
 
-    componentDidMount() {
-        categoryService.getList().then(res => {
+    toolbarButtons = [
+        {
+            label: 'baseLayout.main.buttons.buttonSearch',
+            className:'button-dop',
+            onClick: () => console.log('dop button')
+        },
+        {
+            label: 'baseLayout.main.buttons.buttonAdd',
+            className:'button-success',
+            onClick: (e, thisEl) => {
+                this.addItem();
+            }
+        }
+    ];
 
-            let arr = res.pageItems.map(item => {
-                let obj = {};
-                obj.key = item.id;
-                obj.data = item;
-                obj.leaf = item.leaf;
-                return obj;
-            })
-            this.setState({items: arr, loading: false})
-        });
-        this.setState({selectedColumns: this.state.columns.slice(0,3)});
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({
+                loading: false,
+                items: this.loadNodes(0, 100),
+                totalRecords: 1000
+            });
+        }, 1000);
+    }
+
+    loadNodes(first, rows) {
+        let nodes = [];
+
+        for(let i = 0; i < rows; i++) {
+            let node = {
+                key: (first + i),
+                data: {
+                    name: 'Item ' + (first + i),
+                    comment: 'Type ' + (first + i),
+                    layout: 'kb',
+                    count: first + i,
+                    presenceAttributes: "Yes",
+                    parent: null
+                },
+                leaf: false
+            };
+
+            nodes.push(node);
+        }
+
+        return nodes;
     }
 
     onSelect(e) {
         this.setState({item: e.data, visibleAdd: true})
     }
 
-    onColumnToggle(event) {
-        let selectedColumns = event.value;
-        let orderedSelectedColumns = this.state.columns.filter(col => selectedColumns.includes(col));
-        this.setState({selectedColumns: orderedSelectedColumns});
-    }
 
-    saveItem() {
 
+    onColumnAdd(e) {
+        const {selectedColumns, columns} = this.state;
+        let newColumns = new Map();
+        if(e.value && e.value.length > 0) {
+            let sum = 0;
+            e.value.map((item,index) => {
+                if(columns.has(item)) {
+                    let col = columns.get(item);
+                    newColumns.set(item, col);
+                    sum += col.widthCoef;
+                }
+            });
+            this.setState({
+                selectedColumns: newColumns,
+                columnCoef: (sum > 0? 100/sum: 1)
+            });
+        }
     }
 
     closeDialog() {
         this.setState({item: {}, visibleAdd: false})
     }
 
-    addChildrenToTree(parent, children, id) {
-
-        let lazyItem = {...id};
-        let items = this.state.expandedTree.get(parent.id).map(item => {
-            if(item.key === id.key) {
-                console.log(children, parent)
-            }
-            return item;
-        });
-
-        if(!parent.parent) {
-            return items;
-        }
-
-    }
-
-    onExpand(e) {
-        console.log(this.state.items)
-        if (!e.node.children) {
+    onExpand(event) {
+        if (!event.node.children) {
             this.setState({
                 loading: true
             });
 
-            categoryService.getChildren(e.node.data.path).then(res => {
-                let lazyItem = {...e.node};
-                let map = this.state.expandedTree;
-
-                lazyItem.children = res.pageItems.map(item => {
-                    let obj = {};
-                    obj.data = item;
-                    obj.key = item.id;
-                    obj.leaf = item.leaf;
-                    return obj;
-                });
-
-                map.set(e.node.data.id, lazyItem.children);
-                if(e.node.data.parent) {
-                    this.addChildrenToTree(e.node.data.parent, lazyItem.children, e.node)
-                }
-                let items = this.state.items.map(item => {
-                    if(item.key === e.node.key) {
-                        item = lazyItem;
+            setTimeout(() => {
+                this.loading = false;
+                let lazyNode = {...event.node};
+                lazyNode.children = [
+                    {
+                        key: lazyNode.key + ' - 0',
+                        data: {
+                            name: lazyNode.data.name + ' - 0',
+                            size: Math.floor(Math.random() * 1000) + 1 + 'kb',
+                            comment: 'File',
+                            parent: lazyNode.key
+                        },
+                        leaf: false
+                    },
+                    {
+                        key: lazyNode.key + ' - 1',
+                        data: {
+                            name: lazyNode.data.name + ' - 1',
+                            size: Math.floor(Math.random() * 1000) + 1 + 'kb',
+                            type: 'File',
+                            parent: lazyNode.key
+                        },
+                        leaf: false
                     }
-                    return item;
+                ];
+
+                let nodes = null;
+
+                let newMap = new Map(this.state.expandedTree);
+                lazyNode.children.map(child => {
+                    newMap.set(child.key, {
+                        key: child.key,
+                        data: child.data,
+                        children: null
+                    })
                 });
+
+                let parent = lazyNode.data.parent;
+
+                let count = 0;
+
+                while(parent !== null) {
+                    ++count;
+                    newMap.get(lazyNode.key).children = lazyNode.children;
+                    if(newMap.has(parent)) {
+                        let parentElem = newMap.get(parent);
+                        let childElem = parentElem.children.map(elem => {
+                            if(elem.key === lazyNode.key) {
+                                elem = lazyNode
+                            }
+                            return elem;
+                        })
+                        lazyNode = newMap.get(parent);
+                        parentElem.children = childElem;
+                        parent = newMap.get(parent).data.parent;
+                    } else {
+                        let parenElem = this.state.items.filter(item => item.key === parent)[0];
+                        parent = null;
+                        lazyNode = newMap.get(lazyNode.key);
+                        let childElem = parenElem.children.map(elem => {
+                            if(elem.key === lazyNode.key) {
+                                elem = lazyNode
+                            }
+                            return elem
+                        });
+                        parenElem.children = childElem;
+                        lazyNode = parenElem;
+                    }
+
+                }
+
+                if(parent === null) {
+                    let key = count ? lazyNode.key : event.node.key;
+                    nodes = this.state.items.map(node => {
+                        if (node.key === key) {
+                            node = lazyNode;
+                        }
+                        return node;
+                    });
+                } else {
+
+                }
+
                 this.setState({
                     loading: false,
-                    items: items,
-                    expandedTree: map
+                    items: nodes,
+                    expandedTree: newMap
                 });
-            })
+            }, 250);
         }
+    }
+
+    countBodyTemplate(rowData) {
+        return <span className={classNames('customer-badge', 'status-' + rowData.status)}>{rowData.status}</span>;
     }
 
     render(){
-        let {scrollHeight} = this.state;
-        if(document.querySelector('.p-datatable-scrollable-wrapper')) {
-            scrollHeight = document.querySelector('.p-datatable-scrollable-wrapper').offsetHeight - 105 + 'px';
-        }
 
-        let total = this.state.totalRows + ' результатов';
+        const {t, dopToolbarButtons, dopCheckedButtons, plurals,
+            children, gridView, treeView, apiService, location, editComponent, baseSchema, baseModel} = this.props;
 
-        const paginatorRight =<div>
-            <Button icon="pi pi-download" style={{marginRight:'.25em'}}/>
-            <Button icon="pi pi-upload" />
+        const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
+            totalRows, limit, currentPage, first, sortField, sortOrder, paging, sorter} = this.state;
+
+        let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
+
+        let  breadcrumbs = [{ "label": t('categories.breadcrumbs.name')}];
+
+        const paginatorRight = <div>
+            <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
+            <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
 
-        const columnComponents = this.state.selectedColumns.map(col=> {
-            return <Column field={col.field} header={col.header} sortable />;
+        let offset = 0;
+        if(this.dataGridView.current) {
+            //offset = (selectedColumns.size > 0)? 75/(selectedColumns.size-1): 0;
+            offset = (selectedColumns.size > 0)?((80/this.dataGridView.current.clientWidth)*99)/selectedColumns.size: 0;
+        }
+
+
+
+        const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
+            console.log(col)
+            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})} expander={col.expander} body={col.body ? this.countBodyTemplate:""} />;
         });
 
-        const footer = (
-            <div>
-                <Button label={this.state.item.id?"Сохранить":"Добавить"} className={this.state.item.id?"":"p-button-success"} onClick={this.saveItem} />
-                <Button label="Отменить" className="p-button-danger" onClick={this.closeDialog} />
+        return (<div className={'base-layout'}>
+            <div className='main-section'>
+                <div className='header'>
+                    <Toolbar>
+                        <div className="p-toolbar-group-left">
+                            <BreadCrumb model={breadcrumbs} home={{label: 'Главная', icon: 'pi pi-home', url: 'dashboard'}} />
+                        </div>
+                        <div className="p-toolbar-group-right">
+                            {(toolbarButs && toolbarButs.length > 0) &&
+                            toolbarButs.map((button, index) =>
+                                <Button key={'toolbar_but_' + index} label={t(button.label)} className={button.className}  onClick={(e) => button.onClick(e, this)} tooltip={button.tooltip}/>
+                            )}
+
+                        </div>
+                    </Toolbar>
+                </div>
+
+                <hr/>
+
+                <div className='base-data-section'>
+                    <MultiSelect
+                        maxSelectedLabels={columns.size}
+                        className={'grid-add-column'}
+                        placeholder={' '}
+                        fixedPlaceholder={true}
+                        value={Array.from(selectedColumns.keys())}
+                        options={Array.from(columns.values())}
+                        optionValue='field'
+                        optionLabel='header'
+                        itemTemplate={(option) => {return t(option.header);}}
+                        onChange={(e) => this.onColumnAdd(e)}
+                        tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
+                        tooltipOptions={{position: 'left'}}
+                        /*appendTo={document.body}*/
+                        /*appendTo={this.dataGridView.current}*/
+                    />
+
+                    <TreeTable value={this.state.items} lazy={true} paginator={true} paginatorPosition={'top'} totalRecords={100}
+                               paginatorRight={paginatorRight}
+                               currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
+                               paginatorTemplate="CurrentPageReport"
+                               onExpand={this.onExpand} loading={this.state.loading}
+                               scrollable scrollHeight='calc(100vh - 225px)'>
+                        {columnComponents}
+                        <Column style={{width:'30px'}} />
+                    </TreeTable>
+                </div>
             </div>
-        );
-
-        return (<div>
-            <Toolbar>
-                <div className="p-toolbar-group-left">
-                    <BreadCrumb model={items} home={{label: 'AAA', icon: 'pi pi-home'}} />
-                </div>
-                <div className="p-toolbar-group-right">
-                    <Button label='Поиск' style={{marginRight:'.25em'}} />
-                    <Button label='Добавить' className="p-button-success" onClick={() => this.setState({visibleAdd: true})} />
-                </div>
-            </Toolbar>
-
-            <TreeTable value={this.state.items} lazy={true} paginator={true} totalRecords={100}
-                       onExpand={this.onExpand} loading={this.state.loading}>
-                <Column field={'name'} header={'Категория'} expander />
-                <Column field={'comment'} header={'Комментарий'} />
-            </TreeTable>
-
-            <Dialog header={this.state.item.id?"Редактировать":"Добавить"} footer={footer} visible={this.state.visibleAdd} style={{width: '50vw'}} modal={true} onHide={this.closeDialog}>
-
-            </Dialog>
         </div>)
     }
 }
+
+export default withTranslation()(Categories);
