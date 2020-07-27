@@ -6,7 +6,8 @@ export const FilterType = {
     LIST: 'LIST', // equals, in list, not_in, is_empty, is_not_empty //concat SELECT and MULTI (maybe not needed tow types)
     SELECT: 'SELECT', // equals, in list, not_in, is_empty, is_not_empty
     MULTI: 'MULTI', // equals, in list, not_in, is_empty, is_not_empty
-    DATE: 'DATE' // more_then, less_then, between, is_empty, is_not_empty
+    DATE: 'DATE', // more_then, less_then, between, is_empty, is_not_empty
+    CHECK: 'CHECK' // equals
 };
 
 export const FilterOperation = {
@@ -73,6 +74,9 @@ export function gettingOperationsByType(type) {
                     FilterOperation.LESS_THEN,
                     FilterOperation.BETWEEN);
             }
+            case 'CHECK': { //checkbox
+                return Array.of(FilterOperation.EQUALS);
+            }
         }
     }
     return operations;
@@ -127,5 +131,9 @@ export default class FilterItem {
 
     static buildDate(title, filterField, required, defaultVal = null) {
         return FilterItem.build(title, FilterType.DATE, filterField, required, gettingOperationsByType(FilterType.DATE), defaultVal, null, null);
+    }
+
+    static buildCheck(title, filterField, required, defaultVal = null) {
+        return FilterItem.build(title, FilterType.CHECK, filterField, required, gettingOperationsByType(FilterType.CHECK), defaultVal, null, null);
     }
 }

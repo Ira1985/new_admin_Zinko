@@ -80,9 +80,11 @@ export default class Attribute extends BaseEntity {
         this.subsGroup = (item['subsGroup']?item['subsGroup']:null);
         this.quantType = (item['quantType']?item['quantType']:QuantType.NUMBER);
         this.roundUp = (item['roundUp']?item['roundUp']:null);
-        this.quanSubsGroup = (item['quantSubsGroup']?item['quantSubsGroup']:null);
+        this.quantSubsGroup = (item['quantSubsGroup']?item['quantSubsGroup']:null);
         this.sourceType = (item['sourceType']?item['sourceType']:LinkSourceType.NONE);
         this.attrCategory = (item['attrCategory']?item['attrCategory']:null);
+        this.system = (item.hasOwnProperty('system')?item['system']:false);
+        this.systemSource = (item['systemSource']?item['systemSource']:AttrSystemSource.NONE);
         return this;
     }
 
@@ -91,17 +93,19 @@ export default class Attribute extends BaseEntity {
         base.push(FilterItem.buildList('attributes.attrType','attrType', true));
         base.push(FilterItem.buildList('attributes.valueType','valueType', true));
         base.push(FilterItem.buildSelect('attributes.attrCategory','attrCategory', false));
+        base.push(FilterItem.buildCheck('attributes.system','system', false, false));
         return base;
     }
 
     static buildColumns() {
         let columns =  BaseEntity.buildColumns();
-        columns.push(new GridColumn().build({field: 'attrType', header: 'attributes.attrType', style:{}, sortable: true, order: 3, default: true, widthCoef:0.5}));
-        columns.push(new GridColumn().build({field: 'valueType', header: 'attributes.valueType', style:{}, sortable: true, order: 4, default: true, widthCoef:0.5}));
-        columns.push(new GridColumn().build({field: 'unit', header: 'attributes.unit', style:{}, sortable: true, order: 5, default: true, widthCoef:0.5}));
-        columns.push(new GridColumn().build({field: 'attrCategory', header: 'attributes.attrCategory', style:{}, sortable: true, order: 5, default: true, widthCoef:0.5}));
-        columns.push(new GridColumn().build({field: 'subsGroup', header: 'attributes.subsGroup', style:{}, sortable: true, order: 5, default: true, widthCoef:0.5}));
-        columns.push(new GridColumn().build({field: 'hasQuantities', header: 'attributes.hasQuantities', style:{}, sortable: true, order: 5, default: true, widthCoef:0.5}));
+        columns.push(new GridColumn().build({field: 'attrType', header: 'attributes.attrType', style:{}, sortable: true, order: 4, default: true, widthCoef:1.5}));
+        columns.push(new GridColumn().build({field: 'valueType', header: 'attributes.valueType', style:{}, sortable: true, order: 5, default: true, widthCoef:1.5}));
+        columns.push(new GridColumn().build({field: 'unit', header: 'attributes.unit', style:{}, sortable: true, order: 6, default: true, widthCoef:1.5}));
+        columns.push(new GridColumn().build({field: 'attrCategory', header: 'attributes.attrCategory', style:{}, sortable: true, order: 7, default: true, widthCoef:1.5}));
+        columns.push(new GridColumn().build({field: 'subsGroup', header: 'attributes.subsGroup', style:{}, sortable: true, order: 8, default: true, widthCoef:1.5}));
+        columns.push(new GridColumn().build({field: 'hasQuantities', header: 'attributes.hasQuantities', style:{}, sortable: true, order: 9, default: true, widthCoef:0.5}));
+        columns.push(new GridColumn().build({field: 'system', header: 'attributes.system', style:{}, sortable: true, order: 10, default: true, widthCoef:0.5}));
 
         return columns;
     }

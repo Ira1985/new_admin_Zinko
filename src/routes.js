@@ -9,6 +9,7 @@ const CatalogEdit = React.lazy(() => import('./components/Catalog/CatalogEdit/Ca
 const Categories = React.lazy(() => import('./components/Categories/Categories'));
 const Countries = React.lazy(() => import('./components/Countries/Countries'));
 const Families = React.lazy(() => import('./components/Families/Families'));
+const Models = React.lazy(() => import('./components/Models/Models'));
 const Profile = React.lazy(() => import('./components/Profile/Profile'));
 
 export const routes = [
@@ -22,6 +23,6 @@ export const routes = [
     { path: '/profile', name: 'Профиль', component: Profile },
     { path: '/categories', name: 'Категории', component: Categories },
     { path: '/countries', name: 'Страны мира', component:  Countries},
-    { path: '/families', name: 'Семейства', component: Families }
-
+    { path: '/families', name: 'Семейства', component: Families },
+    { path: '/models', name: 'Модели', component: Models }
 ];
