@@ -254,6 +254,46 @@
       "third": "производителя"
     }
   },
+  "countries": {
+    "breadcrumbs": {
+      "name": "Страны мира"
+    },
+    "plurals": {
+      "first": "стран",
+      "second": "страна",
+      "third": "страны"
+    }
+  },
+  "families": {
+    "breadcrumbs": {
+      "name": "Семейства"
+    },
+    "plurals": {
+      "first": "семейств",
+      "second": "семейство",
+      "third": "семейства"
+    }
+  },
+  "series": {
+    "breadcrumbs": {
+      "name": "Серии"
+    },
+    "plurals": {
+      "first": "серий",
+      "second": "серия",
+      "third": "серии"
+    }
+  },
+  "models": {
+    "breadcrumbs": {
+      "name": "Модели"
+    },
+    "plurals": {
+      "first": "моделей",
+      "second": "модель",
+      "third": "модели"
+    }
+  },
   "catalog": {
     "breadcrumbs": {
       "name": "Каталог"
