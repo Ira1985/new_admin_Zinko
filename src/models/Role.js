@@ -22,7 +22,7 @@ export default class Role extends BaseEntity {
     }
 }
 
-export const DepartmentSchema = Yup.object().shape({
+export const RoleSchema = Yup.object().shape({
     name: Yup.string()
         .min(4,'baseEntity.errors.min')
         .trim()
