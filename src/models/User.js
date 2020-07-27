@@ -1,26 +1,20 @@
 import * as Yup from "yup";
+import BaseEntity from "./base/BaseEntity";
 
-export default class User {
+export default class User extends BaseEntity {
 
-    id = null;
-    name = '';
-    comment = '';
-    userName = '';
-    code = '';
-    enabled = true;
     lastName = '';
     firstName = '';
     middleName = '';
     phone = '';
     email = '';
-    lastLogin;
-    department=null;
-    groups=[];
+    lastLogin = null;
+    department = null;
+    roles = [];
     allowedGroups = [];
     extraPermissions = [];
     subscriptions=[];
     avatar='';
-    admin = false;
     avatarFile = null;
     changedAvatar = false;
     fullName = '';

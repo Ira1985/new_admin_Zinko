@@ -15,13 +15,13 @@ export default class Substitution extends BaseEntity {
 
     static buildFilters() {
         let filters = BaseEntity.buildFilters();
-        filters.push(FilterItem.buildSelect('substitutions.subsGroup','subsGroup', false));
+        filters.push(FilterItem.buildSelect('substitutions.fields.subsGroup','subsGroup', false));
         return filters;
     }
 
     static buildColumns() {
         let columns = BaseEntity.buildColumns();
-        columns.push(new GridColumn().build({field: 'subsGroup', header: 'substitutions.subsGroup', style:{}, sortable: false, order: 3, default: true, widthCoef:2}));
+        columns.push(new GridColumn().build({field: 'subsGroup', header: 'substitutions.fields.subsGroup', style:{}, sortable: false, order: 3, default: true, widthCoef:2}));
         return columns;
     }
 }

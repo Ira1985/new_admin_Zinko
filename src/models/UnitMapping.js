@@ -36,8 +36,12 @@ export default class UnitMapping extends BaseEntity {
 }
 
 export const UnitMappingSchema = Yup.object().shape({
-    name: Yup.string()
-        .min(2,'baseEntity.errors.min')
-        .trim()
-        .required('baseEntity.errors.required')
+    unitFrom: Yup.object().shape({
+        id:Yup.number().required('baseEntity.errors.required'),
+        name:Yup.string().required()
+    }).nullable().required('baseEntity.errors.required'),
+    unitTo: Yup.object().shape({
+        id:Yup.number().required('baseEntity.errors.required'),
+        name:Yup.string().required()
+    }).nullable().required('baseEntity.errors.required')
 });

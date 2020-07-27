@@ -341,6 +341,12 @@
       "first": "атрибутов",
       "second": "атрибут",
       "third": "атрибута"
+    },
+    "fields": {
+      "attrType": "Тип атрибута",
+      "valueType": "Тип значения",
+      "attrCategory": "Группа",
+      "system": "Системный"
     }
   },
   "subsGroups": {
@@ -361,6 +367,35 @@
       "first": "значений",
       "second": "значение",
       "third": "значения"
+    },
+    "fields": {
+      "subsGroup": "Группа"
+    }
+  },
+  "departments": {
+    "breadcrumbs": {
+      "name": "Департаменты"
+    },
+    "plurals": {
+      "first": "департаментов",
+      "second": "департамент",
+      "third": "депертаменты"
+    },
+    "fields": {
+      "description": "Описание",
+      "parent": "Родитель",
+      "roles": "Доступные роли",
+      "allowedRoles": "Разрешенные роли"
+    }
+  },
+  "roles": {
+    "breadcrumbs": {
+      "name": "Роли"
+    },
+    "plurals": {
+      "first": "ролей",
+      "second": "роль",
+      "third": "роли"
     }
   },
 
