@@ -3,6 +3,7 @@ import {Redirect, Route, Switch, Router} from 'react-router-dom';
 import {withTranslation} from "react-i18next";
 import NavigationBaseMenu from "../../Menus/NavigationBaseMenu/NavigationBaseMenu";
 import NavigationTreeMenu from "../../Menus/NavigationTreeMenu/NavigationTreeMenu";
+import AccountMenu from "../../Menus/AccountMenu/AccountMenu";
 import {routes} from "../../../routes";
 
 class DefaultLayout extends Component {
@@ -12,6 +13,7 @@ class DefaultLayout extends Component {
         this.state = {
             activeTreeMenu: true,
             hideTreeMenu: true,
+            activeAccountMenu: false,
         };
     }
 
@@ -20,8 +22,17 @@ class DefaultLayout extends Component {
     showTreeMenu() {
         this.setState(prev => ({
             activeTreeMenu: !prev.activeTreeMenu,
-            hideTreeMenu: !prev.hideTreeMenu
+            hideTreeMenu: !prev.hideTreeMenu,
+            activeAccountMenu: false
         }));
+    }
+
+    showAccountMenu() {
+        this.setState(prev => ({
+            activeAccountMenu: !prev.activeAccountMenu,
+            activeTreeMenu: false,
+            hideTreeMenu: false,
+        }))
     }
 
     onHideTreeMenu() {
@@ -33,16 +44,17 @@ class DefaultLayout extends Component {
 
     render() {
 
-        const {activeTreeMenu, hideTreeMenu} = this.state;
+        const {activeTreeMenu, hideTreeMenu, activeAccountMenu} = this.state;
 
         return (
             <div className='cs-admin-main'>
                 <Suspense fallback={this.loading()}>
-                    <NavigationBaseMenu activeTreeMenu={activeTreeMenu} baseMenuFunc={() => this.showTreeMenu()}/>
+                    <NavigationBaseMenu activeTreeMenu={activeTreeMenu} activeAccountMenu={activeAccountMenu} baseMenuFunc={() => this.showTreeMenu()} showAccountMenu={() => this.showAccountMenu()}/>
                 </Suspense>
-                {hideTreeMenu && <Suspense fallback={this.loading()}>
-                    <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>
-                </Suspense>}
+                <Suspense fallback={this.loading()}>
+                    {hideTreeMenu && <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>}
+                    {activeAccountMenu && <AccountMenu show={activeAccountMenu} showAccountMenu={() => this.showAccountMenu()}/>}
+                </Suspense>
                 <div className='main-block'>
                         <Suspense fallback={this.loading()}>
                             <Switch>
