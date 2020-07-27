@@ -27,8 +27,14 @@ class MainSection extends Component {
             showEditWin: false,
             approveButton: {},
             progressSave: false,
+
+            progressCheckedToolBtn: new Map(),
+            progressDelete: false,
+
             sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
-            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging()
+            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),
+            clearChecked: false,
+            reloadList: false
         };
 
         this.updateChecked = this.updateChecked.bind(this);
@@ -74,7 +80,7 @@ class MainSection extends Component {
         {
             label: 'baseLayout.main.buttons.buttonDel',
             className:'button-delete-cancel',
-            onClick: () => {console.log('add button');},
+            onClick: (btn) => this.deleteCheckedItems(btn),
             hasApproval: true,
             type: 'checked',
             approval: {
@@ -177,11 +183,11 @@ class MainSection extends Component {
 
     approveApprovalWin(button, checkOrFilter) {
         let that = this;
+
         const buttonClick = (btn) => {
             if(btn.onClick && btn.onClick instanceof Function) {
-                new Promise((resolve, reject) => resolve(btn.onClick())).then(
+                new Promise((resolve, reject) => resolve(btn.onClick(button))).then(
                     res => {
-                        console.log('approveApprovalWin - btn.onClick() ', res);
                         that.setState({
                             approveButton: {},
                             showApprovalWin: false
@@ -203,7 +209,6 @@ class MainSection extends Component {
             && button.approval.onApprove instanceof Function) {
             new Promise((resolve, reject) => {resolve(button.approval.onApprove())}).then(
                 resA => {
-                    console.log('approveApprovalWin - button.approval.onApprove() - btn.onClick() ', resA);
                     buttonClick(button);
                 },
                 errorA => {
@@ -219,16 +224,14 @@ class MainSection extends Component {
         this.setState({
             progressSave: true
         });
-
-        console.log(item);
-
         apiService.saveItem(item)
             .then(
                 response => {
                     this.setState(prevState => ({
                         editItem: this.props.baseModel,
                         showEditWin: !prevState.showEditWin,
-                        progressSave: false
+                        progressSave: false,
+                        reloadList: true
                     }));
                     //this.getList(filters,sorter,paging, true);
                 },
@@ -264,10 +267,61 @@ class MainSection extends Component {
             loadOnAddItem(item);
     }
 
+    clearCheckedDone() {
+        this.setState({
+            clearChecked: false
+        });
+    }
+
+    reloadListDone() {
+        this.setState({
+            reloadList: false
+        });
+    }
+
+    deleteCheckedItems(btn) {
+        const {apiService} = this.props;
+        const {checkedItems, progressCheckedToolBtn} = this.state;
+
+        //console.log('deleteCheckedItems', checkedItems);
+        if (checkedItems && checkedItems.size > 0) {
+            //btn.inProgress = true;
+            //progressCheckedToolBtn
+            this.setState({
+                progressDelete: true
+            });
+            //let ids = Array.from(checkedItems).join(",");
+            apiService.removeByList(Array.from(checkedItems.keys()))
+                .then(
+                    response => {
+                            //btn.inProgress = false;
+                            if(response) {
+                                this.setState({
+                                    checkedItems: new Map(),
+                                    clearChecked: true,
+                                    progressDelete: false,
+                                    reloadList: true
+                                });
+                                 //this.getList(filters, sorter, paging, true);
+                            } else
+                                this.setState(prevState => ({
+                                    progressDelete: false}));
+                        },
+                    error => {
+                        this.setState(prevState => ({
+                            progressDelete: false
+                        }));
+                    }
+                );
+        }
+    }
+
+
     render() {
         const {t, breadcrumbs, dopToolbarButtons, dopCheckedButtons, plurals,
             children, gridView, treeView, apiService, location, columns, editComponent, baseSchema, baseModel} = this.props;
-        const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem, progressSave} = this.state;
+        const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem, progressSave,
+            clearChecked, reloadList, progressDelete} = this.state;
 
         let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
         let checkedButs = dopCheckedButtons? Array.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
@@ -300,6 +354,10 @@ class MainSection extends Component {
                                                updateChecked={this.updateChecked}
                                                editItem={this.editItem}
                                                checkedItems={checkedItems}
+                                               clearCheckedDone={() => this.clearCheckedDone()}
+                                               reloadListDone={() => this.reloadListDone()}
+                                               clearChecked={clearChecked}
+                                               reloadList={reloadList}
                                     ></DataGridView>}
                     {/*{treeView && }*/}
                 </div>
@@ -319,7 +377,7 @@ class MainSection extends Component {
                     style={{width: '500px'}}
                     baseText={(approveButton.approval && approveButton.approval.hasOwnProperty('baseText')) ?
                             (t(approveButton.approval.baseText) + '  ' + (approveButton.approval.showCount?(checkedItems.size > 1 ?
-                                (checkedItems.size + ' ' + t(pluralize(checkedItems.size, plurals))):'\''+checkedItems.get(1).name)+'\''
+                                (checkedItems.size + ' ' + t(pluralize(checkedItems.size, plurals))):'\''+checkedItems.get(checkedItems.keys().next().value).name)+'\''
                                 : ''))
                         :''}
                     header={(approveButton && approveButton.approval && approveButton.approval.hasOwnProperty('title'))?t(approveButton.approval.title):''}

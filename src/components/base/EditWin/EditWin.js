@@ -86,9 +86,7 @@ class EditWin extends Component {
     render() {
         const {t, show, style, onClose, editComponent, className, progressSave, saveItem} = this.props;
         const {validForms, item, loading} = this.state;
-
         return (
-
             <Dialog
                 className={'main-edit-win ' + className}
                 header={item.id?t('baseLayout.main.other.edit'):t('baseLayout.main.other.add')}
@@ -104,7 +102,8 @@ class EditWin extends Component {
                     <LoadingButton
                         loading={progressSave}
                         onClick={() => this.saveItem()}
-                        disabled={!validForms}
+                        disabled={!validForms || loading || progressSave}
+                        /*disabled={!validForms}*/
                         label={'baseLayout.main.buttons.buttonAdd'}
                         /*color: PropTypes.string,
                         style: PropTypes.object.isRequired,*/

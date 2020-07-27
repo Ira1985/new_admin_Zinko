@@ -99,9 +99,11 @@ function remove(url, id, consts = consts, showPageError = true) {
 }
 
 function removeByList(url, ids, consts = consts, showPageError = true) {
-    return API.delete(url, {params: {ids:ids}})
+    return API.delete(url, {params: {ids:ids.join(',')}})
         .then(res => {
-            if(ids && ids.split(',').length > 1) {
+            //if(ids && ids.split(',').length > 1) {
+            //.join(",")
+            if(ids && ids.length > 1) {
                 const constName = capitalizeFirstLetter(consts[3]);
                 let successMsgTpl = eval('`'+ i18n.t('services.base.successes.deleteList') + '`');
                 return processResponse(res, showPageError, (i18n.t('services.base.errors.deleteList') + ' ' + consts[2]), (String.raw, successMsgTpl));

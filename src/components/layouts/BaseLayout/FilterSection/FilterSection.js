@@ -164,22 +164,22 @@ class FilterSection extends Component {
                                 {fields && fields.map((field, index) => {
                                     let arr = field.operations.map(operation => t(getAFilterOperation(operation)))
                                     return field.required ?
-                                        <div>
+                                        <div key={'filter-filed-' + index}>
                                             <div className="p-label">
                                                 <span>{t(field.title)}</span>
-                                                <Dropdown value={operations[index]} name={index} options={arr} onChange={this.onOperationChange} style={{width: '12em'}}/>
+                                                <Dropdown value={operations[index]} name={field.filterField} options={arr} onChange={this.onOperationChange} style={{width: '12em'}}/>
                                             </div>
                                             {
                                                 field.type === 'TEXT' ?
-                                                    <InputText name={index} value={textValues[index]} onChange={this.onTextChange} /> :
+                                                    <InputText name={field.filterField} value={textValues[index]} onChange={this.onTextChange} /> :
                                                     field.type === 'DATE' ?
-                                                        <Calendar name={index} value={dateValues[index]} onChange={this.onDateChange} selectionMode={operations[index] === t("baseLayout.filterBlock.operations.between") ? "range" : "single"} locale={ru} dateFormat="dd/mm/yy"  /> :
+                                                        <Calendar name={field.filterField} value={dateValues[index]} onChange={this.onDateChange} selectionMode={operations[index] === t("baseLayout.filterBlock.operations.between") ? "range" : "single"} locale={ru} dateFormat="dd/mm/yy"  /> :
                                                         field.type === 'NUMBER' ?
-                                                            <InputNumber name={index} value={numValues} onChange={this.onNumChange} mode="decimal" minFractionDigits={2} /> :
+                                                            <InputNumber name={field.filterField} value={numValues} onChange={this.onNumChange} mode="decimal" minFractionDigits={2} /> :
                                                             field.type === 'IDS' ?
                                                                 <Inplace>
                                                                     <InplaceDisplay>
-                                                                        <InputText name={index} value={textValues[index]} onChange={this.onTextChange} />
+                                                                        <InputText name={field.filterField} value={textValues[index]} onChange={this.onTextChange} />
                                                                     </InplaceDisplay>
                                                                     <InplaceContent>
                                                                         <InputTextarea rows={5} cols={30} value={this.state.value} onChange={(e) => this.setState({value: e.target.value})} />
@@ -189,7 +189,7 @@ class FilterSection extends Component {
                                                                     </InplaceContent>
                                                                 </Inplace> :
                                                                 field.type === 'MULTI' || field.type === 'LIST' || field.type === 'SELECT' ?
-                                                                    <MultiSelect name={index} value={listValues[index]} options={values} onChange={this.onListChange} style={{minWidth:'15em'}} /> :
+                                                                    <MultiSelect name={field.filterField} value={listValues[index]} options={values} onChange={this.onListChange} style={{minWidth:'15em'}} /> :
                                                                     null
                                             }
                                         </div>
@@ -202,7 +202,7 @@ class FilterSection extends Component {
                                    <div className={'filter-scroll-panel'}>
                                        {fields && fields.map((field, index) => {
                                            return field.required ?
-                                               <div className={"p-title-checked"}>
+                                               <div key={'filter-field-present-' + index} className={"p-title-checked"}>
                                                    <Checkbox checked={true} value={index} onChange={(e) => {
                                                        let obj = fields.slice(0);
                                                        obj[e.value].required = false;
@@ -218,7 +218,7 @@ class FilterSection extends Component {
                                        {fields.find(field => field.required === true) && fields.find(field => field.required === false) && <hr/>}
                                        {fields && fields.map((field, index) => {
                                            return !field.required ?
-                                               <div className={"p-title-unchecked"}>
+                                               <div key={'filter-field-present-' + index} className={"p-title-unchecked"}>
                                                    <Checkbox checked={false} value={index} onChange={(e) => {
                                                        let obj = fields.slice(0);
                                                        obj[e.value].required = true;

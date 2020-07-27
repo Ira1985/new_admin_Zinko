@@ -68,7 +68,23 @@ class  DataGridView extends Component {
         this.dataGridView = React.createRef();
     }
 
-    //TODO: зробити onUpdate( перевірка списку вибору згори і чистка поточного)
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+
+        if(nextProps.clearChecked  && nextProps.hasOwnProperty('clearCheckedDone')) {
+            this.selectItem({value:[]});
+            nextProps.clearCheckedDone();
+            return false;
+        }
+
+        if(nextProps.reloadList  && nextProps.hasOwnProperty('reloadListDone')) {
+            //const {filters, sorter, paging} = this.state;
+            nextProps.reloadListDone();
+            this.getList(nextState.filters, nextState.sorter, nextState.paging, true);
+            return false;
+        }
+        return true;
+    }
+
 
     componentDidMount() {
         const {filters, sorter, paging} = this.state;
@@ -83,7 +99,6 @@ class  DataGridView extends Component {
         });
         this.props.apiService.getList(filtering, sorting, paging)
             .then(response => {
-                    console.log(response ? response.pageItems : []);
                     if(changingPage) {
                         let newPaging = new Paging();
                         if(response) {
@@ -152,10 +167,6 @@ class  DataGridView extends Component {
         this.setState({
             sorter: newSorter
         });
-        /*this.setState({
-            sortField: e.sortField,
-            sortOrder: e.sortOrder
-        });*/
         this.getList(filters, newSorter, paging, false);
     }
 
@@ -273,7 +284,7 @@ DataGridView.propTypes = {
         {
             field: PropTypes.string.isRequired,
             header: PropTypes.string.isRequired,
-            style:  PropTypes.object,
+            style: PropTypes.object,
             sortable: PropTypes.bool,
             order: PropTypes.number.isRequired,
             default: PropTypes.bool.isRequired,
@@ -282,8 +293,11 @@ DataGridView.propTypes = {
     )),
     sorterInit: PropTypes.object,
     pagingInit: PropTypes.object,
-    disableEdit: PropTypes.bool
-
+    disableEdit: PropTypes.bool,
+    clearChecked: PropTypes.bool.isRequired,
+    reloadList: PropTypes.bool.isRequired,
+    clearCheckedDone: PropTypes.func.isRequired,
+    reloadListDone: PropTypes.func.isRequired
 };
 
 export default withTranslation()(DataGridView);

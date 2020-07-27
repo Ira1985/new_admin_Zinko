@@ -242,6 +242,16 @@
       "third": "бренда"
     }
   },
+  "manufacturers": {
+    "breadcrumbs": {
+      "name": "Производители"
+    },
+    "plurals": {
+      "first": "производителей",
+      "second": "производитель",
+      "third": "производителя"
+    }
+  },
   "catalog": {
     "breadcrumbs": {
       "name": "Каталог"
@@ -262,7 +272,6 @@
       "name": "Редактирование товара"
     }
   },
-
   "categories": {
     "breadcrumbs": {
       "name": "Категоризация"
@@ -306,6 +315,12 @@
       "objecta":"бренда",
       "objectov":"брендов",
       "objects":"бренды"
+    },
+    "manufacturers": {
+      "obj":"производитель",
+      "objecta":"производителя",
+      "objectov":"производителей",
+      "objects":"производители"
     }
   }
 }

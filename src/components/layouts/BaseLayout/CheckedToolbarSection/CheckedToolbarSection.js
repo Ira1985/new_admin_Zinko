@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import './checkedToolbarSection.scss';
 import {Button} from "primereact/button";
 import {Checkbox} from "primereact/checkbox";
+import LoadingButton from "../../../base/LoadingButton/LoadingButton";
 
 
 class CheckedToolbarSection extends  Component {
@@ -33,7 +34,15 @@ class CheckedToolbarSection extends  Component {
                 <div className='items-buttons'>
                     {(buttons && buttons.length > 0) &&
                     buttons.map((button, index) =>
-                        <Button key={'toolbar_bottom_but_' + index} label={t(button.label)} className={button.className}  onClick={() => baseOnClick(button)} tooltip={button.tooltip} />
+                        <LoadingButton
+                            key={'checked_toolbar_bottom_but_' + index}
+                            loading={button.inProgress}
+                            onClick={() => baseOnClick(button)}
+                            disabled={button.inProgress}
+                            label={button.label}
+                            className={button.className}
+                            tooltip={button.tooltip}
+                            />
                     )}
                 </div>
             </div>

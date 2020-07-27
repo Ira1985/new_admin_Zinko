@@ -25,7 +25,7 @@ export class BrandEditDialog extends Component {
         return (
             <>
                 {loading ?
-                    <div className="p-fluid">
+                    <div className="p-fluid progress-div">
                         <ProgressSpinner/>
                     </div>
                     :
@@ -60,17 +60,6 @@ export class BrandEditDialog extends Component {
                                         updateValue(e)
                                         //this.updateProperty('name', e.target.value)
                                     }} value={props.values.comment || ''}/>
-                                </div>
-
-                                <div className="p-col-4" style={{padding: '.75em'}}>
-                                    <label htmlFor="description">{t("baseEntity.description")}</label>
-                                </div>
-                                <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputTextarea id="description" onChange={(e) => {
-                                        props.handleChange(e);
-                                        updateValue(e);
-                                        //this.updateProperty('name', e.target.value)
-                                    }} value={props.values.description || ''}/>
                                 </div>
                             </div>
                         )}

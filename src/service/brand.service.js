@@ -1,6 +1,7 @@
 import {toast} from "react-toastify";
 import {toastConfig} from "../helpers/toastConfig";
 import {baseService} from "./base/BaseMethodApi";
+import i18n from "../i18n";
 
 export const brandService = {
     getList,
@@ -16,7 +17,7 @@ export const brandService = {
 };
 
 const BASE_API_URL = '/brands/';
-const consts = ['services.brands.obj', 'services.brands.objecta', 'services.brands.objectov', 'services.brands.objects'];
+const consts = [i18n.t('services.brands.obj'), i18n.t('services.brands.objecta'), i18n.t('services.brands.objectov'), i18n.t('services.brands.objects')];
 
 function baseResponse(res) {
     if(res && res.success)
