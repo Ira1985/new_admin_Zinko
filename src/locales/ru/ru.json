@@ -319,6 +319,51 @@
       "name": "Категоризация"
     }
   },
+
+  "attrCategories": {
+    "breadcrumbs": {
+      "name": "Группы атрибутов"
+    },
+    "plurals": {
+      "first": "групп. аттр.",
+      "second": "группа",
+      "third": "группы атрибутов"
+    },
+    "fields": {
+      "system": "Системная"
+    }
+  },
+  "attributes": {
+    "breadcrumbs": {
+      "name": "Атрибуты"
+    },
+    "plurals": {
+      "first": "атрибутов",
+      "second": "атрибут",
+      "third": "атрибута"
+    }
+  },
+  "subsGroups": {
+    "breadcrumbs": {
+      "name": "Группы значений"
+    },
+    "plurals": {
+      "first": "групп значений",
+      "second": "группа значений",
+      "third": "группы значений"
+    }
+  },
+  "substitutions": {
+    "breadcrumbs": {
+      "name": "Значения"
+    },
+    "plurals": {
+      "first": "значений",
+      "second": "значение",
+      "third": "значения"
+    }
+  },
+
   "services": {
     "base": {
       "consts": {
@@ -387,6 +432,30 @@
       "objecta":"модели",
       "objectov":"моделей",
       "objects":"модели"
+    },
+    "attrCategories": {
+      "obj":"группа",
+      "objecta":"группы",
+      "objectov":"групп",
+      "objects":"групп"
+    },
+    "attributes": {
+      "obj":"атрибут",
+      "objecta":"атрибута",
+      "objectov":"атрибутов",
+      "objects":"атрибутов"
+    },
+    "subsGroups": {
+      "obj":"группа",
+      "objecta":"группы",
+      "objectov":"групп",
+      "objects":"групп"
+    },
+    "substitutions": {
+      "obj":"значение",
+      "objecta":"значения",
+      "objectov":"значений",
+      "objects":"значений"
     }
   }
 }

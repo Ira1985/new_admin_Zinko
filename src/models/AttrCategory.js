@@ -15,13 +15,13 @@ export default class AttrCategory extends BaseEntity {
 
     static buildFilters() {
         let base = BaseEntity.buildFilters();
-        base.push(FilterItem.buildCheck('attrCategories.system','system', false, false));
+        base.push(FilterItem.buildCheck('attrCategories.fields.system','system', false, false));
         return base;
     }
 
     static buildColumns() {
         let columns =  BaseEntity.buildColumns();
-        columns.push(new GridColumn().build({field: 'system', header: 'attrCategories.system', style:{}, sortable: true, order: 4, default: true, widthCoef:1.5}));
+        columns.push(new GridColumn().build({field: 'system', header: 'attrCategories.fields.system', style:{}, sortable: false, order: 4, default: true, widthCoef:1.5}));
         return columns;
     }
 }

@@ -52,9 +52,9 @@ const menuItem = [
         'leaf': false,
         "children": [
             { "key": "2-0", "label": "Характеристики", 'leaf': true },
-            { "key": "2-1", "label": "Список подстановок", 'leaf': true },
+            { "key": "2-1", "label": "Списки подстановок", 'leaf': true },
             { "key": "2-2", "label": "Единицы измерения", 'leaf': true },
-            { "key": "2-3", "label": "Группы атрибутов", 'leaf': true }]
+            { "key": "2-3", "label": "Группы атрибутов", 'leaf': true, "path":'/attrCategories' }]
     },
     {
         "key": "3",
