@@ -71,9 +71,11 @@ class Profile extends Component {
                     <div className={"profile-main"}>
                         <div className='edit-grid-left'>
                             <div className={'edit-grid-main'}>
-                                <img className={'account-logo'} src={logo}  alt={''} />
+                                <div className={'edit-grid-logo'}>
+                                    <img className={'account-logo'} src={logo}  alt={''} />
+                                </div>
                                 <div>
-                                    ADmin
+                                    Admin
                                 </div>
                             </div>
                             <div className={'edit-grid-password'}>
