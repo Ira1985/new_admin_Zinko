@@ -346,7 +346,32 @@
       "attrType": "Тип атрибута",
       "valueType": "Тип значения",
       "attrCategory": "Группа",
-      "system": "Системный"
+      "system": "Системный",
+      "sourceType":"Тип источника",
+      "valueTypes":{
+        "number": "Число",
+        "string": "Строка",
+        "single": "Одно значение",
+        "multi": "Список значений",
+        "yesNo": "Да/Нет",
+        "linkSource": "Ссылка на источник",
+        "fileLink": "Ссылка на файл"
+      },
+      "quantTypes": {
+        "number": "Число",
+        "string": "Строка",
+        "yesNo": "Да/Нет"
+      },
+      "sourceTypes": {
+        "brand": "Бренд",
+        "manufacturer": "Производитель",
+        "family": "Семейство",
+        "series": "Серия",
+        "model": "Модель",
+        "country": "Страна",
+        "substitution": "Значение с списка",
+        "productContent": "Ссылка на контент"
+      }
     }
   },
   "subsGroups": {
@@ -398,6 +423,10 @@
       "third": "роли"
     }
   },
+
+
+
+
 
   "services": {
     "base": {

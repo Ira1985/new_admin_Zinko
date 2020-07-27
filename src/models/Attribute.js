@@ -30,6 +30,9 @@ export const QuantType = {
 export const LinkSourceType = {
     NONE:'NONE',
     BRAND:'BRAND',
+    FAMILY:'FAMILY',
+    SERIES:'SERIES',
+    MODEL:'MODEL',
     MANUFACTURER:'MANUFACTURER',
     COUNTRY:'COUNTRY',
     SUBSTITUTION:'SUBSTITUTION',
@@ -90,7 +93,7 @@ export default class Attribute extends BaseEntity {
 
     static buildFilters() {
         let base = BaseEntity.buildFilters();
-        base.push(FilterItem.buildList('attributes.fields.attrType','attrType', true));
+        /*base.push(FilterItem.buildList('attributes.fields.attrType','attrType', true));*/
         base.push(FilterItem.buildList('attributes.fields.valueType','valueType', true));
         base.push(FilterItem.buildSelect('attributes.fields.attrCategory','attrCategory', false));
         base.push(FilterItem.buildCheck('attributes.fields.system','system', false, false));
@@ -99,7 +102,7 @@ export default class Attribute extends BaseEntity {
 
     static buildColumns() {
         let columns =  BaseEntity.buildColumns();
-        columns.push(new GridColumn().build({field: 'attrType', header: 'attributes.fields.attrType', style:{}, sortable: true, order: 4, default: true, widthCoef:1.5}));
+        /*columns.push(new GridColumn().build({field: 'attrType', header: 'attributes.fields.attrType', style:{}, sortable: true, order: 4, default: true, widthCoef:1.5}));*/
         columns.push(new GridColumn().build({field: 'valueType', header: 'attributes.fields.valueType', style:{}, sortable: true, order: 5, default: true, widthCoef:1.5}));
         columns.push(new GridColumn().build({field: 'unit', header: 'attributes.fields.unit', style:{}, sortable: true, order: 6, default: true, widthCoef:1.5}));
         columns.push(new GridColumn().build({field: 'attrCategory', header: 'attributes.fields.attrCategory', style:{}, sortable: true, order: 7, default: true, widthCoef:1.5}));
@@ -216,22 +219,22 @@ export function renderQuantType(){
 
 export function getValueType(type){
     switch (type) {
-        case ValueType.NUMBER: return 'Число';
-        case ValueType.STRING: return 'Строка';
-        case ValueType.SINGLE: return 'Одно значение';
-        case ValueType.MULTI: return 'Список значений';
-        case ValueType.YESNO: return 'Да/Нет';
-        case ValueType.LINK_SOURCE: return 'Ссылка на источник';
-        case ValueType.FILE_LINK: return 'Ссылка на файл';
+        case ValueType.NUMBER: return 'attributes.fields.valueTypes.number';
+        case ValueType.STRING: return 'attributes.fields.valueTypes.string';
+        case ValueType.SINGLE: return 'attributes.fields.valueTypes.single';
+        case ValueType.MULTI: return 'attributes.fields.valueTypes.multi';
+        case ValueType.YESNO: return 'attributes.fields.valueTypes.yesNo';
+        case ValueType.LINK_SOURCE: return 'attributes.fields.valueTypes.linkSource';
+        case ValueType.FILE_LINK: return 'attributes.fields.valueTypes.fileLink';
         default: return type;
     }
 }
 
 export function getQuantType(type){
     switch (type) {
-        case QuantType.NUMBER: return 'Число';
-        case QuantType.STRING: return 'Строка';
-        case QuantType.YESNO: return 'Да/Нет';
+        case QuantType.NUMBER: return 'attributes.fields.quantTypes.number';
+        case QuantType.STRING: return 'attributes.fields.quantTypes.string';
+        case QuantType.YESNO: return 'attributes.fields.quantTypes.yesNo';
         default: return type;
     }
 }
@@ -239,14 +242,19 @@ export function getQuantType(type){
 export function getLinkSourceType(type){
     switch (type) {
         case LinkSourceType.NONE: return '';
-        case LinkSourceType.BRAND: return 'Бренд';
-        case LinkSourceType.MANUFACTURER: return 'Производитель';
-        case LinkSourceType.COUNTRY: return 'Страна';
-        case LinkSourceType.SUBSTITUTION: return 'Значений с списка';
-        case LinkSourceType.PRODUCT_CONTENT: return 'Контент продукта';
+        case LinkSourceType.BRAND: return 'attributes.fields.sourceTypes.brand';
+        case LinkSourceType.MANUFACTURER: return 'attributes.fields.sourceTypes.manufacturer';
+        case LinkSourceType.COUNTRY: return 'attributes.fields.sourceTypes.country';
+        case LinkSourceType.SUBSTITUTION: return 'attributes.fields.sourceTypes.substitution';
+        case LinkSourceType.PRODUCT_CONTENT: return 'attributes.fields.sourceTypes.productContent';
+
+        case LinkSourceType.FAMILY: return 'attributes.fields.sourceTypes.family';
+        case LinkSourceType.SERIES: return 'attributes.fields.sourceTypes.series';
+        case LinkSourceType.MODEL: return 'attributes.fields.sourceTypes.model';
         default: return type;
     }
 }
+
 
 export function renderLinkSourceType(){
     return (
