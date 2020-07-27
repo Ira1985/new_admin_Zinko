@@ -1,0 +1,236 @@
+@import "../../styles/variables";
+
+.main-section {
+  height: 100%;
+  flex-basis: auto;
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    width: 96%;
+
+    .p-toolbar {
+      display: table-cell;
+      border: none !important;
+      //width: 96%;
+      vertical-align: middle;
+      padding: 0px;
+      margin: 0px;
+
+      .p-toolbar-group-right {
+        margin: 0px;
+
+        .p-button {
+          margin-left: 16px;
+          margin-right: 0px;
+
+          .p-button-text {
+            color: $primary-text-color4;
+          }
+
+        }
+      }
+    }
+  }
+
+  hr {
+    width: 96%;
+  }
+
+  .base-data-section {
+    height: auto;
+    flex-grow: 2;
+    .profile-main {
+      height: 100%;
+      display: flex;
+      //justify-content: space-between;
+      justify-content: space-around;
+      width: 97%;
+      margin: 0 auto;
+
+      .edit-grid-left {
+        display: flex;
+        flex-direction: column;
+        width: 44%;
+        .edit-grid-main {
+          background-color: $primary-block-back-color!important;
+          border-radius: 10px;
+          margin: 0px 20px 20px 0px;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          width: 100%;
+          height: 223px;
+          .account-logo {
+            width: 178px;
+            height: 178px;
+            border-radius: 50em;
+            margin-left: 20px;
+            margin-right: 20px;
+          }
+        }
+
+        .edit-grid-password {
+          background-color: $primary-block-back-color!important;
+          border-radius: 10px;
+          margin: 0px 20px 20px 0px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          width: 100%;
+          height: 227px;
+          p {
+            font-family: Lato;
+            font-style: normal;
+            font-weight: 900;
+            font-size: 16px;
+            line-height: 19px;
+            color: $primary-text-color3;
+            padding-left: 10px;
+          }
+          .edit-grid-container {
+            display: flex;
+            color: $primary-text-color3;
+            font-family: Lato;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 17px;
+            .p-inputtext.p-component, .p-autocomplete.p-component {
+              width: 100%;
+              background-color: $primary-color-input;
+              color: $primary-text-color3;
+              border: 0.5px solid $primary-color-input-border!important;
+              border-radius: 3px;
+              font-family: Lato;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 17px;
+              border: none;
+              .p-inputtext.p-component {
+                width: calc(100% - 20px);
+                border: none!important;
+              }
+              .p-button.p-component {
+                background-color: $primary-button-color;
+                border: none;
+                min-width: 20px;
+                width: 20px;
+                //margin-top: 3px;
+                span {
+                  color: $primary-text-color3;
+                }
+              }
+              .p-autocomplete-panel.p-input-overlay {
+                background-color: $primary-back-color;
+                border: none;
+                .p-autocomplete-list-item {
+                  color: $primary-text-color3;
+                  font-family: Lato;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 14px;
+                  line-height: 17px;
+                  margin: 5px 0px 5px 0px;
+                }
+                .p-autocomplete-list-item:hover {
+                  background-color: $primary-table-header;
+                }
+              }
+
+            }
+            .p-col-6 {
+              display: flex;
+              padding: 0px;
+            }
+          }
+        }
+      }
+
+      .edit-grid-right {
+        background-color: $primary-block-back-color!important;
+        border-radius: 10px;
+        //margin: 0px 20px 20px 0px;
+        width: 54%;
+        //width: 760px;
+        height: 586px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        p {
+          font-family: Lato;
+          font-style: normal;
+          font-weight: 900;
+          font-size: 16px;
+          line-height: 19px;
+          color: $primary-text-color3;
+          padding-left: 10px;
+        }
+        .edit-grid-container {
+          display: flex;
+          color: $primary-text-color3;
+          font-family: Lato;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 17px;
+          .p-disabled {
+            background-color: $primary-color-input-disabled!important;
+          }
+          .p-inputtext.p-component, .p-autocomplete.p-component {
+            width: 100%;
+            background-color: $primary-color-input;
+            color: $primary-text-color3;
+            border: 0.5px solid $primary-color-input-border!important;
+            border-radius: 3px;
+            font-family: Lato;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 17px;
+            border: none;
+            .p-inputtext.p-component {
+              width: calc(100% - 20px);
+              border: none!important;
+            }
+            .p-button.p-component {
+              background-color: $primary-button-color;
+              border: none;
+              min-width: 20px;
+              width: 20px;
+              //margin-top: 3px;
+              span {
+                color: $primary-text-color3;
+              }
+            }
+            .p-autocomplete-panel.p-input-overlay {
+              background-color: $primary-back-color;
+              border: none;
+              .p-autocomplete-list-item {
+                color: $primary-text-color3;
+                font-family: Lato;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 17px;
+                margin: 5px 0px 5px 0px;
+              }
+              .p-autocomplete-list-item:hover {
+                background-color: $primary-table-header;
+              }
+            }
+
+          }
+          .p-col-6 {
+            display: flex;
+            padding: 0px;
+          }
+        }
+      }
+    }
+  }
+}

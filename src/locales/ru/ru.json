@@ -21,6 +21,12 @@
     "properties": "Properties",
     "helps": "Helps"
   },
+  "accountMenu": {
+    "tasks": "Задачи",
+    "sendMessage": "Отправить сообщение",
+    "editProfile": "Редактировать профиль",
+    "exit": "Выйти"
+  },
   "baseLayout": {
     "filterBlock": {
       "baseTitle": "Фильтры",
@@ -128,6 +134,21 @@
         }
       }
     },
+    "editProfile": {
+      "password": "Пароль",
+      "newPassword": "Новый пароль",
+      "oldPassword": "Старый пароль",
+      "repeatPassword": "Повторить пароль",
+      "basic": "Основные",
+      "login": "Логин",
+      "department": "Департамент",
+      "comment": "Комментарий",
+      "name": "Имя",
+      "secondName": "Отчество",
+      "lastName": "Фамилия",
+      "code": "Код",
+      "e-mail": "Почта"
+    },
     "previewProduct" : {
       "article": "Артикул",
       "productId": "Продукт ID",
@@ -224,6 +245,11 @@
   "catalog": {
     "breadcrumbs": {
       "name": "Каталог"
+    }
+  },
+  "profile": {
+    "breadcrumbs": {
+      "name": "Профиль"
     }
   },
   "catalogPreview": {

@@ -11,12 +11,15 @@ class NavigationBaseMenu extends Component {
     }
 
     render() {
-        const { t, activeTreeMenu, baseMenuFunc } = this.props;
+        const { t, activeTreeMenu, activeAccountMenu, baseMenuFunc, showAccountMenu } = this.props;
         return <>
             <div className='navigation-base-menu'>
                 <img className='logo-image' src={logo}  alt={''} />
                 <hr/>
-                <img className='account-logo' src={logo}  alt={''} />
+
+                <a className={activeAccountMenu?'menu-item active-item':'menu-item'} onClick={showAccountMenu}>
+                    <img className={'account-logo'} src={logo}  alt={''} />
+                </a>
                 <hr/>
                 <div className='menu-items-block'>
                     <a className='menu-item' onClick={e => {console.log('message')}}>
