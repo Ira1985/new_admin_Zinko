@@ -26,6 +26,7 @@ class MainSection extends Component {
             showApprovalWin: false,
             showEditWin: false,
             approveButton: {},
+            progressSave: false,
             sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
             paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging()
         };
@@ -214,9 +215,32 @@ class MainSection extends Component {
     }
 
     saveItem(item) {
-        this.setState(prev => ({
+        const {apiService} = this.props;
+        this.setState({
+            progressSave: true
+        });
+
+        console.log(item);
+
+        apiService.saveItem(item)
+            .then(
+                response => {
+                    this.setState(prevState => ({
+                        editItem: this.props.baseModel,
+                        showEditWin: !prevState.showEditWin,
+                        progressSave: false
+                    }));
+                    //this.getList(filters,sorter,paging, true);
+                },
+                error => {
+                    this.setState({
+                        progressSave: false
+                    });
+                }
+            );
+        /*this.setState(prev => ({
             showEditWin: !prev.showEditWin
-        }))
+        }))*/
     }
 
     onCloseEdit() {
@@ -243,7 +267,7 @@ class MainSection extends Component {
     render() {
         const {t, breadcrumbs, dopToolbarButtons, dopCheckedButtons, plurals,
             children, gridView, treeView, apiService, location, columns, editComponent, baseSchema, baseModel} = this.props;
-        const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem} = this.state;
+        const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem, progressSave} = this.state;
 
         let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
         let checkedButs = dopCheckedButtons? Array.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
@@ -312,8 +336,12 @@ class MainSection extends Component {
                     onClose={() => this.onCloseEdit()}
                     editItem={editedItem}
                     editComponent={editComponent}
-                    saveItem={() => this.saveItem(editedItem)}
+                    saveItem={(item) => this.saveItem(item)}
                     baseSchema={baseSchema}
+                    apiService={apiService}
+                    baseModel={baseModel}
+                    loadable={true}
+                    progressSave={progressSave}
                 ></EditWin>}
             </>;
     }

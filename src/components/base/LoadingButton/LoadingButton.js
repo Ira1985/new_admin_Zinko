@@ -20,7 +20,7 @@ class  LoadingButton extends Component {
     render(){
         const {t, loading, onClick, color, style, disabled, className, label} = this.props;
         return (
-            <Button label={t(label)} icon={loading ? 'p-datatable-loading-icon pi-spin pi pi-spinner loading' : ""} iconPos="left" disabled={disabled} style={style} className={className}  onClick={onClick} />
+            <Button label={t(label)} icon={loading ? 'p-datatable-loading-icon pi-spin pi pi-spinner loading' : ""} iconPos="left" disabled={disabled} style={style?style:{}} className={className}  onClick={onClick} />
         );
     }
 }
@@ -30,7 +30,9 @@ LoadingButton.propTypes = {
     onClick: PropTypes.func.isRequired,
     color: PropTypes.string,
     style: PropTypes.object.isRequired,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    label: PropTypes.string.isRequired,
+    className: PropTypes.string
 };
 
 export default withTranslation()(LoadingButton);

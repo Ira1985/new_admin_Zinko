@@ -20,9 +20,9 @@ class Brands extends Component {
         this.state = {};
     }
 
-    editComponent = (editItem, updateValue) => {
+    editComponent = (loading, editItem, updateValue) => {
         return (
-            <BrandEditDialog editedItem={editItem} updateValue={updateValue} />
+            <BrandEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} />
         );
     }
 
