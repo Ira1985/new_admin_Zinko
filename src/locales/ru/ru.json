@@ -363,6 +363,30 @@
       "objecta":"производителя",
       "objectov":"производителей",
       "objects":"производители"
+    },
+    "countries": {
+      "obj":"страна",
+      "objecta":"страны",
+      "objectov":"стран",
+      "objects":"страны"
+    },
+    "families": {
+      "obj":"семейство",
+      "objecta":"семейства",
+      "objectov":"семейств",
+      "objects":"семейства"
+    },
+    "series": {
+      "obj":"серия",
+      "objecta":"серии",
+      "objectov":"серий",
+      "objects":"серии"
+    },
+    "models": {
+      "obj":"модель",
+      "objecta":"модели",
+      "objectov":"моделей",
+      "objects":"модели"
     }
   }
 }
