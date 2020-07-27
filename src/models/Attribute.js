@@ -1,3 +1,4 @@
+import React from "react";
 import * as Yup from "yup";
 import BaseEntity from "./base/BaseEntity";
 import FilterItem from "./base/FilterItem";
@@ -103,10 +104,10 @@ export default class Attribute extends BaseEntity {
     static buildColumns() {
         let columns =  BaseEntity.buildColumns();
         /*columns.push(new GridColumn().build({field: 'attrType', header: 'attributes.fields.attrType', style:{}, sortable: true, order: 4, default: true, widthCoef:1.5}));*/
-        columns.push(new GridColumn().build({field: 'valueType', header: 'attributes.fields.valueType', style:{}, sortable: true, order: 5, default: true, widthCoef:1.5}));
-        columns.push(new GridColumn().build({field: 'unit', header: 'attributes.fields.unit', style:{}, sortable: true, order: 6, default: true, widthCoef:1.5}));
-        columns.push(new GridColumn().build({field: 'attrCategory', header: 'attributes.fields.attrCategory', style:{}, sortable: true, order: 7, default: true, widthCoef:1.5}));
-        columns.push(new GridColumn().build({field: 'subsGroup', header: 'attributes.fields.subsGroup', style:{}, sortable: true, order: 8, default: true, widthCoef:1.5}));
+        /*columns.push(new GridColumn().build({field: 'valueType', header: 'attributes.fields.valueType', style:{}, sortable: true, order: 5, default: true, widthCoef:1.5}));*/
+        /*columns.push(new GridColumn().build({field: 'unit', header: 'attributes.fields.unit', style:{}, sortable: true, order: 6, default: true, widthCoef:1.5}));*/
+        /*columns.push(new GridColumn().build({field: 'attrCategory', header: 'attributes.fields.attrCategory', style:{}, sortable: true, order: 7, default: true, widthCoef:1.5}));*/
+        /*columns.push(new GridColumn().build({field: 'subsGroup', header: 'attributes.fields.subsGroup', style:{}, sortable: true, order: 8, default: true, widthCoef:1.5}));*/
         columns.push(new GridColumn().build({field: 'hasQuantities', header: 'attributes.fields.hasQuantities', style:{}, sortable: true, order: 9, default: true, widthCoef:0.5}));
         columns.push(new GridColumn().build({field: 'system', header: 'attributes.fields.system', style:{}, sortable: true, order: 10, default: true, widthCoef:0.5}));
 

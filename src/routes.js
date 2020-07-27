@@ -11,6 +11,7 @@ const Countries = React.lazy(() => import('./components/Countries/Countries'));
 const Families = React.lazy(() => import('./components/Families/Families'));
 const Models = React.lazy(() => import('./components/Models/Models'));
 const AttrCategories = React.lazy(() => import('./components/AttrCategories/AttrCategories'));
+const Attributes = React.lazy(() => import('./components/Attributes/Attributes'));
 const Profile = React.lazy(() => import('./components/Profile/Profile'));
 
 export const routes = [
@@ -26,5 +27,6 @@ export const routes = [
     { path: '/countries', name: 'Страны мира', component:  Countries},
     { path: '/families', name: 'Семейства', component: Families },
     { path: '/models', name: 'Модели', component: Models },
-    { path: '/attrCategories', name: 'Группы атрибутов', component: AttrCategories }
+    { path: '/attrCategories', name: 'Группы атрибутов', component: AttrCategories },
+    { path: '/attributes', name: 'Атрибуты', component: Attributes }
 ];
