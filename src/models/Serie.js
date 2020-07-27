@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import BaseEntity from "./base/BaseEntity";
 
-export default class Series extends BaseEntity {
+export default class Serie extends BaseEntity {
 
     build(item) {
         return super.build(item);
@@ -16,7 +16,7 @@ export default class Series extends BaseEntity {
     }
 }
 
-export const SeriesSchema = Yup.object().shape({
+export const SerieSchema = Yup.object().shape({
     name: Yup.string()
         .min(2,'baseEntity.errors.min')
         .trim()

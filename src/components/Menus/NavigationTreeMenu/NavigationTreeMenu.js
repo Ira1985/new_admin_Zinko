@@ -25,14 +25,18 @@ const menuItem = [
                 "children": [
                     { "key": "0-1-0", "label": "Производители", 'leaf': true, "path":'/manufacturers' },
                     { "key": "0-1-1", "label": "Бренды", 'leaf': true, "path":'/brands' },
-                    { "key": "0-1-2", "label": "Страны мира", 'leaf': true }
+                    { "key": "0-1-2", "label": "Страны мира", 'leaf': true, "path":'/countries' },
+                    { "key": "0-1-3", "label": "Семейства", 'leaf': true, "path":'/families' },
+                    { "key": "0-1-4", "label": "Серии", 'leaf': true, "path":'/series' },
+                    { "key": "0-1-5", "label": "Модели", 'leaf': true, "path":'/models' },
                 ]
-            },
-            {
+            }
+/*            {
                 "key": "0-2",
                 "label": "Дополнительный класификатор",
                 'leaf': true
-            },]
+            },*/
+        ]
     },
     {
         "key": "1",
