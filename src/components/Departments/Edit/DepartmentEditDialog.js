@@ -6,7 +6,7 @@ import Department, {DepartmentSchema} from "../../../models/Department";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class DepartmentEditDialog extends Component {
+class DepartmentEditDialog extends Component {
 
     constructor(props) {
         super(props);

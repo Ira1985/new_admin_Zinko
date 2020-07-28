@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Serie, {SerieSchema} from "../../models/Serie";
 import {seriesService} from "../../service/series.service";
 import {withTranslation} from "react-i18next";
-import {SeriesEditDialog} from "./Edit/SeriesEditDialog";
+import SeriesEditDialog from "./Edit/SeriesEditDialog";
 
 const plurals = ['series.plurals.first', 'series.plurals.second', 'series.plurals.third'];
 

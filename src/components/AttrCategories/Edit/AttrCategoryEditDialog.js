@@ -6,7 +6,7 @@ import AttrCategory, {AttrCategorySchema} from "../../../models/AttrCategory";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class AttrCategoryEditDialog extends Component {
+class AttrCategoryEditDialog extends Component {
 
     constructor(props) {
         super(props);

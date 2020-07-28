@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Substitution, {SubstitutionSchema} from "../../models/Substitution";
 import {substitutionService} from "../../service/substitution.service";
 import {withTranslation} from "react-i18next";
-import {SubstitutionEditDialog} from "./Edit/SubstitutionEditDialog";
+import SubstitutionEditDialog from "./Edit/SubstitutionEditDialog";
 
 const plurals = ['substitutions.plurals.first', 'substitutions.plurals.second', 'substitutions.plurals.third'];
 

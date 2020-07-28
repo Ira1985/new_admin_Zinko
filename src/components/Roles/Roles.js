@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Role, {RoleSchema} from "../../models/Role";
 import {roleService} from "../../service/role.service";
 import {withTranslation} from "react-i18next";
-import {RoleEditDialog} from "./Edit/RoleEditDialog";
+import RoleEditDialog from "./Edit/RoleEditDialog";
 
 const plurals = ['roles.plurals.first', 'roles.plurals.second', 'roles.plurals.third'];
 

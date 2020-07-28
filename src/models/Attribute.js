@@ -4,6 +4,7 @@ import BaseEntity from "./base/BaseEntity";
 import FilterItem from "./base/FilterItem";
 import TreeColumn from "./base/TreeColumn";
 import GridColumn from "./base/GridColumn";
+import i18n from "../i18n";
 
 export const AttrType = {
     GLOBAL: 'GLOBAL',
@@ -103,13 +104,18 @@ export default class Attribute extends BaseEntity {
 
     static buildColumns() {
         let columns =  BaseEntity.buildColumns();
-        /*columns.push(new GridColumn().build({field: 'attrType', header: 'attributes.fields.attrType', style:{}, sortable: true, order: 4, default: true, widthCoef:1.5}));*/
-        /*columns.push(new GridColumn().build({field: 'valueType', header: 'attributes.fields.valueType', style:{}, sortable: true, order: 5, default: true, widthCoef:1.5}));*/
-        /*columns.push(new GridColumn().build({field: 'unit', header: 'attributes.fields.unit', style:{}, sortable: true, order: 6, default: true, widthCoef:1.5}));*/
-        /*columns.push(new GridColumn().build({field: 'attrCategory', header: 'attributes.fields.attrCategory', style:{}, sortable: true, order: 7, default: true, widthCoef:1.5}));*/
-        /*columns.push(new GridColumn().build({field: 'subsGroup', header: 'attributes.fields.subsGroup', style:{}, sortable: true, order: 8, default: true, widthCoef:1.5}));*/
-        columns.push(new GridColumn().build({field: 'hasQuantities', header: 'attributes.fields.hasQuantities', style:{}, sortable: true, order: 9, default: true, widthCoef:0.5}));
-        columns.push(new GridColumn().build({field: 'system', header: 'attributes.fields.system', style:{}, sortable: true, order: 10, default: true, widthCoef:0.5}));
+        columns.push(new GridColumn().build({field: 'valueType', header: 'attributes.fields.valueType', style: {},
+            sortable: true, order: 5, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.valueType?getValueType(rowData.valueType):''}</p>}}));
+        columns.push(new GridColumn().build({field: 'unit', header: 'attributes.fields.unit', style:{},
+            sortable: true, order: 6, default: false, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.unit?rowData.unit.name:''}</p>}}));
+        columns.push(new GridColumn().build({field: 'attrCategory', header: 'attributes.fields.attrCategory', style:{},
+            sortable: true, order: 7, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.attrCategory?rowData.attrCategory.name:''}</p>}}));
+        columns.push(new GridColumn().build({field: 'subsGroup', header: 'attributes.fields.subsGroup', style:{},
+            sortable: true, order: 8, default: false, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.subsGroup?rowData.subsGroup.name:''}</p>}}));
+        columns.push(new GridColumn().build({field: 'hasQuantities', header: 'attributes.fields.hasQuantities', style:{},
+            sortable: true, order: 9, default: false, widthCoef: 0.5, renderer: (rowData, column) => {return <p>{rowData.hasQuantities?'Да':''}</p>}}));
+        columns.push(new GridColumn().build({field: 'system', header: 'attributes.fields.system', style:{},
+            sortable: true, order: 10, default: false, widthCoef: 0.5, renderer: (rowData, column) => {return <p>{rowData.system?'Да':''}</p>}}));
 
         return columns;
     }
@@ -128,23 +134,23 @@ export const AttributeSchema = Yup.object().shape({
         .required('baseEntity.errors.required')
 });
 
-export function getAttrSystemSource(type){
+export function getAttrSystemSource(type) {
     switch (type) {
-        case AttrSystemSource.NONE: return '';
-        case AttrSystemSource.PRODUCT_ID: return 'ID продукта';
-        case AttrSystemSource.ARTICLE: return 'Артикль';
-        case AttrSystemSource.MANUFACTURER: return 'Производитель';
-        case AttrSystemSource.COUNTRY: return 'Страна';
-        case AttrSystemSource.BRAND: return 'Бренд';
-        case AttrSystemSource.CODE: return 'Код';
-        case AttrSystemSource.FULL_NAME: return 'Имя';
-        case AttrSystemSource.IMAGES: return 'Изображения';
-        case AttrSystemSource.BASE_IMAGE: return 'Базовое изображение';
-        case AttrSystemSource.CERTIFICATES: return 'Сертификаты';
-        case AttrSystemSource.INSTRUCTIONS: return 'Инструкции';
-        case AttrSystemSource.VIDEOS: return 'Видео';
-        case AttrSystemSource.HTML_CONTENT: return 'Контент HTML';
-        case AttrSystemSource.BARCODES: return 'Штрихкоды';
+        case AttrSystemSource.NONE: return i18n.t('');
+        case AttrSystemSource.PRODUCT_ID: return i18n.t('ID продукта');
+        case AttrSystemSource.ARTICLE: return i18n.t('Артикль');
+        case AttrSystemSource.MANUFACTURER: return i18n.t('Производитель');
+        case AttrSystemSource.COUNTRY: return i18n.t('Страна');
+        case AttrSystemSource.BRAND: return i18n.t('Бренд');
+        case AttrSystemSource.CODE: return i18n.t('Код');
+        case AttrSystemSource.FULL_NAME: return i18n.t('Имя');
+        case AttrSystemSource.IMAGES: return i18n.t('Изображения');
+        case AttrSystemSource.BASE_IMAGE: return i18n.t('Базовое изображение');
+        case AttrSystemSource.CERTIFICATES: return i18n.t('Сертификаты');
+        case AttrSystemSource.INSTRUCTIONS: return i18n.t('Инструкции');
+        case AttrSystemSource.VIDEOS: return i18n.t('Видео');
+        case AttrSystemSource.HTML_CONTENT: return i18n.t('Контент HTML');
+        case AttrSystemSource.BARCODES: return i18n.t('Штрихкоды');
         default: return type;
     }
 }
@@ -175,10 +181,10 @@ export function renderAttrSystemSource(){
 
 export function getAttrType(type){
     switch (type) {
-        case AttrType.GLOBAL: return 'Глобальный';
-        case AttrType.INNER: return 'Внутренний';
-        case AttrType.OUTER: return 'Внешний';
-        case AttrType.SYSTEM: return 'Системный';
+        case AttrType.GLOBAL: return i18n.t('Глобальный');
+        case AttrType.INNER: return i18n.t('Внутренний');
+        case AttrType.OUTER: return i18n.t('Внешний');
+        case AttrType.SYSTEM: return i18n.t('Системный');
         default: return type;
     }
 }
@@ -220,22 +226,22 @@ export function renderQuantType(){
 
 export function getValueType(type){
     switch (type) {
-        case ValueType.NUMBER: return 'attributes.fields.valueTypes.number';
-        case ValueType.STRING: return 'attributes.fields.valueTypes.string';
-        case ValueType.SINGLE: return 'attributes.fields.valueTypes.single';
-        case ValueType.MULTI: return 'attributes.fields.valueTypes.multi';
-        case ValueType.YESNO: return 'attributes.fields.valueTypes.yesNo';
-        case ValueType.LINK_SOURCE: return 'attributes.fields.valueTypes.linkSource';
-        case ValueType.FILE_LINK: return 'attributes.fields.valueTypes.fileLink';
+        case ValueType.NUMBER: return i18n.t('attributes.fields.valueTypes.number');
+        case ValueType.STRING: return i18n.t('attributes.fields.valueTypes.string');
+        case ValueType.SINGLE: return i18n.t('attributes.fields.valueTypes.single');
+        case ValueType.MULTI: return i18n.t('attributes.fields.valueTypes.multi');
+        case ValueType.YESNO: return i18n.t('attributes.fields.valueTypes.yesNo');
+        case ValueType.LINK_SOURCE: return i18n.t('attributes.fields.valueTypes.linkSource');
+        case ValueType.FILE_LINK: return i18n.t('attributes.fields.valueTypes.fileLink');
         default: return type;
     }
 }
 
 export function getQuantType(type){
     switch (type) {
-        case QuantType.NUMBER: return 'attributes.fields.quantTypes.number';
-        case QuantType.STRING: return 'attributes.fields.quantTypes.string';
-        case QuantType.YESNO: return 'attributes.fields.quantTypes.yesNo';
+        case QuantType.NUMBER: return i18n.t('attributes.fields.quantTypes.number');
+        case QuantType.STRING: return i18n.t('attributes.fields.quantTypes.string');
+        case QuantType.YESNO: return i18n.t('attributes.fields.quantTypes.yesNo');
         default: return type;
     }
 }
@@ -243,15 +249,15 @@ export function getQuantType(type){
 export function getLinkSourceType(type){
     switch (type) {
         case LinkSourceType.NONE: return '';
-        case LinkSourceType.BRAND: return 'attributes.fields.sourceTypes.brand';
-        case LinkSourceType.MANUFACTURER: return 'attributes.fields.sourceTypes.manufacturer';
-        case LinkSourceType.COUNTRY: return 'attributes.fields.sourceTypes.country';
-        case LinkSourceType.SUBSTITUTION: return 'attributes.fields.sourceTypes.substitution';
-        case LinkSourceType.PRODUCT_CONTENT: return 'attributes.fields.sourceTypes.productContent';
+        case LinkSourceType.BRAND: return i18n.t('attributes.fields.sourceTypes.brand');
+        case LinkSourceType.MANUFACTURER: return i18n.t('attributes.fields.sourceTypes.manufacturer');
+        case LinkSourceType.COUNTRY: return i18n.t('attributes.fields.sourceTypes.country');
+        case LinkSourceType.SUBSTITUTION: return i18n.t('attributes.fields.sourceTypes.substitution');
+        case LinkSourceType.PRODUCT_CONTENT: return i18n.t('attributes.fields.sourceTypes.productContent');
 
-        case LinkSourceType.FAMILY: return 'attributes.fields.sourceTypes.family';
-        case LinkSourceType.SERIES: return 'attributes.fields.sourceTypes.series';
-        case LinkSourceType.MODEL: return 'attributes.fields.sourceTypes.model';
+        case LinkSourceType.FAMILY: return i18n.t('attributes.fields.sourceTypes.family');
+        case LinkSourceType.SERIES: return i18n.t('attributes.fields.sourceTypes.series');
+        case LinkSourceType.MODEL: return i18n.t('attributes.fields.sourceTypes.model');
         default: return type;
     }
 }

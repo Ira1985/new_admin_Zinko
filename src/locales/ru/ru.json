@@ -348,7 +348,16 @@
       "attrCategory": "Группа",
       "system": "Системный",
       "sourceType":"Тип источника",
-      "valueTypes":{
+      "unit": "Юнит",
+      "hasQuantities": "Квантиф.",
+      "roundUp": "Округление",
+      "length": "Длинна",
+      "subsGroup": "Группа значений",
+      "quantSubsGroup": "Группа значений квант.",
+      "quantType": "Тип квант.",
+      "attrCategory": "Группа атрибутов",
+      "systemSource": "Системный источник",
+      "valueTypes": {
         "number": "Число",
         "string": "Строка",
         "single": "Одно значение",

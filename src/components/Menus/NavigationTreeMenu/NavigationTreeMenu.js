@@ -52,8 +52,8 @@ const menuItem = [
         'leaf': false,
         "children": [
             { "key": "2-0", "label": "Характеристики", 'leaf': true, "path":'/attributes' },
-            { "key": "2-1", "label": "Списки подстановок", 'leaf': true },
-            { "key": "2-2", "label": "Единицы измерения", 'leaf': true },
+            { "key": "2-1", "label": "Списки подстановок", 'leaf': true, "path":'/subsGroups' },
+            { "key": "2-2", "label": "Единицы измерения", 'leaf': true, "path":'/units' },
             { "key": "2-3", "label": "Группы атрибутов", 'leaf': true, "path":'/attrCategories' }]
     },
     {
@@ -80,10 +80,11 @@ const menuItem = [
         "label": "Админка",
         'leaf': false,
         "children": [
-            { "key": "5-0", "label": "Пользователи", 'leaf': true },
-            { "key": "5-1", "label": "Департаменты", 'leaf': true },
-            { "key": "5-2", "label": "Роли", 'leaf': true },
-            { "key": "5-3", "label": "Допуски", 'leaf': true }]
+            { "key": "5-0", "label": "Пользователи", 'leaf': true, "path":'/users' },
+            { "key": "5-1", "label": "Департаменты", 'leaf': true, "path":'/departments' },
+            { "key": "5-2", "label": "Роли", 'leaf': true, "path":'/roles'}
+            /*{ "key": "5-3", "label": "Допуски", 'leaf': true }*/
+            ]
     },
 ];
 

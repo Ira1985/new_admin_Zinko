@@ -3,15 +3,11 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import './brands.scss';
 import Brand, {BrandSchema} from "../../models/Brand";
 import {withTranslation} from "react-i18next";
-import BaseGridLayout from "../layouts/BaseGridLayout/BaseGridLayout";
 import {brandService} from "../../service/brand.service";
 import BrandEditDialog from "./Edit/BrandEditDialog";
 import PropTypes from "prop-types";
 
-//const plurals = ['брендов', 'бренд', 'бренда'];
 const plurals = ['brands.plurals.first', 'brands.plurals.second', 'brands.plurals.third'];
-
-//const filters =  Brand.buildFilters();
 
 class Brands extends Component {
 

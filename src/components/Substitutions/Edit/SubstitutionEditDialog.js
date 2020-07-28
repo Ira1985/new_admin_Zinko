@@ -6,7 +6,7 @@ import Substitution, {SubstitutionSchema} from "../../../models/Substitution";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class SubstitutionEditDialog extends Component {
+class SubstitutionEditDialog extends Component {
 
     constructor(props) {
         super(props);

@@ -6,7 +6,7 @@ import Serie , {SerieSchema} from "../../../models/Serie";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class SeriesEditDialog extends Component {
+class SeriesEditDialog extends Component {
 
     constructor(props) {
         super(props);

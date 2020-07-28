@@ -6,7 +6,7 @@ import Attribute, {AttributeSchema} from "../../../models/Attribute";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class AttributeEditDialog extends Component {
+class AttributeEditDialog extends Component {
 
     constructor(props) {
         super(props);
@@ -67,7 +67,6 @@ export class AttributeEditDialog extends Component {
             </>
         );
     }
-
 }
 
 export default withTranslation()(AttributeEditDialog);

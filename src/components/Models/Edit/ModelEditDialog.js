@@ -6,7 +6,7 @@ import Model, {ModelSchema} from "../../../models/Model";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class ModelEditDialog extends Component {
+class ModelEditDialog extends Component {
 
     constructor(props) {
         super(props);

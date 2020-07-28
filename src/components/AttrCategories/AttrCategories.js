@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import AttrCategory, {AttrCategorySchema} from "../../models/AttrCategory";
 import {attrCategoryService} from "../../service/attrCategory.service";
 import {withTranslation} from "react-i18next";
-import {AttrCategoryEditDialog} from "./Edit/AttrCategoryEditDialog";
+import AttrCategoryEditDialog from "./Edit/AttrCategoryEditDialog";
 
 const plurals = ['attrCategories.plurals.first', 'attrCategories.plurals.second', 'attrCategories.plurals.third'];
 

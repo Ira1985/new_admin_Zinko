@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Country, {CountrySchema} from "../../models/Country";
 import {countryService} from "../../service/country.service";
 import {withTranslation} from "react-i18next";
-import {CountryEditDialog} from "./Edit/CountryEditDialog";
+import CountryEditDialog from "./Edit/CountryEditDialog";
 
 const plurals = ['countries.plurals.first', 'countries.plurals.second', 'countries.plurals.third'];
 

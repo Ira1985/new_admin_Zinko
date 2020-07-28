@@ -4,10 +4,9 @@ import {InputTextarea} from 'primereact/inputtextarea';
 import {Formik, useFormik} from 'formik';
 import Brand, {BrandSchema} from "../../../models/Brand";
 import {withTranslation} from "react-i18next";
-import {brandService as apiService} from "../../../service/brand.service"
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class BrandEditDialog extends Component {
+class BrandEditDialog extends Component {
 
     constructor(props) {
         super(props);

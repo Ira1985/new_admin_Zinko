@@ -6,7 +6,7 @@ import Manufacturer , {ManufacturerSchema} from "../../../models/Manufacturer";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class ManufacturerEditDialog extends Component {
+class ManufacturerEditDialog extends Component {
 
     constructor(props) {
         super(props);

@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import SubsGroup, {SubsGroupSchema} from "../../models/SubsGroup";
 import {subsGroupService} from "../../service/subsGroup.service";
 import {withTranslation} from "react-i18next";
-import {SubsGroupEditDialog} from "./Edit/SubsGroupEditDialog";
+import SubsGroupEditDialog from "./Edit/SubsGroupEditDialog";
 
 const plurals = ['subsGroups.plurals.first', 'subsGroups.plurals.second', 'subsGroups.plurals.third'];
 

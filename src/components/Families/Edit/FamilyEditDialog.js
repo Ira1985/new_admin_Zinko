@@ -6,7 +6,7 @@ import Family, {FamilySchema} from "../../../models/Family";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class FamilyEditDialog extends Component {
+class FamilyEditDialog extends Component {
 
     constructor(props) {
         super(props);

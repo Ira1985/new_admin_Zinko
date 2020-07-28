@@ -9,32 +9,28 @@ import BaseLayout from "../BaseLayout/BaseLayout";
 import {Button} from "primereact/button";
 import Paging from "../../../models/base/Paging";
 import Sorter from "../../../models/base/Sorter";
+import GridColumn from "../../../models/base/GridColumn";
 
 class  DataGridView extends Component {
 
     constructor(props) {
         super(props);
-        let columns = new Map(), selectedColumns = new Map(), coef = 1;
+        let columns = new Map(),
+            multiColumns = new Map(),
+            selectedColumns = new Map(), coef = 1;
 
         if(props.columns && props.columns.length > 0) {
             let sum = 0;
             props.columns.map((elem, index) => {
-                columns.set(elem.field,
-                    {field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable,
-                        order: elem.order, default: elem.default, widthCoef: elem.widthCoef});
-                //columns.push({field: elem.field, header: elem.header, style: elem.style, sortable: elem.sortable, order: elem.order});
-                if(elem.default) {
+                    columns.set(elem.field,
+                        new GridColumn().build(elem));
+                    if(!elem.actionColumn)
+                        multiColumns.set(elem.field,
+                            new GridColumn().build(elem));
+                if(elem.default || elem.actionColumn) {
                     sum += elem.widthCoef;
                     selectedColumns.set(
-                        elem.field, {
-                        field: elem.field,
-                        header: elem.header,
-                        style: elem.style,
-                        sortable: elem.sortable,
-                        order: elem.order,
-                        default: elem.default,
-                        widthCoef: elem.widthCoef
-                    });
+                        elem.field, new GridColumn().build(elem));
                 }
             });
             coef = (sum > 0? 100/sum: 1);
@@ -57,6 +53,7 @@ class  DataGridView extends Component {
             //scrollHeight: 0,
             selectedColumns: selectedColumns,
             columns: columns,
+            multiColumns: multiColumns,
             columnCoef: coef,
             /*sortField: '',
             sortOrder: 0,*/
@@ -189,37 +186,39 @@ class  DataGridView extends Component {
     }
 
     render() {
-        const {t, location, minimizeHeight, checkedItems} = this.props;
+        const {t, minimizeHeight, checkedItems} = this.props;
 
-        const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
-            totalRows, limit, currentPage, first, sortField, sortOrder, paging, sorter} = this.state;
+        const { items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter} = this.state;
 
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
 
-        //const offset = (selectedColumns.size > 0)? 75/(selectedColumns.size-1): 0;
         let offset = 0;
         if(this.dataGridView.current) {
-            //offset = (selectedColumns.size > 0)? 75/(selectedColumns.size-1): 0;
             offset = (selectedColumns.size > 0)?((80/this.dataGridView.current.clientWidth)*99)/selectedColumns.size: 0;
         }
 
         const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
-            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable} style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})} />;
+
+            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
+                           style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
+                           bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
+                           body={col.renderer?col.renderer:null}
+                    />;
         });
 
         return (<>
             <div ref={this.dataGridView} className='data_grid_view'>
 
                 <MultiSelect
-                    maxSelectedLabels={columns.size}
+                    maxSelectedLabels={multiColumns.size}
                     className={'grid-add-column'}
                     placeholder={' '}
                     fixedPlaceholder={true}
                     value={Array.from(selectedColumns.keys())}
-                    options={Array.from(columns.values())}
+                    options={Array.from(multiColumns.values())}
                     optionValue='field'
                     optionLabel='header'
                     itemTemplate={(option) => {return t(option.header);}}

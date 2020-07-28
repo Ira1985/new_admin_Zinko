@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Model, {ModelSchema} from "../../models/Model";
 import {modelService} from "../../service/model.service";
 import {withTranslation} from "react-i18next";
-import {ModelEditDialog} from "./Edit/ModelEditDialog";
+import ModelEditDialog from "./Edit/ModelEditDialog";
 
 const plurals = ['models.plurals.first', 'models.plurals.second', 'models.plurals.third'];
 

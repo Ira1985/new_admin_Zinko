@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Department, {DepartmentSchema} from "../../models/Department";
 import {departmentService} from "../../service/department.service";
 import {withTranslation} from "react-i18next";
-import {DepartmentEditDialog} from "./Edit/DepartmentEditDialog";
+import DepartmentEditDialog from "./Edit/DepartmentEditDialog";
 
 const plurals = ['departments.plurals.first', 'departments.plurals.second', 'departments.plurals.third'];
 

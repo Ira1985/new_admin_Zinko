@@ -6,7 +6,7 @@ import SubsGroup, {SubsGroupSchema} from "../../../models/SubsGroup";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class SubsGroupEditDialog extends Component {
+class SubsGroupEditDialog extends Component {
 
     constructor(props) {
         super(props);

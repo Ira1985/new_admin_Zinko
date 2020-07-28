@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Unit, {UnitSchema} from "../../models/Unit";
 import {unitService} from "../../service/unit.service";
 import {withTranslation} from "react-i18next";
-import {UnitEditDialog} from "./Edit/UnitEditDialog";
+import UnitEditDialog from "./Edit/UnitEditDialog";
 
 const plurals = ['units.plurals.first', 'units.plurals.second', 'units.plurals.third'];
 

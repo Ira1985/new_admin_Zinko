@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Attribute, {AttributeSchema} from "../../models/Attribute";
 import {attributeService} from "../../service/attribute.service";
 import {withTranslation} from "react-i18next";
-import {AttributeEditDialog} from "./Edit/AttributeEditDialog";
+import AttributeEditDialog from "./Edit/AttributeEditDialog";
 
 const plurals = ['attributes.plurals.first', 'attributes.plurals.second', 'attributes.plurals.third'];
 

@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Manufacturer , {ManufacturerSchema} from "../../models/Manufacturer";
 import {manufacturerService} from "../../service/manufacturer.service";
 import {withTranslation} from "react-i18next";
-import {ManufacturerEditDialog} from "./Edit/ManufacturerEditDialog";
+import ManufacturerEditDialog from "./Edit/ManufacturerEditDialog";
 
 const plurals = ['manufacturers.plurals.first', 'manufacturers.plurals.second', 'manufacturers.plurals.third'];
 

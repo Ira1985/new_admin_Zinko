@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Family, {FamilySchema} from "../../models/Family";
 import {familyService} from "../../service/family.service";
 import {withTranslation} from "react-i18next";
-import {FamilyEditDialog} from "./Edit/FamilyEditDialog";
+import FamilyEditDialog from "./Edit/FamilyEditDialog";
 
 const plurals = ['families.plurals.first', 'families.plurals.second', 'families.plurals.third'];
 

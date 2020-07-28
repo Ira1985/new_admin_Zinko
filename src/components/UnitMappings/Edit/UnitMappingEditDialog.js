@@ -6,7 +6,7 @@ import UnitMapping, {UnitMappingSchema} from "../../../models/UnitMapping";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class UnitMappingEditDialog extends Component {
+class UnitMappingEditDialog extends Component {
 
     constructor(props) {
         super(props);

@@ -6,7 +6,7 @@ import Role, {RoleSchema} from "../../../models/Role";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class RoleEditDialog extends Component {
+class RoleEditDialog extends Component {
 
     constructor(props) {
         super(props);

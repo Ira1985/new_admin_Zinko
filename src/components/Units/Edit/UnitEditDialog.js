@@ -6,7 +6,7 @@ import Unit, {UnitSchema} from "../../../models/Unit";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class UnitEditDialog extends Component {
+class UnitEditDialog extends Component {
 
     constructor(props) {
         super(props);

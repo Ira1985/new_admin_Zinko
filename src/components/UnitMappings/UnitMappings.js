@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import UnitMapping, {UnitMappingSchema} from "../../models/UnitMapping";
 import {unitMappingService} from "../../service/unitMapping.service";
 import {withTranslation} from "react-i18next";
-import {UnitMappingEditDialog} from "./Edit/UnitMappingEditDialog";
+import UnitMappingEditDialog from "./Edit/UnitMappingEditDialog";
 
 const plurals = ['unitMappings.plurals.first', 'unitMappings.plurals.second', 'unitMappings.plurals.third'];
 

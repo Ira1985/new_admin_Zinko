@@ -6,7 +6,7 @@ import Country, {CountrySchema} from "../../../models/Country";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 
-export class CountryEditDialog extends Component {
+class CountryEditDialog extends Component {
 
     constructor(props) {
         super(props);

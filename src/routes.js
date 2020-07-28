@@ -13,6 +13,12 @@ const Models = React.lazy(() => import('./components/Models/Models'));
 const AttrCategories = React.lazy(() => import('./components/AttrCategories/AttrCategories'));
 const Attributes = React.lazy(() => import('./components/Attributes/Attributes'));
 const Profile = React.lazy(() => import('./components/Profile/Profile'));
+const SubsGroups = React.lazy(() => import('./components/SubsGroups/SubsGroups'));
+const Substitutions = React.lazy(() => import('./components/Substitutions/Substitutions'));
+const Units = React.lazy(() => import('./components/Units/Units'));
+const UnitMappings = React.lazy(() => import('./components/UnitMappings/UnitMappings'));
+const Departments = React.lazy(() => import('./components/Departments/Departments'));
+const Roles = React.lazy(() => import('./components/Roles/Roles'));
 
 export const routes = [
     { path: '/', name: 'Главная', component: DefaultLayout },
@@ -28,5 +34,12 @@ export const routes = [
     { path: '/families', name: 'Семейства', component: Families },
     { path: '/models', name: 'Модели', component: Models },
     { path: '/attrCategories', name: 'Группы атрибутов', component: AttrCategories },
-    { path: '/attributes', name: 'Атрибуты', component: Attributes }
+    { path: '/attributes', name: 'Атрибуты', component: Attributes },
+    { path: '/subsGroups', name: 'Группы значений', component: SubsGroups },
+    { path: '/subsGroups/:id/values', name: 'Подстановки', component: SubsGroups },
+    { path: '/substitutions', name: 'Подстановки', component: Substitutions },
+    { path: '/units', name: 'Юниты', component: Units },
+    { path: '/unitMappings', name: 'Юнит маппинг', component: UnitMappings },
+    { path: '/departments', name: 'Департаменты', component: Departments },
+    { path: '/roles', name: 'Роли', component: Roles }
 ];
