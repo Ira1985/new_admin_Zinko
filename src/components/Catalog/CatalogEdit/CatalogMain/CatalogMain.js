@@ -10,6 +10,9 @@ import {DataTable} from "primereact/datatable";
 import { AutoComplete } from 'primereact/autocomplete';
 import {Dialog} from "primereact/dialog";
 import {ScrollPanel} from "primereact/scrollpanel";
+import {manufacturerService} from "../../../../service/manufacturer.service";
+import {brandService} from "../../../../service/brand.service";
+import {countryService} from "../../../../service/country.service";
 import PropTypes from "prop-types";
 
 
@@ -29,7 +32,7 @@ class CatalogMain extends Component {
     imageTemplate(image) {
         let tag;
         if(image.type === 'IMAGE') {
-            tag = <img src={'http://212.24.48.52/statics/' + image.link}
+            tag = <img src={'http://185.95.22.17/statics/' + image.link}
                        alt={'test'}/>
         }
         return tag;
@@ -44,17 +47,20 @@ class CatalogMain extends Component {
     }
 
     filterItems(event, data) {
-        let results;
+        data.getList().then(res => {
+            data = res.pageItems;
+            let results;
 
-        if (event.query.length === 0) {
-            results = [...data];
-        }
-        else {
-            results = data.filter((item) => {
-                return item.name.toLowerCase().startsWith(event.query.toLowerCase());
-            });
-        }
-        this.setState({ filteredItems: results });
+            if (event.query.length === 0) {
+                results = [...data];
+            }
+            else {
+                results = data.filter((item) => {
+                    return item.name.toLowerCase().startsWith(event.query.toLowerCase());
+                });
+            }
+            this.setState({ filteredItems: results });
+        })
     }
 
     render() {
@@ -156,7 +162,7 @@ class CatalogMain extends Component {
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProduct.manufacturer")}</label></div>
                                 <div className="p-col-10" style={{padding:'.5em'}}>
 
-                                    <AutoComplete value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, manufacturers)} size={30} minLength={1}
+                                    <AutoComplete value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, manufacturerService)} size={30} minLength={1}
                                                   field='name'
                                                   dropdown={true} onChange={(e) => onChangeMethod(e, 'manufacturerName')} />
                                 </div>
@@ -164,7 +170,7 @@ class CatalogMain extends Component {
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.previewProduct.country")}</label></div>
                                 <div className="p-col-10" style={{padding:'.5em'}}>
-                                    <AutoComplete value={item.countryName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, countries)} size={30} minLength={1}
+                                    <AutoComplete value={item.countryName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, countryService)} size={30} minLength={1}
                                                   field='name'
                                                   dropdown={true} onChange={(e) => onChangeMethod(e, 'countryName')} />
                                 </div>
@@ -172,7 +178,7 @@ class CatalogMain extends Component {
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.previewProduct.brand")}</label></div>
                                 <div className="p-col-10" style={{padding:'.5em'}}>
-                                    <AutoComplete value={item.brandName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, brands)} size={30} minLength={1}
+                                    <AutoComplete value={item.brandName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, brandService)} size={30} minLength={1}
                                                   field='name'
                                                   dropdown={true} onChange={(e) => onChangeMethod(e, 'brandName')} />
                                 </div>

@@ -248,6 +248,27 @@ hr {
       font-size: 14px;
       line-height: 17px;
     }
+    .p-autocomplete-dropdown {
+      background-color: $primary-menuitem-link;
+      min-width: 10px;
+      min-height: 32px;
+    }
+    .p-autocomplete-panel.p-input-overlay {
+      background-color: $primary-back-color;
+      border: none;
+      .p-autocomplete-list-item {
+        color: $primary-text-color3;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        margin: 5px 0px 5px 0px;
+      }
+      .p-autocomplete-list-item:hover {
+        background-color: $primary-table-header;
+      }
+    }
     .p-disabled {
       background-color: $primary-color-input-disabled;
     }

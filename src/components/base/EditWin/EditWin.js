@@ -13,10 +13,12 @@ class EditWin extends Component {
         super(props);
         this.state = {
             item: props.editItem,
+            filterItems: null,
             validForms: false,
             loading: true
         };
         this.updateValue = this.updateValue.bind(this);
+        this.filterItems = this.filterItems.bind(this);
     }
 
     componentDidMount() {
@@ -62,19 +64,39 @@ class EditWin extends Component {
     updateValue(e) {
         const {baseSchema} = this.props;
         const {item} = this.state;
-        let name = e.target.id;
-        let value = e.target.value;
+        let name = e.target.name;
+        let value = e.target.value.nameForRemember?e.target.value.nameForRemember:e.target.value;
         let direct = false;
         let val;
         let elem = Object.assign({}, item);
         elem[name] = value;
-
+        console.log(elem)
         baseSchema.isValid(elem).then(validForms => {
             this.setState({
                 validForms: validForms,
                 item: elem
             })
         })
+    }
+
+    filterItems(event, data, render) {
+        if(data) {
+            data.getList().then(res => {
+                data = res.pageItems;
+                let results;
+
+                if (event.query.length === 0) {
+                    results = [...data];
+                }
+                else {
+                    results = data.filter((item) => {
+                        return item.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+                this.setState({ filterItems: results });
+            })
+        } else
+            this.setState({ filterItems: render() });
     }
 
     saveItem() {
@@ -85,7 +107,7 @@ class EditWin extends Component {
 
     render() {
         const {t, show, style, onClose, editComponent, className, progressSave, saveItem} = this.props;
-        const {validForms, item, loading} = this.state;
+        const {validForms, item, loading, filterItems} = this.state;
         return (
             <Dialog
                 className={'main-edit-win ' + className}
@@ -113,7 +135,7 @@ class EditWin extends Component {
                     <Button label={t('baseLayout.main.buttons.buttonCancel')} className="button-delete-cancel" onClick={() => onClose()} />
                 </div>)}
             >
-                {editComponent(loading, item, this.updateValue)}
+                {editComponent(loading, item, this.updateValue, this.filterItems, filterItems)}
             </Dialog>
         );
     }

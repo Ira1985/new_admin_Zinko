@@ -105,7 +105,7 @@ export default class Attribute extends BaseEntity {
     static buildColumns() {
         let columns =  BaseEntity.buildColumns();
         columns.push(new GridColumn().build({field: 'valueType', header: 'attributes.fields.valueType', style: {},
-            sortable: true, order: 5, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.valueType?getValueType(rowData.valueType):''}</p>}}));
+            sortable: true, order: 5, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.valueType?getValueType(rowData.valueType).name:''}</p>}}));
         columns.push(new GridColumn().build({field: 'unit', header: 'attributes.fields.unit', style:{},
             sortable: true, order: 6, default: false, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.unit?rowData.unit.name:''}</p>}}));
         columns.push(new GridColumn().build({field: 'attrCategory', header: 'attributes.fields.attrCategory', style:{},
@@ -136,143 +136,247 @@ export const AttributeSchema = Yup.object().shape({
 
 export function getAttrSystemSource(type) {
     switch (type) {
-        case AttrSystemSource.NONE: return i18n.t('');
-        case AttrSystemSource.PRODUCT_ID: return i18n.t('ID продукта');
-        case AttrSystemSource.ARTICLE: return i18n.t('Артикль');
-        case AttrSystemSource.MANUFACTURER: return i18n.t('Производитель');
-        case AttrSystemSource.COUNTRY: return i18n.t('Страна');
-        case AttrSystemSource.BRAND: return i18n.t('Бренд');
-        case AttrSystemSource.CODE: return i18n.t('Код');
-        case AttrSystemSource.FULL_NAME: return i18n.t('Имя');
-        case AttrSystemSource.IMAGES: return i18n.t('Изображения');
-        case AttrSystemSource.BASE_IMAGE: return i18n.t('Базовое изображение');
-        case AttrSystemSource.CERTIFICATES: return i18n.t('Сертификаты');
-        case AttrSystemSource.INSTRUCTIONS: return i18n.t('Инструкции');
-        case AttrSystemSource.VIDEOS: return i18n.t('Видео');
-        case AttrSystemSource.HTML_CONTENT: return i18n.t('Контент HTML');
-        case AttrSystemSource.BARCODES: return i18n.t('Штрихкоды');
+        case AttrSystemSource.NONE: return {
+            nameForRemember: 'NONE',
+            name: i18n.t('')
+        };
+        case AttrSystemSource.PRODUCT_ID: return {
+            nameForRemember: 'PRODUCT_ID',
+            name: i18n.t('ID продукта')
+        };
+        case AttrSystemSource.ARTICLE: return {
+            nameForRemember: 'ARTICLE',
+            name: i18n.t('Артикль')
+        };
+        case AttrSystemSource.MANUFACTURER: return {
+            nameForRemember: 'MANUFACTURER',
+            name: i18n.t('Производитель')
+        };
+        case AttrSystemSource.COUNTRY: return {
+            nameForRemember: 'COUNTRY',
+            name: i18n.t('Страна')
+        };
+        case AttrSystemSource.BRAND: return {
+            nameForRemember: 'BRAND',
+            name: i18n.t('Бренд')
+        };
+        case AttrSystemSource.CODE: return {
+            nameForRemember: 'CODE',
+            name: i18n.t('Код')
+        };
+        case AttrSystemSource.FULL_NAME: return {
+            nameForRemember: 'FULL_NAME',
+            name: i18n.t('Имя')
+        };
+        case AttrSystemSource.IMAGES: return {
+            nameForRemember: 'IMAGES',
+            name: i18n.t('Изображения')
+        };
+        case AttrSystemSource.BASE_IMAGE: return {
+            nameForRemember: 'BASE_IMAGE',
+            name: i18n.t('Базовое изображение')
+        };
+        case AttrSystemSource.CERTIFICATES: return {
+            nameForRemember: 'CERTIFICATES',
+            name: i18n.t('Сертификаты')
+        };
+        case AttrSystemSource.INSTRUCTIONS: return {
+            nameForRemember: 'INSTRUCTIONS',
+            name: i18n.t('Инструкции')
+        };
+        case AttrSystemSource.VIDEOS: return {
+            nameForRemember: 'VIDEOS',
+            name: i18n.t('Видео')
+        };
+        case AttrSystemSource.HTML_CONTENT: return {
+            nameForRemember: 'HTML_CONTENT',
+            name: i18n.t('Контент HTML')
+        };
+        case AttrSystemSource.BARCODES: return {
+            nameForRemember: 'BARCODES',
+            name: i18n.t('Штрихкоды')
+        };
         default: return type;
     }
 }
 
 export function renderAttrSystemSource(){
-    return (
-        <React.Fragment>
-            <option value='NONE'>{getAttrSystemSource('NONE')}</option>
-            <option value='PRODUCT_ID'>{getAttrSystemSource('PRODUCT_ID')}</option>
-            <option value='ARTICLE'>{getAttrSystemSource('ARTICLE')}</option>
-            <option value='MANUFACTURER'>{getAttrSystemSource('MANUFACTURER')}</option>
-            <option value='COUNTRY'>{getAttrSystemSource('COUNTRY')}</option>
-            <option value='BRAND'>{getAttrSystemSource('BRAND')}</option>
-            <option value='CODE'>{getAttrSystemSource('CODE')}</option>
-            <option value='FULL_NAME'>{getAttrSystemSource('FULL_NAME')}</option>
-            <option value='IMAGES'>{getAttrSystemSource('IMAGES')}</option>
-            <option value='BASE_IMAGE'>{getAttrSystemSource('BASE_IMAGE')}</option>
-            <option value='CERTIFICATES'>{getAttrSystemSource('CERTIFICATES')}</option>
-            <option value='INSTRUCTIONS'>{getAttrSystemSource('INSTRUCTIONS')}</option>
-            <option value='VIDEOS'>{getAttrSystemSource('VIDEOS')}</option>
-            <option value='HTML_CONTENT'>{getAttrSystemSource('HTML_CONTENT')}</option>
-            <option value='BARCODES'>{getAttrSystemSource('BARCODES')}</option>
-            {/*<option value='SUBSTITUTION'>{getLinkSourceType('SUBSTITUTION')}</option>*/}
-            {/*<option value='FILE_LINK'>{getValueType('FILE_LINK')}</option>*/}
-        </React.Fragment>
-    );
+    return [
+        getAttrSystemSource('NONE'),
+        getAttrSystemSource('PRODUCT_ID'),
+        getAttrSystemSource('ARTICLE'),
+        getAttrSystemSource('MANUFACTURER'),
+        getAttrSystemSource('COUNTRY'),
+        getAttrSystemSource('BRAND'),
+        getAttrSystemSource('CODE'),
+        getAttrSystemSource('FULL_NAME'),
+        getAttrSystemSource('IMAGES'),
+        getAttrSystemSource('BASE_IMAGE'),
+        getAttrSystemSource('CERTIFICATES'),
+        getAttrSystemSource('INSTRUCTIONS'),
+        getAttrSystemSource('VIDEOS'),
+        getAttrSystemSource('HTML_CONTENT'),
+        getAttrSystemSource('BARCODES'),
+        //getLinkSourceType('SUBSTITUTION'),
+        //getValueType('FILE_LINK')
+    ];
 }
 
 export function getAttrType(type){
     switch (type) {
-        case AttrType.GLOBAL: return i18n.t('Глобальный');
-        case AttrType.INNER: return i18n.t('Внутренний');
-        case AttrType.OUTER: return i18n.t('Внешний');
-        case AttrType.SYSTEM: return i18n.t('Системный');
+        case AttrType.GLOBAL: return {
+            nameForRemember: 'GLOBAL',
+            name: i18n.t('Глобальный')
+        };
+        case AttrType.INNER: return {
+            nameForRemember: 'INNER',
+            name: i18n.t('Внутренний')
+        };
+        case AttrType.OUTER: return {
+            nameForRemember: 'OUTER',
+            name: i18n.t('Внешний')
+        };
+        case AttrType.SYSTEM: return {
+            nameForRemember: 'SYSTEM',
+            name: i18n.t('Системный')
+        };
         default: return type;
     }
 }
 
 export function renderAttrType(){
-    return (
-        <React.Fragment>
-            <option value='GLOBAL'>{getAttrType('GLOBAL')}</option>
-            {/*<option value='INNER'>{getAttrType('INNER')}</option>
-            <option value='OUTER'>{getAttrType('OUTER')}</option>*/}
-            <option value='SYSTEM'>{getAttrType('SYSTEM')}</option>
-        </React.Fragment>
-    );
+    return [
+        getAttrType('GLOBAL'),
+        //getAttrType('INNER'),
+        //getAttrType('OUTER'),
+        getAttrType('SYSTEM')
+    ];
 }
 
 export function renderValueType(){
-    return (
-        <React.Fragment>
-            <option value='NUMBER'>{getValueType('NUMBER')}</option>
-            <option value='STRING'>{getValueType('STRING')}</option>
-            <option value='SINGLE'>{getValueType('SINGLE')}</option>
-            <option value='MULTI'>{getValueType('MULTI')}</option>
-            <option value='YESNO'>{getValueType('YESNO')}</option>
-            <option value='LINK_SOURCE'>{getValueType('LINK_SOURCE')}</option>
-            {/*<option value='FILE_LINK'>{getValueType('FILE_LINK')}</option>*/}
-        </React.Fragment>
-    );
+    return [
+        getValueType('NUMBER'),
+        getValueType('STRING'),
+        getValueType('SINGLE'),
+        getValueType('MULTI'),
+        getValueType('YESNO'),
+        getValueType('LINK_SOURCE'),
+        //getValueType('FILE_LINK')
+    ];
 }
 
 export function renderQuantType(){
-    return (
-        <React.Fragment>
-            <option value='NUMBER'>{getQuantType('NUMBER')}</option>
-            <option value='STRING'>{getQuantType('STRING')}</option>
-            <option value='YESNO'>{getQuantType('YESNO')}</option>
-        </React.Fragment>
-    );
+    return [
+        getQuantType('NUMBER'),
+        getQuantType('STRING'),
+        getQuantType('YESNO')
+    ];
 }
 
 export function getValueType(type){
     switch (type) {
-        case ValueType.NUMBER: return i18n.t('attributes.fields.valueTypes.number');
-        case ValueType.STRING: return i18n.t('attributes.fields.valueTypes.string');
-        case ValueType.SINGLE: return i18n.t('attributes.fields.valueTypes.single');
-        case ValueType.MULTI: return i18n.t('attributes.fields.valueTypes.multi');
-        case ValueType.YESNO: return i18n.t('attributes.fields.valueTypes.yesNo');
-        case ValueType.LINK_SOURCE: return i18n.t('attributes.fields.valueTypes.linkSource');
-        case ValueType.FILE_LINK: return i18n.t('attributes.fields.valueTypes.fileLink');
+        case ValueType.NUMBER: return {
+            nameForRemember: 'NUMBER',
+            name: i18n.t('attributes.fields.valueTypes.number')
+        };
+        case ValueType.STRING: return {
+            nameForRemember: 'STRING',
+            name: i18n.t('attributes.fields.valueTypes.string')
+        };
+        case ValueType.SINGLE: return {
+            nameForRemember: 'SINGLE',
+            name: i18n.t('attributes.fields.valueTypes.single')
+        };
+        case ValueType.MULTI: return {
+            nameForRemember: 'MULTI',
+            name: i18n.t('attributes.fields.valueTypes.multi')
+        };
+        case ValueType.YESNO: return {
+            nameForRemember: 'YESNO',
+            name: i18n.t('attributes.fields.valueTypes.yesNo')
+        };
+        case ValueType.LINK_SOURCE: return {
+            nameForRemember: 'LINK_SOURCE',
+            name: i18n.t('attributes.fields.valueTypes.linkSource')
+        };
+        case ValueType.FILE_LINK: return {
+            nameForRemember: 'FILE_LINK',
+            name: i18n.t('attributes.fields.valueTypes.fileLink')
+        };
         default: return type;
     }
 }
 
 export function getQuantType(type){
     switch (type) {
-        case QuantType.NUMBER: return i18n.t('attributes.fields.quantTypes.number');
-        case QuantType.STRING: return i18n.t('attributes.fields.quantTypes.string');
-        case QuantType.YESNO: return i18n.t('attributes.fields.quantTypes.yesNo');
+        case QuantType.NUMBER: return {
+            nameForRemember: 'NUMBER',
+            name: i18n.t('attributes.fields.quantTypes.number')
+        };
+        case QuantType.STRING: return {
+            nameForRemember: 'STRING',
+            name: i18n.t('attributes.fields.quantTypes.string')
+        };
+        case QuantType.YESNO: return {
+            nameForRemember: 'YESNO',
+            name: i18n.t('attributes.fields.quantTypes.yesNo')
+        };
         default: return type;
     }
 }
 
 export function getLinkSourceType(type){
     switch (type) {
-        case LinkSourceType.NONE: return '';
-        case LinkSourceType.BRAND: return i18n.t('attributes.fields.sourceTypes.brand');
-        case LinkSourceType.MANUFACTURER: return i18n.t('attributes.fields.sourceTypes.manufacturer');
-        case LinkSourceType.COUNTRY: return i18n.t('attributes.fields.sourceTypes.country');
-        case LinkSourceType.SUBSTITUTION: return i18n.t('attributes.fields.sourceTypes.substitution');
-        case LinkSourceType.PRODUCT_CONTENT: return i18n.t('attributes.fields.sourceTypes.productContent');
+        case LinkSourceType.NONE: return {
+            nameForRemember: 'NONE',
+            name: ''
+        };
+        case LinkSourceType.BRAND: return {
+            nameForRemember: 'BRAND',
+            name: i18n.t('attributes.fields.sourceTypes.brand')
+        };
+        case LinkSourceType.MANUFACTURER: return {
+            nameForRemember: 'MANUFACTURER',
+            name: i18n.t('attributes.fields.sourceTypes.manufacturer')
+        };
+        case LinkSourceType.COUNTRY: return {
+            nameForRemember: 'COUNTRY',
+            name: i18n.t('attributes.fields.sourceTypes.country')
+        };
+        case LinkSourceType.SUBSTITUTION: return {
+            nameForRemember: 'SUBSTITUTION',
+            name: i18n.t('attributes.fields.sourceTypes.substitution')
+        };
+        case LinkSourceType.PRODUCT_CONTENT: return {
+            nameForRemember: 'PRODUCT_CONTENT',
+            name: i18n.t('attributes.fields.sourceTypes.productContent')
+        };
 
-        case LinkSourceType.FAMILY: return i18n.t('attributes.fields.sourceTypes.family');
-        case LinkSourceType.SERIES: return i18n.t('attributes.fields.sourceTypes.series');
-        case LinkSourceType.MODEL: return i18n.t('attributes.fields.sourceTypes.model');
+        case LinkSourceType.FAMILY: return {
+            nameForRemember: 'FAMILY',
+            name: i18n.t('attributes.fields.sourceTypes.family')
+        };
+        case LinkSourceType.SERIES: return {
+            nameForRemember: 'SERIES',
+            name: i18n.t('attributes.fields.sourceTypes.series')
+        };
+        case LinkSourceType.MODEL: return {
+            nameForRemember: 'MODEL',
+            name: i18n.t('attributes.fields.sourceTypes.model')
+        };
         default: return type;
     }
 }
 
 
 export function renderLinkSourceType(){
-    return (
-        <React.Fragment>
-            <option value='NONE'>{getLinkSourceType('NONE')}</option>
-            <option value='BRAND'>{getLinkSourceType('BRAND')}</option>
-            <option value='MANUFACTURER'>{getLinkSourceType('MANUFACTURER')}</option>
-            <option value='COUNTRY'>{getLinkSourceType('COUNTRY')}</option>
-            {/*<option value='SUBSTITUTION'>{getLinkSourceType('SUBSTITUTION')}</option>*/}
-            <option value='PRODUCT_CONTENT'>{getLinkSourceType('PRODUCT_CONTENT')}</option>
-            {/*<option value='FILE_LINK'>{getValueType('FILE_LINK')}</option>*/}
-        </React.Fragment>
-    );
+    return [
+        getLinkSourceType('NONE'),
+        getLinkSourceType('BRAND'),
+        getLinkSourceType('MANUFACTURER'),
+        getLinkSourceType('COUNTRY'),
+        //getLinkSourceType('SUBSTITUTION'),
+        getLinkSourceType('PRODUCT_CONTENT'),
+        //getValueType('FILE_LINK')
+    ];
 }

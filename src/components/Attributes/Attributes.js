@@ -15,9 +15,9 @@ class Attributes extends Component {
         this.state = {};
     }
 
-    editComponent = (loading, editItem, updateValue) => {
+    editComponent = (loading, editItem, updateValue, filter, filterItems) => {
         return (
-            <AttributeEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} />
+            <AttributeEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
         );
     }
 
