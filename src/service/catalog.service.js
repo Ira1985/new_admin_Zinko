@@ -41,7 +41,6 @@ function getList(filters, sorter, paging) {
 function getItem(id) {
     return baseService.getItem(BASE_API_URL, id, consts)
         .then(res => {
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaa", res)
             return baseResponse(res);
         })
         .catch(error => {

@@ -48,7 +48,7 @@ class CatalogCard extends Component {
 
                 <DataTable value={item.productCards.cards} rowGroupMode="subheader" sortField="groupName" sortOrder={0} groupField="groupName"
                            rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate}
-                           scrollable={true} scrollHeight='90%'
+                           scrollable={true} scrollHeight='calc(100vh - 255px)'
                            contextMenuSelection={this.state.selectedRow} onContextMenuSelectionChange={e => this.setState({selectedRow: e.value})}
                            onContextMenu={e => this.cm.show(e.originalEvent)}
                            expandableRowGroups={true} expandedRows={this.state.expandedRows} onRowToggle={(e) => this.setState({expandedRows:e.data})}>

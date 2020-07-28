@@ -27,9 +27,10 @@ class CatalogEdit extends Component {
     }
 
     componentDidMount() {
-        const id = window.location.pathname.split('/')[2];
+        const id = window.location.pathname.split('/')[2] + "/edit";
         catalogService.getItem(id).then(res => {
-            this.setState({item: res})
+            console.log(res)
+            this.setState({item: res.pageItems[0]})
         });
     }
 

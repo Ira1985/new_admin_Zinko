@@ -18,14 +18,14 @@ class CatalogPreview extends Component {
         super(props);
         this.state = {
             activeIndex: 0,
-            item: {},
+            item: null,
             expandedRows: []
         };
         this.headerTemplate = this.headerTemplate.bind(this);
     }
 
     componentDidMount() {
-        const id = window.location.pathname.split('/')[2];
+        const id = window.location.pathname.split('/')[2] + "/preview";
         catalogService.getItem(id).then(res => {
             this.setState({item: res.pageItems[0]})
         });

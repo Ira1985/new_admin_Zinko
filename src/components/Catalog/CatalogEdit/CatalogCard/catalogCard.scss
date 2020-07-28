@@ -42,8 +42,8 @@
   .p-datatable-scrollable-wrapper {
     margin: 0 auto;
     height: calc(100vh - 210px);
-    overflow-y: auto;
-    scrollbar-width: thin;
+    //overflow-y: auto;
+    //scrollbar-width: thin;
     width: 96%;
 
     background-color: $primary-block-back-color;
@@ -174,7 +174,7 @@
 
       .p-datatable-scrollable-body {
         height: auto;
-        max-height: calc(100vh - 225px)!important;
+        max-height: calc(100vh - 275px)!important;
         overflow-y: auto;
         display: block;
         position: relative;
