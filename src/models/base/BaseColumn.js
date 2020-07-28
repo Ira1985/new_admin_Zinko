@@ -10,6 +10,7 @@ export default class BaseColumn {
     widthCoef = 1;
     renderer = null;
     actionColumn = false;
+    actionWidth = 0;
 
     build(item) {
         this.field = item['field']?item['field']:null;
@@ -22,6 +23,7 @@ export default class BaseColumn {
         this.widthCoef = (item['widthCoef'] && item['widthCoef'] >= 0)?item['widthCoef']:1;
         this.renderer = (item.hasOwnProperty('renderer'))?item['renderer']:null;
         this.actionColumn = (item.hasOwnProperty('actionColumn') && item['actionColumn'])?item['actionColumn']:false;
+        this.actionWidth = (item.hasOwnProperty('actionWidth'))?item['actionWidth']:0
         return this;
     }
 

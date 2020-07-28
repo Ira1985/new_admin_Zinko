@@ -5,6 +5,10 @@ import SubsGroup, {SubsGroupSchema} from "../../models/SubsGroup";
 import {subsGroupService} from "../../service/subsGroup.service";
 import {withTranslation} from "react-i18next";
 import SubsGroupEditDialog from "./Edit/SubsGroupEditDialog";
+import Attribute from "../../models/Attribute";
+import GridColumn from "../../models/base/GridColumn";
+import {Button} from "primereact/button";
+import history from "./../../App";
 
 const plurals = ['subsGroups.plurals.first', 'subsGroups.plurals.second', 'subsGroups.plurals.third'];
 
@@ -19,6 +23,28 @@ class SubsGroups extends Component {
         return (
             <SubsGroupEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} />
         );
+    }
+
+    renderActionColumns(rowData, column) {
+        const {t} = this.props;
+        return <div className={'column-button'}>
+            <Button icon="pi p-empty-button chain-ico" onClick={() => {
+                history.push('/subs_groups/' + rowData.id + '/subs');
+            }} tooltip={t('subsGroups.fields.showSubs')}/>
+        </div>
+    }
+
+    buildColumns() {
+        let columns = SubsGroup.buildColumns();
+        columns.push(new GridColumn().build({field: '', header: '', style: {textAlign:'center'}, actionColumn: true,
+            order: 50,
+            actionWidth: 40,
+            default: true,
+            /*widthCoef: 1,*/
+            bodyStyle: {textAlign: 'center'},
+            renderer: (rowData, column) => this.renderActionColumns(rowData, column)}));
+
+        return columns;
     }
 
     render() {
@@ -38,7 +64,7 @@ class SubsGroups extends Component {
                         location={this.props.location}
                         gridView={true}
                         treeView={false}
-                        columns={SubsGroup.buildColumns()}
+                        columns={this.buildColumns()}
                         editComponent={this.editComponent}
             >
             </BaseLayout>

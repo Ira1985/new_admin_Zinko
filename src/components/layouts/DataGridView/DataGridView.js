@@ -28,7 +28,8 @@ class  DataGridView extends Component {
                         multiColumns.set(elem.field,
                             new GridColumn().build(elem));
                 if(elem.default || elem.actionColumn) {
-                    sum += elem.widthCoef;
+                    if(!elem.actionColumn)
+                        sum += elem.widthCoef;
                     selectedColumns.set(
                         elem.field, new GridColumn().build(elem));
                 }
@@ -135,7 +136,8 @@ class  DataGridView extends Component {
                 if(columns.has(item)) {
                     let col = columns.get(item);
                     newColumns.set(item, col);
-                    sum += col.widthCoef;
+                    if(!col.actionColumn)
+                        sum += col.widthCoef;
                 }
             });
             this.setState({
@@ -195,18 +197,33 @@ class  DataGridView extends Component {
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
 
+        let offsetConst = 80;
+        let actionCol = 0;
+        Array.from(selectedColumns.values()).map((col, index ) => {
+            if(col.actionColumn && col.actionWidth > 0) {
+                offsetConst += col.actionWidth;
+                actionCol++;
+            }
+        });
+
         let offset = 0;
-        if(this.dataGridView.current) {
-            offset = (selectedColumns.size > 0)?((80/this.dataGridView.current.clientWidth)*99)/selectedColumns.size: 0;
-        }
+        if(this.dataGridView.current)
+            offset = (selectedColumns.size > actionCol)?((offsetConst/this.dataGridView.current.clientWidth)*98)/(selectedColumns.size-actionCol): 0;
 
         const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
 
-            return <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
-                           style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
-                           bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
-                           body={col.renderer?col.renderer:null}
-                    />;
+        return !col.actionColumn ?
+                <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
+                       style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
+                       bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
+                       body={col.renderer?col.renderer:null}
+                />:
+                <Column key={'data-table-col-' + index}
+                        style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
+                        bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
+                        body={col.renderer?col.renderer:null}
+                />
+
         });
 
         return (<>
@@ -281,13 +298,15 @@ DataGridView.propTypes = {
     checkedItems: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.shape(
         {
-            field: PropTypes.string.isRequired,
-            header: PropTypes.string.isRequired,
+            field: PropTypes.string,
+            header: PropTypes.string,
             style: PropTypes.object,
             sortable: PropTypes.bool,
             order: PropTypes.number.isRequired,
             default: PropTypes.bool.isRequired,
-            widthCoef: PropTypes.number.isRequired
+            widthCoef: PropTypes.number.isRequired,
+            renderer: PropTypes.func,
+            actionColumn: PropTypes.bool
         }
     )),
     sorterInit: PropTypes.object,
