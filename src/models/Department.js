@@ -2,6 +2,7 @@ import * as Yup from "yup";
 import BaseEntity from "./base/BaseEntity";
 import FilterItem from "./base/FilterItem";
 import GridColumn from "./base/GridColumn";
+import React from "react";
 
 export default class Department extends BaseEntity {
 
@@ -27,8 +28,10 @@ export default class Department extends BaseEntity {
 
     static buildColumns() {
         let columns =  BaseEntity.buildColumns();
-        columns.push(new GridColumn().build({field: 'description', header: 'departments.fields.description', style:{}, sortable: false, order: 4, default: true, widthCoef:1.5}));
-        columns.push(new GridColumn().build({field: 'parent', header: 'departments.fields.parent', style:{}, sortable: false, order: 5, default: true, widthCoef:1.5}));
+        columns.push(new GridColumn().build({field: 'description', header: 'departments.fields.description', style:{}, sortable: false,
+            order: 4, default: false, widthCoef:2}));
+        columns.push(new GridColumn().build({field: 'parent', header: 'departments.fields.parent', style:{}, sortable: false,
+            order: 5, default: true, widthCoef:2, renderer: (rowData, column) => {return <p>{rowData.parent?rowData.parent.name:''}</p>}}));
         return columns;
     }
 }
