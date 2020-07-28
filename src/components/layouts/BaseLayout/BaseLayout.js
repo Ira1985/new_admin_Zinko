@@ -21,7 +21,7 @@ class BaseLayout extends Component {
         const {t, filterItems, plurals, dopClass,
             breadcrumbs, toolbarButtons, checkedButtons,
             children, apiService, location, gridView, treeView, columns, editComponent, baseSchema, baseModel,
-            initModelField, sorterInit, pagingInit, disableEdit} = this.props;
+            modelFieldInit, sorterInit, pagingInit, disableEdit, filterInit} = this.props;
         const {checkedItems} = this.state;
 
         return <>
@@ -39,11 +39,11 @@ class BaseLayout extends Component {
                                  editComponent={editComponent}
                                  baseSchema={baseSchema}
                                  baseModel={baseModel}
-                                 initModelField={initModelField}
+                                 initModelField={modelFieldInit}
                                  sorterInit={sorterInit}
                                  pagingInit={pagingInit}
                                  disableEdit={disableEdit}
-
+                                 filterInit={filterInit}
                     >
                         {children}
                     </MainSection>
@@ -67,10 +67,11 @@ BaseLayout.propTypes = {
     baseSchema: PropTypes.object.isRequired,
     location: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.object),
-    initModelField: PropTypes.object,
+    modelFieldInit: PropTypes.object,
+    filterInit:PropTypes.object,
+    loadOnMount: PropTypes.func,
     // may be needed after
     //loadOnMountBefore: PropTypes.func,
-    //loadOnMount: PropTypes.func,
     //loadOnUpdateValue: PropTypes.func,
     //loadOnAddItem: PropTypes.func,
     //loadOnEditItem: PropTypes.func,

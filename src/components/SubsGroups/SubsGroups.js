@@ -8,7 +8,7 @@ import SubsGroupEditDialog from "./Edit/SubsGroupEditDialog";
 import Attribute from "../../models/Attribute";
 import GridColumn from "../../models/base/GridColumn";
 import {Button} from "primereact/button";
-import history from "./../../App";
+import {history} from "./../../App";
 
 const plurals = ['subsGroups.plurals.first', 'subsGroups.plurals.second', 'subsGroups.plurals.third'];
 
@@ -29,7 +29,7 @@ class SubsGroups extends Component {
         const {t} = this.props;
         return <div className={'column-button'}>
             <Button icon="pi p-empty-button chain-ico" onClick={() => {
-                history.push('/subs_groups/' + rowData.id + '/subs');
+                history.push('/subsGroups/' + rowData.id + '/values');
             }} tooltip={t('subsGroups.fields.showSubs')}/>
         </div>
     }

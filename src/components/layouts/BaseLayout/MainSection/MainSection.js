@@ -27,14 +27,13 @@ class MainSection extends Component {
             showEditWin: false,
             approveButton: {},
             progressSave: false,
-
             progressCheckedToolBtn: new Map(),
             progressDelete: false,
-
-            sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
-            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),
+            /*sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
+            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),*/
             clearChecked: false,
             reloadList: false
+            //filterInit: props.filterInit ? props.filterInit:{}
         };
 
         this.updateChecked = this.updateChecked.bind(this);
@@ -59,7 +58,6 @@ class MainSection extends Component {
             }
         }
     ];
-
     checkedButtons = [
         {
             label: 'baseLayout.main.buttons.buttonUnload',
@@ -254,9 +252,9 @@ class MainSection extends Component {
     }
 
     addItem(init) {
-        const {loadOnAddItem, initModelField} = this.props;
+        const {loadOnAddItem, modelFieldInit} = this.props;
 
-        let item = Object.assign( Object.create( Object.getPrototypeOf(this.props.baseModel)), this.props.baseModel, initModelField?initModelField:{}, init?init:{});
+        let item = Object.assign( Object.create( Object.getPrototypeOf(this.props.baseModel)), this.props.baseModel, modelFieldInit?modelFieldInit:{}, init?init:{});
         //let item = Object.assign( Object.create( Object.getPrototypeOf(this.props.baseModel)), this.props.baseModel );
         //this.props.baseSchema.isValid(item).then(valid => this.setState({validForms: valid}));
         this.setState(prevState => ({
@@ -319,9 +317,10 @@ class MainSection extends Component {
 
     render() {
         const {t, breadcrumbs, dopToolbarButtons, dopCheckedButtons, plurals,
-            children, gridView, treeView, apiService, location, columns, editComponent, baseSchema, baseModel} = this.props;
+            children, gridView, treeView, apiService, location, columns, editComponent, baseSchema, baseModel, disableEdit,
+            filterInit,sorterInit, pagingInit} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem, progressSave,
-            clearChecked, reloadList, progressDelete} = this.state;
+            clearChecked, reloadList} = this.state;
 
         let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
         let checkedButs = dopCheckedButtons? Array.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
@@ -331,7 +330,7 @@ class MainSection extends Component {
                 <div className='header'>
                     <Toolbar>
                         <div className="p-toolbar-group-left">
-                            <BreadCrumb model={breadcrumbs} home={{label: 'Главная', icon: 'pi pi-home', url: 'dashboard'}} />
+                            <BreadCrumb model={breadcrumbs} home={{label: 'Главная', icon: 'pi pi-home', url: '/'}} />
                         </div>
                         <div className="p-toolbar-group-right">
                             {(toolbarButs && toolbarButs.length > 0) &&
@@ -358,6 +357,10 @@ class MainSection extends Component {
                                                reloadListDone={() => this.reloadListDone()}
                                                clearChecked={clearChecked}
                                                reloadList={reloadList}
+                                               filterInit={filterInit}
+                                               sorterInit={sorterInit}
+                                               pagingInit={pagingInit}
+                                               disableEdit={disableEdit}
                                     ></DataGridView>}
                     {/*{treeView && }*/}
                 </div>
@@ -421,7 +424,9 @@ MainSection.propTypes = {
     baseSchema: PropTypes.object.isRequired,
     location: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    initModelField: PropTypes.object,
+    modelFieldInit: PropTypes.object,
+    filterInit: PropTypes.object,
+    loadOnMount: PropTypes.func,
     // may be needed after
     //loadOnMountBefore: PropTypes.func,
     //loadOnMount: PropTypes.func,

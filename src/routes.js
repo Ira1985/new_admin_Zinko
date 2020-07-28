@@ -35,11 +35,12 @@ export const routes = [
     { path: '/models', name: 'Модели', component: Models },
     { path: '/attrCategories', name: 'Группы атрибутов', component: AttrCategories },
     { path: '/attributes', name: 'Атрибуты', component: Attributes },
-    { path: '/subsGroups', name: 'Группы значений', component: SubsGroups },
-    { path: '/subsGroups/:id/values', name: 'Подстановки', component: SubsGroups },
+    { path: '/subsGroups', exact: true, name: 'Группы значений', component: SubsGroups },
+    { path: '/subsGroups/:id/values', exact: true, name: 'Подстановки', component: Substitutions },
     { path: '/substitutions', name: 'Подстановки', component: Substitutions },
-    { path: '/units', name: 'Юниты', component: Units },
-    { path: '/unitMappings', name: 'Юнит маппинг', component: UnitMappings },
+    { path: '/units', name: 'Юниты',  exact: true, component: Units },
+    { path: '/units/:id/mapping', exact: true, name: 'Юнит маппинг', component: UnitMappings },
+    { path: '/unitMappings', exact: true, name: 'Юнит маппинг', component: UnitMappings },
     { path: '/departments', name: 'Департаменты', component: Departments },
     { path: '/roles', name: 'Роли', component: Roles }
 ];

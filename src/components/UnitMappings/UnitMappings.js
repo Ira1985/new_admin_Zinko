@@ -12,7 +12,38 @@ class UnitMappings extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        let unitFromId = props.match.params.id;
+        let filtersNew = {};
+        filtersNew['unitFromId'] = +unitFromId;
+
+        this.state = {
+            dopFilter: filtersNew,
+            unitFrom: {},
+            unitFromId: unitFromId
+        };
+    }
+
+    loadOnMount = () => {
+        return Promise.resolve(this.gettingSubsGroup())
+    }
+
+    gettingSubsGroup() {
+        const {unitFrom, unitFromId} = this.state;
+        if(unitFrom) {
+            /* return subsGroupsService.getItem(subsGroupId)
+                 .then(
+                     response => {
+                         this.setState({
+                             subsGroup: response.pageItems[0]
+                         });
+                         return true;
+                     },
+                     error => {
+                         toast.error('Ошибка получения группы подстановок ', toastConfig);
+                         return false;
+                     });*/
+        }
+        return Promise.resolve(true);
     }
 
     editComponent = (loading, editItem, updateValue) => {
@@ -23,13 +54,16 @@ class UnitMappings extends Component {
 
     render() {
         const {t} = this.props;
-        let  breadcrumbs = [{ "label": t('unitMappings.breadcrumbs.name')}];
+        const {dopFilter, unitFromId} = this.state;
+
+        let  breadcrumbs = [{ "label": (t('units.breadcrumbs.name') + ' (' + unitFromId + ')'), url: '/units'},{ "label": t('unitMappings.breadcrumbs.name')}];
 
         return (
             <BaseLayout breadcrumbs={breadcrumbs}
                         filterItems={UnitMapping.buildFilters()}
                         plurals={plurals}
                         dopClass={'unitMappings_main'}
+                        filterInit={dopFilter}
                 /*dopToolbarButtons={toolbarButtons}
                 dopCheckedButtons={checkedButtons}*/
                         apiService={unitMappingService}

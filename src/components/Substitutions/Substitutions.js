@@ -12,8 +12,40 @@ class Substitutions extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        let subsId = this.props.match.params.id;
+        let filtersNew = {};
+        filtersNew['subsGroupId'] = +subsId;
+
+        this.state = {
+            dopFilter: filtersNew,
+            subsGroup: {},
+            subsGroupId: subsId
+        };
     }
+
+    loadOnMount = () => {
+        return Promise.resolve(this.gettingSubsGroup())
+    }
+
+    gettingSubsGroup() {
+        const {subsGroup, subsGroupId} = this.state;
+        if(subsGroupId) {
+           /* return subsGroupsService.getItem(subsGroupId)
+                .then(
+                    response => {
+                        this.setState({
+                            subsGroup: response.pageItems[0]
+                        });
+                        return true;
+                    },
+                    error => {
+                        toast.error('Ошибка получения группы подстановок ', toastConfig);
+                        return false;
+                    });*/
+        }
+        return Promise.resolve(true);
+    }
+
 
     editComponent = (loading, editItem, updateValue) => {
         return (
@@ -23,13 +55,15 @@ class Substitutions extends Component {
 
     render() {
         const {t} = this.props;
-        let  breadcrumbs = [{ "label": t('substitutions.breadcrumbs.name')}];
+        const {dopFilter, subsGroupId} = this.state;
+        let  breadcrumbs = [{ "label": (t('subsGroups.breadcrumbs.name') + ' (' + subsGroupId + ')'), url: '/subsGroups'},{ "label": t('substitutions.breadcrumbs.name')}];
 
         return (
             <BaseLayout breadcrumbs={breadcrumbs}
                         filterItems={Substitution.buildFilters()}
                         plurals={plurals}
                         dopClass={'substitutions_main'}
+                        filterInit={dopFilter}
                 /*dopToolbarButtons={toolbarButtons}
                 dopCheckedButtons={checkedButtons}*/
                         apiService={substitutionService}

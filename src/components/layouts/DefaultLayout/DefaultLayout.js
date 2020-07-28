@@ -11,8 +11,8 @@ class DefaultLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTreeMenu: true,
-            hideTreeMenu: true,
+            activeTreeMenu: false,
+            hideTreeMenu: false,
             activeAccountMenu: false,
         };
     }

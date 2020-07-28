@@ -5,24 +5,23 @@ import GridColumn from "./base/GridColumn";
 
 export default class Unit extends BaseEntity {
 
-    description = '';
-
+    /*description = '';*/
 
     build(item) {
         super.build(item);
-        this.description = (item['description']?item['description']:this.description);
+        /*this.description = (item['description']?item['description']:this.description);*/
         return this;
     }
 
     static buildFilters() {
         let base = BaseEntity.buildFilters();
-        base.push(FilterItem.buildText('units.fields.description','description', false));
+        /*base.push(FilterItem.buildText('units.fields.description','description', false));*/
         return base;
     }
 
     static buildColumns() {
         let columns =  BaseEntity.buildColumns();
-        columns.push(new GridColumn().build({field: 'description', header: 'units.fields.description', style:{}, sortable: false, order: 4, default: true, widthCoef:1.5}));
+        /*columns.push(new GridColumn().build({field: 'description', header: 'units.fields.description', style:{}, sortable: false, order: 5, default: true, widthCoef: 1.5}));*/
         return columns;
     }
 }

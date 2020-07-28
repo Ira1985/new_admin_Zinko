@@ -21,7 +21,7 @@ class  DataGridView extends Component {
 
         if(props.columns && props.columns.length > 0) {
             let sum = 0;
-            props.columns.map((elem, index) => {
+            props.columns.forEach((elem, index) => {
                     columns.set(elem.field,
                         new GridColumn().build(elem));
                     if(!elem.actionColumn)
@@ -37,30 +37,21 @@ class  DataGridView extends Component {
             coef = (sum > 0? 100/sum: 1);
         }
 
-
         this.state = {
             loading: true,
             items: [],
 
-            /*totalRows: 0,
-            limit: 20,
-            currentPage: 1,
-            first: 0,*/
-
             selectedItems: new Map(),
             freezItems: new Map(),
-            //visibleAdd: false,
             item: {},
-            //scrollHeight: 0,
             selectedColumns: selectedColumns,
             columns: columns,
-            multiColumns: multiColumns,
+            multiColumns: new Map([...multiColumns.entries()].sort((a1,a2) => {return ((a1[1].order > a2[1].order)?1:(a1[1].order < a2[1].order)?-1:0)})),
             columnCoef: coef,
-            /*sortField: '',
-            sortOrder: 0,*/
 
             sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
-            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging()
+            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),
+            filters: Object.assign({},props.filterInit ? props.filterInit:{})
         };
 
         this.dataGridView = React.createRef();
@@ -182,14 +173,14 @@ class  DataGridView extends Component {
     }
 
     onDoubleClick(e) {
-        const {editItem} = this.props;
-        editItem(e.data);
+        const {editItem, disableEdit} = this.props;
+        if(!disableEdit)
+            editItem(e.data);
         //this.setState({item: e.data, visibleAdd: true})
     }
 
     render() {
         const {t, minimizeHeight, checkedItems} = this.props;
-
         const { items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter} = this.state;
 
         const paginatorRight = <div>
@@ -199,7 +190,7 @@ class  DataGridView extends Component {
 
         let offsetConst = 80;
         let actionCol = 0;
-        Array.from(selectedColumns.values()).map((col, index ) => {
+        Array.from(selectedColumns.values()).forEach((col, index ) => {
             if(col.actionColumn && col.actionWidth > 0) {
                 offsetConst += col.actionWidth;
                 actionCol++;
@@ -315,7 +306,8 @@ DataGridView.propTypes = {
     clearChecked: PropTypes.bool.isRequired,
     reloadList: PropTypes.bool.isRequired,
     clearCheckedDone: PropTypes.func.isRequired,
-    reloadListDone: PropTypes.func.isRequired
+    reloadListDone: PropTypes.func.isRequired,
+    filterInit: PropTypes.object
 };
 
 export default withTranslation()(DataGridView);
