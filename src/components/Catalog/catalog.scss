@@ -30,6 +30,11 @@
       width: 96%;
       margin: 0 auto;
       position: relative;
+      .p-dataview-layout-options {
+        position: absolute;
+        left: 175px;
+        top: 0px;
+      }
       .p-dataview-list {
         .p-dataview-content {
           .p-col-12 {

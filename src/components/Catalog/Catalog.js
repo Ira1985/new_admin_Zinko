@@ -13,6 +13,9 @@ import {Checkbox} from 'primereact/checkbox';
 import {SplitButton} from "primereact/splitbutton";
 import {history} from "../../App";
 import emptyImg from "../../assets/img/EmptyImg.png"
+import Sorter from "../../models/base/Sorter";
+import Paging from "../../models/base/Paging";
+import {DataTable} from "primereact/datatable";
 
 class Catalog extends Component {
 
@@ -20,7 +23,7 @@ class Catalog extends Component {
         super(props);
         this.state = {
             gridView: true,
-
+            loading: true,
             items: [],
             layout: 'grid',
             selectedItems: [],
@@ -45,6 +48,8 @@ class Catalog extends Component {
                 }
             ],
             checked: {},
+            sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
+            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging()
         };
         this.itemTemplate = this.itemTemplate.bind(this);
     }
@@ -52,12 +57,77 @@ class Catalog extends Component {
     filterLoading = false;
     filterItems = [];
 
+    componentDidMount() {
+        const {filters, sorter, paging} = this.state;
+        this.getList(filters, sorter, paging, true);
+    }
+
+    getList(filtering, sorting, paging, changingPage) {
+
+        this.setState({
+            loading: true,
+            items: []
+        });
+        catalogService.getList(filtering, sorting, paging)
+            .then(response => {
+                    if(changingPage) {
+                        let newPaging = new Paging();
+                        if(response) {
+                            //let newPaging = new Paging();
+                            newPaging = Object.assign({}, paging, {
+                                //page: 1,
+                                count: response.totalRows,
+                                totalPages: response.totalPages
+                            });
+                        }
+                        this.setState({
+                            paging: newPaging,
+                            items: response ? response.pageItems : [],
+                            loading: false
+                        });
+                    } else
+                        this.setState({
+                            items: response ? response.pageItems : [],
+                            loading: false
+                        });
+                },
+                error => {
+                    this.setState({
+                        items: [],
+                        loading: false,
+                        paging: new Paging()
+                    });
+                });
+    }
+
+    onPage(e) {
+        const {filters, sorter, paging} = this.state;
+        let newPaging =  Object.assign({}, paging, {
+            page: (e.originalEvent.page + 1),
+            limit:e.rows
+        });
+        this.setState({
+            paging: newPaging
+        });
+        this.getList(filters, sorter, newPaging, true);
+    }
+
+    onSort(e) {
+        const {filters, sorter, paging} = this.state;
+
+        let newSorter = new Sorter().build(e.sortField,e.sortOrder === 1?'desc':'asc');
+        this.setState({
+            sorter: newSorter
+        });
+        this.getList(filters, newSorter, paging, false);
+    }
+
     imgTemplate(rowData, column) {
         let src;
         if (!rowData.baseImage) {
             src = emptyImg;
         } else {
-            src = 'http://212.24.48.52/statics/' + rowData.baseImage;
+            src = 'http://185.95.22.17/statics/' + rowData.baseImage;
         }
         return (
             <div className='main-container-image'>
@@ -128,7 +198,7 @@ class Catalog extends Component {
                 <div style={{ padding: '.5em' }} className="p-col-12 p-md-3">
                     <Panel header={this.imgTemplate(product)}>
                         <div className="product-detail">
-                            <p>{product.fullName}</p>
+                            <p>{product.article}</p>
                             <span>{product.productId}</span>
                         </div>
                         <div className="product-button">
@@ -148,7 +218,7 @@ class Catalog extends Component {
     render() {
         const {t} = this.props;
         let  breadcrumbs = [{ "label": t('catalog.breadcrumbs.name')}];
-        let {gridView, items, layout, selectedItems} = this.state;
+        let {gridView, items, layout, selectedItems, paging, loading} = this.state;
 
         const paginatorLeft = (<div>
             <DataViewLayoutOptions layout={layout} onChange={(e) => this.setState({layout: e.value})} />
@@ -185,11 +255,24 @@ class Catalog extends Component {
                                       responsive={true}
                                       autoLayout={true}
                                       itemTemplate={this.itemTemplate}
-                                      scrollable={true} scrollHeight='calc(100vh - 225px)'
-                                      currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')} paginatorRight={paginatorRight} paginatorLeft={paginatorLeft}
-                                      selection={selectedItems} onSelectionChange={e => this.setState({selectedItems: e.value})}
-                                      paginator rows={20} paginatorPosition={'top'}
-                                      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[20,40,60,80,100]}
+                                      scrollable={true}
+                                      scrollHeight='calc(100vh - 225px)'
+                                      currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
+                                      totalRecords={paging.count}
+                                      lazy={true}
+                                      first={(paging.page - 1) * paging.limit}
+                                      onPage={(e) => this.onPage(e)}
+                                      onSort={(e) => this.onSort(e)}
+                                      loading={loading}
+                                      paginatorRight={paginatorRight}
+                                      paginatorLeft={paginatorLeft}
+                                      selection={selectedItems}
+                                      onSelectionChange={e => this.setState({selectedItems: e.value})}
+                                      paginator
+                                      rows={20}
+                                      paginatorPosition={'top'}
+                                      paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                                      rowsPerPageOptions={[20,40,60,80,100]}
                             />
                         </div>}
                         {/*{treeView && }*/}

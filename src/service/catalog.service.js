@@ -1,28 +1,138 @@
+import {toast} from "react-toastify";
+import {toastConfig} from "../helpers/toastConfig";
+import {baseService} from "./base/BaseMethodApi";
+import i18n from "../i18n";
+
 export const catalogService = {
     getList,
-    getItem
+    update,
+    remove,
+    getItem,
+    removeByList,
+    removeByFilter,
+    create,
+    saveItem,
+    getCombo,
+    dump
 };
 
-function getList() {
-    let token = JSON.parse(localStorage.getItem('cs_user')).token;
-    let val = `Bearer ${token}`;
-    let options = {};
-    options.headers = {};
-    options.headers.Authorization = val;
+const BASE_API_URL = '/products/';
 
-    return fetch("http://212.24.48.52:8080/content/products/", options).then(res => res.json()).then(res => {
-        return  res;
-    })
+const consts = [i18n.t('services.manufacturers.obj'), i18n.t('services.manufacturers.objecta'),
+    i18n.t('services.manufacturers.objectov'), i18n.t('services.manufacturers.objects')];
+
+function baseResponse(res) {
+    if(res && res.success)
+        return res;
+    else
+        return null;
+}
+
+function getList(filters, sorter, paging) {
+    return baseService.getList(BASE_API_URL, filters, sorter, paging, consts)
+        .then(res => {
+            return baseResponse(res);
+        }).catch(error => {
+            console.log('Something wrong in catalog service getList', error);
+            return null;
+        });
 }
 
 function getItem(id) {
-    let token = JSON.parse(localStorage.getItem('cs_user')).token;
-    let val = `Bearer ${token}`;
-    let options = {};
-    options.headers = {};
-    options.headers.Authorization = val;
+    return baseService.getItem(BASE_API_URL, id, consts)
+        .then(res => {
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaa", res)
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in catalog service getItem', error);
+            return null;
+        });
+}
 
-    return fetch("http://212.24.48.52:8080/content/products/" + id + "/preview", options).then(res => res.json()).then(res => {
-        return  res;
-    })
+function remove(id) {
+    return baseService.remove(BASE_API_URL, id, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in catalog service remove', error);
+            return null;
+        });
+}
+
+function removeByList(ids) {
+    return baseService.removeByList(BASE_API_URL, ids, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in catalog service removeByList', error);
+            return null;
+        });
+}
+
+function removeByFilter(filters) {
+    return baseService.removeByList(BASE_API_URL, filters, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in catalog service removeByFilter', error);
+            return null;
+        });
+}
+
+function saveItem(item) {
+    return baseService.saveItem(BASE_API_URL, item, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in catalog service saveItem', error);
+            return null;
+        });
+}
+
+function update(item) {
+    return baseService.update(BASE_API_URL, item, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in catalog service update', error);
+            return null;
+        });
+}
+
+function create(item) {
+    return baseService.create(BASE_API_URL, item, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in catalog service create', error);
+            return null;
+        });
+}
+
+function getCombo(name, limit) {
+    return baseService.getCombo(BASE_API_URL, name, limit, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in catalog service getCombo', error);
+            return null;
+        });
+}
+
+function dump(filters) {
+    return baseService.dump(BASE_API_URL, filters, consts)
+        .then(res => {
+            return baseResponse(res);
+        }).catch(error => {
+            console.log('Something wrong in catalog service dump', error);
+            return null;
+        });
 }
