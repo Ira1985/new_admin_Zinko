@@ -5,6 +5,7 @@ import NavigationBaseMenu from "../../Menus/NavigationBaseMenu/NavigationBaseMen
 import NavigationTreeMenu from "../../Menus/NavigationTreeMenu/NavigationTreeMenu";
 //import AccountMenu from "../../Menus/AccountMenu/AccountMenu";
 import {routes} from "../../../routes";
+import {ToastContainer} from "react-toastify";
 
 class DefaultLayout extends Component {
 
@@ -48,6 +49,9 @@ class DefaultLayout extends Component {
 
         return (
             <div className='cs-admin-main'>
+                <div className="animated">
+                    <ToastContainer position="bottom-right" autoClose={2000} style={{zIndex:2000}}/>
+                </div>
                 <Suspense fallback={this.loading()}>
                     <NavigationBaseMenu activeTreeMenu={activeTreeMenu} activeAccountMenu={activeAccountMenu} baseMenuFunc={() => this.showTreeMenu()} showAccountMenu={() => this.showAccountMenu()}/>
                 </Suspense>

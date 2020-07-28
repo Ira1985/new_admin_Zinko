@@ -5,14 +5,22 @@ import {BreadCrumb} from "primereact/breadcrumb";
 import {Button} from "primereact/button";
 import {Toolbar} from "primereact/toolbar";
 import CheckedToolbarSection from "../CheckedToolbarSection/CheckedToolbarSection";
-import {Dialog} from "primereact/dialog";
 import {pluralize} from "../../../../helpers/utils";
 import ApprovalWin from "../../../base/ApprovalWin/ApprovalWin";
 import EditWin from "../../../base/EditWin/EditWin";
 import PropTypes from "prop-types";
-import DataGridView from "../../DataGridView/DataGridView";
-import Paging from "../../../../models/base/Paging";
-import Sorter from "../../../../models/base/Sorter";
+//import DataGridView from "../../DataGridView/DataGridView";
+import Loadable from 'react-loadable';
+import DataTreeView from "../../DataTreeView/DataTreeView";
+
+const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
+
+// DataGridView
+const DataGridView = Loadable({
+    loader: () => import('../../DataGridView/DataGridView'),
+    loading
+});
+
 
 class MainSection extends Component {
 
@@ -29,11 +37,8 @@ class MainSection extends Component {
             progressSave: false,
             progressCheckedToolBtn: new Map(),
             progressDelete: false,
-            /*sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
-            paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),*/
             clearChecked: false,
             reloadList: false
-            //filterInit: props.filterInit ? props.filterInit:{}
         };
 
         this.updateChecked = this.updateChecked.bind(this);
@@ -362,7 +367,22 @@ class MainSection extends Component {
                                                pagingInit={pagingInit}
                                                disableEdit={disableEdit}
                                     ></DataGridView>}
-                    {/*{treeView && }*/}
+                    {treeView && <DataTreeView minimizeHeight={showCheckedItemsMenu}
+                                               apiService={apiService}
+                                               location={location}
+                                               columns={columns}
+                                               updateChecked={this.updateChecked}
+                                               editItem={this.editItem}
+                                               checkedItems={checkedItems}
+                                               clearCheckedDone={() => this.clearCheckedDone()}
+                                               reloadListDone={() => this.reloadListDone()}
+                                               clearChecked={clearChecked}
+                                               reloadList={reloadList}
+                                               filterInit={filterInit}
+                                               sorterInit={sorterInit}
+                                               pagingInit={pagingInit}
+                                               disableEdit={disableEdit}
+                    ></DataTreeView>}
                 </div>
 
                 <div className={showCheckedItemsMenu? 'checked-toolbar-section show': 'checked-toolbar-section'}>

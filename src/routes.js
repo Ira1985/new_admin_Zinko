@@ -7,6 +7,8 @@ const Catalog = React.lazy(() => import('./components/Catalog/Catalog'));
 const CatalogPreview = React.lazy(() => import('./components/Catalog/CatalogPreview/CatalogPreview'));
 const CatalogEdit = React.lazy(() => import('./components/Catalog/CatalogEdit/CatalogEdit'));
 const Categories = React.lazy(() => import('./components/Categories/Categories'));
+const CategoriesNew = React.lazy(() => import('./components/Categories/CategoriesNew'));
+//CategoriesNew
 const Countries = React.lazy(() => import('./components/Countries/Countries'));
 const Families = React.lazy(() => import('./components/Families/Families'));
 const Models = React.lazy(() => import('./components/Models/Models'));
@@ -29,7 +31,7 @@ export const routes = [
     { path: '/catalog/:id/preview', exact: true, name: 'Просмотр товара', component: CatalogPreview },
     { path: '/catalog/:id/edit', exact: true, name: 'Просмотр товара', component: CatalogEdit },
     { path: '/profile', name: 'Профиль', component: Profile },
-    { path: '/categories', name: 'Категории', component: Categories },
+    { path: '/categories', name: 'Категории', component: CategoriesNew},
     { path: '/countries', name: 'Страны мира', component:  Countries},
     { path: '/families', name: 'Семейства', component: Families },
     { path: '/models', name: 'Модели', component: Models },

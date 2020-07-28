@@ -7,8 +7,23 @@ import React from "react";
 
 export default class Category extends BaseEntity {
 
+    definition = '';
+    customer = null;
+    customerId = null;
+    layout = false;
+    forMatchingAnalog = false;
+    foreignMarket = false;
+    parent = null;
+    leaf = true;
+
     build(item) {
-        return super.build(item);
+        super.build(item);
+        this.definition = (item['definition']?item['definition']:this.definition);
+        this.foreignMarket = (item.hasOwnProperty('foreignMarket')?item['foreignMarket']:this.foreignMarket);
+        this.layout = (item.hasOwnProperty('layout')?item['layout']:this.layout);
+        this.forMatchingAnalog = (item.hasOwnProperty('forMatchingAnalog')?item['forMatchingAnalog']:this.forMatchingAnalog);
+        this.leaf = (item.hasOwnProperty('leaf')?item['leaf']:this.leaf);
+        return this;
     }
 
     static buildFilters() {

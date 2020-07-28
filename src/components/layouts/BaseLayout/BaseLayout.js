@@ -60,6 +60,7 @@ BaseLayout.propTypes = {
     dopToolbarButtons: PropTypes.arrayOf(PropTypes.object),
     dopCheckedButtons: PropTypes.arrayOf(PropTypes.object),
     showSectionChecked: PropTypes.func,
+
     gridView: PropTypes.bool,
     treeView: PropTypes.bool,
     apiService: PropTypes.any.isRequired,
