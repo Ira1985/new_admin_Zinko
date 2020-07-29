@@ -65,7 +65,8 @@ class EditWin extends Component {
         const {baseSchema} = this.props;
         const {item} = this.state;
         let name = e.target.name;
-        let value = e.target.value.nameForRemember?e.target.value.nameForRemember:e.target.value;
+        //let value = e.target.value.nameForRemember?e.target.value.nameForRemember:e.target.checked?e.target.checked:e.target.value;
+        let value = e.target.checked?e.target.checked:e.target.value?e.target.value.nameForRemember?e.target.value.nameForRemember:e.target.value:false;
         let direct = false;
         let val;
         let elem = Object.assign({}, item);

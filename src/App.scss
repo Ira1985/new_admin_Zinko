@@ -206,6 +206,27 @@ hr {
     width: 85%;
   }
 
+  .p-tabview {
+    .p-button-danger {
+      background-color: transparent;
+      min-width: 15px;
+      color: $primary-text-color3;
+      margin-left: -25px;
+    }
+    .p-tabview-nav {
+      border-bottom: 1px solid $primary-color-tabview-border;
+      .p-unselectable-text {
+        border: 1px solid $primary-color-tabview-border;
+        .p-tabview-title {
+          color: $primary-text-color3;
+        }
+      }
+      .p-unselectable-text.p-highlight {
+        background-color: $primary-table-body-hover;
+      }
+    }
+  }
+
   .p-dialog-titlebar {
     color: $primary-text-color3;
     font-style: normal;

@@ -15,6 +15,11 @@ export const ExportResultFormat = {
     TXT: 'TXT'
 };
 
+export const  CustomerType = {
+    EXTERNAL:'EXTERNAL',
+    INTERNAL:'INTERNAL'
+};
+
 export default class Customer extends BaseEntity {
     description = ''; //String - основнные
     contact = ''; //String - Контакты
@@ -123,31 +128,74 @@ export default class Customer extends BaseEntity {
 
 export function getExportResultFormat(type){
     switch (type) {
-        case ExportResultFormat.XML: return 'XML';
-        case ExportResultFormat.JSON: return 'JSON';
-        case ExportResultFormat.XLS: return 'XLS';
-        case ExportResultFormat.CSV: return 'CSV';
-        case ExportResultFormat.TSV: return 'TSV';
-        case ExportResultFormat.HTML: return 'HTML';
-        case ExportResultFormat.ZIP: return 'ZIP';
-        case ExportResultFormat.TXT: return 'TXT';
+        case ExportResultFormat.XML: return {
+            nameForRemember: 'XML',
+            name: 'XML'
+        };
+        case ExportResultFormat.JSON: return {
+            nameForRemember: 'JSON',
+            name: 'JSON'
+        };
+        case ExportResultFormat.XLS: return {
+            nameForRemember: 'XLS',
+            name: 'XLS'
+        };
+        case ExportResultFormat.CSV: return {
+            nameForRemember: 'CSV',
+            name: 'CSV'
+        };
+        case ExportResultFormat.TSV: return {
+            nameForRemember: 'TSV',
+            name: 'TSV'
+        };
+        case ExportResultFormat.HTML: return {
+            nameForRemember: 'HTML',
+            name: 'HTML'
+        };
+        case ExportResultFormat.ZIP: return {
+            nameForRemember: 'ZIP',
+            name: 'ZIP'
+        };
+        case ExportResultFormat.TXT: return {
+            nameForRemember: 'TXT',
+            name: 'TXT'
+        };
         default: return type;
     }
 }
 
 export function renderExportResultFormat(){
-    return (
-        <React.Fragment>
-            <option value='XML'>{getExportResultFormat('XML')}</option>
-            <option value='JSON'>{getExportResultFormat('JSON')}</option>
-            <option value='XLS'>{getExportResultFormat('XLS')}</option>
-            <option value='CSV'>{getExportResultFormat('CSV')}</option>
-            <option value='TSV'>{getExportResultFormat('TSV')}</option>
-            <option value='HTML'>{getExportResultFormat('HTML')}</option>
-            <option value='ZIP'>{getExportResultFormat('ZIP')}</option>
-            <option value='TXT'>{getExportResultFormat('TXT')}</option>
-        </React.Fragment>
-    );
+    return [
+        getExportResultFormat('XML'),
+        getExportResultFormat('JSON'),
+        getExportResultFormat('XLS'),
+        getExportResultFormat('CSV'),
+        getExportResultFormat('TSV'),
+        getExportResultFormat('HTML'),
+        getExportResultFormat('ZIP'),
+        getExportResultFormat('TXT')
+    ];
+}
+
+export function getCustomerType(type){
+    switch (type) {
+        case CustomerType.EXTERNAL: return {
+            nameForRemember: "EXTERNAL",
+            name: 'Внешний'
+        };
+        case CustomerType.INTERNAL: return {
+            nameForRemember: "INTERNAL",
+            name: 'Внутренний'
+        };
+        default: return type;
+    }
+}
+
+export function renderCustomerType(){
+    return [
+        getCustomerType('EXTERNAL'),
+        getCustomerType('INTERNAL')
+    ];
 }
 
 export const CustomerSchema = Yup.object().shape({

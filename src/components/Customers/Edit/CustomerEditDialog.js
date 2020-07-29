@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import {InputText} from "primereact/inputtext";
-import {InputTextarea} from 'primereact/inputtextarea';
 import {Formik, useFormik} from 'formik';
 import Customer, {CustomerSchema} from "../../../models/Customer";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
+import {TabPanel, TabView} from "primereact/tabview";
+import CustomerEditMain from "./EditTabs/CustomerEditMain";
+import CustomerEditContact from "./EditTabs/CustomerEditContact";
+import CustomerEditSetting from "./EditTabs/CustomerEditSetting";
+import CustomerEditRequirement from "./EditTabs/CustomerEditRequirement";
 
 class CustomerEditDialog extends Component {
 
@@ -19,7 +22,7 @@ class CustomerEditDialog extends Component {
     }
 
     render() {
-        let {t, editedItem, updateValue, loading} = this.props;
+        let {t, editedItem, updateValue, loading, filter, filterItems} = this.props;
 
         return (
             <>
@@ -33,34 +36,48 @@ class CustomerEditDialog extends Component {
                         validationSchema={CustomerSchema}
                     >
                         {props => (
-                            <div className="p-grid p-fluid">
-                                <div className="p-col-4" style={{padding: '.75em'}}>
-                                    <label htmlFor="name">{t("baseEntity.name")}</label>
-                                </div>
-                                <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputText id="name" onChange={(e) => {
-                                        props.handleChange(e);
-                                        updateValue(e);
-                                        //this.updateProperty('name', e.target.value)
-                                    }} value={props.values.name || ''} required/>
-                                    {props.errors.name ? (
-                                        <div>
-                                            <small style={{color: 'red'}}>{t(props.errors.name)}</small>
-                                        </div>
-                                    ) : null}
-                                </div>
-
-                                <div className="p-col-4" style={{padding: '.75em'}}>
-                                    <label htmlFor="comment">{t("baseEntity.comment")}</label>
-                                </div>
-                                <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputTextarea id="comment" onChange={(e) => {
-                                        props.handleChange(e);
-                                        updateValue(e)
-                                        //this.updateProperty('name', e.target.value)
-                                    }} value={props.values.comment || ''}/>
-                                </div>
-                            </div>
+                            <TabView renderActiveOnly={false}>
+                                <TabPanel header={t("baseLayout.editCustomer.basic")}>
+                                    <CustomerEditMain
+                                        editedItem={editedItem}
+                                        formikItem={props.values}
+                                        formikError={props.errors}
+                                        updateValue={(e) => updateValue(e)}
+                                        formikHandler={(e) => props.handleChange(e)}
+                                        filter={filter}
+                                        filterItems={filterItems}
+                                    />
+                                </TabPanel>
+                                <TabPanel header={t("baseLayout.editCustomer.contact")}>
+                                    <CustomerEditContact
+                                        editedItem={editedItem}
+                                        formikItem={props.values}
+                                        formikError={props.errors}
+                                        updateValue={(e) => updateValue(e)}
+                                        formikHandler={(e) => props.handleChange(e)}
+                                    />
+                                </TabPanel>
+                                <TabPanel header={t("baseLayout.editCustomer.setting")}>
+                                    <CustomerEditSetting
+                                        editedItem={editedItem}
+                                        formikItem={props.values}
+                                        formikError={props.errors}
+                                        updateValue={(e) => updateValue(e)}
+                                        formikHandler={(e) => props.handleChange(e)}
+                                        filter={filter}
+                                        filterItems={filterItems}
+                                    />
+                                </TabPanel>
+                                <TabPanel header={t("baseLayout.editCustomer.demand")}>
+                                    <CustomerEditRequirement
+                                        editedItem={editedItem}
+                                        formikItem={props.values}
+                                        formikError={props.errors}
+                                        updateValue={(e) => updateValue(e)}
+                                        formikHandler={(e) => props.handleChange(e)}
+                                    />
+                                </TabPanel>
+                            </TabView>
                         )}
                     </Formik>
                 }
