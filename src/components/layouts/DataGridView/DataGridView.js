@@ -51,7 +51,8 @@ class  DataGridView extends Component {
 
             sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
             paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),
-            filters: Object.assign({},props.filterInit ? props.filterInit:{})
+            filters: Object.assign({},props.filterInit ? props.filterInit:{}),
+            activeColumns: []
         };
 
         this.dataGridView = React.createRef();
@@ -76,8 +77,12 @@ class  DataGridView extends Component {
 
 
     componentDidMount() {
-        const {filters, sorter, paging} = this.state;
+        const {filters, sorter, paging, selectedColumns, columnCoef} = this.state;
+        const {t} = this.props;
         this.getList(filters, sorter, paging, true);
+        this.setState({
+            activeColumns: this.rebuildColumns(selectedColumns,columnCoef)
+        });
     }
 
     getList(filtering, sorting, paging, changingPage) {
@@ -133,7 +138,8 @@ class  DataGridView extends Component {
             });
             this.setState({
                 selectedColumns: newColumns,
-                columnCoef: (sum > 0? 100/sum: 1)
+                columnCoef: (sum > 0? 100/sum: 1),
+                activeColumns: this.rebuildColumns(selectedColumns, (sum > 0? 100/sum: 1))
             });
         }
     }
@@ -181,44 +187,12 @@ class  DataGridView extends Component {
 
     render() {
         const {t, minimizeHeight, checkedItems} = this.props;
-        const { items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter} = this.state;
-
-        console.log(sorter);
-        console.log(sorter.directions == 'desc'?1:0);
+        const { items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter, activeColumns} = this.state;
 
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
-
-        let offsetConst = 80;
-        let actionCol = 0;
-        Array.from(selectedColumns.values()).forEach((col, index ) => {
-            if(col.actionColumn && col.actionWidth > 0) {
-                offsetConst += col.actionWidth;
-                actionCol++;
-            }
-        });
-
-        let offset = 0;
-        if(this.dataGridView.current)
-            offset = (selectedColumns.size > actionCol)?((offsetConst/this.dataGridView.current.clientWidth)*98)/(selectedColumns.size-actionCol): 0;
-
-        const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
-
-        return !col.actionColumn ?
-                <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
-                       style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
-                       bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
-                       body={col.renderer?col.renderer:null}
-                />:
-                <Column key={'data-table-col-' + index}
-                        style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
-                        bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
-                        body={col.renderer?col.renderer:null}
-                />
-
-        });
 
         return (<>
             <div ref={this.dataGridView} className='data_grid_view'>
@@ -261,7 +235,7 @@ class  DataGridView extends Component {
                            onPage={(e) => this.onPage(e)}
                            onSort={(e) => this.onSort(e)}
                            loading={loading}
-                           paginatorRight={paginatorRight}
+                           paginatorRight={this.paginatorRight}
                            selection={Array.from(checkedItems.values())}
                            /*frozenValue={Array.from(checkedItems.values())}*/
                            onSelectionChange={e => this.selectItem(e)}
@@ -270,7 +244,7 @@ class  DataGridView extends Component {
                            paginatorPosition={'top'}
                            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}>
                     <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
-                    {columnComponents}
+                    {activeColumns}
                     <Column style={{width:'30px'}} />
                 </DataTable>
 

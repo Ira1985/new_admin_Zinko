@@ -11,7 +11,7 @@ import EditWin from "../../../base/EditWin/EditWin";
 import PropTypes from "prop-types";
 //import DataGridView from "../../DataGridView/DataGridView";
 import Loadable from 'react-loadable';
-import DataTreeView from "../../DataTreeView/DataTreeView";
+//import DataTreeView from "../../DataTreeView/DataTreeView";
 
 const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 
@@ -21,6 +21,11 @@ const DataGridView = Loadable({
     loading
 });
 
+// DataGridView
+const DataTreeView = Loadable({
+    loader: () => import('../../DataTreeView/DataTreeView'),
+    loading
+});
 
 class MainSection extends Component {
 
@@ -151,7 +156,8 @@ class MainSection extends Component {
     clearChecked() {
         this.setState((prev) => ({
             checkedItems: new Map(),
-            showCheckedItemsMenu: !prev.showCheckedItemsMenu
+            showCheckedItemsMenu: !prev.showCheckedItemsMenu,
+            clearChecked: true
         }));
     }
 

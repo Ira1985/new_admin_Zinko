@@ -334,7 +334,9 @@ class Categories extends Component {
                         /*appendTo={this.dataGridView.current}*/
                     />
 
-                    <TreeTable value={this.state.items} lazy={true} paginator={true} paginatorPosition={'top'} totalRecords={100}
+                    <TreeTable
+                        className={'testttt'}
+                        value={this.state.items} lazy={true} paginator={true} paginatorPosition={'top'} totalRecords={100}
                                paginatorRight={paginatorRight}
                                currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
                                paginatorTemplate="CurrentPageReport"

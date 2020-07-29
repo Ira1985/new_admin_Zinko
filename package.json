@@ -5,11 +5,11 @@
   "dependencies": {
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
-    "formik": "^2.1.4",
+    "formik": "^2.1.5",
     "history": "^4.10.1",
-    "i18next": "^19.5.1",
+    "i18next": "^19.6.3",
     "i18next-browser-languagedetector": "^5.0.0",
-    "i18next-http-backend": "^1.0.15",
+    "i18next-http-backend": "^1.0.17",
     "node-sass": "^4.14.1",
     "primeflex": "^1.3.1",
     "primeicons": "^3.0.0-rc.1",
@@ -24,10 +24,10 @@
     "react-scripts": "3.4.1",
     "react-toastify": "^6.0.8",
     "react-transition-group": "^4.4.1",
-    "transition": "^0.1.1",
-    "yup": "^0.29.1",
     "sockjs-client": "^1.4.0",
-    "stompjs": "^2.3.3"
+    "stompjs": "^2.3.3",
+    "transition": "^0.1.1",
+    "yup": "^0.29.2"
   },
   "scripts": {
     "start": "react-scripts start",

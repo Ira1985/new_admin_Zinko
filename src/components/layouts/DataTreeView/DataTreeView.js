@@ -63,7 +63,7 @@ class  DataTreeView extends Component {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
 
         if(nextProps.clearChecked  && nextProps.hasOwnProperty('clearCheckedDone')) {
-            this.selectItem({value:[]});
+            this.selectItem({value:{}});
             nextProps.clearCheckedDone();
             return false;
         }
@@ -180,18 +180,14 @@ class  DataTreeView extends Component {
     selectItem(e) {
         let {updateChecked, checkedItems} = this.props;
         let {items, selectedItems} = this.state;
-        console.log(e);
-        let newCheckedItems = new Map(checkedItems);
+        let newCheckedItems = new Map();
         Object.keys(e.value).forEach(item => {
-            if(!newCheckedItems.has(item)) {
-                newCheckedItems.set(item, items.get(item));
-            } else {
-                newCheckedItems.delete(item);
-            }
+            newCheckedItems.set(item, items.get(item));
         });
         this.setState({
             selectedItems: e.value
         });
+
         updateChecked(newCheckedItems);
     }
 
@@ -339,14 +335,12 @@ class  DataTreeView extends Component {
 
     render() {
         const {t, minimizeHeight} = this.props;
-        const {items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter, selectedItems, activeColumns} = this.state;
+        const {items, loading, selectedColumns, multiColumns, paging, sorter, selectedItems, activeColumns} = this.state;
 
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
         </div>;
-
-        console.log('render', minimizeHeight);
 
         return (<>
             <div ref={this.dataGridView} className='data-tree-view'>
@@ -369,35 +363,35 @@ class  DataTreeView extends Component {
                 />
 
                 <TreeTable value={Array.from(items.values())}
-                           selectionMode="checkbox"
-                           //onRowDoubleClick={(e) => this.onDoubleClick(e)}
-                           selectionKeys={selectedItems}
-                           //onSelectionChange={e => this.setState({selectedNodeKeys3: e.value})}
-                            scrollable={true}
-                            responsive={true}
-                            autoLayout={true}
-                            resizableColumns={true}
-                            /*className={minimizeHeight?'minimize-height-body': ''}*/
-                            className={'minimize-height-body'}
-                            sortField={sorter.name}
-                            sortOrder={sorter.directions == 'desc'?1:0}
-                            scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
-                            currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
-                            totalRecords={paging.count}
-                            lazy={true}
-                            first={(paging.page - 1) * paging.limit}
-                            onPage={(e) => this.onPage(e)}
-                            onSort={(e) => this.onSort(e)}
-                            loading={loading}
-                            paginatorRight={paginatorRight}
-                            /*selection={Array.from(checkedItems.values())}*/
-                            /*frozenValue={Array.from(checkedItems.values())}*/
-                            onSelectionChange={e => this.selectItem(e)}
-                            paginator={true}
-                            rows={paging.limit}
-                            paginatorPosition={'top'}
-                            paginatorTemplate="CurrentPageReport"
-                            onExpand={(event) => this.onExpand(event)}
+                   selectionMode="checkbox"
+                   //onRowDoubleClick={(e) => this.onDoubleClick(e)}
+                   selectionKeys={selectedItems}
+                   //onSelectionChange={e => this.setState({selectedNodeKeys3: e.value})}
+                    scrollable={true}
+                    responsive={true}
+                    autoLayout={true}
+                    resizableColumns={true}
+                    className={minimizeHeight?'minimize-height-body': ''}
+                    /*className={'minimize-height-body'}*/
+                    sortField={sorter.name}
+                    sortOrder={sorter.directions == 'desc'?1:0}
+                    scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
+                    currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
+                    totalRecords={paging.count}
+                    lazy={true}
+                    first={(paging.page - 1) * paging.limit}
+                    onPage={(e) => this.onPage(e)}
+                    onSort={(e) => this.onSort(e)}
+                    loading={loading}
+                    paginatorRight={this.paginatorRight}
+                    /*selection={Array.from(checkedItems.values())}*/
+                    /*frozenValue={Array.from(checkedItems.values())}*/
+                    onSelectionChange={e => this.selectItem(e)}
+                    paginator={true}
+                    rows={paging.limit}
+                    paginatorPosition={'top'}
+                    paginatorTemplate="CurrentPageReport"
+                    onExpand={(event) => this.onExpand(event)}
                 >
                     {/*<Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />*/}
                     {activeColumns}
