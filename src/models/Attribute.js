@@ -80,15 +80,15 @@ export default class Attribute extends BaseEntity {
         super.build(item);
         this.attrType = (item['attrType']?item['attrType']:AttrType.GLOBAL);
         this.valueType = (item['valueType']?item['valueType']:ValueType.STRING);
-        this.unit = (item['unit']?item['unit']:null);
-        this.hasQuantities = (item.hasOwnProperty('hasQuantities')?item['hasQuantities']:false);
-        this.subsGroup = (item['subsGroup']?item['subsGroup']:null);
+        this.unit = (item['unit']?item['unit']:this.unit);
+        this.hasQuantities = (item.hasOwnProperty('hasQuantities')?item['hasQuantities']:this.hasQuantities);
+        this.subsGroup = (item['subsGroup']?item['subsGroup']: this.subsGroup);
         this.quantType = (item['quantType']?item['quantType']:QuantType.NUMBER);
-        this.roundUp = (item['roundUp']?item['roundUp']:null);
-        this.quantSubsGroup = (item['quantSubsGroup']?item['quantSubsGroup']:null);
+        this.roundUp = (item['roundUp']?item['roundUp']: this.roundUp);
+        this.quantSubsGroup = (item['quantSubsGroup']?item['quantSubsGroup']:this.quantSubsGroup);
         this.sourceType = (item['sourceType']?item['sourceType']:LinkSourceType.NONE);
-        this.attrCategory = (item['attrCategory']?item['attrCategory']:null);
-        this.system = (item.hasOwnProperty('system')?item['system']:false);
+        this.attrCategory = (item['attrCategory']?item['attrCategory']:this.attrCategory);
+        this.system = (item.hasOwnProperty('system')?item['system']:  this.system);
         this.systemSource = (item['systemSource']?item['systemSource']:AttrSystemSource.NONE);
         return this;
     }

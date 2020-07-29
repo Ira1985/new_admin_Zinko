@@ -482,6 +482,26 @@
     }
   },
 
+  "exportTemplates": {
+    "breadcrumbs": {
+      "name": "Экспортные шаблоны"
+    },
+    "plurals": {і
+      "first": "экспортных шаблонов",
+      "second": "экспортный шаблон",
+      "third": "экспортных шаблонов"
+    },
+    "fields": {
+      "description": "Описание",
+      "category": "Категория",
+      "customerCategory": "Категория заказчика",
+      "type": "Тип",
+      "customer": "Заказчик",
+      "changePlain": "Смена числа",
+      "useBaseGroup": "Базовая группа"
+    }
+  },
+
   "services": {
     "base": {
       "consts": {
