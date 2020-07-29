@@ -152,7 +152,7 @@ export function renderExportResultFormat(){
 
 export const CustomerSchema = Yup.object().shape({
     name: Yup.string()
-        .min(2,'Минимальная длинна 2 символа')
+        .min(2,'baseEntity.errors.min')
         .trim()
-        .required('Обязательное поле!')
+        .required('baseEntity.errors.required')
 });

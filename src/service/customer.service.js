@@ -3,7 +3,7 @@ import {toastConfig} from "../helpers/toastConfig";
 import {baseService} from "./base/BaseMethodApi";
 import i18n from "../i18n";
 
-export const attrCategoryService = {
+export const customerService = {
     getList,
     update,
     remove,
@@ -16,9 +16,9 @@ export const attrCategoryService = {
     dump
 };
 
-const BASE_API_URL = '/attrCats/';
-const consts = [i18n.t('services.attrCategories.obj'), i18n.t('services.attrCategories.objecta'),
-    i18n.t('services.attrCategories.objectov'), i18n.t('services.attrCategories.objects')];
+const BASE_API_URL = '/customers/';
+const consts = [i18n.t('services.customers.obj'), i18n.t('services.customers.objecta'),
+    i18n.t('services.customers.objectov'), i18n.t('services.customers.objects')];
 
 function baseResponse(res) {
     if(res && res.success)
@@ -32,7 +32,7 @@ function getList(filters, sorter, paging) {
         .then(res => {
             return baseResponse(res);
         }).catch(error => {
-            console.log('Something wrong in attrCategory service getList', error);
+            console.log('Something wrong in customer service getList', error);
             return null;
         });
 }
@@ -43,7 +43,7 @@ function getItem(id) {
             return baseResponse(res);
         })
         .catch(error => {
-            console.log('Something wrong in attrCategory service getItem', error);
+            console.log('Something wrong in customer service getItem', error);
             return null;
         });
 }
@@ -54,7 +54,7 @@ function remove(id) {
             return baseResponse(res);
         })
         .catch(error => {
-            console.log('Something wrong in attrCategory service remove', error);
+            console.log('Something wrong in customer service remove', error);
             return null;
         });
 }
@@ -65,7 +65,7 @@ function removeByList(ids) {
             return baseResponse(res);
         })
         .catch(error => {
-            console.log('Something wrong in attrCategory service removeByList', error);
+            console.log('Something wrong in customer service removeByList', error);
             return null;
         });
 }
@@ -76,7 +76,7 @@ function removeByFilter(filters) {
             return baseResponse(res);
         })
         .catch(error => {
-            console.log('Something wrong in attrCategory service removeByFilter', error);
+            console.log('Something wrong in customer service removeByFilter', error);
             return null;
         });
 }
@@ -87,7 +87,7 @@ function saveItem(item) {
             return baseResponse(res);
         })
         .catch(error => {
-            console.log('Something wrong in attrCategory service saveItem', error);
+            console.log('Something wrong in customer service saveItem', error);
             return null;
         });
 }
@@ -98,7 +98,7 @@ function update(item) {
             return baseResponse(res);
         })
         .catch(error => {
-            console.log('Something wrong in attrCategory service update', error);
+            console.log('Something wrong in customer service update', error);
             return null;
         });
 }
@@ -109,7 +109,7 @@ function create(item) {
             return baseResponse(res);
         })
         .catch(error => {
-            console.log('Something wrong in attrCategory service create', error);
+            console.log('Something wrong in customer service create', error);
             return null;
         });
 }
@@ -120,7 +120,7 @@ function getCombo(name, limit) {
             return baseResponse(res);
         })
         .catch(error => {
-            console.log('Something wrong in attrCategory service getCombo', error);
+            console.log('Something wrong in customer service getCombo', error);
             return null;
         });
 }
@@ -130,7 +130,7 @@ function dump(filters) {
         .then(res => {
             return baseResponse(res);
         }).catch(error => {
-            console.log('Something wrong in attrCategory service dump', error);
+            console.log('Something wrong in customer service dump', error);
             return null;
         });
 }
