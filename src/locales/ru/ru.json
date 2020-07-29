@@ -464,9 +464,23 @@
 
     }
   },
-
-
-
+  "categories": {
+    "breadcrumbs": {
+      "name": "Категории"
+    },
+    "plurals": {
+      "first": "категорий",
+      "second": "категория",
+      "third": "категории"
+    },
+    "fields": {
+      "name": "Категория",
+      "description": "Описание",
+      "parent": "Родитель",
+      "productCnt": "Продуктов",
+      "hasAttr": "Модель"
+    }
+  },
 
   "services": {
     "base": {

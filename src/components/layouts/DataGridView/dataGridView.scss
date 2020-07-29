@@ -216,6 +216,10 @@
                   border-bottom-left-radius: 5px !important;
                 }
 
+                &:nth-last-child(2) {
+                  border-right: 0px !important;
+                }
+
                 &:last-child {
                   border-top-right-radius: 5px !important;
                   border-bottom-right-radius: 5px !important;

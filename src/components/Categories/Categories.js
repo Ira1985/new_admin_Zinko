@@ -274,6 +274,8 @@ class Categories extends Component {
         const { items, loading, selectedColumns, columns, columnCoef, selectedItems,
             totalRows, limit, currentPage, first, sortField, sortOrder, paging, sorter} = this.state;
 
+        console.log(items);
+
         let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
 
         let  breadcrumbs = [{ "label": t('categories.breadcrumbs.name')}];

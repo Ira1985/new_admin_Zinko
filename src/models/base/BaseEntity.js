@@ -1,5 +1,6 @@
 import FilterItem from './FilterItem';
 import GridColumn from "./GridColumn";
+import {Fieldset} from "primereact/fieldset";
 
 export default class BaseEntity {
     id = null;
@@ -37,8 +38,24 @@ export default class BaseEntity {
         ];
   }
 
-  static buildColumns() {
-      return [
+  static buildColumns(skipped = new Set()) {
+      let columns = [];
+      if(!skipped.has('id'))
+        columns.push(new GridColumn().build({field: 'id', header: 'baseEntity.id', style:{}, sortable: true, order: 1, default: false, widthCoef:1}));
+      if(!skipped.has('name'))
+        columns.push(new GridColumn().build({field: 'name', header: 'baseEntity.name', style:{}, sortable: true, order: 2, default: true, widthCoef:3}));
+      if(!skipped.has('comment'))
+        columns.push(new GridColumn().build({field: 'comment', header: 'baseEntity.comment', style:{}, sortable: false, order: 3, default: true, widthCoef:2}));
+      if(!skipped.has('createdAt'))
+        columns.push(new GridColumn().build({field: 'createdAt', header: 'baseEntity.createdAt', style:{}, sortable: true, order: 20, default: false, widthCoef:1.5}));
+      if(!skipped.has('updatedAt'))
+        columns.push(new GridColumn().build({field: 'updatedAt', header: 'baseEntity.updatedAt', style:{}, sortable: true, order: 22, default: false, widthCoef:1.5}));
+      if(!skipped.has('createdBy'))
+        columns.push(new GridColumn().build({field: 'createdBy', header: 'baseEntity.createdBy', style:{}, sortable: false, order: 21, default: false, widthCoef:1.5}));
+      if(!skipped.has('updatedBy'))
+        columns.push(new GridColumn().build({field: 'updatedBy', header: 'baseEntity.updatedBy', style:{}, sortable: false, order: 23, default: false, widthCoef:1.5}));
+      return columns;
+      /*return [
           new GridColumn().build({field: 'id', header: 'baseEntity.id', style:{}, sortable: true, order: 1, default: false, widthCoef:1}),
           new GridColumn().build({field: 'name', header: 'baseEntity.name', style:{}, sortable: true, order: 2, default: true, widthCoef:3}),
           new GridColumn().build({field: 'comment', header: 'baseEntity.comment', style:{}, sortable: false, order: 3, default: true, widthCoef:3}),
@@ -46,7 +63,7 @@ export default class BaseEntity {
           new GridColumn().build({field: 'updatedAt', header: 'baseEntity.updatedAt', style:{}, sortable: true, order: 22, default: false, widthCoef:1.5}),
           new GridColumn().build({field: 'createdBy', header: 'baseEntity.createdBy', style:{}, sortable: false, order: 21, default: false, widthCoef:1.5}),
           new GridColumn().build({field: 'updatedBy', header: 'baseEntity.updatedBy', style:{}, sortable: false, order: 23, default: false, widthCoef:1.5})
-      ];
+      ];*/
   }
 
 }

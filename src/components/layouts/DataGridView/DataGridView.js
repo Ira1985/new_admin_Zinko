@@ -183,6 +183,9 @@ class  DataGridView extends Component {
         const {t, minimizeHeight, checkedItems} = this.props;
         const { items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter} = this.state;
 
+        console.log(sorter);
+        console.log(sorter.directions == 'desc'?1:0);
+
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
             <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
@@ -245,9 +248,7 @@ class  DataGridView extends Component {
                            resizableColumns={true}
                            className={minimizeHeight?'minimize-height-body': ''}
                            /*resizableColumns={true}*/
-                           //sortField={sortField}
                            sortField={sorter.name}
-                           //sortOrder={sortOrder}
                            sortOrder={sorter.directions == 'desc'?1:0}
                            scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
                            /*scrollHeight={scrollHeight}*/
@@ -256,7 +257,6 @@ class  DataGridView extends Component {
                            //totalRecords={totalRows}
                            totalRecords={paging.count}
                            lazy={true}
-                           //first={first}
                            first={(paging.page - 1) * paging.limit}
                            onPage={(e) => this.onPage(e)}
                            onSort={(e) => this.onSort(e)}
@@ -266,7 +266,6 @@ class  DataGridView extends Component {
                            /*frozenValue={Array.from(checkedItems.values())}*/
                            onSelectionChange={e => this.selectItem(e)}
                            paginator={true}
-                           //rows={limit}
                            rows={paging.limit}
                            paginatorPosition={'top'}
                            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}>

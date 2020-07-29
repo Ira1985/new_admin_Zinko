@@ -9,8 +9,9 @@ import BaseLayout from "../BaseLayout/BaseLayout";
 import {Button} from "primereact/button";
 import Paging from "../../../models/base/Paging";
 import Sorter from "../../../models/base/Sorter";
-import GridColumn from "../../../models/base/GridColumn";
 import {TreeTable} from "primereact/treetable";
+import TreeTableItem from "../../../models/base/TreeTableItem";
+import TreeColumn from "../../../models/base/TreeColumn";
 
 class  DataTreeView extends Component {
 
@@ -24,15 +25,15 @@ class  DataTreeView extends Component {
             let sum = 0;
             props.columns.forEach((elem, index) => {
                 columns.set(elem.field,
-                    new GridColumn().build(elem));
+                    new TreeColumn().build(elem));
                 if(!elem.actionColumn)
                     multiColumns.set(elem.field,
-                        new GridColumn().build(elem));
+                        new TreeColumn().build(elem));
                 if(elem.default || elem.actionColumn) {
                     if(!elem.actionColumn)
                         sum += elem.widthCoef;
                     selectedColumns.set(
-                        elem.field, new GridColumn().build(elem));
+                        elem.field, new TreeColumn().build(elem));
                 }
             });
             coef = (sum > 0? 100/sum: 1);
@@ -40,7 +41,7 @@ class  DataTreeView extends Component {
 
         this.state = {
             loading: true,
-            items: [],
+            items: new Map(),
 
             selectedItems: new Map(),
             freezItems: new Map(),
@@ -52,7 +53,8 @@ class  DataTreeView extends Component {
 
             sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
             paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),
-            filters: Object.assign({},props.filterInit ? props.filterInit:{})
+            filters: Object.assign({},props.filterInit ? props.filterInit:{}),
+            activeColumns: []
         };
 
         this.dataGridView = React.createRef();
@@ -77,15 +79,18 @@ class  DataTreeView extends Component {
 
 
     componentDidMount() {
-        const {filters, sorter, paging} = this.state;
+        const {filters, sorter, paging, selectedColumns, columnCoef} = this.state;
         this.getList(filters, sorter, paging, true);
+        this.setState({
+            activeColumns: this.rebuildColumns(selectedColumns,columnCoef)
+            });
     }
 
     getList(filtering, sorting, paging, changingPage) {
 
         this.setState({
-            loading: true,
-            items: []
+            loading: true
+            //items: new Map()
         });
         this.props.apiService.getList(filtering, sorting, paging)
             .then(response => {
@@ -101,22 +106,32 @@ class  DataTreeView extends Component {
                         }
                         this.setState({
                             paging: newPaging,
-                            items: response ? response.pageItems : [],
+                            items: response ? this.transformItems(response.pageItems) : [],
                             loading: false
                         });
                     } else
                         this.setState({
-                            items: response ? response.pageItems : [],
+                            items: response ? this.transformItems(response.pageItems) : [],
                             loading: false
                         });
                 },
                 error => {
                     this.setState({
-                        items: [],
+                        items: new Map(),
                         loading: false,
                         paging: new Paging()
                     });
                 });
+    }
+
+    transformItems(items) {
+        let nodes = new Map();
+        if(items && items.length > 0) {
+            items.forEach((item, index) => {
+                nodes.set(item.id, new TreeTableItem().build(item));
+            });
+        }
+        return nodes;
     }
 
     onColumnAdd(e) {
@@ -134,7 +149,8 @@ class  DataTreeView extends Component {
             });
             this.setState({
                 selectedColumns: newColumns,
-                columnCoef: (sum > 0? 100/sum: 1)
+                columnCoef: (sum > 0? 100/sum: 1),
+                activeColumns: this.rebuildColumns(selectedColumns, (sum > 0? 100/sum: 1))
             });
         }
     }
@@ -162,15 +178,21 @@ class  DataTreeView extends Component {
     }
 
     selectItem(e) {
-        let {updateChecked} = this.props;
-        let newSelectedItems = new Map();
-        e.value.forEach(item => {
-            newSelectedItems.set(item.id, item);
+        let {updateChecked, checkedItems} = this.props;
+        let {items, selectedItems} = this.state;
+        console.log(e);
+        let newCheckedItems = new Map(checkedItems);
+        Object.keys(e.value).forEach(item => {
+            if(!newCheckedItems.has(item)) {
+                newCheckedItems.set(item, items.get(item));
+            } else {
+                newCheckedItems.delete(item);
+            }
         });
         this.setState({
-            selectedItems: newSelectedItems
+            selectedItems: e.value
         });
-        updateChecked(newSelectedItems);
+        updateChecked(newCheckedItems);
     }
 
     onDoubleClick(e) {
@@ -180,16 +202,109 @@ class  DataTreeView extends Component {
         //this.setState({item: e.data, visibleAdd: true})
     }
 
-    render() {
-        const {t, minimizeHeight, checkedItems} = this.props;
-        const { items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter} = this.state;
+    onExpand(event) {
+        if (!event.node.children) {
+            this.setState({
+                loading: true
+            });
 
-        const paginatorRight = <div>
-            <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
-            <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
-        </div>;
+            setTimeout(() => {
+                this.loading = false;
+                let lazyNode = {...event.node};
+                lazyNode.children = [
+                    {
+                        key: lazyNode.key + ' - 0',
+                        data: {
+                            name: lazyNode.data.name + ' - 0',
+                            size: Math.floor(Math.random() * 1000) + 1 + 'kb',
+                            comment: 'File',
+                            presenceAttributes: "No",
+                            parent: lazyNode.key
+                        },
+                        leaf: false
+                    },
+                    {
+                        key: lazyNode.key + ' - 1',
+                        data: {
+                            name: lazyNode.data.name + ' - 1',
+                            size: Math.floor(Math.random() * 1000) + 1 + 'kb',
+                            type: 'File',
+                            parent: lazyNode.key
+                        },
+                        leaf: false
+                    }
+                ];
 
-        let offsetConst = 80;
+                let nodes = null;
+
+                let newMap = new Map(this.state.expandedTree);
+                lazyNode.children.map(child => {
+                    newMap.set(child.key, {
+                        key: child.key,
+                        data: child.data,
+                        children: null
+                    })
+                });
+
+                let parent = lazyNode.data.parent;
+
+                let count = 0;
+
+                while(parent !== null) {
+                    ++count;
+                    newMap.get(lazyNode.key).children = lazyNode.children;
+                    if(newMap.has(parent)) {
+                        let parentElem = newMap.get(parent);
+                        let childElem = parentElem.children.map(elem => {
+                            if(elem.key === lazyNode.key) {
+                                elem = lazyNode
+                            }
+                            return elem;
+                        })
+                        lazyNode = newMap.get(parent);
+                        parentElem.children = childElem;
+                        parent = newMap.get(parent).data.parent;
+                    } else {
+                        let parenElem = this.state.items.filter(item => item.key === parent)[0];
+                        parent = null;
+                        lazyNode = newMap.get(lazyNode.key);
+                        let childElem = parenElem.children.map(elem => {
+                            if(elem.key === lazyNode.key) {
+                                elem = lazyNode
+                            }
+                            return elem
+                        });
+                        parenElem.children = childElem;
+                        lazyNode = parenElem;
+                    }
+
+                }
+
+                if(parent === null) {
+                    let key = count ? lazyNode.key : event.node.key;
+                    nodes = this.state.items.map(node => {
+                        if (node.key === key) {
+                            node = lazyNode;
+                        }
+                        return node;
+                    });
+                } else {
+
+                }
+
+                this.setState({
+                    loading: false,
+                    items: nodes,
+                    expandedTree: newMap
+                });
+            }, 250);
+        }
+    }
+
+    rebuildColumns(selectedColumns, columnCoef) {
+        const {t} = this.props;
+        //const {selectedColumns, columnCoef} = this.state;
+        let offsetConst = 30;
         let actionCol = 0;
         Array.from(selectedColumns.values()).forEach((col, index ) => {
             if(col.actionColumn && col.actionWidth > 0) {
@@ -209,14 +324,29 @@ class  DataTreeView extends Component {
                         style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
                         body={col.renderer?col.renderer:null}
+                        expander={col.expander?true: false}
                 />:
                 <Column key={'data-table-col-' + index}
                         style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
                         body={col.renderer?col.renderer:null}
+                        expander={col.expander?true: false}
                 />
 
         });
+        return columnComponents;
+    }
+
+    render() {
+        const {t, minimizeHeight} = this.props;
+        const {items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter, selectedItems, activeColumns} = this.state;
+
+        const paginatorRight = <div>
+            <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
+            <Button className={'grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
+        </div>;
+
+        console.log('render', minimizeHeight);
 
         return (<>
             <div ref={this.dataGridView} className='data-tree-view'>
@@ -238,46 +368,39 @@ class  DataTreeView extends Component {
                     /*appendTo={this.dataGridView.current}*/
                 />
 
-                <TreeTable value={items}
-                    onRowDoubleClick={(e) => this.onDoubleClick(e)}
-                    scrollable={true}
-                    responsive={true}
-                    autoLayout={true}
-                    resizableColumns={true}
-                    className={minimizeHeight?'minimize-height-body': ''}
-                    sortField={sorter.name}
-                    sortOrder={sorter.directions == 'desc'?1:0}
-                    scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
-                    currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
-                    totalRecords={paging.count}
-                    lazy={true}
-                    first={(paging.page - 1) * paging.limit}
-                    onPage={(e) => this.onPage(e)}
-                    onSort={(e) => this.onSort(e)}
-                    loading={loading}
-                    paginatorRight={paginatorRight}
-                    selection={Array.from(checkedItems.values())}
-                    /*frozenValue={Array.from(checkedItems.values())}*/
-                    onSelectionChange={e => this.selectItem(e)}
-                    paginator={true}
-                    rows={paging.limit}
-                    paginatorPosition={'top'}
-                    paginatorTemplate="CurrentPageReport"
-                    onExpand={this.onExpand}
-
-                           /*lazy={true}
-                           paginator={true}
-                           paginatorPosition={'top'}
-                           totalRecords={100}
-                           paginatorRight={paginatorRight}*/
-                           /*currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
-                           paginatorTemplate="CurrentPageReport"
-                           onExpand={this.onExpand}
-                           /*loading={this.state.loading}
-                           scrollHeight='calc(100vh - 225px)'*/
+                <TreeTable value={Array.from(items.values())}
+                           selectionMode="checkbox"
+                           //onRowDoubleClick={(e) => this.onDoubleClick(e)}
+                           selectionKeys={selectedItems}
+                           //onSelectionChange={e => this.setState({selectedNodeKeys3: e.value})}
+                            scrollable={true}
+                            responsive={true}
+                            autoLayout={true}
+                            resizableColumns={true}
+                            /*className={minimizeHeight?'minimize-height-body': ''}*/
+                            className={'minimize-height-body'}
+                            sortField={sorter.name}
+                            sortOrder={sorter.directions == 'desc'?1:0}
+                            scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
+                            currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
+                            totalRecords={paging.count}
+                            lazy={true}
+                            first={(paging.page - 1) * paging.limit}
+                            onPage={(e) => this.onPage(e)}
+                            onSort={(e) => this.onSort(e)}
+                            loading={loading}
+                            paginatorRight={paginatorRight}
+                            /*selection={Array.from(checkedItems.values())}*/
+                            /*frozenValue={Array.from(checkedItems.values())}*/
+                            onSelectionChange={e => this.selectItem(e)}
+                            paginator={true}
+                            rows={paging.limit}
+                            paginatorPosition={'top'}
+                            paginatorTemplate="CurrentPageReport"
+                            onExpand={(event) => this.onExpand(event)}
                 >
-                    <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
-                    {columnComponents}
+                    {/*<Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />*/}
+                    {activeColumns}
                     {/*<Column style={{width:'120px'}} body={this.butBodyTemplate} />*/}
                     <Column style={{width:'30px'}} />
                 </TreeTable>
