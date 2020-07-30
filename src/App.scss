@@ -420,6 +420,32 @@ hr {
   }
 }
 
+.p-growl {
+  opacity: 0.8;
+
+  .p-growl-item-container {
+    padding: 5px 5px ;
+    box-shadow: 0 0 15px $primary-back-color;
+    color: $primary-back-color;
+
+    &.p-growl-message-error {
+      background-color: $informer-error;
+    }
+
+    &.p-growl-message-success {
+      background-color: $informer-success;
+    }
+
+    &.p-growl-message-warn {
+      background-color: $informer-warn;
+    }
+
+    &.p-growl-message-info {
+      background-color: $informer-info;
+    }
+  }
+}
+
 .cs-admin {
   width: 100%;
   height: 100%;

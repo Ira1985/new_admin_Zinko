@@ -1,6 +1,7 @@
 import * as axios from "axios";
 import {history} from "../App";
 import {toast} from "react-toastify";
+import {informerService} from './../service/base/InformerService'
 import i18n from "../i18n";
 
 export const API = axios.create({
@@ -40,26 +41,30 @@ API.interceptors.response.use(function (response) {
         switch(error.response.status) {
             case 401:{
                 history.push('/login');
-            break;}
+                break;}
             case 500:{
                 console.log(i18n.t('services.base.errors.server'), error);
-                toast.error(i18n.t('services.base.errors.server'), {onClose:()=>{toast.dismiss()}});
+                //toast.error(i18n.t('services.base.errors.server'), {onClose:()=>{toast.dismiss()}});
+                informerService.error(i18n.t('services.base.errors.server'));
                 return Promise.reject(error);
                 break;}
             case 404:{
                 console.log(i18n.t('services.base.errors.pathNotFound'), error);
-                toast.error(i18n.t('services.base.errors.pathNotFound'), {onClose:()=>{toast.dismiss()}});
+                //toast.error(i18n.t('services.base.errors.pathNotFound'), {onClose:()=>{toast.dismiss()}});
+                informerService.error(i18n.t('services.base.errors.pathNotFound'));
                 return Promise.reject(error);
                 break;}
             default:{
                 console.log(i18n.t('services.base.errors.network'), error);
-                toast.error(i18n.t('services.base.errors.network'), {onClose:()=>{toast.dismiss()}});
+                //toast.error(i18n.t('services.base.errors.network'), {onClose:()=>{toast.dismiss()}});
+                informerService.error(i18n.t('services.base.errors.network'));
                 return Promise.reject(error);
             }
         }
     } else {
         console.log(i18n.t('services.base.errors.network'), error);
-        toast.error(i18n.t('services.base.errors.network'), {onClose:()=>{toast.dismiss()}});
+        //toast.error(i18n.t('services.base.errors.network'), {onClose:()=>{toast.dismiss()}});
+        informerService.error(i18n.t('services.base.errors.network'));
         return Promise.reject(error);
     }
     //return Promise.reject(error);

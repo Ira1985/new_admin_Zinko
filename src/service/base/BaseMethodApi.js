@@ -3,6 +3,7 @@ import {objectToFormData} from "../../helpers/configAxios";
 import Sorter from "../../models/base/Sorter";
 import Paging from "../../models/base/Paging";
 import {toast} from "react-toastify";
+import {informerService} from './InformerService'
 import {toastConfig} from "../../helpers/toastConfig";
 import i18n from "../../i18n";
 import {capitalizeFirstLetter} from "../../helpers/utils";
@@ -30,15 +31,18 @@ function processResponse(res, showPageError, baseError, successMsg = null) {
             const error = res.data.errors[0].error,
                 code = res.data.errors[0].code;
             console.log('Error server - ' + code + ' - ' + error, res);
-            toast.error(error, toastConfig);
+            //toast.error(error, toastConfig);
+            informerService.error(error);
         } else if(successMsg)
-            toast.success(successMsg, toastConfig);
+            informerService.success(successMsg);
+            //toast.success(successMsg, toastConfig);
 
         return res.data;
     } else {
         //const error = i18n.t('services.base.errors.network') + ((res && res.status)?' - ' + res.status:'');
         console.log(baseError + ' - ' + ((res && res.status)?' - ' + res.status:''), res);
-        toast.error(baseError, toastConfig);
+        //toast.error(baseError, toastConfig);
+        informerService.error(baseError);
         return null;
     }
 }
@@ -46,7 +50,8 @@ function processResponse(res, showPageError, baseError, successMsg = null) {
 function processCatch(error) {
     const msg = i18n.t('services.base.errors.code');
     console.log(msg, error);
-    toast.error(msg, toastConfig);
+    //toast.error(msg, toastConfig);
+    //informerService.error(msg);
     return null;
 }
 

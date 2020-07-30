@@ -27,3 +27,15 @@ This README would normally document whatever steps are necessary to get your app
 
 * Repo owner or admin
 * Other community or team contact
+
+### Bugfixes ###
+* /node_modules/primereact/components/treetable/TreeTable.js
+    
+    add className on create p-treetable find and replace
+
+var className = (0, _classnames.default)('p-treetable p-component', {
+        'p-treetable-hoverable-rows': this.isRowSelectionMode(),
+        'p-treetable-resizable': this.props.resizableColumns,
+        'p-treetable-resizable-fit': this.props.resizableColumns && this.props.columnResizeMode === 'fit',
+        'p-treetable-auto-layout': this.props.autoLayout
+      }, this.props.className);
