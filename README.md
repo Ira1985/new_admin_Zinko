@@ -39,3 +39,31 @@ var className = (0, _classnames.default)('p-treetable p-component', {
         'p-treetable-resizable-fit': this.props.resizableColumns && this.props.columnResizeMode === 'fit',
         'p-treetable-auto-layout': this.props.autoLayout
       }, this.props.className);
+      
+* /node_modules/primereact/components/treetable/TreeTableScrollableView.js
+          
+          not working auto set Scroll Height
+          
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (!this.props.frozen) {
+        this.alignScrollBar();
+      }
+      if (this.props.scrollHeight !== prevProps.scrollHeight) {
+        this.setScrollHeight();
+      }
+    }
+   
+* /node_modules/primereact/components/treetable/TreeTableScrollableView.js
+             
+          not added style and class for col
+          
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+     if (!this.props.frozen) {
+       this.alignScrollBar();
+     }
+     if (this.props.scrollHeight !== prevProps.scrollHeight) {
+       this.setScrollHeight();
+     }
+    }

@@ -316,13 +316,13 @@ class  DataTreeView extends Component {
         const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
 
             return !col.actionColumn ?
-                <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
+                <Column key={'tree-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
                         style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
                         body={col.renderer?col.renderer:null}
                         expander={col.expander?true: false}
                 />:
-                <Column key={'data-table-col-' + index}
+                <Column key={'tree-table-col-' + index}
                         style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
                         body={col.renderer?col.renderer:null}
@@ -383,17 +383,18 @@ class  DataTreeView extends Component {
                     onPage={(e) => this.onPage(e)}
                     onSort={(e) => this.onSort(e)}
                     loading={loading}
-                    paginatorRight={this.paginatorRight}
+                    paginatorRight={paginatorRight}
                     /*selection={Array.from(checkedItems.values())}*/
                     /*frozenValue={Array.from(checkedItems.values())}*/
                     onSelectionChange={e => this.selectItem(e)}
                     paginator={true}
                     rows={paging.limit}
                     paginatorPosition={'top'}
-                    paginatorTemplate="CurrentPageReport"
+                    /*paginatorTemplate="CurrentPageReport"*/
+                    paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
                     onExpand={(event) => this.onExpand(event)}
                 >
-                    {/*<Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />*/}
+                    {/*<Column key={'tree-table-selection-key-0'} style={{width:'2px'}} />*/}
                     {activeColumns}
                     {/*<Column style={{width:'120px'}} body={this.butBodyTemplate} />*/}
                     <Column style={{width:'30px'}} />
