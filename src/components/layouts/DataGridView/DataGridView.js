@@ -158,7 +158,6 @@ class  DataGridView extends Component {
 
     onSort(e) {
         const {filters, sorter, paging} = this.state;
-
         let newSorter = new Sorter().build(e.sortField,e.sortOrder === 1?'desc':'asc');
         this.setState({
             sorter: newSorter
@@ -183,6 +182,42 @@ class  DataGridView extends Component {
         if(!disableEdit)
             editItem(e.data);
         //this.setState({item: e.data, visibleAdd: true})
+    }
+
+    rebuildColumns(selectedColumns, columnCoef) {
+        const {t} = this.props;
+        //const {selectedColumns, columnCoef} = this.state;
+        let offsetConst = 30;
+        let actionCol = 0;
+        Array.from(selectedColumns.values()).forEach((col, index ) => {
+            if(col.actionColumn && col.actionWidth > 0) {
+                offsetConst += col.actionWidth;
+                actionCol++;
+            }
+        });
+
+        let offset = 0;
+        if(this.dataGridView.current)
+            offset = (selectedColumns.size > actionCol)?((offsetConst/this.dataGridView.current.clientWidth)*98)/(selectedColumns.size-actionCol): 0;
+
+        const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
+
+            return !col.actionColumn ?
+                <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
+                        style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
+                        bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
+                        body={col.renderer?col.renderer:null}
+                        expander={col.expander?true: false}
+                />:
+                <Column key={'data-table-col-' + index}
+                        style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
+                        bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
+                        body={col.renderer?col.renderer:null}
+                        expander={col.expander?true: false}
+                />
+
+        });
+        return columnComponents;
     }
 
     render() {
@@ -223,7 +258,7 @@ class  DataGridView extends Component {
                            className={minimizeHeight?'minimize-height-body': ''}
                            /*resizableColumns={true}*/
                            sortField={sorter.name}
-                           sortOrder={sorter.directions == 'desc'?1:0}
+                           sortOrder={sorter.directions === 'desc'?1:-1}
                            scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
                            /*scrollHeight={scrollHeight}*/
                            /*currentPageReportTemplate={'{currentPage} of {totalPages}'}*/
