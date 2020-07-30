@@ -23,7 +23,7 @@ class CustomerEditRequirement extends Component {
         return (
             <div className="p-grid p-fluid">
                 <div className="p-col-3" style={{padding: '.75em'}}>
-                    <label htmlFor="requirementsDesc">{t("baseLayout.editCustomer.requirementsDesc")}</label>
+                    <label htmlFor="requirementsDesc">{t("customers.fields.requirementsDesc")}</label>
                 </div>
                 <div className="p-col-9" style={{padding: '.5em'}}>
                     <InputTextarea name="requirementsDesc" onChange={(e) => {
@@ -34,7 +34,7 @@ class CustomerEditRequirement extends Component {
                 </div>
 
                 <div className="p-col-3" style={{padding: '.75em'}}>
-                    <label htmlFor="requirementsFileLink">{t("baseLayout.editCustomer.requirementsFileLink")}</label>
+                    <label htmlFor="requirementsFileLink">{t("customers.fields.requirementsFileLink")}</label>
                 </div>
                 <div className="p-col-7" >
                     <div className="p-inputgroup">

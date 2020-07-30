@@ -64,13 +64,6 @@ export default class ExportTemplate extends BaseEntity {
     }
 }
 
-export const ExportTemplateType = {
-    CARD:'CARD',
-    AUTO_NAME:'AUTO_NAME',
-    NOT_ASSIGNED:'NOT_ASSIGNED',
-    TEXT:'TEXT'
-};
-
 
 export function getTemplateType(type){
     switch (type) {
@@ -92,6 +85,15 @@ export function getTemplateType(type){
         };
         default: return type;
     }
+}
+
+export function renderExportTemplateType(){
+    return [
+        getTemplateType('CARD'),
+        getTemplateType('AUTO_NAME'),
+        //getTemplateType('TEXT'),
+        getTemplateType('NOT_ASSIGNED')
+    ];
 }
 
 export const ExportTemplateSchema = Yup.object().shape({

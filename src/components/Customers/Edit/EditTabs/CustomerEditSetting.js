@@ -6,6 +6,7 @@ import {AutoComplete} from "primereact/autocomplete";
 import {InputNumber} from 'primereact/inputnumber';
 import {Checkbox} from 'primereact/checkbox';
 import {Button} from "primereact/button";
+import {FileUpload} from 'primereact/fileupload';
 import {customerService} from "../../../../service/customer.service";
 import {renderExportResultFormat, getExportResultFormat} from "../../../../models/Customer";
 
@@ -72,59 +73,123 @@ class CustomerEditSetting extends Component {
                 {editedItem.id &&
                 <>
                     <div className="p-col-4" style={{padding: '.75em'}}>
-                        <label htmlFor="contact">{t("baseLayout.editCustomer.useApi")}</label>
+                        <label htmlFor="contact">{t("customers.fields.useApi")}</label>
                     </div>
                     <div className="p-col-8" style={{padding: '.5em'}}>
-                        <Button label={t("baseLayout.editCustomer.getKeyAccess")} disabled={!editedItem.useApi || !editedItem.id} className={'button-dop'} onClick={()=>this.gettingKeyApi()}/>
+                        <Button label={t("customers.other.getKeyAccess")} disabled={!editedItem.useApi || !editedItem.id} className={'button-dop'} onClick={()=>this.gettingKeyApi()}/>
                     </div>
                 </>}
 
                 <div className="p-col-6" style={{padding: '.75em'}}>
-                    <Checkbox name={'hasWatermark'} onChange={e => updateValue(e)} checked={editedItem.hasWatermark}></Checkbox>
+                    <Checkbox
+                        name={'hasWatermark'}
+                        onChange={(e) => {
+                            formikHandler(e);
+                            updateValue(e);
+                            //this.updateProperty('name', e.target.value)
+                        }}
+                        checked={formikItem.hasWatermark}
+                    ></Checkbox>
                     {" "}
-                    <label htmlFor="hasWatermark">{t("baseLayout.editCustomer.hasWatermark")}</label>
+                    <label htmlFor="hasWatermark">{t("customers.fields.hasWatermark")}</label>
                 </div>
                 <div className="p-col-6" style={{padding: '.75em'}}>
-                    <Checkbox name={'hasMapping'} onChange={e => updateValue(e)} checked={editedItem.hasMapping}></Checkbox>
+                    <Checkbox
+                        name={'hasMapping'}
+                        onChange={(e) => {
+                            formikHandler(e);
+                            updateValue(e);
+                            //this.updateProperty('name', e.target.value)
+                        }}
+                        checked={formikItem.hasMapping}
+                    ></Checkbox>
                     {" "}
-                    <label htmlFor="hasMapping">{t("baseLayout.editCustomer.hasMapping")}</label>
-                </div>
-
-                <div className="p-col-6" style={{padding: '.75em'}}>
-                    <Checkbox name={'hasModel'} onChange={e => updateValue(e)} checked={editedItem.hasModel}></Checkbox>
-                    {" "}
-                    <label htmlFor="hasModel">{t("baseLayout.editCustomer.hasModel")}</label>
-                </div>
-                <div className="p-col-6" style={{padding: '.75em'}}>
-                    <Checkbox name={'hasLinking'} onChange={e => updateValue(e)} checked={editedItem.hasLinking}></Checkbox>
-                    {" "}
-                    <label htmlFor="hasLinking">{t("baseLayout.editCustomer.hasLinking")}</label>
-                </div>
-
-                <div className="p-col-6" style={{padding: '.75em'}}>
-                    <Checkbox name={'hasImages'} onChange={e => updateValue(e)} checked={editedItem.hasImages}></Checkbox>
-                    {" "}
-                    <label htmlFor="hasImages">{t("baseLayout.editCustomer.hasImages")}</label>
-                </div>
-                <div className="p-col-6" style={{padding: '.75em'}}>
-                    <Checkbox name={'hasInstructions'} onChange={e => updateValue(e)} checked={editedItem.hasInstructions}></Checkbox>
-                    {" "}
-                    <label htmlFor="hasInstructions">{t("baseLayout.editCustomer.hasInstructions")}</label>
+                    <label htmlFor="hasMapping">{t("customers.fields.hasMapping")}</label>
                 </div>
 
                 <div className="p-col-6" style={{padding: '.75em'}}>
-                    <Checkbox name={'hasVideos'} onChange={e => updateValue(e)} checked={editedItem.hasVideos}></Checkbox>
+                    <Checkbox
+                        name={'hasModel'}
+                        onChange={(e) => {
+                            formikHandler(e);
+                            updateValue(e);
+                            //this.updateProperty('name', e.target.value)
+                        }}
+                        checked={formikItem.hasModel}
+                    ></Checkbox>
                     {" "}
-                    <label htmlFor="hasVideos">{t("baseLayout.editCustomer.hasVideos")}</label>
+                    <label htmlFor="hasModel">{t("customers.fields.hasModel")}</label>
                 </div>
                 <div className="p-col-6" style={{padding: '.75em'}}>
-                    <Checkbox name={'hasCertificate'} onChange={e => updateValue(e)} checked={editedItem.hasCertificate}></Checkbox>
+                    <Checkbox
+                        name={'hasLinking'}
+                        onChange={(e) => {
+                            formikHandler(e);
+                            updateValue(e);
+                            //this.updateProperty('name', e.target.value)
+                        }}
+                        checked={formikItem.hasLinking}
+                    ></Checkbox>
                     {" "}
-                    <label htmlFor="hasCertificate">{t("baseLayout.editCustomer.hasCertificate")}</label>
+                    <label htmlFor="hasLinking">{t("customers.fields..hasLinking")}</label>
+                </div>
+
+                <div className="p-col-6" style={{padding: '.75em'}}>
+                    <Checkbox
+                        name={'hasImages'}
+                        onChange={(e) => {
+                            formikHandler(e);
+                            updateValue(e);
+                            //this.updateProperty('name', e.target.value)
+                        }}
+                        checked={formikItem.hasImages}
+                    ></Checkbox>
+                    {" "}
+                    <label htmlFor="hasImages">{t("customers.fields.hasImages")}</label>
+                </div>
+                <div className="p-col-6" style={{padding: '.75em'}}>
+                    <Checkbox
+                        name={'hasInstructions'}
+                        onChange={(e) => {
+                            formikHandler(e);
+                            updateValue(e);
+                            //this.updateProperty('name', e.target.value)
+                        }}
+                        checked={formikItem.hasInstructions}
+                    ></Checkbox>
+                    {" "}
+                    <label htmlFor="hasInstructions">{t("customers.fields.hasInstructions")}</label>
+                </div>
+
+                <div className="p-col-6" style={{padding: '.75em'}}>
+                    <Checkbox
+                        name={'hasVideos'}
+                        onChange={(e) => {
+                            formikHandler(e);
+                            updateValue(e);
+                            //this.updateProperty('name', e.target.value)
+                        }}
+                        checked={formikItem.hasVideos}
+                    ></Checkbox>
+                    {" "}
+                    <label htmlFor="hasVideos">{t("customers.fields.hasVideos")}</label>
+                </div>
+                <div className="p-col-6" style={{padding: '.75em'}}>
+                    <Checkbox
+                        name={'hasCertificate'}
+                        onChange={(e) => {
+                            formikHandler(e);
+                            updateValue(e);
+                            //this.updateProperty('name', e.target.value)
+                        }}
+                        checked={formikItem.hasCertificate}
+                    ></Checkbox>
+                    {" "}
+                    <label htmlFor="hasCertificate">{t("customers.fields.hasCertificate")}</label>
                 </div>
 
                 <div className="p-col-3" style={{padding: '.75em'}}>
-                    <label htmlFor="resultFormat">{t("baseLayout.editCustomer.resultFormat")}</label>
+                    <label htmlFor="resultFormat">{t("customers.fields.resultFormat")}</label>
                 </div>
                 <div className="p-col-9" style={{padding: '.5em'}}>
                     <AutoComplete name="resultFormat"
@@ -143,7 +208,7 @@ class CustomerEditSetting extends Component {
                 </div>
 
                 <div className="p-col-4" style={{padding: '.75em'}}>
-                    <label htmlFor="width">{t("baseLayout.editCustomer.width")}</label>
+                    <label htmlFor="width">{t("customers.fields.width")}</label>
                 </div>
                 <div className="p-col-2" style={{padding: '.5em'}}>
                     <InputNumber name="width" onChange={(e) => {
@@ -153,7 +218,7 @@ class CustomerEditSetting extends Component {
                     }} value={formikItem.width || 0} min={-1} step={1} max={100000} />
                 </div>
                 <div className="p-col-4" style={{padding: '.75em'}}>
-                    <label htmlFor="height">{t("baseLayout.editCustomer.height")}</label>
+                    <label htmlFor="height">{t("customers.fields.height")}</label>
                 </div>
                 <div className="p-col-2" style={{padding: '.5em'}}>
                     <InputNumber name="height" onChange={(e) => {
@@ -163,24 +228,21 @@ class CustomerEditSetting extends Component {
                     }} value={formikItem.height || 0} min={-1} step={1} max={100000} />
                 </div>
 
+
                 <div className="p-col-3" style={{padding: '.75em'}}>
-                    <label htmlFor="watermarkFileLink">{t("baseLayout.editCustomer.watermarkFileLink")}</label>
+                    <label htmlFor="watermarkFileLink">{t("customers.fields.watermarkFileLink")}</label>
                 </div>
-                <div className="p-col-7" style={{padding: '.5em'}}>
-                    <div className="p-inputgroup">
-                        <InputText name="watermarkFileLink" onChange={(e) => {
-                            formikHandler(e);
-                            updateValue(e);
-                            //this.updateProperty('name', e.target.value)
-                        }} value={formikItem.watermarkFileLink || ''} placeholder="Ссылка" />
-                        <Button icon="pi pi-times" className="p-button-danger" onClick={(e)=>this.clearOneContent()}/>
-                    </div>
-                </div>
-                <div className="p-col-1">
-                    <Button className={'but-customers grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
-                </div>
-                <div className="p-col-1">
-                    <Button className={'but-customers grid-toolbar-import'} icon="pi p-empty-button grid-import-ico" tooltip={t('baseLayout.main.buttons.tooltips.buttonImport')} tooltipOptions={{position: 'left'}} />
+                <div className="p-col-9">
+                    <FileUpload
+                                //mode="basic"
+                                accept="image/*"
+                                maxFileSize={1000000}
+                                onUpload={this.onUpload}
+                                chooseLabel=''
+                                uploadLabel=''
+                                cancelLabel=''
+                                customUpload={true}
+                    />
                 </div>
             </div>
         );

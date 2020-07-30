@@ -37,7 +37,7 @@ class CustomerEditDialog extends Component {
                     >
                         {props => (
                             <TabView renderActiveOnly={false}>
-                                <TabPanel header={t("baseLayout.editCustomer.basic")}>
+                                <TabPanel header={t("customers.other.basic")}>
                                     <CustomerEditMain
                                         editedItem={editedItem}
                                         formikItem={props.values}
@@ -48,7 +48,7 @@ class CustomerEditDialog extends Component {
                                         filterItems={filterItems}
                                     />
                                 </TabPanel>
-                                <TabPanel header={t("baseLayout.editCustomer.contact")}>
+                                <TabPanel header={t("customers.other.contact")}>
                                     <CustomerEditContact
                                         editedItem={editedItem}
                                         formikItem={props.values}
@@ -57,7 +57,7 @@ class CustomerEditDialog extends Component {
                                         formikHandler={(e) => props.handleChange(e)}
                                     />
                                 </TabPanel>
-                                <TabPanel header={t("baseLayout.editCustomer.setting")}>
+                                <TabPanel header={t("customers.other.setting")}>
                                     <CustomerEditSetting
                                         editedItem={editedItem}
                                         formikItem={props.values}
@@ -68,7 +68,7 @@ class CustomerEditDialog extends Component {
                                         filterItems={filterItems}
                                     />
                                 </TabPanel>
-                                <TabPanel header={t("baseLayout.editCustomer.demand")}>
+                                <TabPanel header={t("customers.other.demand")}>
                                     <CustomerEditRequirement
                                         editedItem={editedItem}
                                         formikItem={props.values}

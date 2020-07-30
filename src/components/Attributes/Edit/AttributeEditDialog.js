@@ -210,17 +210,18 @@ class AttributeEditDialog extends Component {
                                                   }}  />
                                 </div>
 
-                                <div className="p-col-1" style={{padding: '.75em'}}>
-                                    <Checkbox onChange={e => this.setState({checked: e.checked})} checked={this.state.checked}></Checkbox>
-                                </div>
-                                <div className="p-col-4" style={{padding: '.5em'}}>
+                                <div className="p-col-12" style={{padding: '.75em'}}>
+                                    <Checkbox
+                                        name={'hasQuantities'}
+                                        onChange={(e) => {
+                                            props.handleChange(e);
+                                            updateValue(e);
+                                            //this.updateProperty('name', e.target.value)
+                                        }}
+                                        checked={props.values.hasQuantities}
+                                    ></Checkbox>
+                                    {" "}
                                     <label htmlFor="hasQuantities">{t("attributes.fields.hasQuantities")}</label>
-                                </div>
-                                <div className="p-col-3" style={{padding: '.75em'}}>
-
-                                </div>
-                                <div className="p-col-4" style={{padding: '.5em'}}>
-
                                 </div>
 
                                 <div className="p-col-2" style={{padding: '.75em'}}>

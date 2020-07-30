@@ -73,7 +73,7 @@ class CustomerEditMain extends Component {
                     </div>
 
                     <div className="p-col-4" style={{padding: '.75em'}}>
-                        <label htmlFor="description">{t("baseEntity.description")}</label>
+                        <label htmlFor="description">{t("customers.fields.description")}</label>
                     </div>
                     <div className="p-col-8" style={{padding: '.5em'}}>
                         <InputTextarea id="description" onChange={(e) => {
@@ -84,7 +84,7 @@ class CustomerEditMain extends Component {
                     </div>
 
                     <div className="p-col-4" style={{padding: '.75em'}}>
-                        <label htmlFor="type">{t("baseLayout.editCustomer.type")}</label>
+                        <label htmlFor="type">{t("customers.fields.type")}</label>
                     </div>
                     <div className="p-col-8" style={{padding: '.5em'}}>
                         <AutoComplete name="type"
@@ -103,7 +103,7 @@ class CustomerEditMain extends Component {
                     </div>
 
                     <div className="p-col-4">
-                        <label htmlFor="parent">{t("baseLayout.editCustomer.parent")}</label>
+                        <label htmlFor="parent">{t("customers.fields..parent")}</label>
                     </div>
                     <div className="p-col-8">
                         <AutoComplete name="parent"
@@ -122,7 +122,7 @@ class CustomerEditMain extends Component {
                     </div>
 
                     <div className="p-col-4">
-                        <label htmlFor="owner">{t("baseLayout.editCustomer.owner")}</label>
+                        <label htmlFor="owner">{t("customers.fields..owner")}</label>
                     </div>
                     <div className="p-col-8">
                         <AutoComplete name="owner"

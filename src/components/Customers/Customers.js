@@ -15,9 +15,9 @@ class Customers extends Component {
         this.state = {};
     }
 
-    editComponent = (loading, editItem, updateValue) => {
+    editComponent = (loading, editItem, updateValue, filter, filterItems) => {
         return (
-            <CustomerEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} />
+            <CustomerEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
         );
     }
 
