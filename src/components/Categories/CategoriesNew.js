@@ -19,9 +19,9 @@ class CategoriesNew extends Component {
         this.state = {};
     }
 
-    editComponent = (loading, editItem, updateValue) => {
+    editComponent = (loading, editItem, updateValue, filter, filterItems) => {
         return (
-            <CountryEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} />
+            <CountryEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
         );
     }
 
@@ -53,7 +53,7 @@ class CategoriesNew extends Component {
 
     render() {
         const {t} = this.props;
-        let  breadcrumbs = [{ "label": t('countries.breadcrumbs.name')}];
+        let  breadcrumbs = [{ "label": t('categories.breadcrumbs.name')}];
 
         return (
             <BaseLayout breadcrumbs={breadcrumbs}
