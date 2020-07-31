@@ -235,7 +235,7 @@ class CustomerEditSetting extends Component {
                 <div className="p-col-9">
                     <FileUpload
                                 //mode="basic"
-                                accept="image/*"
+                                accept="image/jpeg,image/jpeg,image/png,image/x-icon,image/gif,image/svg+xml,image/bmp"
                                 maxFileSize={1000000}
                                 onUpload={this.onUpload}
                                 chooseLabel=''

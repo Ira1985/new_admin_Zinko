@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import BaseEntity from "./base/BaseEntity";
 import FilterItem from "./base/FilterItem";
 import GridColumn from "./base/GridColumn";
+import i18n from "../i18n";
 
 export const ExportResultFormat = {
     XML: 'XML',
@@ -181,11 +182,11 @@ export function getCustomerType(type){
     switch (type) {
         case CustomerType.EXTERNAL: return {
             nameForRemember: "EXTERNAL",
-            name: 'Внешний'
+            name: i18n.t('customers.fields.types.external')
         };
         case CustomerType.INTERNAL: return {
             nameForRemember: "INTERNAL",
-            name: 'Внутренний'
+            name:  i18n.t('customers.fields.types.internal')
         };
         default: return type;
     }

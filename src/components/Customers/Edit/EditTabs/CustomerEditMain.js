@@ -131,7 +131,7 @@ class CustomerEditMain extends Component {
                                       completeMethod={(e) => filter(e, userService)}
                                       size={30}
                                       minLength={1}
-                                      field='userName'
+                                      field='name'
                                       dropdown={true}
                                       onChange={(e) => {
                                           formikHandler(e);

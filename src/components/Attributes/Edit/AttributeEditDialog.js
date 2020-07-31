@@ -25,7 +25,7 @@ class AttributeEditDialog extends Component {
     }
 
     render() {
-        let {t, editedItem, updateValue, loading, filter, filterItems} = this.props;
+        let {t, editedItem, updateValue, loading, filter, filterItems, itemTemplate} = this.props;
 
         return (
             <>
@@ -73,7 +73,8 @@ class AttributeEditDialog extends Component {
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="attrCategory"
                                                   value={props.values.attrCategory || ''}
-                                                  suggestions={filterItems}
+                                                  suggestions={filterItems && filterItems.length ? filterItems : [{name: 'Empty object'}]}
+                                                  itemTemplate={itemTemplate}
                                                   completeMethod={(e) => filter(e, attrCategoryService)}
                                                   size={30}
                                                   minLength={1}

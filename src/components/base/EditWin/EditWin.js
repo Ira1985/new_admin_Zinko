@@ -19,6 +19,7 @@ class EditWin extends Component {
         };
         this.updateValue = this.updateValue.bind(this);
         this.filterItems = this.filterItems.bind(this);
+        this.itemTemplate = this.itemTemplate.bind(this);
     }
 
     componentDidMount() {
@@ -82,7 +83,7 @@ class EditWin extends Component {
 
     filterItems(event, data, render) {
         if(data) {
-            data.getList().then(res => {
+            data.getCombo(event.query).then(res => {
                 data = res.pageItems;
                 let results;
 
@@ -94,10 +95,24 @@ class EditWin extends Component {
                         return item.name.toLowerCase().startsWith(event.query.toLowerCase());
                     });
                 }
+                if(!results.length)
+                    this.itemTemplate({name: ''})
                 this.setState({ filterItems: results });
             })
         } else
             this.setState({ filterItems: render() });
+    }
+
+    itemTemplate(item) {
+        const {t} = this.props;
+        let elem = null;
+        if(item.name === "Empty object") {
+            elem = <Button label={t("baseLayout.main.buttons.buttonAddNew")} className={'button-dop'}/>
+        } else
+            elem = (<div className="p-clearfix">
+                        <div >{item.name}</div>
+                    </div>)
+        return elem;
     }
 
     saveItem() {
@@ -136,7 +151,7 @@ class EditWin extends Component {
                     <Button label={t('baseLayout.main.buttons.buttonCancel')} className="button-delete-cancel" onClick={() => onClose()} />
                 </div>)}
             >
-                {editComponent(loading, item, this.updateValue, this.filterItems, filterItems)}
+                {editComponent(loading, item, this.updateValue, this.filterItems, filterItems, this.itemTemplate)}
             </Dialog>
         );
     }

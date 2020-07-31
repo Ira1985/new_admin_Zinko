@@ -57,6 +57,7 @@
     "main": {
       "buttons": {
         "buttonAdd": "Добавить",
+        "buttonAddNew": "Добавить новый",
         "buttonSearch": "Поиск",
         "buttonEdit": "Редактирование",
         "buttonPreview": "Просмотр",

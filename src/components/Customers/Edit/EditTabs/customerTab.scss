@@ -122,8 +122,10 @@
   }
   .p-fileupload-content {
     width: 90%;
-    padding: 0px;
+    padding: 3px;
     border: 1px solid $primary-color-input-border;
+    background-color: $primary-color-input;
+    border-radius: 3px;
     .p-progressbar {
       display: none;
     }
@@ -145,7 +147,7 @@
         }
         .p-button {
           min-width: 36px!important;
-          background-color: $primary-block-back-color;
+          background-color: $primary-color-input;
           color: $primary-text-color3;
           padding-top: 4px;
         }

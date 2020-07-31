@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {withTranslation} from "react-i18next";
 import './categoriesNew.scss'
-import CountryEditDialog from "../Countries/Edit/CountryEditDialog";
+import CategoryEditDialog from "./Edit/CategoryEditDialog";
 import BaseLayout from "../layouts/BaseLayout/BaseLayout";
 import Category, {CategorySchema} from "../../models/Category";
 import {categoryNewService} from "../../service/categoryNew.service";
@@ -21,7 +21,7 @@ class CategoriesNew extends Component {
 
     editComponent = (loading, editItem, updateValue, filter, filterItems) => {
         return (
-            <CountryEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
+            <CategoryEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
         );
     }
 
