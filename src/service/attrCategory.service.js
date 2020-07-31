@@ -16,7 +16,7 @@ export const attrCategoryService = {
     dump
 };
 
-const BASE_API_URL = '/attrCats/';
+const BASE_API_URL = '/attrCategories/';
 const consts = [i18n.t('services.attrCategories.obj'), i18n.t('services.attrCategories.objecta'),
     i18n.t('services.attrCategories.objectov'), i18n.t('services.attrCategories.objects')];
 

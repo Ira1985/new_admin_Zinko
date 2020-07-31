@@ -8,7 +8,6 @@ const CatalogPreview = React.lazy(() => import('./components/Catalog/CatalogPrev
 const CatalogEdit = React.lazy(() => import('./components/Catalog/CatalogEdit/CatalogEdit'));
 const Categories = React.lazy(() => import('./components/Categories/Categories'));
 const CategoriesNew = React.lazy(() => import('./components/Categories/CategoriesNew'));
-//CategoriesNew
 const Countries = React.lazy(() => import('./components/Countries/Countries'));
 const Families = React.lazy(() => import('./components/Families/Families'));
 const Models = React.lazy(() => import('./components/Models/Models'));
@@ -21,6 +20,9 @@ const Units = React.lazy(() => import('./components/Units/Units'));
 const UnitMappings = React.lazy(() => import('./components/UnitMappings/UnitMappings'));
 const Departments = React.lazy(() => import('./components/Departments/Departments'));
 const Roles = React.lazy(() => import('./components/Roles/Roles'));
+const Users = React.lazy(() => import('./components/Users/Users'));
+const Customers = React.lazy(() => import('./components/Customers/Customers'));
+const ExportTemplates = React.lazy(() => import('./components/ExportTemplates/ExportTemplates'));
 
 export const routes = [
     { path: '/', name: 'Главная', component: DefaultLayout },
@@ -44,5 +46,8 @@ export const routes = [
     { path: '/units/:id/mapping', exact: true, name: 'Юнит маппинг', component: UnitMappings },
     { path: '/unitMappings', exact: true, name: 'Юнит маппинг', component: UnitMappings },
     { path: '/departments', name: 'Департаменты', component: Departments },
-    { path: '/roles', name: 'Роли', component: Roles }
+    { path: '/roles', name: 'Роли', component: Roles },
+    { path: '/users', name: 'Пользователи', component: Users },
+    { path: '/customers', name: 'Заказчики', component: Customers },
+    { path: '/exportTemplates', name: 'Экспортные шаблоны', component: ExportTemplates }
 ];

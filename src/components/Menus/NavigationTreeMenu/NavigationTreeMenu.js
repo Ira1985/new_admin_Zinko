@@ -61,7 +61,7 @@ const menuItem = [
         "label": "Заказчики",
         'leaf': false,
         "children": [
-            { "key": "3-0", "label": "Посмотреть/Создать", 'leaf': true },
+            { "key": "3-0", "label": "Посмотреть/Создать", 'leaf': true, "path":'/customers' },
             { "key": "3-1", "label": "Имформационные модели", 'leaf': false, "children": [
                     { "key": "3-1-0", "label": "Категоризация", 'leaf': true },
                     { "key": "3-1-1", "label": "Модели", 'leaf': true }]
@@ -73,7 +73,7 @@ const menuItem = [
         "label": "Экспорт",
         'leaf': false,
         "children": [
-            { "key": "4-0", "label": "Экспортные шаблоны", 'leaf': true }]
+            { "key": "4-0", "label": "Экспортные шаблоны", 'leaf': true, 'path':'/exportTemplates' }]
     },
     {
         "key": "5",
