@@ -274,6 +274,15 @@
                     background-color: $primary-table-body-active-h;
                   }
                 }
+
+                &.p-highlight-contextmenu {
+                  border: 0.5px solid $primary-table-body-active;
+                  outline: 0.5px solid $primary-table-body-active !important;
+
+                  &:hover {
+                    background-color: $primary-table-body-active-h;
+                  }
+                }
               }
             }
           }
@@ -299,7 +308,29 @@
   }
 
 
-
+  .p-contextmenu.p-component {
+    border-color: $primary-color-border;
+    //left: 600px!important;
+    .p-menuitem {
+      background-color: $primary-menuitem-link;
+      .p-menuitem-link {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+        text-decoration: none;
+        .p-menuitem-text {
+          color: $primary-text-color3;
+        }
+      }
+    }
+    .p-menuitem-active {
+      .p-menuitem-link {
+        background-color: $primary-button-color-h!important;
+      }
+    }
+  }
 
 
 

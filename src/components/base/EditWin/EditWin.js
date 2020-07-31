@@ -15,7 +15,8 @@ class EditWin extends Component {
             item: props.editItem,
             filterItems: null,
             validForms: false,
-            loading: true
+            loading: true,
+            newName: ""
         };
         this.updateValue = this.updateValue.bind(this);
         this.filterItems = this.filterItems.bind(this);
@@ -97,7 +98,7 @@ class EditWin extends Component {
                 }
                 if(!results.length)
                     this.itemTemplate({name: ''})
-                this.setState({ filterItems: results });
+                this.setState({ filterItems: results, newName: event.query });
             })
         } else
             this.setState({ filterItems: render() });
@@ -105,14 +106,27 @@ class EditWin extends Component {
 
     itemTemplate(item) {
         const {t} = this.props;
+        const {newName} = this.state;
         let elem = null;
         if(item.name === "Empty object") {
-            elem = <Button label={t("baseLayout.main.buttons.buttonAddNew")} className={'button-dop'}/>
+            elem = <Button label={t("baseLayout.main.buttons.buttonAddNew")} className={'button-dop'} onClick={() => this.onEmpty(item)}/>
+            item.name = newName
         } else
             elem = (<div className="p-clearfix">
                         <div >{item.name}</div>
                     </div>)
         return elem;
+    }
+
+    onEmpty(item){
+        const {onEmptyLink,value} = this.props;
+        const {newName} = this.state;
+        let textValue = newName?newName:'';
+        if(item.emptyLink) {
+            let win = window.open(item.emptyLink + '&name='+textValue, '_blank');
+            win.focus();
+        }
+
     }
 
     saveItem() {

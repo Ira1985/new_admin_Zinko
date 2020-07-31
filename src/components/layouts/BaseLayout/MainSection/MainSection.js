@@ -329,7 +329,7 @@ class MainSection extends Component {
     render() {
         const {t, breadcrumbs, dopToolbarButtons, dopCheckedButtons, plurals,
             children, gridView, treeView, apiService, location, columns, editComponent, baseSchema, baseModel, disableEdit,
-            filterInit,sorterInit, pagingInit} = this.props;
+            filterInit,sorterInit, pagingInit, contexmenuItem} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem, progressSave,
             clearChecked, reloadList} = this.state;
 
@@ -372,6 +372,7 @@ class MainSection extends Component {
                                                sorterInit={sorterInit}
                                                pagingInit={pagingInit}
                                                disableEdit={disableEdit}
+                                               contexmenuItem={contexmenuItem}
                                     ></DataGridView>}
                     {treeView && <DataTreeView minimizeHeight={showCheckedItemsMenu}
                                                apiService={apiService}
@@ -388,6 +389,7 @@ class MainSection extends Component {
                                                sorterInit={sorterInit}
                                                pagingInit={pagingInit}
                                                disableEdit={disableEdit}
+                                               contexmenuItem={contexmenuItem}
                     ></DataTreeView>}
                 </div>
 

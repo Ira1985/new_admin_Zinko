@@ -12,6 +12,7 @@ import Sorter from "../../../models/base/Sorter";
 import {TreeTable} from "primereact/treetable";
 import TreeTableItem from "../../../models/base/TreeTableItem";
 import TreeColumn from "../../../models/base/TreeColumn";
+import {ContextMenu} from "primereact/contextmenu";
 
 class  DataTreeView extends Component {
 
@@ -334,7 +335,7 @@ class  DataTreeView extends Component {
     }
 
     render() {
-        const {t, minimizeHeight} = this.props;
+        const {t, minimizeHeight, contexmenuItem} = this.props;
         const {items, loading, selectedColumns, multiColumns, paging, sorter, selectedItems, activeColumns} = this.state;
 
         const paginatorRight = <div>
@@ -344,6 +345,8 @@ class  DataTreeView extends Component {
 
         return (<>
             <div ref={this.dataGridView} className='data-tree-view'>
+
+                {contexmenuItem && contexmenuItem.length && <ContextMenu model={contexmenuItem} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>}
 
                 <MultiSelect
                     maxSelectedLabels={multiColumns.size}
@@ -393,6 +396,9 @@ class  DataTreeView extends Component {
                     /*paginatorTemplate="CurrentPageReport"*/
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
                     onExpand={(event) => this.onExpand(event)}
+                    contextMenuSelection={contexmenuItem && contexmenuItem.length ? this.state.selectedRow : null}
+                    onContextMenuSelectionChange={contexmenuItem && contexmenuItem.length ? e => this.setState({selectedRow: e.value}) : null}
+                    onContextMenu={contexmenuItem && contexmenuItem.length ? e => this.cm.show(e.originalEvent): null}
                 >
                     {/*<Column key={'tree-table-selection-key-0'} style={{width:'2px'}} />*/}
                     {activeColumns}

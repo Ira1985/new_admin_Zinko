@@ -73,7 +73,12 @@ class AttributeEditDialog extends Component {
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="attrCategory"
                                                   value={props.values.attrCategory || ''}
-                                                  suggestions={filterItems && filterItems.length ? filterItems : [{name: 'Empty object'}]}
+                                                  suggestions={filterItems && filterItems.length ? filterItems :
+                                                      [{
+                                                          name: 'Empty object',
+                                                          emptyLink: '/attrcategories?id=0'
+                                                      }]
+                                                  }
                                                   itemTemplate={itemTemplate}
                                                   completeMethod={(e) => filter(e, attrCategoryService)}
                                                   size={30}

@@ -1,5 +1,8 @@
 import React from 'react';
 import DefaultLayout from "./components/layouts/DefaultLayout/DefaultLayout";
+import i18n from './i18n';
+
+
 const Brands = React.lazy(() => import('./components/Brands/Brands'));
 const Manufacturers = React.lazy(() => import('./components/Manufacturers/Manufacturers'));
 const Series = React.lazy(() => import('./components/Serieses/Series'));
@@ -25,29 +28,29 @@ const Customers = React.lazy(() => import('./components/Customers/Customers'));
 const ExportTemplates = React.lazy(() => import('./components/ExportTemplates/ExportTemplates'));
 
 export const routes = [
-    { path: '/', name: 'Главная', component: DefaultLayout },
-    { path: '/brands', name: 'Бренды', component: Brands },
-    { path: '/manufacturers', name: 'Производители', component: Manufacturers },
-    { path: '/series', name: 'Серии', component: Series },
-    { path: '/catalog', exact: true, name: 'Каталог', component: Catalog },
-    { path: '/catalog/:id/preview', exact: true, name: 'Просмотр товара', component: CatalogPreview },
-    { path: '/catalog/:id/edit', exact: true, name: 'Просмотр товара', component: CatalogEdit },
-    { path: '/profile', name: 'Профиль', component: Profile },
-    { path: '/categories', name: 'Категории', component: CategoriesNew},
-    { path: '/countries', name: 'Страны мира', component:  Countries},
-    { path: '/families', name: 'Семейства', component: Families },
-    { path: '/models', name: 'Модели', component: Models },
-    { path: '/attrCategories', name: 'Группы атрибутов', component: AttrCategories },
-    { path: '/attributes', name: 'Атрибуты', component: Attributes },
-    { path: '/subsGroups', exact: true, name: 'Группы значений', component: SubsGroups },
-    { path: '/subsGroups/:id/values', exact: true, name: 'Подстановки', component: Substitutions },
-    { path: '/substitutions', name: 'Подстановки', component: Substitutions },
-    { path: '/units', name: 'Юниты',  exact: true, component: Units },
-    { path: '/units/:id/mapping', exact: true, name: 'Юнит маппинг', component: UnitMappings },
-    { path: '/unitMappings', exact: true, name: 'Юнит маппинг', component: UnitMappings },
-    { path: '/departments', name: 'Департаменты', component: Departments },
-    { path: '/roles', name: 'Роли', component: Roles },
-    { path: '/users', name: 'Пользователи', component: Users },
-    { path: '/customers', name: 'Заказчики', component: Customers },
-    { path: '/exportTemplates', name: 'Экспортные шаблоны', component: ExportTemplates }
+    { path: '/', name: i18n.t('baseLayout.main.main'), component: DefaultLayout },
+    { path: '/brands', name: i18n.t('brands.breadcrumbs.name'), component: Brands },
+    { path: '/manufacturers', name: i18n.t('manufacturers.breadcrumbs.name'), component: Manufacturers },
+    { path: '/series', name: i18n.t('series.breadcrumbs.name'), component: Series },
+    { path: '/catalog', exact: true, name: i18n.t('catalog.breadcrumbs.name'), component: Catalog },
+    { path: '/catalog/:id/preview', exact: true, name: i18n.t('catalogPreview.breadcrumbs.name'), component: CatalogPreview },
+    { path: '/catalog/:id/edit', exact: true, name: i18n.t('catalogEdit.breadcrumbs.name'), component: CatalogEdit },
+    { path: '/profile', name: i18n.t('profile.breadcrumbs.name'), component: Profile },
+    { path: '/categories', name: i18n.t('categories.breadcrumbs.name'), component: CategoriesNew},
+    { path: '/countries', name: i18n.t('countries.breadcrumbs.name'), component:  Countries},
+    { path: '/families', name: i18n.t('families.breadcrumbs.name'), component: Families },
+    { path: '/models', name: i18n.t('models.breadcrumbs.name'), component: Models },
+    { path: '/attrCategories', name: i18n.t('attrCategories.breadcrumbs.name'), component: AttrCategories },
+    { path: '/attributes', name: i18n.t('attributes.breadcrumbs.name'), component: Attributes },
+    { path: '/subsGroups', exact: true, name: i18n.t('subsGroups.breadcrumbs.name'), component: SubsGroups },
+    { path: '/subsGroups/:id/values', exact: true, name: i18n.t('substitutions.breadcrumbs.name'), component: Substitutions },
+    { path: '/substitutions', name: i18n.t('substitutions.breadcrumbs.name'), component: Substitutions },
+    { path: '/units', name: i18n.t('units.breadcrumbs.name'),  exact: true, component: Units },
+    { path: '/units/:id/mapping', exact: true, name: i18n.t('unitMappings.breadcrumbs.name'), component: UnitMappings },
+    { path: '/unitMappings', exact: true, name: i18n.t('unitMappings.breadcrumbs.name'), component: UnitMappings },
+    { path: '/departments', name: i18n.t('departments.breadcrumbs.name'), component: Departments },
+    { path: '/roles', name: i18n.t('roles.breadcrumbs.name'), component: Roles },
+    { path: '/users', name: i18n.t('users.breadcrumbs.name'), component: Users },
+    { path: '/customers', name: i18n.t('customers.breadcrumbs.name'), component: Customers },
+    { path: '/exportTemplates', name: i18n.t('exportTemplates.breadcrumbs.name'), component: ExportTemplates }
 ];

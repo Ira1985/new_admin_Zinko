@@ -10,6 +10,8 @@ import {Button} from "primereact/button";
 import Paging from "../../../models/base/Paging";
 import Sorter from "../../../models/base/Sorter";
 import GridColumn from "../../../models/base/GridColumn";
+import {ContextMenu} from "primereact/contextmenu";
+import {TreeTable} from "primereact/treetable";
 
 class  DataGridView extends Component {
 
@@ -221,7 +223,7 @@ class  DataGridView extends Component {
     }
 
     render() {
-        const {t, minimizeHeight, checkedItems} = this.props;
+        const {t, minimizeHeight, checkedItems, contexmenuItem} = this.props;
         const { items, loading, selectedColumns, columns, multiColumns, columnCoef, paging, sorter, activeColumns} = this.state;
 
         const paginatorRight = <div>
@@ -248,6 +250,8 @@ class  DataGridView extends Component {
                     /*appendTo={document.body}*/
                     /*appendTo={this.dataGridView.current}*/
                 />
+
+                {contexmenuItem && contexmenuItem.length && <ContextMenu model={contexmenuItem} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>}
 
                 <DataTable value={items}
                     onRowDoubleClick={(e) => this.onDoubleClick(e)}
@@ -277,7 +281,11 @@ class  DataGridView extends Component {
                            paginator={true}
                            rows={paging.limit}
                            paginatorPosition={'top'}
-                           paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}>
+                           paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
+                           contextMenuSelection={contexmenuItem && contexmenuItem.length ? this.state.selectedRow : null}
+                           onContextMenuSelectionChange={contexmenuItem && contexmenuItem.length ? e => this.setState({selectedRow: e.value}) : null}
+                           onContextMenu={contexmenuItem && contexmenuItem.length ? e => this.cm.show(e.originalEvent): null}
+                >
                     <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
                     {activeColumns}
                     <Column style={{width:'30px'}} />

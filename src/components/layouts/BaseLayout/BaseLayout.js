@@ -21,7 +21,7 @@ class BaseLayout extends Component {
         const {t, filterItems, plurals, dopClass,
             breadcrumbs, toolbarButtons, checkedButtons,
             children, apiService, location, gridView, treeView, columns, editComponent, baseSchema, baseModel,
-            modelFieldInit, sorterInit, pagingInit, disableEdit, filterInit} = this.props;
+            modelFieldInit, sorterInit, pagingInit, disableEdit, filterInit, contexmenuItem} = this.props;
         const {checkedItems} = this.state;
 
         return <>
@@ -44,6 +44,7 @@ class BaseLayout extends Component {
                                  pagingInit={pagingInit}
                                  disableEdit={disableEdit}
                                  filterInit={filterInit}
+                                 contexmenuItem={contexmenuItem}
                     >
                         {children}
                     </MainSection>
