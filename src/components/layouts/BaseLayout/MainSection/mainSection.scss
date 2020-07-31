@@ -1,0 +1,66 @@
+@import "../../../../styles/variables";
+
+
+  .main-section {
+    flex-basis: auto;
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      width: 96%;
+
+      .p-toolbar {
+        display: table-cell;
+        border: none !important;
+        //width: 96%;
+        vertical-align: middle;
+        padding: 0px;
+        margin: 0px;
+
+        .p-toolbar-group-right {
+          margin: 0px;
+
+          .p-button {
+            margin-left: 16px;
+            margin-right: 0px;
+
+            .p-button-text {
+              color: $primary-text-color4;
+            }
+
+          }
+        }
+      }
+    }
+
+    hr {
+      width: 96%;
+    }
+
+    .base-data-section {
+      height: auto;
+      flex-grow: 2;
+    }
+
+    .checked-toolbar-section {
+      width: calc(100% - 0px);
+      height: 0px;
+      background-color: $primary-buttom-sidebar-color;
+
+      transition: height 0.4s;
+      -webkit-transition: height 0.4s;
+      -o-transition: height 0.4s;
+      -moz-transition: height 0.4s;
+
+      &.show {
+        height: 98px;
+        transition: height 0.4s;
+        -webkit-transition: height 0.4s;
+        -o-transition: height 0.4s;
+        -moz-transition: height 0.4s;
+      }
+    }
+  }
+

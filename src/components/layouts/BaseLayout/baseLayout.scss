@@ -1,0 +1,30 @@
+@import "../../../styles/variables";
+
+.base-layout {
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: relative;
+
+  .header {
+    //height: 70px;
+    height: calc(70px - 25px);
+    margin: 0px auto;
+    display: table;
+    padding-top: 25px;
+    width: 100%;
+  }
+
+  .main-section {
+    flex-basis: auto;
+    flex-grow: 1;
+    /*width: auto;
+    height: 100%;*/
+
+    hr {
+      width: 96%;
+    }
+  }
+}

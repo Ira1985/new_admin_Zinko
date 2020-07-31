@@ -1,0 +1,16 @@
+@import "../../../styles/variables";
+
+.p-inputswitch {
+  .p-inputswitch-slider {
+    background-color: $primary-color-input-border;
+    &:before {
+      background-color: $primary-color-tabview-border;
+    }
+  }
+
+  &.p-inputswitch-checked {
+    .p-inputswitch-slider {
+      background-color: $primary-color-active;
+    }
+  }
+}

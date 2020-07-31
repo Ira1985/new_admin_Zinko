@@ -1,0 +1,631 @@
+{
+  "loginLayout": {
+    "buttonLogIn": "войти",
+    "username": "Логин",
+    "password": "Пароль",
+    "enter": "Вход",
+    "enterSmall": "Войдите в Ваш аккаунт",
+    "forgotPassword": "Забыли пароль?"
+  },
+  "leftSideMenu": {
+    "messages": "Сообщения",
+    "menu": "Меню",
+    "products": "Товары",
+    "properties": "Настройки",
+    "helps": "Помощь"
+  },
+  "treeBaseMenu": {
+    "messages": "Messages",
+    "menu": "Menu",
+    "products": "Products",
+    "properties": "Properties",
+    "helps": "Helps"
+  },
+  "accountMenu": {
+    "tasks": "Задачи",
+    "sendMessage": "Отправить сообщение",
+    "editProfile": "Редактировать профиль",
+    "exit": "Выйти"
+  },
+  "baseLayout": {
+    "filterBlock": {
+      "baseTitle": "Фильтры",
+
+      "buttonFilter": "Отфильтровать",
+      "buttonApply": "Применить",
+
+      "operations": {
+        "equals": "равно",
+        "contains": "содержит",
+        "isEmpty": "присутствует",
+        "isNotEmpty": "отсутствует",
+        "startWith": "начинается с",
+        "endWith": "заканчивается на",
+        "moreThen": "больше чем",
+        "lessThen": "меньше чем",
+        "between": "между",
+        "inList": "в списке",
+        "notInList": "нет в списке"
+      },
+
+      "tooltips": {
+        "showHideBlock": "Показть/Скрыть",
+        "addFilter": "Добавить фильтр",
+        "clearFilter": "Очистить"
+      }
+    },
+    "main": {
+      "buttons": {
+        "buttonAdd": "Добавить",
+        "buttonAddNew": "Добавить новый",
+        "buttonSearch": "Поиск",
+        "buttonEdit": "Редактирование",
+        "buttonPreview": "Просмотр",
+        "buttonClone": "Клонировать",
+        "buttonExportResult": "Результат экспорта",
+        "buttonButch": "Пакетная обработка",
+        "buttonSave": "Сохранить",
+        "buttonCancel": "Отменить",
+        "buttonUnload": "Выгрузить",
+        "buttonDel": "Удалить",
+        "buttonYesDel": "Да, удалить",
+
+        "tooltips": {
+          "buttonUnload": "Выгрузить",
+          "buttonImport": "Импорт",
+          "gridColumnAdd": "Добавить столбец"
+        }
+      },
+      "approvals": {
+        "yes": "Да",
+        "cancel": "Отмена",
+        "removeCheck": {
+          "title": "Удаление",
+          "msg": "Вы действительно хотите удалить",
+          "yes": "Да, удалить",
+          "cancel": "Отмена"
+        },
+        "removeFilter": {
+          "title": "Удаление по фильтру",
+          "msg": "Вы действительно хотите удалить",
+          "yes": "Да, удалить",
+          "cancel": "Отмена"
+        },
+        "unloadCheck": {
+          "title": "Выгрузка",
+          "msg": "Вы хотите выгрузить",
+          "yes": "Да, выгрузить",
+          "cancel": "Отмена"
+        },
+        "unloadFilter": {
+          "title": "Выгрузка по фильтру",
+          "msg": "Вы хотите выгрузить",
+          "yes": "Да, выгрузить",
+          "cancel": "Отмена"
+        }
+      },
+      "other": {
+        "checkedText": "Выбрано",
+        "disableChecked": "Отмена выбраного",
+        "totalItemsLabel": "результатов",
+        "edit": "Редактировать",
+        "add": "Добавить",
+        "monthNames": {
+          "january": "Январь",
+          "february": "Февраль",
+          "march": "Март",
+          "april": "Апрель",
+          "may": "Май",
+          "june": "Июнь",
+          "july": "Июль",
+          "august": "Август",
+          "september": "Сентябрь",
+          "october": "Октябрь",
+          "november": "Ноябрь",
+          "december": "Декабрь"
+        },
+        "dayNamesMin": {
+          "monday": "Пн",
+          "tuesday": "Вт",
+          "wednesday": "Ср",
+          "thursday": "Чт",
+          "friday": "Пт",
+          "saturday": "Сб",
+          "sunday": "Вс"
+        }
+      }
+    },
+    "editProfile": {
+      "password": "Пароль",
+      "newPassword": "Новый пароль",
+      "oldPassword": "Старый пароль",
+      "repeatPassword": "Повторить пароль",
+      "basic": "Основные",
+      "login": "Логин",
+      "department": "Департамент",
+      "comment": "Комментарий",
+      "name": "Имя",
+      "secondName": "Отчество",
+      "lastName": "Фамилия",
+      "code": "Код",
+      "e-mail": "Почта"
+    },
+    "previewProduct" : {
+      "article": "Артикул",
+      "productId": "Продукт ID",
+      "productCode": "Продукт CODE",
+      "propertyProduct": "СВОЙСТВА ТОВАРА",
+      "propertyContent": "СВОЙСТВА КОНТЕНТА",
+      "status": "Статус",
+      "typeProduct": "Тип товара",
+      "country": "Страна производитель",
+      "vendor": "Вендор",
+      "brand": "Бренд",
+      "family": "Семейство",
+      "series": "Серия",
+      "model": "Модель",
+      "barcodes": "Штрихкоды",
+      "categories": "Категории",
+      "accessories": "АКСЕССУАРЫ",
+      "productCharacteristics": "ХАРАКТЕРИСТИКИ ТОВАРА"
+    },
+    "editProduct" : {
+      "basic": "Основные",
+      "content": "Контент",
+      "card": "Карточка",
+      "history": "История изменений",
+      "creator": "Создатель",
+      "editor": "Редактор",
+      "dateEdit": "Дата редактирования",
+      "dateCreate": "Дата создания",
+      "required": "Обязательные",
+      "key": "Ключевые",
+      "attributes": "Атрибуты",
+      "attribute": "Атрибут",
+      "value": "Значение",
+      "unit": "Юнит",
+      "edit": "Редактировать",
+      "comment": "Комментарий",
+      "delete": "Удалить",
+      "name": "Имя",
+      "fullName": "Полное имя",
+      "type": "Тип",
+      "view": "Просмотр",
+      "image": "ФОТО",
+      "marketingImage": "МАРКЕТИНГОВОЕ ФОТО",
+      "certificate": "СЕРТИФИКАТ",
+      "instruction" : "ИНСТРУКЦИЯ",
+      "video": "ВИДЕО",
+      "view360": "ОБЗОРНОЕ ВИДЕО",
+      "htmlContent": "HTML КОНТЕНТ",
+      "pictogram": "ПИКТОГРАММА",
+      "manufacturer": "Производитель",
+      "categories": "Категоризация",
+      "barcode": "Штрихкод",
+      "englishName": "Наименование Англ.",
+      "ean": "EAN",
+      "tnved": "ТНВЭД",
+      "crpt": "ЦРПТ",
+      "productStatus": "Статус продукта"
+    }
+  },
+  "baseEntity": {
+    "id": "Ид",
+    "name": "Название",
+    "comment": "Комментарий",
+    "description": "Описание",
+    "code": "Код",
+    "updatedAt": "Обновлен в",
+    "createdAt": "Создан в",
+    "updatedBy": "Обновлен кем",
+    "createdBy": "Создан кем",
+    "errors": {
+      "min": "Минимальная длинна 2 символа",
+      "max": "Максимальная длинна 1000 символов",
+      "required": "Обязательное поле"
+    },
+    "plurals": {
+      "first": "объектов",
+      "second": "объект",
+      "third": "объекта"
+    }
+  },
+  "categories": {
+    "layout": "Макет",
+    "count": "Количество продуктов",
+    "presenceAttributes": "Наличие аттрибутов"
+  },
+  "brands": {
+    "breadcrumbs": {
+      "name": "Бренды"
+    },
+    "plurals": {
+      "first": "брендов",
+      "second": "бренд",
+      "third": "бренда"
+    }
+  },
+  "manufacturers": {
+    "breadcrumbs": {
+      "name": "Производители"
+    },
+    "plurals": {
+      "first": "производителей",
+      "second": "производитель",
+      "third": "производителя"
+    }
+  },
+  "countries": {
+    "breadcrumbs": {
+      "name": "Страны мира"
+    },
+    "plurals": {
+      "first": "стран",
+      "second": "страна",
+      "third": "страны"
+    }
+  },
+  "families": {
+    "breadcrumbs": {
+      "name": "Семейства"
+    },
+    "plurals": {
+      "first": "семейств",
+      "second": "семейство",
+      "third": "семейства"
+    }
+  },
+  "series": {
+    "breadcrumbs": {
+      "name": "Серии"
+    },
+    "plurals": {
+      "first": "серий",
+      "second": "серия",
+      "third": "серии"
+    }
+  },
+  "models": {
+    "breadcrumbs": {
+      "name": "Модели"
+    },
+    "plurals": {
+      "first": "моделей",
+      "second": "модель",
+      "third": "модели"
+    }
+  },
+  "catalog": {
+    "breadcrumbs": {
+      "name": "Каталог"
+    }
+  },
+  "profile": {
+    "breadcrumbs": {
+      "name": "Профиль"
+    }
+  },
+  "catalogPreview": {
+    "breadcrumbs": {
+      "name": "Просмотр товара"
+    }
+  },
+  "catalogEdit": {
+    "breadcrumbs": {
+      "name": "Редактирование товара"
+    }
+  },
+  "categories": {
+    "breadcrumbs": {
+      "name": "Категоризация"
+    }
+  },
+
+  "attrCategories": {
+    "breadcrumbs": {
+      "name": "Группы атрибутов"
+    },
+    "plurals": {
+      "first": "групп. аттр.",
+      "second": "группа",
+      "third": "группы атрибутов"
+    },
+    "fields": {
+      "system": "Системная"
+    }
+  },
+  "attributes": {
+    "breadcrumbs": {
+      "name": "Атрибуты"
+    },
+    "plurals": {
+      "first": "атрибутов",
+      "second": "атрибут",
+      "third": "атрибута"
+    },
+    "fields": {
+      "attrType": "Тип атрибута",
+      "valueType": "Тип значения",
+      "attrCategory": "Группа",
+      "system": "Системный",
+      "sourceType":"Тип источника",
+      "unit": "Юнит",
+      "hasQuantities": "Квантиф.",
+      "roundUp": "Округление",
+      "length": "Длинна",
+      "subsGroup": "Группа значений",
+      "quantSubsGroup": "Группа значений квант.",
+      "quantType": "Тип квант.",
+      "attrCategory": "Группа атрибутов",
+      "systemSource": "Системный источник",
+      "valueTypes": {
+        "number": "Число",
+        "string": "Строка",
+        "single": "Одно значение",
+        "multi": "Список значений",
+        "yesNo": "Да/Нет",
+        "linkSource": "Ссылка на источник",
+        "fileLink": "Ссылка на файл"
+      },
+      "quantTypes": {
+        "number": "Число",
+        "string": "Строка",
+        "yesNo": "Да/Нет"
+      },
+      "sourceTypes": {
+        "brand": "Бренд",
+        "manufacturer": "Производитель",
+        "family": "Семейство",
+        "series": "Серия",
+        "model": "Модель",
+        "country": "Страна",
+        "substitution": "Значение с списка",
+        "productContent": "Ссылка на контент"
+      }
+    }
+  },
+  "subsGroups": {
+    "breadcrumbs": {
+      "name": "Группы значений"
+    },
+    "plurals": {
+      "first": "групп значений",
+      "second": "группа значений",
+      "third": "группы значений"
+    },
+    "fields": {
+      "showSubs": "Значения группы"
+    }
+  },
+  "substitutions": {
+    "breadcrumbs": {
+      "name": "Значения"
+    },
+    "plurals": {
+      "first": "значений",
+      "second": "значение",
+      "third": "значения"
+    },
+    "fields": {
+      "subsGroup": "Группа"
+    }
+  },
+  "departments": {
+    "breadcrumbs": {
+      "name": "Департаменты"
+    },
+    "plurals": {
+      "first": "департаментов",
+      "second": "департамент",
+      "third": "депертаменты"
+    },
+    "fields": {
+      "description": "Описание",
+      "parent": "Родитель",
+      "roles": "Доступные роли",
+      "allowedRoles": "Разрешенные роли"
+    }
+  },
+  "roles": {
+    "breadcrumbs": {
+      "name": "Роли"
+    },
+    "plurals": {
+      "first": "ролей",
+      "second": "роль",
+      "third": "роли"
+    }
+  },
+  "units": {
+    "breadcrumbs": {
+      "name": "Единицы измерения"
+    },
+    "plurals": {
+      "first": "Единиц изм.",
+      "second": "Единица изм.",
+      "third": "Единицы изм."
+    },
+    "fields": {
+      "showMapping": "Показать маппинг"
+    }
+  },
+  "unitMappings": {
+    "breadcrumbs": {
+      "name": "Маппинги единиц изм."
+    },
+    "plurals": {
+      "first": "Маппингов един. изм.",
+      "second": "Маппинг един. изм.",
+      "third": "Маппинга един. изм."
+    },
+    "fields": {
+      "unitFrom": "C юнита",
+      "unitTo": "В юнит",
+      "ratio": "Коэффициент"
+
+    }
+  },
+  "categories": {
+    "breadcrumbs": {
+      "name": "Категории"
+    },
+    "plurals": {
+      "first": "категорий",
+      "second": "категория",
+      "third": "категории"
+    },
+    "fields": {
+      "name": "Категория",
+      "description": "Описание",
+      "parent": "Родитель",
+      "productCnt": "Продуктов",
+      "hasAttr": "Модель"
+    }
+  },
+
+  "exportTemplates": {
+    "breadcrumbs": {
+      "name": "Экспортные шаблоны"
+    },
+    "plurals": {
+      "first": "экспортных шаблонов",
+      "second": "экспортный шаблон",
+      "third": "экспортных шаблонов"
+    },
+    "fields": {
+      "description": "Описание",
+      "category": "Категория",
+      "customerCategory": "Категория заказчика",
+      "type": "Тип",
+      "customer": "Заказчик",
+      "changePlain": "Смена числа",
+      "useBaseGroup": "Базовая группа"
+    }
+  },
+
+  "services": {
+    "base": {
+      "consts": {
+        "obj": "объект",
+        "objecta": "объекта",
+        "objectov": "объектов",
+        "objects": "объекты"
+      },
+      "errors":{
+        "server": "Ошибка на сервере, обратитесь к администратору",
+        "pathNotFound": "Ошибка на сервере, не найлен такой путь или сервер не доступен",
+        "code": "Ошибка в коде",
+        "network": "Сетевая ошибка",
+        "list": "Ошибка получения списка",
+        "item": "Ошибка получения",
+        "deleteItem": "Ошибка удаления",
+        "deleteList": "Ошибка удаления выбранных",
+        "deleteFilter": "Ошибка удаления по фильтру",
+        "create": "Ошибка создания",
+        "update": "Ошибка сохранения"
+      },
+      "successes": {
+        "deleteItem": "${constName} c ид: ${id} - удален",
+        "deleteList": "Выбранные ${constName} удалены",
+        "deleteFilter": "Выбранные ${constName} удалены",
+        "create": "создан",
+        "update": "обновлен"
+      }
+    },
+    "auth": {
+      "errorLoginPass": "Неправильно логин или пароль",
+      "errorAuth": "Ошибка авторизации"
+    },
+    "informer": {
+      "success": "Успех",
+      "error": "Ошибка",
+      "warn": "Предупреждение",
+      "info": "Инфо"
+    },
+    "brands": {
+      "obj":"бренд",
+      "objecta":"бренда",
+      "objectov":"брендов",
+      "objects":"бренды"
+    },
+    "manufacturers": {
+      "obj":"производитель",
+      "objecta":"производителя",
+      "objectov":"производителей",
+      "objects":"производители"
+    },
+    "countries": {
+      "obj":"страна",
+      "objecta":"страны",
+      "objectov":"стран",
+      "objects":"страны"
+    },
+    "families": {
+      "obj":"семейство",
+      "objecta":"семейства",
+      "objectov":"семейств",
+      "objects":"семейства"
+    },
+    "series": {
+      "obj":"серия",
+      "objecta":"серии",
+      "objectov":"серий",
+      "objects":"серии"
+    },
+    "models": {
+      "obj":"модель",
+      "objecta":"модели",
+      "objectov":"моделей",
+      "objects":"модели"
+    },
+    "attrCategories": {
+      "obj":"группа",
+      "objecta":"группы",
+      "objectov":"групп",
+      "objects":"групп"
+    },
+    "attributes": {
+      "obj":"атрибут",
+      "objecta":"атрибута",
+      "objectov":"атрибутов",
+      "objects":"атрибутов"
+    },
+    "subsGroups": {
+      "obj":"группа",
+      "objecta":"группы",
+      "objectov":"групп",
+      "objects":"групп"
+    },
+    "substitutions": {
+      "obj":"значение",
+      "objecta":"значения",
+      "objectov":"значений",
+      "objects":"значений"
+    },
+
+    "departments": {
+      "obj":"департамент",
+      "objecta":"департамента",
+      "objectov":"департаментов",
+      "objects":"департаменты"
+    },
+    "roles": {
+      "obj":"роль",
+      "objecta":"роли",
+      "objectov":"ролей",
+      "objects":"роли"
+    },
+    "units": {
+      "obj": "единица измерения",
+      "objecta": "единицы измерения",
+      "objectov": "единиц измерения",
+      "objects": "единицы измерения"
+    },
+    "unitMappings": {
+      "obj":"маппинг един. измер.",
+      "objecta":"маппинг един. измер.",
+      "objectov":"маппингов един. измер.",
+      "objects":"маппинги един. измер."
+    }
+  }
+}
