@@ -45,25 +45,30 @@ var className = (0, _classnames.default)('p-treetable p-component', {
           not working auto set Scroll Height
           
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      if (!this.props.frozen) {
-        this.alignScrollBar();
-      }
-      if (this.props.scrollHeight !== prevProps.scrollHeight) {
-        this.setScrollHeight();
-      }
-    }
+        value: function componentDidUpdate(prevProps, prevState, snapshot) {
+          if (!this.props.frozen) {
+            this.alignScrollBar();
+          }
+          if (this.props.scrollHeight !== prevProps.scrollHeight) { this.setScrollHeight(); }
+        }
    
 * /node_modules/primereact/components/treetable/TreeTableScrollableView.js
              
           not added style and class for col
           
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-     if (!this.props.frozen) {
-       this.alignScrollBar();
-     }
-     if (this.props.scrollHeight !== prevProps.scrollHeight) {
-       this.setScrollHeight();
-     }
-    }
+    key: "renderColGroup",
+        value: function renderColGroup() {
+          if (this.props.columns && this.props.columns.length) {
+            return /*#__PURE__*/_react.default.createElement("colgroup", {
+              className: "p-treetable-scrollable-colgroup"
+            }, this.props.columns.map(function (col, i) {
+              return /*#__PURE__*/_react.default.createElement("col", {
+                key: col.field + '_' + i,
+                style: col.props.headerStyle || col.props.style,
+                className: col.props.headerClassName || col.props.className
+              });
+            }));
+          } else {
+            return null;
+          }
+        }
