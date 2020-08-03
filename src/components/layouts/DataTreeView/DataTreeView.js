@@ -366,18 +366,51 @@ class  DataTreeView extends Component {
                 <Column columnKey={''+index} key={''+index} field={col.field} header={t(col.header)} sortable={col.sortable}
                         style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
-                        body={col.renderer?col.renderer:null}
+                        body={col.renderer?col.renderer:(col.actions?(rowData, column) => this.renderActionColumns(rowData, column, col.actions):null)}
                         expander={col.expander?true: false}
                 />:
                 <Column columnKey={''+index} key={''+index}
                         style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
-                        body={col.renderer?col.renderer:null}
+                        body={col.renderer?col.renderer:(col.actions?(rowData, column) => this.renderActionColumns(rowData, column, col.actions):null)}
                         expander={col.expander?true: false}
                 />
 
         });
         return columnComponents;
+    }
+
+    renderActionColumns(rowData, column, actions) {
+        const {t, addItem, editItem} = this.props;
+        return <div className={'column-button'}>
+            {actions && actions.map((action, index) => {
+                return <Button key={'action-column-' + index} className={action.className}
+                               icon={action.icon}
+                               onClick={() => {
+                                   if(action.onClick) action.onClick(rowData, column);
+                                   else if(action.addNew) addItem();
+                                   else if(action.addChild) addItem({parent: rowData.data});
+                                   else if(action.edit) editItem(rowData.data);
+                                   else if(action.remove) this.deleteItem(rowData.data);
+                               }}
+                               tooltip={action.tooltip?t(action.tooltip):null}
+                />
+            })}
+        </div>
+    }
+
+    deleteItem(item) {
+        const {deleteItem} = this.props;
+        let value = {};
+
+        value[item.id] = {checked: true};
+        this.selectItem({value});
+        new Promise(resolve => {
+            this.selectItem({value:value});
+            setTimeout(function(deleteItem) {
+                deleteItem();
+            }, 500);
+        });
     }
 
     render() {
@@ -440,8 +473,8 @@ class  DataTreeView extends Component {
                         /*paginatorTemplate="CurrentPageReport"*/
                         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
                         onExpand={(event) => this.onExpand(event)}
-                        contextMenuSelection={(contextMenuItems && contextMenuItems.length && this.state.selectedRow && this.state.selectedRow.id) ? this.state.selectedRow : null}
-                        contextMenuSelectionKey={(contextMenuItems && contextMenuItems.length) ? this.state.selectedRow : null}
+                        contextMenuSelection={(contextMenuItems && contextMenuItems.length && this.state.selectedRow && this.state.selectedRow.id) ? this.state.selectedRow.id : null}
+                        contextMenuSelectionKey={(contextMenuItems && contextMenuItems.length && this.state.selectedRow && this.state.selectedRow.id) ? this.state.selectedRow.id : null}
                         onContextMenuSelectionChange={(contextMenuItems && contextMenuItems.length) ? e => this.setState({selectedRow: items.get(e.value).data}) : null}
                         onContextMenu={(contextMenuItems && contextMenuItems.length) ? e => this.cm.show(e.originalEvent): null}
                     >
@@ -454,7 +487,6 @@ class  DataTreeView extends Component {
             </div>
         </>);
     }
-
 }
 
 DataTreeView.propTypes = {
@@ -462,6 +494,8 @@ DataTreeView.propTypes = {
     apiService: PropTypes.any,
     //location: PropTypes.object,
     editItem: PropTypes.func,
+    addItem: PropTypes.func,
+    deleteItem: PropTypes.func,
     checkedItems: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.shape(
         {

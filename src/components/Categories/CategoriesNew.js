@@ -9,6 +9,7 @@ import {Button} from "primereact/button";
 import {history} from "../../App";
 import SubsGroup from "../../models/SubsGroup";
 import GridColumn from "../../models/base/GridColumn";
+import ActionButton from "../../models/base/ActionButton";
 
 const plurals = ['models.plurals.first', 'models.plurals.second', 'models.plurals.third'];
 
@@ -25,12 +26,9 @@ class CategoriesNew extends Component {
         );
     }
 
-    renderActionColumns(rowData, column) {
+    /*renderActionColumns(rowData, column) {
         const {t} = this.props;
         return <div className={'column-button'}>
-            {/*<Button icon="pi p-empty-button chain-ico" onClick={() => {
-                history.push('/subsGroups/' + rowData.id + '/values');
-            }} tooltip={t('subsGroups.fields.showSubs')}/>*/}
             <Button icon="pi p-empty-button case-ico" onClick={(e) => history.push('/catalog')}/>
             <Button icon="pi p-empty-button plus-ico"/>
             <Button icon="pi p-empty-button times-ico"/>
@@ -39,7 +37,7 @@ class CategoriesNew extends Component {
             }
             }/>
         </div>
-    }
+    }*/
 
     buildColumns() {
         let columns = SubsGroup.buildColumns();
@@ -49,7 +47,23 @@ class CategoriesNew extends Component {
             default: true,
             /*widthCoef: 1,*/
             bodyStyle: {textAlign: 'center'},
-            renderer: (rowData, column) => this.renderActionColumns(rowData, column)}));
+            /*renderer: (rowData, column) => this.renderActionColumns(rowData, column),*/
+            actions: [
+                new ActionButton().build({icon: "pi p-empty-button case-ico", onClick: (rowData, column) => {
+                    const win = window.open('/catalog', '_blank');
+                        if (win != null) {
+                            win.focus();
+                        }}}),
+                new ActionButton().build({icon: "pi p-empty-button plus-ico", addChild: true}),
+                new ActionButton().build({icon: "pi p-empty-button times-ico", remove: true}),
+                new ActionButton().build({icon: "pi p-empty-button chain-ico", onClick: (rowData, column) => {
+                        const win = window.open('/categories/' + rowData.data.id + '/cat2Attrs', '_blank');
+                        if (win != null) {
+                            win.focus();
+                        }
+                }})
+            ]
+        }));
 
         return columns;
     }

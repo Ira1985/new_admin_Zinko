@@ -48,8 +48,12 @@ class MainSection extends Component {
 
         this.updateChecked = this.updateChecked.bind(this);
         this.editItem = this.editItem.bind(this);
+        this.addItem = this.addItem.bind(this);
         this.onCloseEdit = this.onCloseEdit.bind(this);
         this.clearChecked = this.clearChecked.bind(this);
+        this.deleteCheckedItems = this.deleteCheckedItems.bind(this);
+        this.onClickCheckedToolbar = this.onClickCheckedToolbar.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     toolbarButtons = [
@@ -288,7 +292,7 @@ class MainSection extends Component {
         });
     }
 
-    deleteCheckedItems(btn) {
+    deleteCheckedItems() {
         const {apiService} = this.props;
         const {checkedItems, progressCheckedToolBtn} = this.state;
 
@@ -325,6 +329,55 @@ class MainSection extends Component {
         }
     }
 
+    deleteItem(item) {
+        const {apiService} = this.props;
+        if(item && item.id) {
+            const approveDelete = () => {
+                apiService.remove(item.id)
+                    .then(
+                        response => {
+                            //btn.inProgress = false;
+                            if (response) {
+                                this.setState({
+                                    checkedItems: new Map(),
+                                    clearChecked: true,
+                                    progressDelete: false,
+                                    reloadList: true
+                                });
+                                //this.getList(filters, sorter, paging, true);
+                            } else
+                                this.setState(prevState => ({
+                                    progressDelete: false
+                                }));
+                        },
+                        error => {
+                            this.setState(prevState => ({
+                                progressDelete: false
+                            }));
+                        }
+                    );
+            };
+
+            const button = {
+                label: 'baseLayout.main.buttons.buttonDel',
+                className:'button-delete-cancel',
+                onClick: this.deleteCheckedItems,
+                hasApproval: true,
+                type: 'checked',
+                approval: {
+                showCount: true,
+                    title: 'baseLayout.main.approvals.removeCheck.title',
+                    baseText: 'baseLayout.main.approvals.removeCheck.msg',
+                    yes: "baseLayout.main.approvals.removeCheck.yes",
+                    cancel: "baseLayout.main.approvals.removeCheck.cancel"
+                    /*onCancel: () => console.log('buttonDel onCancel'),
+                    onApprove: () => {console.log('buttonDel onApprove');}*/
+                }
+            };
+            //this.approveApprovalWin(button);
+            this.onClickCheckedToolbar(button);
+        }
+    }
 
     render() {
         const {t, breadcrumbs, dopToolbarButtons, dopCheckedButtons, plurals,
@@ -363,6 +416,8 @@ class MainSection extends Component {
                                                columns={columns}
                                                updateChecked={this.updateChecked}
                                                editItem={this.editItem}
+                                               addItem={this.addItem}
+                                               deleteItems={this.deleteItem}
                                                checkedItems={checkedItems}
                                                clearCheckedDone={() => this.clearCheckedDone()}
                                                reloadListDone={() => this.reloadListDone()}
@@ -380,6 +435,8 @@ class MainSection extends Component {
                                                columns={columns}
                                                updateChecked={this.updateChecked}
                                                editItem={this.editItem}
+                                               addItem={this.addItem}
+                                               deleteItems={this.deleteItem}
                                                checkedItems={checkedItems}
                                                clearCheckedDone={() => this.clearCheckedDone()}
                                                reloadListDone={() => this.reloadListDone()}
