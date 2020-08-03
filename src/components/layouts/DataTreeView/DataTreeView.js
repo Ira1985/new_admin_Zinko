@@ -345,66 +345,73 @@ class  DataTreeView extends Component {
 
         return (<>
             <div ref={this.dataGridView} className='data-tree-view'>
-
-                {contexmenuItem && contexmenuItem.length && <ContextMenu model={contexmenuItem} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>}
-
-                <MultiSelect
-                    maxSelectedLabels={multiColumns.size}
-                    className={'grid-add-column'}
-                    placeholder={' '}
-                    fixedPlaceholder={true}
-                    value={Array.from(selectedColumns.keys())}
-                    options={Array.from(multiColumns.values())}
-                    optionValue='field'
-                    optionLabel='header'
-                    itemTemplate={(option) => {return t(option.header);}}
-                    onChange={(e) => this.onColumnAdd(e)}
-                    tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
-                    tooltipOptions={{position: 'left'}}
-                    /*appendTo={document.body}*/
-                    /*appendTo={this.dataGridView.current}*/
-                />
-
-                <TreeTable value={Array.from(items.values())}
-                   selectionMode="checkbox"
-                   //onRowDoubleClick={(e) => this.onDoubleClick(e)}
-                   selectionKeys={selectedItems}
-                   //onSelectionChange={e => this.setState({selectedNodeKeys3: e.value})}
-                    scrollable={true}
-                    responsive={true}
-                    autoLayout={true}
-                    resizableColumns={true}
-                    className={minimizeHeight?'minimize-height-body': ''}
-                    /*className={'minimize-height-body'}*/
-                    sortField={sorter.name}
-                    sortOrder={sorter.directions == 'desc'?1:0}
-                    scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
-                    currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
-                    totalRecords={paging.count}
-                    lazy={true}
-                    first={(paging.page - 1) * paging.limit}
-                    onPage={(e) => this.onPage(e)}
-                    onSort={(e) => this.onSort(e)}
-                    loading={loading}
-                    paginatorRight={paginatorRight}
-                    /*selection={Array.from(checkedItems.values())}*/
-                    /*frozenValue={Array.from(checkedItems.values())}*/
-                    onSelectionChange={e => this.selectItem(e)}
-                    paginator={true}
-                    rows={paging.limit}
-                    paginatorPosition={'top'}
-                    /*paginatorTemplate="CurrentPageReport"*/
-                    paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
-                    onExpand={(event) => this.onExpand(event)}
-                    contextMenuSelection={contexmenuItem && contexmenuItem.length ? this.state.selectedRow : null}
-                    onContextMenuSelectionChange={contexmenuItem && contexmenuItem.length ? e => this.setState({selectedRow: e.value}) : null}
-                    onContextMenu={contexmenuItem && contexmenuItem.length ? e => this.cm.show(e.originalEvent): null}
-                >
-                    {/*<Column key={'tree-table-selection-key-0'} style={{width:'2px'}} />*/}
-                    {activeColumns}
-                    {/*<Column style={{width:'120px'}} body={this.butBodyTemplate} />*/}
-                    <Column style={{width:'30px'}} />
-                </TreeTable>
+                {(contexmenuItem && contexmenuItem.length) && <ContextMenu model={contexmenuItem} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>}
+                <div className="body-for-main-item">
+                    <MultiSelect
+                        maxSelectedLabels={multiColumns.size}
+                        className={'grid-add-column'}
+                        placeholder={' '}
+                        fixedPlaceholder={true}
+                        value={Array.from(selectedColumns.keys())}
+                        options={Array.from(multiColumns.values())}
+                        optionValue='field'
+                        optionLabel='header'
+                        itemTemplate={(option) => {return t(option.header);}}
+                        onChange={(e) => this.onColumnAdd(e)}
+                        tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
+                        tooltipOptions={{position: 'left'}}
+                        /*appendTo={document.body}*/
+                        /*appendTo={this.dataGridView.current}*/
+                    />
+                    <TreeTable value={Array.from(items.values())}
+                       selectionMode="checkbox"
+                       //onRowDoubleClick={(e) => this.onDoubleClick(e)}
+                       selectionKeys={selectedItems}
+                       //onSelectionChange={e => this.setState({selectedNodeKeys3: e.value})}
+                        scrollable={true}
+                        responsive={true}
+                        autoLayout={true}
+                        resizableColumns={true}
+                        className={minimizeHeight?'minimize-height-body': ''}
+                        /*className={'minimize-height-body'}*/
+                        sortField={sorter.name}
+                        sortOrder={sorter.directions == 'desc'?1:0}
+                        scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
+                        currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
+                        totalRecords={paging.count}
+                        lazy={true}
+                        first={(paging.page - 1) * paging.limit}
+                        onPage={(e) => this.onPage(e)}
+                        onSort={(e) => this.onSort(e)}
+                        loading={loading}
+                        paginatorRight={paginatorRight}
+                        /*selection={Array.from(checkedItems.values())}*/
+                        /*frozenValue={Array.from(checkedItems.values())}*/
+                        onSelectionChange={e => this.selectItem(e)}
+                        paginator={true}
+                        rows={paging.limit}
+                        paginatorPosition={'top'}
+                        /*paginatorTemplate="CurrentPageReport"*/
+                        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
+                        onExpand={(event) => this.onExpand(event)}
+                        contextMenuSelection={(contexmenuItem && contexmenuItem.length) ? this.state.selectedRow : null}
+                        onContextMenuSelectionChange={(contexmenuItem && contexmenuItem.length) ? e => this.setState({selectedRow: e.value}) : null}
+                        onContextMenu={(contexmenuItem && contexmenuItem.length) ? e => {
+                            /*let event = Object.assign(Object.create( Object.getPrototypeOf(e.originalEvent)), e.originalEvent, {pageY:(e.originalEvent.nativeEvent.clientY), pageX:e.originalEvent.nativeEvent.clientX});*/
+                            /*console.log(e);
+                            console.log(e.originalEvent);
+                            console.log(event);*/
+                            this.cm.show(e.originalEvent);
+                            /*e.originalEvent.stopPropagation();
+                            e.originalEvent.preventDefault();*/
+                        }: null}
+                    >
+                        {/*<Column key={'tree-table-selection-key-0'} style={{width:'2px'}} />*/}
+                        {activeColumns}
+                        {/*<Column style={{width:'120px'}} body={this.butBodyTemplate} />*/}
+                        <Column style={{width:'30px'}} />
+                    </TreeTable>
+                </div>
             </div>
         </>);
     }
