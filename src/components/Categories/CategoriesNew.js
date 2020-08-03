@@ -31,10 +31,13 @@ class CategoriesNew extends Component {
             {/*<Button icon="pi p-empty-button chain-ico" onClick={() => {
                 history.push('/subsGroups/' + rowData.id + '/values');
             }} tooltip={t('subsGroups.fields.showSubs')}/>*/}
-            <Button icon="pi p-empty-button case-ico"/>
+            <Button icon="pi p-empty-button case-ico" onClick={(e) => history.push('/catalog')}/>
             <Button icon="pi p-empty-button plus-ico"/>
             <Button icon="pi p-empty-button times-ico"/>
-            <Button icon="pi p-empty-button chain-ico"/>
+            <Button icon="pi p-empty-button chain-ico"  onClick={(e) =>{
+                history.push('categories/' + rowData.id + '/cat2Attrs')
+            }
+            }/>
         </div>
     }
 
@@ -60,7 +63,7 @@ class CategoriesNew extends Component {
             showDelete: true,
             showChildAdd: true,
             buttons: [
-                  {label: t("baseLayout.main.other.edit2"), command: (item) => console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa',item)}
+                  {label: t("baseLayout.main.other.edit2"), command: (item) => console.log(item)}
             ]
         };
 
