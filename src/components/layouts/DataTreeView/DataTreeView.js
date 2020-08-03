@@ -55,10 +55,40 @@ class  DataTreeView extends Component {
             sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
             paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),
             filters: Object.assign({},props.filterInit ? props.filterInit:{}),
-            activeColumns: []
+            activeColumns: [],
+            contextMenuItems: this.buildContexMenu(props.contexMenuProps)
         };
 
         this.dataGridView = React.createRef();
+    }
+
+    buildContexMenu(contextMenuProps) {
+        const {t} = this.props;
+        /*
+            showEdit: true,
+            showDelete: true,
+            showChildAdd: true,
+            buttons: [
+                  {label: t("baseLayout.main.other.edit"), command: (item) => console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa',item)},
+                  {label: t("baseLayout.main.other.delete"), command: (item) => console.log(item)}
+            ]
+        */
+        let buttons = [];
+        if(contextMenuProps) {
+            if(contextMenuProps.hasOwnProperty('showEdit') && contextMenuProps.showEdit)
+                buttons.push({label: t("baseLayout.main.other.edit"), command: (item) => this.editItem(this.state.selectedRow)});
+            if(contextMenuProps.hasOwnProperty('showEdit') && contextMenuProps.showEdit)
+                buttons.push({label: t("baseLayout.main.other.delete"), command: (item) => this.deleteItem(this.state.selectedRow)});
+            if(contextMenuProps.hasOwnProperty('showEdit') && contextMenuProps.showEdit)
+                buttons.push({label: t("baseLayout.main.other.addChild"), command: (item) => this.addChild(this.state.selectedRow)});
+
+            if(contextMenuProps.buttons && contextMenuProps.buttons.length) {
+                contextMenuProps.buttons.forEach((button, index) => {
+                    buttons.push({label: t(button.label), command: (item) => button.command(this.state.selectedRow)});
+                });
+            }
+        }
+        return buttons;
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -78,6 +108,20 @@ class  DataTreeView extends Component {
         return true;
     }
 
+    editItem(item) {
+        //тут редагування
+        console.log('editItem', item);
+    }
+
+    deleteItem(item) {
+        //тут видалення
+        console.log('deleteItem', item);
+    }
+
+    addChild(item) {
+        //тут видалення
+        console.log('addChild', item);
+    }
 
     componentDidMount() {
         const {filters, sorter, paging, selectedColumns, columnCoef} = this.state;
@@ -317,13 +361,13 @@ class  DataTreeView extends Component {
         const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
 
             return !col.actionColumn ?
-                <Column key={'tree-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
+                <Column columnKey={''+index} key={''+index} field={col.field} header={t(col.header)} sortable={col.sortable}
                         style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
                         body={col.renderer?col.renderer:null}
                         expander={col.expander?true: false}
                 />:
-                <Column key={'tree-table-col-' + index}
+                <Column columnKey={''+index} key={''+index}
                         style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
                         body={col.renderer?col.renderer:null}
@@ -335,8 +379,8 @@ class  DataTreeView extends Component {
     }
 
     render() {
-        const {t, minimizeHeight, contexmenuItem} = this.props;
-        const {items, loading, selectedColumns, multiColumns, paging, sorter, selectedItems, activeColumns} = this.state;
+        const {t, minimizeHeight} = this.props;
+        const {items, loading, selectedColumns, multiColumns, paging, sorter, selectedItems, activeColumns, contextMenuItems} = this.state;
 
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
@@ -345,7 +389,7 @@ class  DataTreeView extends Component {
 
         return (<>
             <div ref={this.dataGridView} className='data-tree-view'>
-                {(contexmenuItem && contexmenuItem.length) && <ContextMenu model={contexmenuItem} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>}
+                {(contextMenuItems && contextMenuItems.length) && <ContextMenu model={contextMenuItems} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>}
                 <div className="body-for-main-item">
                     <MultiSelect
                         maxSelectedLabels={multiColumns.size}
@@ -394,22 +438,15 @@ class  DataTreeView extends Component {
                         /*paginatorTemplate="CurrentPageReport"*/
                         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
                         onExpand={(event) => this.onExpand(event)}
-                        contextMenuSelection={(contexmenuItem && contexmenuItem.length) ? this.state.selectedRow : null}
-                        onContextMenuSelectionChange={(contexmenuItem && contexmenuItem.length) ? e => this.setState({selectedRow: e.value}) : null}
-                        onContextMenu={(contexmenuItem && contexmenuItem.length) ? e => {
-                            /*let event = Object.assign(Object.create( Object.getPrototypeOf(e.originalEvent)), e.originalEvent, {pageY:(e.originalEvent.nativeEvent.clientY), pageX:e.originalEvent.nativeEvent.clientX});*/
-                            /*console.log(e);
-                            console.log(e.originalEvent);
-                            console.log(event);*/
-                            this.cm.show(e.originalEvent);
-                            /*e.originalEvent.stopPropagation();
-                            e.originalEvent.preventDefault();*/
-                        }: null}
+                        contextMenuSelection={(contextMenuItems && contextMenuItems.length) ? this.state.selectedRow : null}
+                        contextMenuSelectionKey={(contextMenuItems && contextMenuItems.length) ? this.state.selectedRow : null}
+                        onContextMenuSelectionChange={(contextMenuItems && contextMenuItems.length) ? e => this.setState({selectedRow: e.value}) : null}
+                        onContextMenu={(contextMenuItems && contextMenuItems.length) ? e => this.cm.show(e.originalEvent): null}
                     >
                         {/*<Column key={'tree-table-selection-key-0'} style={{width:'2px'}} />*/}
                         {activeColumns}
                         {/*<Column style={{width:'120px'}} body={this.butBodyTemplate} />*/}
-                        <Column style={{width:'30px'}} />
+                        <Column key={'tree-table-hidden-column-0'} style={{width:'30px'}} />
                     </TreeTable>
                 </div>
             </div>

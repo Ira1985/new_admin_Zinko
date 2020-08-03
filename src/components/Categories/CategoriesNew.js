@@ -55,10 +55,14 @@ class CategoriesNew extends Component {
         const {t} = this.props;
         let  breadcrumbs = [{ "label": t('categories.breadcrumbs.name')}];
 
-        let contexmenuItem = [
-            {label: t("baseLayout.main.other.edit"), command: (e) => console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa', e.originalEvent.target)},
-            {label: t("baseLayout.main.other.delete"), command: () => console.log('')}
-        ]
+        let contexMenuProps = {
+            showEdit: true,
+            showDelete: true,
+            showChildAdd: true,
+            buttons: [
+                  {label: t("baseLayout.main.other.edit2"), command: (item) => console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa',item)}
+            ]
+        };
 
         return (
             <BaseLayout breadcrumbs={breadcrumbs}
@@ -75,7 +79,7 @@ class CategoriesNew extends Component {
                         treeView={true}
                         columns={this.buildColumns()}
                         editComponent={this.editComponent}
-                        contexmenuItem={contexmenuItem}
+                        contexMenuProps={contexMenuProps}
             >
             </BaseLayout>
         );

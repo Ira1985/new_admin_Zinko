@@ -329,7 +329,7 @@ class MainSection extends Component {
     render() {
         const {t, breadcrumbs, dopToolbarButtons, dopCheckedButtons, plurals,
             children, gridView, treeView, apiService, location, columns, editComponent, baseSchema, baseModel, disableEdit,
-            filterInit,sorterInit, pagingInit, contexmenuItem} = this.props;
+            filterInit,sorterInit, pagingInit, contexMenuProps} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem, progressSave,
             clearChecked, reloadList} = this.state;
 
@@ -372,7 +372,7 @@ class MainSection extends Component {
                                                sorterInit={sorterInit}
                                                pagingInit={pagingInit}
                                                disableEdit={disableEdit}
-                                               contexmenuItem={contexmenuItem}
+                                               contexMenuProps={contexMenuProps}
                                     ></DataGridView>}
                     {treeView && <DataTreeView minimizeHeight={showCheckedItemsMenu}
                                                apiService={apiService}
@@ -389,7 +389,7 @@ class MainSection extends Component {
                                                sorterInit={sorterInit}
                                                pagingInit={pagingInit}
                                                disableEdit={disableEdit}
-                                               contexmenuItem={contexmenuItem}
+                                               contexMenuProps={contexMenuProps}
                     ></DataTreeView>}
                 </div>
 
@@ -463,7 +463,8 @@ MainSection.propTypes = {
     //loadOnEditItem: PropTypes.func,
     sorterInit: PropTypes.object,
     pagingInit: PropTypes.object,
-    disableEdit: PropTypes.bool
+    disableEdit: PropTypes.bool,
+    contexMenuProps: PropTypes.object
 };
 
 export default withTranslation()(MainSection);

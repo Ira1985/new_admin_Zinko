@@ -205,13 +205,13 @@ class  DataGridView extends Component {
         const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
 
             return !col.actionColumn ?
-                <Column key={'data-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
+                <Column key={''+index} field={col.field} header={t(col.header)} sortable={col.sortable}
                         style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
                         body={col.renderer?col.renderer:null}
                         expander={col.expander?true: false}
                 />:
-                <Column key={'data-table-col-' + index}
+                <Column key={''+index}
                         style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
                         body={col.renderer?col.renderer:null}
