@@ -109,7 +109,9 @@ class  DataTreeView extends Component {
     }
 
     editItem(item) {
-        //тут редагування
+        const {editItem, disableEdit} = this.props;
+        if(!disableEdit)
+            editItem(item);
         console.log('editItem', item);
     }
 
@@ -151,12 +153,12 @@ class  DataTreeView extends Component {
                         }
                         this.setState({
                             paging: newPaging,
-                            items: response ? this.transformItems(response.pageItems) : [],
+                            items: response ? this.transformItems(response.pageItems) : new Map(),
                             loading: false
                         });
                     } else
                         this.setState({
-                            items: response ? this.transformItems(response.pageItems) : [],
+                            items: response ? this.transformItems(response.pageItems) : new Map(),
                             loading: false
                         });
                 },
@@ -438,9 +440,9 @@ class  DataTreeView extends Component {
                         /*paginatorTemplate="CurrentPageReport"*/
                         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
                         onExpand={(event) => this.onExpand(event)}
-                        contextMenuSelection={(contextMenuItems && contextMenuItems.length) ? this.state.selectedRow : null}
+                        contextMenuSelection={(contextMenuItems && contextMenuItems.length && this.state.selectedRow && this.state.selectedRow.id) ? this.state.selectedRow : null}
                         contextMenuSelectionKey={(contextMenuItems && contextMenuItems.length) ? this.state.selectedRow : null}
-                        onContextMenuSelectionChange={(contextMenuItems && contextMenuItems.length) ? e => this.setState({selectedRow: e.value}) : null}
+                        onContextMenuSelectionChange={(contextMenuItems && contextMenuItems.length) ? e => this.setState({selectedRow: items.get(e.value).data}) : null}
                         onContextMenu={(contextMenuItems && contextMenuItems.length) ? e => this.cm.show(e.originalEvent): null}
                     >
                         {/*<Column key={'tree-table-selection-key-0'} style={{width:'2px'}} />*/}
