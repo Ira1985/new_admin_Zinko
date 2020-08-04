@@ -352,6 +352,9 @@ hr {
 .progress-div {
   height: 110px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* column with ico in grid or tree */

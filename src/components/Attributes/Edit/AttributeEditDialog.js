@@ -26,12 +26,11 @@ class AttributeEditDialog extends Component {
 
     render() {
         let {t, editedItem, updateValue, loading, filter, filterItems, itemTemplate} = this.props;
-
         return (
             <>
                 {loading ?
                     <div className="p-fluid progress-div">
-                        <ProgressSpinner/>
+                        <i className="pi pi-spin pi-spinner"></i>
                     </div>
                     :
                     <Formik

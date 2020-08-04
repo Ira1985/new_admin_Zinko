@@ -197,7 +197,7 @@ class  DataTreeView extends Component {
             this.setState({
                 selectedColumns: newColumns,
                 columnCoef: (sum > 0? 100/sum: 1),
-                activeColumns: this.rebuildColumns(selectedColumns, (sum > 0? 100/sum: 1))
+                activeColumns: this.rebuildColumns(newColumns, (sum > 0? 100/sum: 1))
             });
         }
     }

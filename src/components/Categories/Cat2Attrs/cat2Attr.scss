@@ -47,7 +47,7 @@
         border-color: $primary-color-border;
         //left: 600px!important;
         .p-menuitem {
-          background-color: $primary-menuitem-link;
+          background-color: $primary-color-border-active;
           .p-menuitem-link {
             font-family: Lato;
             font-style: normal;
@@ -57,6 +57,23 @@
             text-decoration: none;
             .p-menuitem-text {
               color: $primary-text-color3;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              .p-inputswitch {
+                .p-inputswitch-slider {
+                  background-color: $primary-color-input-border;
+                  &:before {
+                    background-color: $primary-color-tabview-border;
+                  }
+                }
+
+                &.p-inputswitch-checked {
+                  .p-inputswitch-slider {
+                    background-color: $primary-color-active;
+                  }
+                }
+              }
             }
           }
         }
@@ -237,6 +254,14 @@
                     }
 
                     &.p-highlight {
+                      border: 0.5px solid $primary-table-body-active;
+                      outline: 0.5px solid $primary-table-body-active !important;
+
+                      &:hover {
+                        background-color: $primary-table-body-active-h;
+                      }
+                    }
+                    &.p-highlight-contextmenu {
                       border: 0.5px solid $primary-table-body-active;
                       outline: 0.5px solid $primary-table-body-active !important;
 
