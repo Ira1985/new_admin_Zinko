@@ -60,6 +60,13 @@
               display: flex;
               align-items: center;
               justify-content: space-between;
+              cursor: default;
+              .p-button {
+                min-width: 36px;
+                min-height: 10px;
+                background-color: $primary-color-input-border;
+                color: $primary-text-color3;
+              }
               .p-inputswitch {
                 .p-inputswitch-slider {
                   background-color: $primary-color-input-border;
@@ -79,7 +86,7 @@
         }
         .p-menuitem-active {
           .p-menuitem-link {
-            background-color: $primary-button-color-h!important;
+            background-color: $primary-menuitem-link!important;
           }
         }
       }

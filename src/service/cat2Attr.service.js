@@ -8,7 +8,8 @@ export const cat2AttrsService = {
     remove,
     getItem,
     getCombo,
-    getDescList
+    getDescList,
+    saveItem
 };
 
 const BASE_API_URL = '/cat2Attrs/';
@@ -44,6 +45,17 @@ function baseResponse(res) {
         return res;
     else
         return null;
+}
+
+function saveItem(item) {
+    return baseService.saveItem(BASE_API_URL, item, consts)
+        .then(res => {
+            return baseResponse(res);
+        })
+        .catch(error => {
+            console.log('Something wrong in brand service saveItem', error);
+            return null;
+        });
 }
 
 function getList(filters, sorter, paging) {

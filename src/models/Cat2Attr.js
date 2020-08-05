@@ -1,7 +1,9 @@
 import BaseEntity from "./base/BaseEntity";
 import TreeColumn from "./base/TreeColumn";
+import {AttrType} from "./Attribute";
+import * as Yup from "yup";
 
-export default class Cat2Attr {
+export default class Cat2Attr extends BaseEntity {
     category = {};
     attribute = {};
     id = null;
@@ -42,3 +44,9 @@ export default class Cat2Attr {
         return base;
     }
 }
+export const Cat2AttrSchema = Yup.object().shape({
+    name: Yup.string()
+        .min(2,'baseEntity.errors.min')
+        .trim()
+        .required('baseEntity.errors.required')
+});

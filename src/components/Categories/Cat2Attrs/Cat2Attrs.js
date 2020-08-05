@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {withTranslation} from "react-i18next";
 import "./cat2Attr.scss";
 import {categoryNewService} from "../../../service/categoryNew.service";
+import Cat2Attr from "../../../models/Cat2Attr";
 import {cat2AttrsService} from "../../../service/cat2Attr.service";
+import {Cat2AttrSchema} from "../../../models/Cat2Attr";
 import {Column} from "primereact/column";
 import {DataTable} from "primereact/datatable";
 import {ContextMenu} from 'primereact/contextmenu';
@@ -13,6 +15,9 @@ import {InputSwitch} from 'primereact/inputswitch';
 import {ScrollPanel} from "primereact/scrollpanel";
 import emptyImg from "../../../assets/img/EmptyImg.png";
 import {TabPanel, TabView} from "primereact/tabview";
+import Sorter from "../../../models/base/Sorter";
+import EditWin from "../../base/EditWin/EditWin";
+import Cat2AttrEditDialog from "./Edit/Cat2AttrEditDialog";
 
 
 class Cat2Attrs extends Component {
@@ -22,33 +27,19 @@ class Cat2Attrs extends Component {
         this.state = {
             expandedRows: [],
             selectedRow: null,
-            loading: true
+            loading: true,
+            contextMenuItem: [],
+            showEditWin: false,
+            progressSave: false
         };
-        this.menu = [
-            {label: props.t("cat2Attrs.fields.create"), command: () => console.log(this.state.selectedRow)},
-            {label: props.t("cat2Attrs.fields.edit"), command: () => console.log(this.state.selectedRow)},
-            {label: <>
-                    {props.t("cat2Attrs.fields.required.name")}
-                    <InputSwitch
-                        checked={this.state.selectedRow?this.state.selectedRow.required:false}
-                        onChange={(e) => {
-                            e.originalEvent.stopPropagation();
-                            let elem = Object.assign({}, this.state.selectedRow);
-                            console.log("aaaaaaaaaaaaaaaaa", this.state.selectedRow)
-                            elem.required = e.value;
-                            this.setState({selectedRow: elem})
-                        }
-                        }
-                    />
-                    </>
-            },
-            {label: <>
-                    {props.t("cat2Attrs.fields.key.name")}
-                    <InputSwitch checked={this.state.value} onChange={(e) => this.setState({value: e.value})} />
-                    </>, command: () => console.log(this.state.selectedRow)},
-            {label: props.t("cat2Attrs.fields.weight"), command: () => console.log(this.state.selectedRow)}
-        ];
         this.headerTemplate = this.headerTemplate.bind(this);
+        this.buildContextMenu = this.buildContextMenu.bind(this);
+    }
+
+    editComponent = (loading, editItem, updateValue, filter, filterItems) => {
+        return (
+            <Cat2AttrEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
+        );
     }
 
     componentDidMount() {
@@ -68,9 +59,126 @@ class Cat2Attrs extends Component {
         );
     }
 
+    onCloseEdit() {
+        this.setState(prev=>({
+            showEditWin: !prev.showEditWin,
+            editedItem: null
+        }))
+    }
+
+    saveItem(item) {
+        this.setState({
+            progressSave: true
+        });
+        cat2AttrsService.saveItem(item)
+            .then(
+                response => {
+                    this.setState(prevState => ({
+                        editItem: this.props.baseModel,
+                        showEditWin: !prevState.showEditWin,
+                        progressSave: false,
+                        reloadList: true
+                    }));
+                    //this.getList(filters,sorter,paging, true);
+                },
+                error => {
+                    this.setState({
+                        progressSave: false
+                    });
+                }
+            );
+        /*this.setState(prev => ({
+            showEditWin: !prev.showEditWin
+        }))*/
+    }
+
+    buildContextMenu(rowData) {
+        const {t} = this.props;
+        return [
+            {label: t("cat2Attrs.fields.create"), key: t("cat2Attrs.fields.create"), command: () => console.log(rowData)},
+            {
+                label: t("cat2Attrs.fields.edit"),
+                key: t("cat2Attrs.fields.edit"),
+                command: (e) => {
+                    const {selectedRow} = this.state
+                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", selectedRow)
+                    this.setState((prev) => ({
+                        showEditWin: !prev.showEditWin,
+                        editedItem: selectedRow
+                    }))
+                }
+            },
+            {label: <>
+                    {t("cat2Attrs.fields.required.name")}
+                    <InputSwitch
+                        checked={rowData?rowData.required:false}
+                        onChange={(e) => {
+                            e.originalEvent.stopPropagation();
+                            let elem = Object.assign({}, this.state.selectedRow);
+                            elem.required = e.value;
+                            let arr = Array.from(this.state.item);
+
+                            arr.map(item => {
+                                if(item.id === this.state.selectedRow.id)
+                                    item.required = e.value;
+                                return item
+                            })
+                            this.setState({item: arr})
+                        }
+                        }
+                    />
+                </>,
+                key: t("cat2Attrs.fields.required.name")
+            },
+            {label: <>
+                    {t("cat2Attrs.fields.key.name")}
+                    <InputSwitch
+                        checked={this.state.value}
+                        onChange={(e) =>{
+                            this.setState({value: e.value});
+                            e.originalEvent.stopPropagation();
+                        }}
+                    />
+                </>,
+                key: t("cat2Attrs.fields.key.name"),
+                command: (e) => e.originalEvent.stopPropagation()},
+            {label: <>
+                    {t("cat2Attrs.fields.weight")}
+                    <div>
+                        <Button
+                            icon={"pi pi-plus"}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                let arr = Array.from(this.state.item);
+                                arr.map(item => {
+                                    if(item.id === this.state.selectedRow.id)
+                                        item.weight++;
+                                    return item
+                                })
+                                this.setState({item: arr})
+                            }}
+                        />
+                        <Button
+                            icon={"pi pi-minus"}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                let arr = Array.from(this.state.item);
+                                arr.map(item => {
+                                    if(item.id === this.state.selectedRow.id)
+                                        item.weight--;
+                                    return item
+                                })
+                                this.setState({item: arr})
+                            }}
+                        />
+                    </div>
+                </>, key: t("cat2Attrs.fields.weight"), command: () => console.log(this.state.selectedRow)}
+        ];
+    }
+
     render() {
         const {t} = this.props;
-        const {item, loading} = this.state;
+        const {item, loading, selectedRow, contextMenuItem, showEditWin, progressSave} = this.state;
 
         let  breadcrumbs = [
             { "label": t('categories.breadcrumbs.name')},
@@ -94,12 +202,22 @@ class Cat2Attrs extends Component {
 
                     <hr/>
 
-                    <Button  className={'button-bottom-unload'} icon="pi p-empty-button plus-minus-ico" onClick={(e) => console.log('')}/>
+                    <Button
+                        className={'button-bottom-unload'}
+                        icon="pi p-empty-button plus-minus-ico"
+                        onClick={(e) => {
+                            const {expandedRows} = this.state;
+                            if(expandedRows.length !== item.length)
+                                this.setState({expandedRows: item})
+                            else
+                                this.setState({expandedRows: []})
+                        }}
+                    />
                     <Button label={t('baseLayout.main.buttons.buttonAdd')} className={'button-success'}  onClick={(e) => console.log('')}/>
                     <Button label={t('baseLayout.main.buttons.buttonDel')} className={'button-delete-cancel'}  onClick={(e) => console.log('')}/>
 
                     <div className='grid-card'>
-                        <ContextMenu model={this.menu} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>
+                        <ContextMenu model={contextMenuItem} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>
                         <div className="body-for-main-item">
                             <DataTable
                                 value={item}
@@ -116,11 +234,13 @@ class Cat2Attrs extends Component {
                                 loading={loading}
                                 scrollHeight='calc(100vh - 155px)'
                                 contextMenuSelection={this.state.selectedRow}
-                                onContextMenuSelectionChange={e => this.setState({selectedRow: e.value})}
+                                onContextMenuSelectionChange={e => this.setState({selectedRow: e.value, contextMenuItem: this.buildContextMenu(this.state.selectedRow)})}
                                 onContextMenu={e => this.cm.show(e.originalEvent)}
                                 expandableRowGroups={true}
                                 expandedRows={this.state.expandedRows}
-                                onRowToggle={(e) => this.setState({expandedRows:e.data})}>
+                                onRowToggle={(e) => {
+                                    this.setState({expandedRows:e.data})
+                                }}>
                                 <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
                                 <Column field="attribute.name" header={t('cat2Attrs.fields.attribute')} />
                                 <Column
@@ -131,7 +251,7 @@ class Cat2Attrs extends Component {
                                 <Column
                                     field="key"
                                     header={t('cat2Attrs.fields.key.name')}
-                                    body={(rowData => rowData.required ? t("cat2Attrs.fields.key.yes"):t("cat2Attrs.fields.key.no"))}
+                                    body={(rowData => rowData.key ? t("cat2Attrs.fields.key.yes"):t("cat2Attrs.fields.key.no"))}
                                 />
                                 <Column field="weight" header={t('cat2Attrs.fields.weight')} />
                             </DataTable>
@@ -139,6 +259,20 @@ class Cat2Attrs extends Component {
                         </div>
                     </div>
                 </div>
+                {showEditWin &&
+                <EditWin
+                    style={{width:'620px'}}
+                    show={showEditWin}
+                    onClose={() => this.onCloseEdit}
+                    editItem={this.state.editedItem}
+                    editComponent={this.editComponent}
+                    saveItem={(item) => this.saveItem(item)}
+                    baseSchema={Cat2AttrSchema}
+                    apiService={categoryNewService}
+                    baseModel={new Cat2Attr()}
+                    loadable={true}
+                    progressSave={progressSave}
+                ></EditWin>}
             </div>
         )
     }
