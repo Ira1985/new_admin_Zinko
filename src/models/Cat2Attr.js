@@ -27,7 +27,7 @@ export default class Cat2Attr extends BaseEntity {
         this.category = {id:cat.id, name:cat.name};
         //this.attribute = {id:attr.id, name:attr.name, comment:attr.comment, attrType: attr.attrType};
         this.attribute = attr;
-        this.attrType =  attr.attrType;
+        //this.attrType =  attr.attrType;
         return this;
     }
 
@@ -45,8 +45,8 @@ export default class Cat2Attr extends BaseEntity {
     }
 }
 export const Cat2AttrSchema = Yup.object().shape({
-    name: Yup.string()
-        .min(2,'baseEntity.errors.min')
-        .trim()
-        .required('baseEntity.errors.required')
+    attribute: Yup.object().shape({
+        id:Yup.number().required('baseEntity.errors.required'),
+        name:Yup.string().required()
+    }).nullable().required('baseEntity.errors.required')
 });

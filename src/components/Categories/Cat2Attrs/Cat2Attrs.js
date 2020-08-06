@@ -12,10 +12,6 @@ import {Toolbar} from "primereact/toolbar";
 import {BreadCrumb} from "primereact/breadcrumb";
 import {Button} from "primereact/button";
 import {InputSwitch} from 'primereact/inputswitch';
-import {ScrollPanel} from "primereact/scrollpanel";
-import emptyImg from "../../../assets/img/EmptyImg.png";
-import {TabPanel, TabView} from "primereact/tabview";
-import Sorter from "../../../models/base/Sorter";
 import EditWin from "../../base/EditWin/EditWin";
 import Cat2AttrEditDialog from "./Edit/Cat2AttrEditDialog";
 
@@ -34,18 +30,19 @@ class Cat2Attrs extends Component {
         };
         this.headerTemplate = this.headerTemplate.bind(this);
         this.buildContextMenu = this.buildContextMenu.bind(this);
+        this.onCloseEdit = this.onCloseEdit.bind(this);
     }
 
-    editComponent = (loading, editItem, updateValue, filter, filterItems) => {
+    editComponent = (loading, editItem, updateValue, filter, filterItems, itemTemplate) => {
         return (
-            <Cat2AttrEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
+            <Cat2AttrEditDialog loading={loading} editedItem={this.state.editedItem} updateValue={updateValue} filter={filter} filterItems={filterItems} itemTemplate={itemTemplate} />
         );
     }
 
     componentDidMount() {
         const id = window.location.pathname.split('/')[2];
         cat2AttrsService.getDescList(id).then(res => {
-            this.setState({item: res.pageItems, loading: false})
+            this.setState({item: res.pageItems, expandedRows: res.pageItems, loading: false})
         });
     }
 
@@ -100,8 +97,8 @@ class Cat2Attrs extends Component {
                 label: t("cat2Attrs.fields.edit"),
                 key: t("cat2Attrs.fields.edit"),
                 command: (e) => {
-                    const {selectedRow} = this.state
-                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", selectedRow)
+                    const {selectedRow} = this.state;
+
                     this.setState((prev) => ({
                         showEditWin: !prev.showEditWin,
                         editedItem: selectedRow
@@ -154,7 +151,8 @@ class Cat2Attrs extends Component {
                                     if(item.id === this.state.selectedRow.id)
                                         item.weight++;
                                     return item
-                                })
+                                });
+                                arr.sort((a, b) => a.weight > b.weight ? -1 : 1);
                                 this.setState({item: arr})
                             }}
                         />
@@ -167,7 +165,8 @@ class Cat2Attrs extends Component {
                                     if(item.id === this.state.selectedRow.id)
                                         item.weight--;
                                     return item
-                                })
+                                });
+                                arr.sort((a, b) => a.weight > b.weight ? -1 : 1);
                                 this.setState({item: arr})
                             }}
                         />
@@ -263,12 +262,12 @@ class Cat2Attrs extends Component {
                 <EditWin
                     style={{width:'620px'}}
                     show={showEditWin}
-                    onClose={() => this.onCloseEdit}
-                    editItem={this.state.editedItem}
+                    onClose={this.onCloseEdit}
+                    editItem={{}}
                     editComponent={this.editComponent}
                     saveItem={(item) => this.saveItem(item)}
                     baseSchema={Cat2AttrSchema}
-                    apiService={categoryNewService}
+                    apiService={cat2AttrsService}
                     baseModel={new Cat2Attr()}
                     loadable={true}
                     progressSave={progressSave}
