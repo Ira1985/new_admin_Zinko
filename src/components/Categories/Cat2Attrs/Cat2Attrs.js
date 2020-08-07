@@ -14,7 +14,7 @@ import {Button} from "primereact/button";
 import {InputSwitch} from 'primereact/inputswitch';
 import EditWin from "../../base/EditWin/EditWin";
 import Cat2AttrEditDialog from "./Edit/Cat2AttrEditDialog";
-
+import GroupEditDialog from "./Edit/GroupEditDialog";
 
 class Cat2Attrs extends Component {
 
@@ -26,16 +26,26 @@ class Cat2Attrs extends Component {
             loading: true,
             contextMenuItem: [],
             showEditWin: false,
-            progressSave: false
+            progressSave: false,
+            groups: [],
+            showGrWin: false,
         };
         this.headerTemplate = this.headerTemplate.bind(this);
         this.buildContextMenu = this.buildContextMenu.bind(this);
         this.onCloseEdit = this.onCloseEdit.bind(this);
+
+        this.groups = [];
     }
 
     editComponent = (loading, editItem, updateValue, filter, filterItems, itemTemplate) => {
         return (
             <Cat2AttrEditDialog loading={loading} editedItem={this.state.editedItem} updateValue={updateValue} filter={filter} filterItems={filterItems} itemTemplate={itemTemplate} />
+        );
+    }
+
+    editGroup = (loading, editItem, updateValue, filter, filterItems, itemTemplate) => {
+        return (
+            <GroupEditDialog loading={loading} editedItem={this.state.editedItem} updateValue={updateValue} filter={filter} filterItems={filterItems} groups={this.groups} />
         );
     }
 
@@ -47,6 +57,11 @@ class Cat2Attrs extends Component {
     }
 
     headerTemplate(data) {
+        let arr = Array.from(this.groups);
+        if(!arr.length || !arr.find(item => item.name === data.groupName))
+            arr.push({name: data.groupName});
+        this.groups = arr;
+        //this.setState({groups: arr})
         return data.groupName;
     }
     footerTemplate(data, index) {
@@ -58,41 +73,53 @@ class Cat2Attrs extends Component {
 
     onCloseEdit() {
         this.setState(prev=>({
-            showEditWin: !prev.showEditWin,
+            showEditWin: false,
+            showGrWin: false,
             editedItem: null
         }))
     }
 
     saveItem(item) {
         this.setState({
-            progressSave: true
+            progressSave: false
         });
-        cat2AttrsService.saveItem(item)
-            .then(
-                response => {
-                    this.setState(prevState => ({
-                        editItem: this.props.baseModel,
-                        showEditWin: !prevState.showEditWin,
-                        progressSave: false,
-                        reloadList: true
-                    }));
-                    //this.getList(filters,sorter,paging, true);
-                },
-                error => {
-                    this.setState({
-                        progressSave: false
-                    });
-                }
-            );
-        /*this.setState(prev => ({
-            showEditWin: !prev.showEditWin
-        }))*/
+        let elem = Object.assign({}, this.state.editedItem);
+        Object.keys(item).forEach(it => {
+            elem[it] = item[it]
+        });
+        let arr = Array.from(this.state.item);
+        arr.map(it => {
+            if(it.id === elem.id) {
+                Object.keys(item).forEach(it1 => {
+                    it[it1] = item[it1]
+                });
+            }
+            return item;
+        });
+        arr.sort((a, b) => a.weight > b.weight ? -1 : 1);
+        let r = arr.filter(item => item.id === elem.id);
+        this.setState(prev => ({
+            showEditWin: false,
+            showGrWin: false,
+            item: arr
+        }))
     }
 
     buildContextMenu(rowData) {
         const {t} = this.props;
         return [
-            {label: t("cat2Attrs.fields.create"), key: t("cat2Attrs.fields.create"), command: () => console.log(rowData)},
+            {
+                label: t("cat2Attrs.fields.create"),
+                key: t("cat2Attrs.fields.create"),
+                command: () => {
+                    const {selectedRow} = this.state;
+
+                    this.setState((prev) => ({
+                        showGrWin: !prev.showGrWin,
+                        editedItem: selectedRow
+                    }))
+                }
+            },
             {
                 label: t("cat2Attrs.fields.edit"),
                 key: t("cat2Attrs.fields.edit"),
@@ -114,7 +141,7 @@ class Cat2Attrs extends Component {
                             let elem = Object.assign({}, this.state.selectedRow);
                             elem.required = e.value;
                             let arr = Array.from(this.state.item);
-
+                            e.originalEvent.target.parentElement.classList.add("p-inputswitch-checked");
                             arr.map(item => {
                                 if(item.id === this.state.selectedRow.id)
                                     item.required = e.value;
@@ -177,7 +204,7 @@ class Cat2Attrs extends Component {
 
     render() {
         const {t} = this.props;
-        const {item, loading, selectedRow, contextMenuItem, showEditWin, progressSave} = this.state;
+        const {item, loading, selectedRow, contextMenuItem, showEditWin, progressSave, showGrWin} = this.state;
 
         let  breadcrumbs = [
             { "label": t('categories.breadcrumbs.name')},
@@ -212,7 +239,10 @@ class Cat2Attrs extends Component {
                                 this.setState({expandedRows: []})
                         }}
                     />
-                    <Button label={t('baseLayout.main.buttons.buttonAdd')} className={'button-success'}  onClick={(e) => console.log('')}/>
+                    <Button label={t('baseLayout.main.buttons.buttonAdd')} className={'button-success'}  onClick={(e) => this.setState((prev) => ({
+                        showEditWin: !prev.showEditWin,
+                        editedItem: new Cat2Attr()
+                    }))}/>
                     <Button label={t('baseLayout.main.buttons.buttonDel')} className={'button-delete-cancel'}  onClick={(e) => console.log('')}/>
 
                     <div className='grid-card'>
@@ -258,13 +288,13 @@ class Cat2Attrs extends Component {
                         </div>
                     </div>
                 </div>
-                {showEditWin &&
+                {(showEditWin || showGrWin) &&
                 <EditWin
                     style={{width:'620px'}}
-                    show={showEditWin}
+                    show={showEditWin || showGrWin}
                     onClose={this.onCloseEdit}
                     editItem={{}}
-                    editComponent={this.editComponent}
+                    editComponent={showEditWin ? this.editComponent : this.editGroup}
                     saveItem={(item) => this.saveItem(item)}
                     baseSchema={Cat2AttrSchema}
                     apiService={cat2AttrsService}
