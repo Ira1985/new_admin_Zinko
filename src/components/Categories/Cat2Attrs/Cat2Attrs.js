@@ -79,25 +79,21 @@ class Cat2Attrs extends Component {
         }))
     }
 
-    saveItem(item) {
+    saveItem(savedItem) {
+        const {item, editedItem} = this.state;
         this.setState({
             progressSave: false
         });
-        let elem = Object.assign({}, this.state.editedItem);
-        Object.keys(item).forEach(it => {
-            elem[it] = item[it]
-        });
-        let arr = Array.from(this.state.item);
+        let arr = Array.from(item);
         arr.map(it => {
-            if(it.id === elem.id) {
-                Object.keys(item).forEach(it1 => {
-                    it[it1] = item[it1]
+            if(it.id === editedItem.id) {
+                Object.keys(savedItem).forEach(elem => {
+                    it[elem] = savedItem[elem]
                 });
             }
-            return item;
+            return it;
         });
         arr.sort((a, b) => a.weight > b.weight ? -1 : 1);
-        let r = arr.filter(item => item.id === elem.id);
         this.setState(prev => ({
             showEditWin: false,
             showGrWin: false,
@@ -228,22 +224,24 @@ class Cat2Attrs extends Component {
 
                     <hr/>
 
-                    <Button
-                        className={'button-bottom-unload'}
-                        icon="pi p-empty-button plus-minus-ico"
-                        onClick={(e) => {
-                            const {expandedRows} = this.state;
-                            if(expandedRows.length !== item.length)
-                                this.setState({expandedRows: item})
-                            else
-                                this.setState({expandedRows: []})
-                        }}
-                    />
-                    <Button label={t('baseLayout.main.buttons.buttonAdd')} className={'button-success'}  onClick={(e) => this.setState((prev) => ({
-                        showEditWin: !prev.showEditWin,
-                        editedItem: new Cat2Attr()
-                    }))}/>
-                    <Button label={t('baseLayout.main.buttons.buttonDel')} className={'button-delete-cancel'}  onClick={(e) => console.log('')}/>
+                    <div className={'grid-button'}>
+                        <Button
+                            className={'button-bottom-unload'}
+                            icon="pi p-empty-button plus-minus-ico"
+                            onClick={(e) => {
+                                const {expandedRows} = this.state;
+                                if(expandedRows.length !== item.length)
+                                    this.setState({expandedRows: item})
+                                else
+                                    this.setState({expandedRows: []})
+                            }}
+                        />
+                        <Button label={t('baseLayout.main.buttons.buttonAdd')} className={'button-success'}  onClick={(e) => this.setState((prev) => ({
+                            showEditWin: !prev.showEditWin,
+                            editedItem: new Cat2Attr()
+                        }))}/>
+                        <Button label={t('baseLayout.main.buttons.buttonDel')} className={'button-delete-cancel'}  onClick={(e) => console.log('')}/>
+                    </div>
 
                     <div className='grid-card'>
                         <ContextMenu model={contextMenuItem} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>
@@ -256,6 +254,8 @@ class Cat2Attrs extends Component {
                                 groupField="groupName"
                                 rowGroupHeaderTemplate={this.headerTemplate}
                                 rowGroupFooterTemplate={this.footerTemplate}
+                                selection={this.state.selectedItem}
+                                onSelectionChange={e => this.setState({selectedItem: e.value})}
                                 scrollable={true}
                                 responsive={true}
                                 autoLayout={true}

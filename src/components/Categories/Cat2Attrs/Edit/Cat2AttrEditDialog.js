@@ -89,12 +89,7 @@ class Cat2AttrEditDialog extends Component {
                                                       props.handleChange(e);
                                                       updateValue(e);
                                                       //this.updateProperty('name', e.target.value)
-                                                  }} required />
-                                    {props.errors.attribute ? (
-                                        <div>
-                                            <small style={{color: 'red'}}>{t(props.errors.attribute)}</small>
-                                        </div>
-                                    ) : null}
+                                                  }} />
                                 </div>
 
                                 <div className="p-col-4" style={{padding: '.75em'}}>
