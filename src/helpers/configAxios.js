@@ -5,11 +5,9 @@ import {informerService} from './../service/base/InformerService'
 import i18n from "../i18n";
 
 export const API = axios.create({
-      baseURL: 'http://localhost:8083/content',
-      //baseURL: 'http://185.95.22.17:8083/content',
-     //baseURL: 'http://192.168.1.103:8080/content',
-     //baseURL: 'http://212.24.48.52:8080/content',
-    timeout: 1000000
+      //baseURL: 'http://localhost:8083/content',
+      baseURL: 'http://185.95.22.17:8083/content',
+      timeout: 1000000
 });
 
 // Alter defaults after instance has been created
@@ -37,7 +35,6 @@ API.interceptors.response.use(function (response) {
     // Do something with response data
     return response;
 }, function (error) {
-
     if(error && error.response){
         switch(error.response.status) {
             case 401:{

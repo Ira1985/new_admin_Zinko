@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import {withTranslation} from "react-i18next";
-import './categoriesNew.scss'
-import CategoryEditDialog from "./Edit/CategoryEditDialog";
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
-import Category, {CategorySchema} from "../../models/Category";
-import {categoryNewService} from "../../service/categoryNew.service";
+import './customerModels.scss'
+import CustomerEditDialog from "../Edit/CustomerEditDialog";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
+import CustomerModel from "../../../models/CustomerModel";
+import {CustomerSchema} from "../../../models/Customer";
+import {customerModelService} from "../../../service/customerModel.service";
 import {Button} from "primereact/button";
-import {history} from "../../App";
-import SubsGroup from "../../models/SubsGroup";
-import GridColumn from "../../models/base/GridColumn";
-import ActionButton from "../../models/base/ActionButton";
+import {history} from "../../../App";
+import SubsGroup from "../../../models/SubsGroup";
+import GridColumn from "../../../models/base/GridColumn";
+import ActionButton from "../../../models/base/ActionButton";
 
-const plurals = ['models.plurals.first', 'models.plurals.second', 'models.plurals.third'];
+const plurals = ['customerModels.plurals.first', 'customerModels.plurals.second', 'customerModels.plurals.third'];
 
-class CategoriesNew extends Component {
+class CustomerModels extends Component {
 
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ class CategoriesNew extends Component {
 
     editComponent = (loading, editItem, updateValue, filter, filterItems) => {
         return (
-            <CategoryEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
+            <CustomerEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
         );
     }
 
@@ -40,7 +41,7 @@ class CategoriesNew extends Component {
     }*/
 
     buildColumns() {
-        let columns = Category.buildColumns();
+        let columns = CustomerModel.buildColumns();
         columns.push(new GridColumn().build({field: '', header: '', style: {textAlign:'center'}, actionColumn: true,
             order: 50,
             actionWidth: 120,
@@ -50,18 +51,11 @@ class CategoriesNew extends Component {
             /*renderer: (rowData, column) => this.renderActionColumns(rowData, column),*/
             actions: [
                 new ActionButton().build({icon: "pi p-empty-button case-ico", onClick: (rowData, column) => {
-                    const win = window.open('/catalog', '_blank');
+                        const win = window.open('/catalog', '_blank');
                         if (win != null) {
                             win.focus();
                         }}}),
-                new ActionButton().build({icon: "pi p-empty-button plus-ico", addChild: true}),
-                new ActionButton().build({icon: "pi p-empty-button times-ico", remove: true}),
-                new ActionButton().build({icon: "pi p-empty-button chain-ico", onClick: (rowData, column) => {
-                        const win = window.open('/categories/' + rowData.data.id + '/cat2Attrs', '_blank');
-                        if (win != null) {
-                            win.focus();
-                        }
-                }})
+                new ActionButton().build({icon: "pi p-empty-button times-ico", remove: true})
             ]
         }));
 
@@ -70,27 +64,29 @@ class CategoriesNew extends Component {
 
     render() {
         const {t} = this.props;
-        let  breadcrumbs = [{ "label": t('categories.breadcrumbs.name')}];
+        let  breadcrumbs = [
+            { "label": t('customerModels.breadcrumbs.name')}
+        ];
 
         let contexMenuProps = {
             showEdit: true,
             showDelete: true,
             showChildAdd: true,
             buttons: [
-                  {label: t("baseLayout.main.other.edit2"), command: (item) => console.log(item)}
+                {label: t("baseLayout.main.other.edit2"), command: (item) => console.log(item)}
             ]
         };
 
         return (
             <BaseLayout breadcrumbs={breadcrumbs}
-                        filterItems={Category.buildFilters()}
+                        filterItems={CustomerModel.buildFilters()}
                         plurals={plurals}
-                        dopClass={'countries_main'}
-                        /*dopToolbarButtons={toolbarButtons}
-                        dopCheckedButtons={checkedButtons}*/
-                        apiService={categoryNewService}
-                        baseSchema={CategorySchema}
-                        baseModel={new Category()}
+                        dopClass={'customerModels_main'}
+                /*dopToolbarButtons={toolbarButtons}
+                dopCheckedButtons={checkedButtons}*/
+                        apiService={customerModelService}
+                        baseSchema={CustomerSchema}
+                        baseModel={new CustomerModel()}
                         location={this.props.location}
                         gridView={false}
                         treeView={true}
@@ -103,4 +99,4 @@ class CategoriesNew extends Component {
     }
 }
 
-export default withTranslation()(CategoriesNew);
+export default withTranslation()(CustomerModels);

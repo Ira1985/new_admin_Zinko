@@ -4,6 +4,9 @@
   flex-grow: 1;
   overflow-x: auto;
   height: calc(100% - 162px);
+  .body-for-main-item {
+    position: relative;
+  }
   .p-contextmenu.p-component {
     border-color: $primary-color-border;
     //left: 600px!important;

@@ -245,6 +245,25 @@
       "third": "бренда"
     }
   },
+  "cat2Attrs" : {
+    "fields": {
+      "create": "Создать/Перенести в группу",
+      "edit": "Редактировать",
+      "attribute": "Аттрибут",
+      "groupName": "Группа",
+      "required": {
+        "name": "Обязательный",
+        "yes": "Да",
+        "no": "Нет"
+      },
+      "key": {
+        "name": "Ключевой",
+        "yes": "Да",
+        "no": "Нет"
+      },
+      "weight": "Вес"
+    }
+  },
   "manufacturers": {
     "breadcrumbs": {
       "name": "Производители"

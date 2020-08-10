@@ -64,7 +64,7 @@ const menuItem = [
             { "key": "3-0", "label": "Посмотреть/Создать", 'leaf': true, "path":'/customers' },
             { "key": "3-1", "label": "Имформационные модели", 'leaf': false, "children": [
                     { "key": "3-1-0", "label": "Категоризация", 'leaf': true },
-                    { "key": "3-1-1", "label": "Модели", 'leaf': true }]
+                    { "key": "3-1-1", "label": "Модели", 'leaf': true, "path":'/customerModels' }]
             },
             { "key": "3-2", "label": "Каталог/Привязка моделей", 'leaf': true }]
     },

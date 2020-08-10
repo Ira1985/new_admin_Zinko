@@ -142,59 +142,59 @@ export function getAttrSystemSource(type) {
         };
         case AttrSystemSource.PRODUCT_ID: return {
             nameForRemember: 'PRODUCT_ID',
-            name: i18n.t('ID продукта')
+            name: i18n.t('attributes.fields.systemSource.productId')
         };
         case AttrSystemSource.ARTICLE: return {
             nameForRemember: 'ARTICLE',
-            name: i18n.t('Артикль')
+            name: i18n.t('attributes.fields.systemSource.article')
         };
         case AttrSystemSource.MANUFACTURER: return {
             nameForRemember: 'MANUFACTURER',
-            name: i18n.t('Производитель')
+            name: i18n.t('attributes.fields.systemSource.manufacturer')
         };
         case AttrSystemSource.COUNTRY: return {
             nameForRemember: 'COUNTRY',
-            name: i18n.t('Страна')
+            name: i18n.t('attributes.fields.systemSource.country')
         };
         case AttrSystemSource.BRAND: return {
             nameForRemember: 'BRAND',
-            name: i18n.t('Бренд')
+            name: i18n.t('attributes.fields.systemSource.brand')
         };
         case AttrSystemSource.CODE: return {
             nameForRemember: 'CODE',
-            name: i18n.t('Код')
+            name: i18n.t('attributes.fields.systemSource.code')
         };
         case AttrSystemSource.FULL_NAME: return {
             nameForRemember: 'FULL_NAME',
-            name: i18n.t('Имя')
+            name: i18n.t('attributes.fields.systemSource.fullName')
         };
         case AttrSystemSource.IMAGES: return {
             nameForRemember: 'IMAGES',
-            name: i18n.t('Изображения')
+            name: i18n.t('attributes.fields.systemSource.images')
         };
         case AttrSystemSource.BASE_IMAGE: return {
             nameForRemember: 'BASE_IMAGE',
-            name: i18n.t('Базовое изображение')
+            name: i18n.t('attributes.fields.systemSource.baseImage')
         };
         case AttrSystemSource.CERTIFICATES: return {
             nameForRemember: 'CERTIFICATES',
-            name: i18n.t('Сертификаты')
+            name: i18n.t('attributes.fields.systemSource.certificates')
         };
         case AttrSystemSource.INSTRUCTIONS: return {
             nameForRemember: 'INSTRUCTIONS',
-            name: i18n.t('Инструкции')
+            name: i18n.t('attributes.fields.systemSource.instructions')
         };
         case AttrSystemSource.VIDEOS: return {
             nameForRemember: 'VIDEOS',
-            name: i18n.t('Видео')
+            name: i18n.t('attributes.fields.systemSource.videos')
         };
         case AttrSystemSource.HTML_CONTENT: return {
             nameForRemember: 'HTML_CONTENT',
-            name: i18n.t('Контент HTML')
+            name: i18n.t('attributes.fields.systemSource.htmlContent')
         };
         case AttrSystemSource.BARCODES: return {
             nameForRemember: 'BARCODES',
-            name: i18n.t('Штрихкоды')
+            name: i18n.t('attributes.fields.systemSource.barcodes')
         };
         default: return type;
     }
@@ -226,19 +226,19 @@ export function getAttrType(type){
     switch (type) {
         case AttrType.GLOBAL: return {
             nameForRemember: 'GLOBAL',
-            name: i18n.t('Глобальный')
+            name: i18n.t('attributes.fields.types.global')
         };
         case AttrType.INNER: return {
             nameForRemember: 'INNER',
-            name: i18n.t('Внутренний')
+            name: i18n.t('attributes.fields.types.inner')
         };
         case AttrType.OUTER: return {
             nameForRemember: 'OUTER',
-            name: i18n.t('Внешний')
+            name: i18n.t('attributes.fields.types.outer')
         };
         case AttrType.SYSTEM: return {
             nameForRemember: 'SYSTEM',
-            name: i18n.t('Системный')
+            name: i18n.t('attributes.fields.types.system')
         };
         default: return type;
     }

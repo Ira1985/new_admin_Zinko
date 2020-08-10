@@ -21,7 +21,7 @@ class BaseLayout extends Component {
         const {t, filterItems, plurals, dopClass,
             breadcrumbs, toolbarButtons, checkedButtons,
             children, apiService, location, gridView, treeView, columns, editComponent, baseSchema, baseModel,
-            modelFieldInit, sorterInit, pagingInit, disableEdit, filterInit, contexmenuItem} = this.props;
+            modelFieldInit, sorterInit, pagingInit, disableEdit, filterInit, contexMenuProps} = this.props;
         const {checkedItems} = this.state;
 
         return <>
@@ -44,7 +44,7 @@ class BaseLayout extends Component {
                                  pagingInit={pagingInit}
                                  disableEdit={disableEdit}
                                  filterInit={filterInit}
-                                 contexmenuItem={contexmenuItem}
+                                 contexMenuProps={contexMenuProps}
                     >
                         {children}
                     </MainSection>
@@ -79,7 +79,8 @@ BaseLayout.propTypes = {
     //loadOnEditItem: PropTypes.func,
     sorterInit: PropTypes.object,
     pagingInit: PropTypes.object,
-    disableEdit: PropTypes.bool
+    disableEdit: PropTypes.bool,
+    contexMenuProps: PropTypes.object
 };
 
 export default withTranslation()(BaseLayout);

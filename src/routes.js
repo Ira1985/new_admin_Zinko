@@ -26,6 +26,8 @@ const Roles = React.lazy(() => import('./components/Roles/Roles'));
 const Users = React.lazy(() => import('./components/Users/Users'));
 const Customers = React.lazy(() => import('./components/Customers/Customers'));
 const ExportTemplates = React.lazy(() => import('./components/ExportTemplates/ExportTemplates'));
+const Cat2Attrs = React.lazy(() => import('./components/Categories/Cat2Attrs/Cat2Attrs'));
+const CustomerModels = React.lazy(() => import('./components/Customers/CustomerModels/CustomerModels'));
 
 export const routes = [
     { path: '/', name: i18n.t('baseLayout.main.main'), component: DefaultLayout },
@@ -36,7 +38,8 @@ export const routes = [
     { path: '/catalog/:id/preview', exact: true, name: i18n.t('catalogPreview.breadcrumbs.name'), component: CatalogPreview },
     { path: '/catalog/:id/edit', exact: true, name: i18n.t('catalogEdit.breadcrumbs.name'), component: CatalogEdit },
     { path: '/profile', name: i18n.t('profile.breadcrumbs.name'), component: Profile },
-    { path: '/categories', name: i18n.t('categories.breadcrumbs.name'), component: CategoriesNew},
+    { path: '/categories', exact: true, name: i18n.t('categories.breadcrumbs.name'), component: CategoriesNew},
+    { path: '/categories/:id/cat2Attrs', exact: true, name: i18n.t('categories.breadcrumbs.name'), component: Cat2Attrs},
     { path: '/countries', name: i18n.t('countries.breadcrumbs.name'), component:  Countries},
     { path: '/families', name: i18n.t('families.breadcrumbs.name'), component: Families },
     { path: '/models', name: i18n.t('models.breadcrumbs.name'), component: Models },
@@ -52,5 +55,6 @@ export const routes = [
     { path: '/roles', name: i18n.t('roles.breadcrumbs.name'), component: Roles },
     { path: '/users', name: i18n.t('users.breadcrumbs.name'), component: Users },
     { path: '/customers', name: i18n.t('customers.breadcrumbs.name'), component: Customers },
+    { path: '/customerModels', name: i18n.t('customerModels.breadcrumbs.name'), component: CustomerModels },
     { path: '/exportTemplates', name: i18n.t('exportTemplates.breadcrumbs.name'), component: ExportTemplates }
 ];

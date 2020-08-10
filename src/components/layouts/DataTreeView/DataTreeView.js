@@ -55,10 +55,40 @@ class  DataTreeView extends Component {
             sorter: props.sorterInit? new Sorter().build(props.sorterInit.name, props.sorterInit.directions):new Sorter(),
             paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),
             filters: Object.assign({},props.filterInit ? props.filterInit:{}),
-            activeColumns: []
+            activeColumns: [],
+            contextMenuItems: this.buildContexMenu(props.contexMenuProps)
         };
 
         this.dataGridView = React.createRef();
+    }
+
+    buildContexMenu(contextMenuProps) {
+        const {t} = this.props;
+        /*
+            showEdit: true,
+            showDelete: true,
+            showChildAdd: true,
+            buttons: [
+                  {label: t("baseLayout.main.other.edit"), command: (item) => console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa',item)},
+                  {label: t("baseLayout.main.other.delete"), command: (item) => console.log(item)}
+            ]
+        */
+        let buttons = [];
+        if(contextMenuProps) {
+            if(contextMenuProps.hasOwnProperty('showEdit') && contextMenuProps.showEdit)
+                buttons.push({label: t("baseLayout.main.other.edit"), command: (item) => this.editItem(this.state.selectedRow)});
+            if(contextMenuProps.hasOwnProperty('showEdit') && contextMenuProps.showEdit)
+                buttons.push({label: t("baseLayout.main.other.delete"), command: (item) => this.deleteItem(this.state.selectedRow)});
+            if(contextMenuProps.hasOwnProperty('showEdit') && contextMenuProps.showEdit)
+                buttons.push({label: t("baseLayout.main.other.addChild"), command: (item) => this.addChild(this.state.selectedRow)});
+
+            if(contextMenuProps.buttons && contextMenuProps.buttons.length) {
+                contextMenuProps.buttons.forEach((button, index) => {
+                    buttons.push({label: t(button.label), command: (item) => button.command(this.state.selectedRow)});
+                });
+            }
+        }
+        return buttons;
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -78,6 +108,22 @@ class  DataTreeView extends Component {
         return true;
     }
 
+    editItem(item) {
+        const {editItem, disableEdit} = this.props;
+        if(!disableEdit)
+            editItem(item);
+        console.log('editItem', item);
+    }
+
+    deleteItem(item) {
+        //тут видалення
+        console.log('deleteItem', item);
+    }
+
+    addChild(item) {
+        //тут видалення
+        console.log('addChild', item);
+    }
 
     componentDidMount() {
         const {filters, sorter, paging, selectedColumns, columnCoef} = this.state;
@@ -107,12 +153,12 @@ class  DataTreeView extends Component {
                         }
                         this.setState({
                             paging: newPaging,
-                            items: response ? this.transformItems(response.pageItems) : [],
+                            items: response ? this.transformItems(response.pageItems) : new Map(),
                             loading: false
                         });
                     } else
                         this.setState({
-                            items: response ? this.transformItems(response.pageItems) : [],
+                            items: response ? this.transformItems(response.pageItems) : new Map(),
                             loading: false
                         });
                 },
@@ -151,7 +197,7 @@ class  DataTreeView extends Component {
             this.setState({
                 selectedColumns: newColumns,
                 columnCoef: (sum > 0? 100/sum: 1),
-                activeColumns: this.rebuildColumns(selectedColumns, (sum > 0? 100/sum: 1))
+                activeColumns: this.rebuildColumns(newColumns, (sum > 0? 100/sum: 1))
             });
         }
     }
@@ -317,16 +363,16 @@ class  DataTreeView extends Component {
         const columnComponents = Array.from(selectedColumns.values()).sort((a1,a2) => {return ((a1.order > a2.order)?1:(a1.order < a2.order)?-1:0)}).map((col, index) => {
 
             return !col.actionColumn ?
-                <Column key={'tree-table-col-' + index} field={col.field} header={t(col.header)} sortable={col.sortable}
+                <Column columnKey={''+index} key={''+index} field={col.field} header={t(col.header)} sortable={col.sortable}
                         style={Object.assign({},col.style, {width:((columnCoef*col.widthCoef) - offset)+'%'})}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):{})}
-                        body={col.renderer?col.renderer:null}
+                        body={col.renderer?col.renderer:(col.actions?(rowData, column) => this.renderActionColumns(rowData, column, col.actions):null)}
                         expander={col.expander?true: false}
                 />:
-                <Column key={'tree-table-col-' + index}
+                <Column columnKey={''+index} key={''+index}
                         style={Object.assign({},{width:col.actionWidth + 'px'}, col.style)}
                         bodyStyle={((!col.bodyStyle || Object.keys(col.bodyStyle).length === 0)?(index == 0?{textAlign:'left'}:{textAlign:'center'}):col.bodyStyle)}
-                        body={col.renderer?col.renderer:null}
+                        body={col.renderer?col.renderer:(col.actions?(rowData, column) => this.renderActionColumns(rowData, column, col.actions):null)}
                         expander={col.expander?true: false}
                 />
 
@@ -334,9 +380,42 @@ class  DataTreeView extends Component {
         return columnComponents;
     }
 
+    renderActionColumns(rowData, column, actions) {
+        const {t, addItem, editItem} = this.props;
+        return <div className={'column-button'}>
+            {actions && actions.map((action, index) => {
+                return <Button key={'action-column-' + index} className={action.className}
+                               icon={action.icon}
+                               onClick={() => {
+                                   if(action.onClick) action.onClick(rowData, column);
+                                   else if(action.addNew) addItem();
+                                   else if(action.addChild) addItem({parent: rowData.data});
+                                   else if(action.edit) editItem(rowData.data);
+                                   else if(action.remove) this.deleteItem(rowData.data);
+                               }}
+                               tooltip={action.tooltip?t(action.tooltip):null}
+                />
+            })}
+        </div>
+    }
+
+    deleteItem(item) {
+        const {deleteItem} = this.props;
+        let value = {};
+
+        value[item.id] = {checked: true};
+        this.selectItem({value});
+        new Promise(resolve => {
+            this.selectItem({value:value});
+            setTimeout(function(deleteItem) {
+                deleteItem();
+            }, 500);
+        });
+    }
+
     render() {
-        const {t, minimizeHeight, contexmenuItem} = this.props;
-        const {items, loading, selectedColumns, multiColumns, paging, sorter, selectedItems, activeColumns} = this.state;
+        const {t, minimizeHeight} = this.props;
+        const {items, loading, selectedColumns, multiColumns, paging, sorter, selectedItems, activeColumns, contextMenuItems} = this.state;
 
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
@@ -345,70 +424,69 @@ class  DataTreeView extends Component {
 
         return (<>
             <div ref={this.dataGridView} className='data-tree-view'>
-
-                {contexmenuItem && contexmenuItem.length && <ContextMenu model={contexmenuItem} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>}
-
-                <MultiSelect
-                    maxSelectedLabels={multiColumns.size}
-                    className={'grid-add-column'}
-                    placeholder={' '}
-                    fixedPlaceholder={true}
-                    value={Array.from(selectedColumns.keys())}
-                    options={Array.from(multiColumns.values())}
-                    optionValue='field'
-                    optionLabel='header'
-                    itemTemplate={(option) => {return t(option.header);}}
-                    onChange={(e) => this.onColumnAdd(e)}
-                    tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
-                    tooltipOptions={{position: 'left'}}
-                    /*appendTo={document.body}*/
-                    /*appendTo={this.dataGridView.current}*/
-                />
-
-                <TreeTable value={Array.from(items.values())}
-                   selectionMode="checkbox"
-                   //onRowDoubleClick={(e) => this.onDoubleClick(e)}
-                   selectionKeys={selectedItems}
-                   //onSelectionChange={e => this.setState({selectedNodeKeys3: e.value})}
-                    scrollable={true}
-                    responsive={true}
-                    autoLayout={true}
-                    resizableColumns={true}
-                    className={minimizeHeight?'minimize-height-body': ''}
-                    /*className={'minimize-height-body'}*/
-                    sortField={sorter.name}
-                    sortOrder={sorter.directions == 'desc'?1:0}
-                    scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
-                    currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
-                    totalRecords={paging.count}
-                    lazy={true}
-                    first={(paging.page - 1) * paging.limit}
-                    onPage={(e) => this.onPage(e)}
-                    onSort={(e) => this.onSort(e)}
-                    loading={loading}
-                    paginatorRight={paginatorRight}
-                    /*selection={Array.from(checkedItems.values())}*/
-                    /*frozenValue={Array.from(checkedItems.values())}*/
-                    onSelectionChange={e => this.selectItem(e)}
-                    paginator={true}
-                    rows={paging.limit}
-                    paginatorPosition={'top'}
-                    /*paginatorTemplate="CurrentPageReport"*/
-                    paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
-                    onExpand={(event) => this.onExpand(event)}
-                    contextMenuSelection={contexmenuItem && contexmenuItem.length ? this.state.selectedRow : null}
-                    onContextMenuSelectionChange={contexmenuItem && contexmenuItem.length ? e => this.setState({selectedRow: e.value}) : null}
-                    onContextMenu={contexmenuItem && contexmenuItem.length ? e => this.cm.show(e.originalEvent): null}
-                >
-                    {/*<Column key={'tree-table-selection-key-0'} style={{width:'2px'}} />*/}
-                    {activeColumns}
-                    {/*<Column style={{width:'120px'}} body={this.butBodyTemplate} />*/}
-                    <Column style={{width:'30px'}} />
-                </TreeTable>
+                {(contextMenuItems && contextMenuItems.length) && <ContextMenu model={contextMenuItems} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>}
+                <div className="body-for-main-item">
+                    <MultiSelect
+                        maxSelectedLabels={multiColumns.size}
+                        className={'grid-add-column'}
+                        placeholder={' '}
+                        fixedPlaceholder={true}
+                        value={Array.from(selectedColumns.keys())}
+                        options={Array.from(multiColumns.values())}
+                        optionValue='field'
+                        optionLabel='header'
+                        itemTemplate={(option) => {return t(option.header);}}
+                        onChange={(e) => this.onColumnAdd(e)}
+                        tooltip={t('baseLayout.main.buttons.tooltips.gridColumnAdd')}
+                        tooltipOptions={{position: 'left'}}
+                        /*appendTo={document.body}*/
+                        /*appendTo={this.dataGridView.current}*/
+                    />
+                    <TreeTable value={Array.from(items.values())}
+                       selectionMode="checkbox"
+                       //onRowDoubleClick={(e) => this.onDoubleClick(e)}
+                       selectionKeys={selectedItems}
+                       //onSelectionChange={e => this.setState({selectedNodeKeys3: e.value})}
+                        scrollable={true}
+                        responsive={true}
+                        autoLayout={true}
+                        resizableColumns={true}
+                        className={minimizeHeight?'minimize-height-body': ''}
+                        /*className={'minimize-height-body'}*/
+                        sortField={sorter.name}
+                        sortOrder={sorter.directions == 'desc'?1:0}
+                        scrollHeight={minimizeHeight?'calc(100vh - 325px)': 'calc(100vh - 225px)'}
+                        currentPageReportTemplate={'{totalRecords} ' + t('baseLayout.main.other.totalItemsLabel')}
+                        totalRecords={paging.count}
+                        lazy={true}
+                        first={(paging.page - 1) * paging.limit}
+                        onPage={(e) => this.onPage(e)}
+                        onSort={(e) => this.onSort(e)}
+                        loading={loading}
+                        paginatorRight={paginatorRight}
+                        /*selection={Array.from(checkedItems.values())}*/
+                        /*frozenValue={Array.from(checkedItems.values())}*/
+                        onSelectionChange={e => this.selectItem(e)}
+                        paginator={true}
+                        rows={paging.limit}
+                        paginatorPosition={'top'}
+                        /*paginatorTemplate="CurrentPageReport"*/
+                        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown" rowsPerPageOptions={[10,20,50,100]}
+                        onExpand={(event) => this.onExpand(event)}
+                        contextMenuSelection={(contextMenuItems && contextMenuItems.length && this.state.selectedRow && this.state.selectedRow.id) ? this.state.selectedRow.id : null}
+                        contextMenuSelectionKey={(contextMenuItems && contextMenuItems.length && this.state.selectedRow && this.state.selectedRow.id) ? this.state.selectedRow.id : null}
+                        onContextMenuSelectionChange={(contextMenuItems && contextMenuItems.length) ? e => this.setState({selectedRow: items.get(e.value).data}) : null}
+                        onContextMenu={(contextMenuItems && contextMenuItems.length) ? e => this.cm.show(e.originalEvent): null}
+                    >
+                        {/*<Column key={'tree-table-selection-key-0'} style={{width:'2px'}} />*/}
+                        {activeColumns}
+                        {/*<Column style={{width:'120px'}} body={this.butBodyTemplate} />*/}
+                        <Column key={'tree-table-hidden-column-0'} style={{width:'30px'}} />
+                    </TreeTable>
+                </div>
             </div>
         </>);
     }
-
 }
 
 DataTreeView.propTypes = {
@@ -416,6 +494,8 @@ DataTreeView.propTypes = {
     apiService: PropTypes.any,
     //location: PropTypes.object,
     editItem: PropTypes.func,
+    addItem: PropTypes.func,
+    deleteItem: PropTypes.func,
     checkedItems: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.shape(
         {

@@ -38,24 +38,25 @@ class CatalogCard extends Component {
 
         return (
             <div className='grid-card'>
-                <div className='edit-grid-card'>
-                    <div>{t("baseLayout.editProduct.attributes")}: {item.productCards.all} / {item.productCards.fill}</div>
-                    <div>{t("baseLayout.editProduct.required")}: {item.productCards.requiredAll} / {item.productCards.requiredFill}</div>
-                    <div>{t("baseLayout.editProduct.key")}: {item.productCards.keyAll} / {item.productCards.keyFill}</div>
-                </div>
-
                 <ContextMenu model={this.menu} ref={el => this.cm = el} onHide={() => this.setState({selectedRow: null})}/>
+                <div className="body-for-main-item">
+                    <div className='edit-grid-card'>
+                        <div>{t("baseLayout.editProduct.attributes")}: {item.productCards.all} / {item.productCards.fill}</div>
+                        <div>{t("baseLayout.editProduct.required")}: {item.productCards.requiredAll} / {item.productCards.requiredFill}</div>
+                        <div>{t("baseLayout.editProduct.key")}: {item.productCards.keyAll} / {item.productCards.keyFill}</div>
+                    </div>
 
-                <DataTable value={item.productCards.cards} rowGroupMode="subheader" sortField="groupName" sortOrder={0} groupField="groupName"
-                           rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate}
-                           scrollable={true} scrollHeight='calc(100vh - 255px)'
-                           contextMenuSelection={this.state.selectedRow} onContextMenuSelectionChange={e => this.setState({selectedRow: e.value})}
-                           onContextMenu={e => this.cm.show(e.originalEvent)}
-                           expandableRowGroups={true} expandedRows={this.state.expandedRows} onRowToggle={(e) => this.setState({expandedRows:e.data})}>
-                    <Column field="attribute.name" header={t('baseLayout.editProduct.attribute')} />
-                    <Column field="value" header={t('baseLayout.editProduct.value')} />
-                    <Column field="unit.name" header={t('baseLayout.editProduct.unit')} />
-                </DataTable>
+                    <DataTable value={item.productCards.cards} rowGroupMode="subheader" sortField="groupName" sortOrder={0} groupField="groupName"
+                               rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate}
+                               scrollable={true} scrollHeight='calc(100vh - 255px)'
+                               contextMenuSelection={this.state.selectedRow} onContextMenuSelectionChange={e => this.setState({selectedRow: e.value})}
+                               onContextMenu={e => this.cm.show(e.originalEvent)}
+                               expandableRowGroups={true} expandedRows={this.state.expandedRows} onRowToggle={(e) => this.setState({expandedRows:e.data})}>
+                        <Column field="attribute.name" header={t('baseLayout.editProduct.attribute')} />
+                        <Column field="value" header={t('baseLayout.editProduct.value')} />
+                        <Column field="unit.name" header={t('baseLayout.editProduct.unit')} />
+                    </DataTable>
+                </div>
             </div>
         )
     }
