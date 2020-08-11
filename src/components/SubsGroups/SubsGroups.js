@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './subsGroups.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import SubsGroup, {SubsGroupSchema} from "../../models/SubsGroup";
 import {subsGroupService} from "../../service/subsGroup.service";
 import {withTranslation} from "react-i18next";

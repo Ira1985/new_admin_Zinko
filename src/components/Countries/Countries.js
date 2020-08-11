@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './countries.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Country, {CountrySchema} from "../../models/Country";
 import {countryService} from "../../service/country.service";
 import {withTranslation} from "react-i18next";

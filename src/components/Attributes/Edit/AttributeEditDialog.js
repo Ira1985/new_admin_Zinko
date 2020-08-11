@@ -26,6 +26,8 @@ class AttributeEditDialog extends Component {
 
     render() {
         let {t, editedItem, updateValue, loading, filter, filterItems, itemTemplate} = this.props;
+        // bugfix for show dialog
+        const root = document.getElementById('root');
         return (
             <>
                 {loading ?
@@ -71,6 +73,7 @@ class AttributeEditDialog extends Component {
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="attrCategory"
+                                                  appendTo={root}
                                                   value={props.values.attrCategory || ''}
                                                   suggestions={filterItems && filterItems.length ? filterItems :
                                                       [{
@@ -96,6 +99,7 @@ class AttributeEditDialog extends Component {
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="attrType"
+                                                  appendTo={root}
                                                   value={getAttrType(props.values.attrType) || ''}
                                                   field='name'
                                                   suggestions={filterItems}
@@ -120,6 +124,7 @@ class AttributeEditDialog extends Component {
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="valueType"
+                                                  appendTo={root}
                                                   value={getValueType(props.values.valueType) || ''}
                                                   field='name'
                                                   suggestions={filterItems}
@@ -144,6 +149,7 @@ class AttributeEditDialog extends Component {
                                 </div>
                                 <div className="p-col-3" style={{padding: '.5em'}}>
                                     <AutoComplete name="unit"
+                                                  appendTo={root}
                                                   value={props.values.unit || ''}
                                                   suggestions={filterItems}
                                                   completeMethod={(e) => filter(e, unitService)}
@@ -183,6 +189,7 @@ class AttributeEditDialog extends Component {
                                 </div>
                                 <div className="p-col-4" style={{padding: '.5em'}}>
                                     <AutoComplete name="subsGroup"
+                                                  appendTo={root}
                                                   value={props.values.subsGroup || ''}
                                                   suggestions={filterItems}
                                                   completeMethod={(e) => filter(e, subsGroupService)}
@@ -201,6 +208,7 @@ class AttributeEditDialog extends Component {
                                 </div>
                                 <div className="p-col-4" style={{padding: '.5em'}}>
                                     <AutoComplete name="sourceType"
+                                                  appendTo={root}
                                                   value={getLinkSourceType(props.values.sourceType) || ''}
                                                   field='name'
                                                   suggestions={filterItems}
@@ -234,6 +242,7 @@ class AttributeEditDialog extends Component {
                                 </div>
                                 <div className="p-col-4" style={{padding: '.5em'}}>
                                     <AutoComplete name="quantType"
+                                                  appendTo={root}
                                                   value={getQuantType(props.values.quantType) || ''}
                                                   field='name'
                                                   suggestions={filterItems}
@@ -252,6 +261,7 @@ class AttributeEditDialog extends Component {
                                 </div>
                                 <div className="p-col-4" style={{padding: '.5em'}}>
                                     <AutoComplete name="systemSource"
+                                                  appendTo={root}
                                                   value={getAttrSystemSource(props.values.systemSource) || ''}
                                                   field='name'
                                                   suggestions={filterItems}

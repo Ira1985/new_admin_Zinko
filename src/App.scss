@@ -258,6 +258,7 @@ hr {
       line-height: 17px;
     }
 
+    /* For all inout text */
     .p-inputtext {
       background-color: $primary-color-input;
       color: $primary-text-color3;
@@ -270,29 +271,7 @@ hr {
       font-size: 14px;
       line-height: 17px;
     }
-    .p-autocomplete-dropdown {
-      background-color: $primary-menuitem-link;
-      min-width: 10px;
-      min-height: 32px;
-    }
-    .p-autocomplete-panel.p-input-overlay {
-      background-color: $primary-back-color;
-      border: none;
-      position: relative;
-      top: 0px!important;
-      .p-autocomplete-list-item {
-        color: $primary-text-color3;
-        font-family: Lato;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 17px;
-        margin: 5px 0px 5px 0px;
-      }
-      .p-autocomplete-list-item:hover {
-        background-color: $primary-table-header;
-      }
-    }
+
     .p-disabled {
       background-color: $primary-color-input-disabled;
     }
@@ -317,6 +296,37 @@ hr {
     }
   }
 
+}
+
+/* Bugfix auto complit in mozilla */
+.p-autocomplete.p-autocomplete-dd .p-autocomplete-input, .p-autocomplete.p-autocomplete-dd .p-autocomplete-multiple-container {
+  width: calc(100% - 2.1em) !important;
+}
+
+/* For all dropdown */
+.p-autocomplete-dropdown {
+  background-color: $primary-menuitem-link;
+  min-width: 10px;
+  min-height: 32px;
+}
+
+/* For all drop down panel */
+.p-autocomplete-panel.p-input-overlay {
+  background-color: $primary-back-color;
+  border: none;
+
+  .p-autocomplete-list-item {
+    color: $primary-text-color3;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 5px 0px 5px 0px;
+  }
+  .p-autocomplete-list-item:hover {
+    background-color: $primary-table-header;
+  }
 }
 
 /* For all checkbox */

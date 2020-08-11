@@ -5,13 +5,11 @@ import {BreadCrumb} from "primereact/breadcrumb";
 import {Button} from "primereact/button";
 import {Toolbar} from "primereact/toolbar";
 import CheckedToolbarSection from "../CheckedToolbarSection/CheckedToolbarSection";
-import {pluralize} from "../../../../helpers/utils";
-import ApprovalWin from "../../../base/ApprovalWin/ApprovalWin";
-import EditWin from "../../../base/EditWin/EditWin";
+import {pluralize} from "../../../helpers/utils";
+import ApprovalWin from "../../../components/base/ApprovalWin/ApprovalWin";
+import EditWin from "../../../components/base/EditWin/EditWin";
 import PropTypes from "prop-types";
-//import DataGridView from "../../DataGridView/DataGridView";
 import Loadable from 'react-loadable';
-//import DataTreeView from "../../DataTreeView/DataTreeView";
 
 const loading = () => <div className="animated fadeIn pt-3 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
 

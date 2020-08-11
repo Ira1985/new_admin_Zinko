@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './department.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Department, {DepartmentSchema} from "../../models/Department";
 import {departmentService} from "../../service/department.service";
 import {withTranslation} from "react-i18next";

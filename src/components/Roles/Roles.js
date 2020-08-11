@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './roles.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Role, {RoleSchema} from "../../models/Role";
 import {roleService} from "../../service/role.service";
 import {withTranslation} from "react-i18next";

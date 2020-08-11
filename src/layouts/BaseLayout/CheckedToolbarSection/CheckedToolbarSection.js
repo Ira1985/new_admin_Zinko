@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import './checkedToolbarSection.scss';
 import {Button} from "primereact/button";
 import {Checkbox} from "primereact/checkbox";
-import LoadingButton from "../../../base/LoadingButton/LoadingButton";
+import LoadingButton from "../../../components/base/LoadingButton/LoadingButton";
 
 
 class CheckedToolbarSection extends  Component {

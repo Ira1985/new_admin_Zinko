@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './series.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Serie, {SerieSchema} from "../../models/Serie";
 import {seriesService} from "../../service/series.service";
 import {withTranslation} from "react-i18next";

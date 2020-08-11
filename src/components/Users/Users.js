@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './users.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import User, {UserSchema} from "../../models/User";
 import {userService} from "../../service/user.service";
 import {withTranslation} from "react-i18next";

@@ -7,9 +7,7 @@ import Category, {CategorySchema} from "../../../models/Category";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 import {AutoComplete} from "primereact/autocomplete";
-import {InputSwitch} from 'primereact/inputswitch';
-import {Checkbox} from 'primereact/checkbox';
-import {customerService} from "../../../service/customer.service";
+import {categoryNewService} from "../../../service/categoryNew.service";
 
 class CategoryEditDialog extends Component {
 
@@ -24,7 +22,9 @@ class CategoryEditDialog extends Component {
     }
 
     render() {
-        let {t, editedItem, updateValue, loading, filter, filterItems} = this.props;
+        let {t, editedItem, updateValue, loading, filter, filterItems, itemTemplate} = this.props;
+
+        const root = document.getElementById('root');
 
         return (
             <>
@@ -39,6 +39,39 @@ class CategoryEditDialog extends Component {
                     >
                         {props => (
                             <div className="p-grid p-fluid">
+
+                                { props.values.parent &&
+                                    <>
+                                        <div className="p-col-4" style={{padding: '.75em'}}>
+                                            <label htmlFor="name">{t("categories.fields.parent")}</label>
+                                        </div>
+                                        <div className="p-col-8" style={{padding: '.5em'}}>
+                                            <AutoComplete name="parent"
+                                                  readonly={true}
+                                                  disabled={true}
+                                                  appendTo={root}
+                                                  value={props.values.parent || ''}
+                                                  suggestions={filterItems && filterItems.length ? filterItems :
+                                                      [{
+                                                          name: 'Empty object',
+                                                          emptyLink: '/categories?id=0'
+                                                      }]
+                                                  }
+                                                  itemTemplate={itemTemplate}
+                                                  completeMethod={(e) => filter(e, categoryNewService)}
+                                                  size={30}
+                                                  minLength={1}
+                                                  field='name'
+                                                  dropdown={true}
+                                                  onChange={(e) => {
+                                                      props.handleChange(e);
+                                                      updateValue(e);
+                                                  }}  />
+                                        </div>
+                                    </>
+                                }
+
+
                                 <div className="p-col-4" style={{padding: '.75em'}}>
                                     <label htmlFor="name">{t("baseEntity.name")}</label>
                                 </div>
@@ -54,6 +87,8 @@ class CategoryEditDialog extends Component {
                                         </div>
                                     ) : null}
                                 </div>
+
+
 
                                 <div className="p-col-4" style={{padding: '.75em'}}>
                                     <label htmlFor="comment">{t("baseEntity.comment")}</label>
@@ -77,69 +112,6 @@ class CategoryEditDialog extends Component {
                                     }} value={props.values.description || ''}/>
                                 </div>
 
-                                <div className="p-col-4" style={{padding: '.75em'}}>
-                                    <label htmlFor="customer">{t("categories.fields.customer")}</label>
-                                </div>
-                                <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <AutoComplete name="customer"
-                                                  value={props.values.customer || ''}
-                                                  suggestions={filterItems}
-                                                  completeMethod={(e) => filter(e, customerService)}
-                                                  size={30}
-                                                  minLength={1}
-                                                  field='name'
-                                                  dropdown={true}
-                                                  onChange={(e) => {
-                                                      props.handleChange(e);
-                                                      updateValue(e);
-                                                      //this.updateProperty('name', e.target.value)
-                                                  }}  />
-                                </div>
-
-                                <div className="p-col-4" style={{padding: '.75em'}}>
-                                    <label htmlFor="layout">{t("categories.fields.layout")}</label>
-                                </div>
-                                <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputSwitch
-                                        name={'layout'}
-                                        onChange={(e) => {
-                                            props.handleChange(e);
-                                            updateValue(e);
-                                            //this.updateProperty('name', e.target.value)
-                                        }}
-                                        checked={props.values.layout}
-                                    />
-                                </div>
-
-                                <div className="p-col-4" style={{padding: '.75em'}}>
-                                    <label htmlFor="forMatchingAnalog">{t("categories.fields.forMatchingAnalog")}</label>
-                                </div>
-                                <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputSwitch
-                                        name={'forMatchingAnalog'}
-                                        onChange={(e) => {
-                                            props.handleChange(e);
-                                            updateValue(e);
-                                            //this.updateProperty('name', e.target.value)
-                                        }}
-                                        checked={props.values.forMatchingAnalog}
-                                    />
-                                </div>
-
-                                <div className="p-col-4" style={{padding: '.75em'}}>
-                                    <label htmlFor="foreignMarket">{t("categories.fields.foreignMarket")}</label>
-                                </div>
-                                <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputSwitch
-                                        name={'foreignMarket'}
-                                        onChange={(e) => {
-                                            props.handleChange(e);
-                                            updateValue(e);
-                                            //this.updateProperty('name', e.target.value)
-                                        }}
-                                        checked={props.values.foreignMarket}
-                                    />
-                                </div>
                             </div>
                         )}
                     </Formik>

@@ -73,7 +73,6 @@ class EditWin extends Component {
         let val;
         let elem = Object.assign({}, item);
         elem[name] = value;
-        console.log(elem)
         baseSchema.isValid(elem).then(validForms => {
             this.setState({
                 validForms: validForms,
@@ -82,16 +81,15 @@ class EditWin extends Component {
         })
     }
 
-    filterItems(event, data, render) {
-        if(data) {
-            data.getCombo(event.query).then(res => {
-                data = res.pageItems;
+    filterItems(event, api, render) {
+        if(api) {
+            api.getCombo(event.query).then(res => {
+                let data = res.pageItems;
                 let results;
 
                 if (event.query.length === 0) {
                     results = [...data];
-                }
-                else {
+                } else {
                     results = data.filter((item) => {
                         return item.name.toLowerCase().startsWith(event.query.toLowerCase());
                     });

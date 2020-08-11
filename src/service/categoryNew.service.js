@@ -17,8 +17,8 @@ export const categoryNewService = {
 };
 
 const BASE_API_URL = '/categories/';
-const consts = [i18n.t('services.attributes.obj'), i18n.t('services.attributes.objecta'),
-    i18n.t('services.attributes.objectov'), i18n.t('services.attributes.objects')];
+const consts = [i18n.t('services.categories.obj'), i18n.t('services.categories.objecta'),
+    i18n.t('services.categories.objectov'), i18n.t('services.categories.objects')];
 
 function baseResponse(res) {
     if(res && res.success)

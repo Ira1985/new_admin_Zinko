@@ -1,13 +1,13 @@
 import React, { Component, lazy, Suspense } from 'react';
 import {Redirect, Route, Switch, Router} from 'react-router-dom';
 import {withTranslation} from "react-i18next";
-import NavigationBaseMenu from "../../Menus/NavigationBaseMenu/NavigationBaseMenu";
-import NavigationTreeMenu from "../../Menus/NavigationTreeMenu/NavigationTreeMenu";
+import NavigationBaseMenu from "../../components/Menus/NavigationBaseMenu/NavigationBaseMenu";
+import NavigationTreeMenu from "../../components/Menus/NavigationTreeMenu/NavigationTreeMenu";
 //import AccountMenu from "../../Menus/AccountMenu/AccountMenu";
-import {routes} from "../../../routes";
+import {routes} from "../../routes";
 import {ToastContainer} from "react-toastify";
 import {Growl} from "primereact/growl";
-import {informer} from "../../../App";
+import {informer} from "../../App";
 
 class DefaultLayout extends Component {
 

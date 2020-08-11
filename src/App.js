@@ -16,7 +16,7 @@ const Login = Loadable({
 });
 
 const DefaultLayout = Loadable({
-    loader: () => import('./components/layouts/DefaultLayout/DefaultLayout'),
+    loader: () => import('./layouts/DefaultLayout/DefaultLayout'),
     loading
 });
 

@@ -4,7 +4,6 @@ import './baseLayout.scss';
 import FilterSection from "./FilterSection/FilterSection";
 import MainSection from "./MainSection/MainSection";
 import PropTypes from "prop-types";
-import {brandService} from "../../../service/brand.service";
 
 class BaseLayout extends Component {
 

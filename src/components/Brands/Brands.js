@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import './brands.scss';
 import Brand, {BrandSchema} from "../../models/Brand";
 import {withTranslation} from "react-i18next";

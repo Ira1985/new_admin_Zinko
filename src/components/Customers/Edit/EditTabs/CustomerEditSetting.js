@@ -68,6 +68,8 @@ class CustomerEditSetting extends Component {
     render() {
         let {t, editedItem, updateValue, formikItem, formikError, formikHandler, filterItems, filter} = this.props;
 
+        const root = document.getElementById('root');
+
         return (
             <div className="p-grid p-fluid">
                 {editedItem.id &&
@@ -193,6 +195,7 @@ class CustomerEditSetting extends Component {
                 </div>
                 <div className="p-col-9" style={{padding: '.5em'}}>
                     <AutoComplete name="resultFormat"
+                                  appendTo={root}
                                   value={getExportResultFormat(formikItem.resultFormat) || ''}
                                   field='name'
                                   suggestions={filterItems}

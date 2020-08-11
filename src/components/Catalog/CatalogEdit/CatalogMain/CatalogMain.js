@@ -69,6 +69,9 @@ class CatalogMain extends Component {
         const header = <div className="p-clearfix" style={{'lineHeight':'1.87em'}}>{t("baseLayout.editProduct.categories")} <i
             className="pi pi-plus" style={{'float':'right'}} onClick={() => this.setState({visibleDialog: true})} /></div>;
 
+        // bugfix for show dialog
+        const root = document.getElementById('root');
+
         return (
             <div className='grid-common'>
                 <ScrollPanel>
@@ -162,7 +165,7 @@ class CatalogMain extends Component {
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProduct.manufacturer")}</label></div>
                                 <div className="p-col-10" style={{padding:'.5em'}}>
 
-                                    <AutoComplete value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, manufacturerService)} size={30} minLength={1}
+                                    <AutoComplete appendTo={root} value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, manufacturerService)} size={30} minLength={1}
                                                   field='name'
                                                   dropdown={true} onChange={(e) => onChangeMethod(e, 'manufacturerName')} />
                                 </div>
@@ -170,7 +173,7 @@ class CatalogMain extends Component {
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.previewProduct.country")}</label></div>
                                 <div className="p-col-10" style={{padding:'.5em'}}>
-                                    <AutoComplete value={item.countryName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, countryService)} size={30} minLength={1}
+                                    <AutoComplete appendTo={root} value={item.countryName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, countryService)} size={30} minLength={1}
                                                   field='name'
                                                   dropdown={true} onChange={(e) => onChangeMethod(e, 'countryName')} />
                                 </div>
@@ -178,7 +181,7 @@ class CatalogMain extends Component {
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.previewProduct.brand")}</label></div>
                                 <div className="p-col-10" style={{padding:'.5em'}}>
-                                    <AutoComplete value={item.brandName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, brandService)} size={30} minLength={1}
+                                    <AutoComplete appendTo={root} value={item.brandName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, brandService)} size={30} minLength={1}
                                                   field='name'
                                                   dropdown={true} onChange={(e) => onChangeMethod(e, 'brandName')} />
                                 </div>
@@ -212,7 +215,7 @@ class CatalogMain extends Component {
                 </ScrollPanel>
 
                 <Dialog header="Добавить категорию" footer={<Button label={t('baseLayout.main.buttons.buttonAdd')} className="p-button-success" onClick={this.saveItem} />} visible={this.state.visibleDialog} style={{width: '30vw'}} modal={true} onHide={() => this.setState({visibleDialog: false})}>
-                    <AutoComplete value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, manufacturers)} size={30} minLength={1}
+                    <AutoComplete appendTo={root} value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, manufacturers)} size={30} minLength={1}
                                   field='name'
                                   dropdown={true} onChange={(e) => {
                         let obj = Object.assign({}, item);

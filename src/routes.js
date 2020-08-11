@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultLayout from "./components/layouts/DefaultLayout/DefaultLayout";
+import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 import i18n from './i18n';
 
 
@@ -30,7 +30,8 @@ const Cat2Attrs = React.lazy(() => import('./components/Categories/Cat2Attrs/Cat
 const CustomerModels = React.lazy(() => import('./components/Customers/CustomerModels/CustomerModels'));
 
 export const routes = [
-    { path: '/', name: i18n.t('baseLayout.main.main'), component: DefaultLayout },
+    //{ path: '/', name: i18n.t('baseLayout.main.main'), component: DefaultLayout },
+    { path: '/', name: '', component: DefaultLayout },
     { path: '/brands', name: i18n.t('brands.breadcrumbs.name'), component: Brands },
     { path: '/manufacturers', name: i18n.t('manufacturers.breadcrumbs.name'), component: Manufacturers },
     { path: '/series', name: i18n.t('series.breadcrumbs.name'), component: Series },

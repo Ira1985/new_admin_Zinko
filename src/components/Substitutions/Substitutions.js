@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './substitutions.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Substitution, {SubstitutionSchema} from "../../models/Substitution";
 import {substitutionService} from "../../service/substitution.service";
 import {withTranslation} from "react-i18next";

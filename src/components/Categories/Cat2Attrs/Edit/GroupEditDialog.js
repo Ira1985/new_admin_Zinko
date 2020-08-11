@@ -20,6 +20,8 @@ class Cat2AttrEditDialog extends Component {
     render() {
         let {t, editedItem, updateValue, loading, filterItems, filter, groups} = this.props;
 
+        const root = document.getElementById('root');
+
         return (
             <>
                 {loading ?
@@ -38,6 +40,7 @@ class Cat2AttrEditDialog extends Component {
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="groupName"
+                                                  appendTo={root}
                                                   value={props.values.groupName || ''}
                                                   suggestions={filterItems}
                                                   completeMethod={(e) => filter(e, null, () => Array.from(groups))}

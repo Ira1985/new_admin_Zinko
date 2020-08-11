@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {withTranslation} from "react-i18next";
 import './categoriesNew.scss'
 import CategoryEditDialog from "./Edit/CategoryEditDialog";
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Category, {CategorySchema} from "../../models/Category";
 import {categoryNewService} from "../../service/categoryNew.service";
 import {Button} from "primereact/button";
@@ -49,14 +49,14 @@ class CategoriesNew extends Component {
             bodyStyle: {textAlign: 'center'},
             /*renderer: (rowData, column) => this.renderActionColumns(rowData, column),*/
             actions: [
-                new ActionButton().build({icon: "pi p-empty-button case-ico", onClick: (rowData, column) => {
+                new ActionButton().build({icon: "pi p-empty-button case-ico", tooltip:'categories.actions.product', onClick: (rowData, column) => {
                     const win = window.open('/catalog', '_blank');
                         if (win != null) {
                             win.focus();
                         }}}),
-                new ActionButton().build({icon: "pi p-empty-button plus-ico", addChild: true}),
-                new ActionButton().build({icon: "pi p-empty-button times-ico", remove: true}),
-                new ActionButton().build({icon: "pi p-empty-button chain-ico", onClick: (rowData, column) => {
+                new ActionButton().build({icon: "pi p-empty-button plus-ico", tooltip:'categories.actions.addChild', addChild: true}),
+                new ActionButton().build({icon: "pi p-empty-button times-ico", tooltip:'categories.actions.remove', remove: true}),
+                new ActionButton().build({icon: "pi p-empty-button chain-ico", tooltip:'categories.actions.model', onClick: (rowData, column) => {
                         const win = window.open('/categories/' + rowData.data.id + '/cat2Attrs', '_blank');
                         if (win != null) {
                             win.focus();
@@ -77,7 +77,7 @@ class CategoriesNew extends Component {
             showDelete: true,
             showChildAdd: true,
             buttons: [
-                  {label: t("baseLayout.main.other.edit2"), command: (item) => console.log(item)}
+                  /*{label: "categories.actions.edit", command: (item) => console.log(item)}*/
             ]
         };
 

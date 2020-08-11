@@ -3,7 +3,7 @@ import './catalog.scss';
 import {withTranslation} from "react-i18next";
 import {catalogService} from "../../service/catalog.service";
 import PropTypes from "prop-types";
-import FilterSection from "../layouts/BaseLayout/FilterSection/FilterSection";
+import FilterSection from "../../layouts/BaseLayout/FilterSection/FilterSection";
 import {Toolbar} from "primereact/toolbar";
 import {BreadCrumb} from "primereact/breadcrumb";
 import {Button} from "primereact/button";

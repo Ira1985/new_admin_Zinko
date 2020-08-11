@@ -30,6 +30,9 @@ class CustomerEditMain extends Component {
     render() {
         let {t, editedItem, updateValue, formikItem, formikError, formikHandler, filterItems, filter} = this.props;
 
+        // bugfix for show dialog
+        const root = document.getElementById('root');
+
         return (
             <div className='main-tab-container'>
                 <div className='image-container'>
@@ -87,7 +90,9 @@ class CustomerEditMain extends Component {
                         <label htmlFor="type">{t("customers.fields.type")}</label>
                     </div>
                     <div className="p-col-8" style={{padding: '.5em'}}>
-                        <AutoComplete name="type"
+                        <AutoComplete
+                                      appendTo={root}
+                                      name="type"
                                       value={getCustomerType(formikItem.type) || ''}
                                       field='name'
                                       suggestions={filterItems}
@@ -106,7 +111,9 @@ class CustomerEditMain extends Component {
                         <label htmlFor="parent">{t("customers.fields..parent")}</label>
                     </div>
                     <div className="p-col-8">
-                        <AutoComplete name="parent"
+                        <AutoComplete
+                                      appendTo={root}
+                                      name="parent"
                                       value={formikItem.parent || ''}
                                       suggestions={filterItems}
                                       completeMethod={(e) => filter(e, customerService)}
@@ -126,6 +133,7 @@ class CustomerEditMain extends Component {
                     </div>
                     <div className="p-col-8">
                         <AutoComplete name="owner"
+                                      appendTo={root}
                                       value={formikItem.owner || ''}
                                       suggestions={filterItems}
                                       completeMethod={(e) => filter(e, userService)}

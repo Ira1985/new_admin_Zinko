@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {withTranslation} from "react-i18next";
 import './customerModels.scss'
 import CustomerEditDialog from "../Edit/CustomerEditDialog";
-import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../../layouts/BaseLayout/BaseLayout";
 import CustomerModel from "../../../models/CustomerModel";
 import {CustomerSchema} from "../../../models/Customer";
 import {customerModelService} from "../../../service/customerModel.service";

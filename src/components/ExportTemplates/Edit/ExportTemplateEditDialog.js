@@ -25,6 +25,8 @@ class ExportTemplateEditDialog extends Component {
     render() {
         let {t, editedItem, updateValue, loading, filter, filterItems} = this.props;
 
+        const root = document.getElementById('root');
+
         return (
             <>
                 {loading ?
@@ -81,6 +83,7 @@ class ExportTemplateEditDialog extends Component {
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="type"
+                                                  appendTo={root}
                                                   value={getTemplateType(props.values.type) || ''}
                                                   field='name'
                                                   suggestions={filterItems}
@@ -100,6 +103,7 @@ class ExportTemplateEditDialog extends Component {
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="category"
+                                                  appendTo={root}
                                                   value={props.values.category || ''}
                                                   suggestions={filterItems}
                                                   completeMethod={(e) => filter(e, categoryService)}
@@ -124,6 +128,7 @@ class ExportTemplateEditDialog extends Component {
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="customerCategory"
+                                                  appendTo={root}
                                                   value={props.values.customerCategory || ''}
                                                   suggestions={filterItems}
                                         //completeMethod={(e) => filter(e, customerCategoriesService)}
@@ -143,6 +148,7 @@ class ExportTemplateEditDialog extends Component {
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
                                     <AutoComplete name="customer"
+                                                  appendTo={root}
                                                   value={props.values.customer || ''}
                                                   suggestions={filterItems}
                                                   completeMethod={(e) => filter(e, customerService)}

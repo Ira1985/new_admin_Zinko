@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {withTranslation} from "react-i18next";
 import './filterSection.scss';
-import {SelectButton} from "primereact/selectbutton";
 import {Button} from "primereact/button";
-import {Sidebar} from "primereact/sidebar";
 import {InputText} from 'primereact/inputtext';
 import {Calendar} from 'primereact/calendar';
 import {InputNumber} from 'primereact/inputnumber';
@@ -13,7 +11,7 @@ import {MultiSelect} from 'primereact/multiselect';
 import {Dropdown} from 'primereact/dropdown';
 import {ScrollPanel} from "primereact/scrollpanel";
 import {Checkbox} from "primereact/checkbox";
-import {getAFilterOperation} from "../../../../models/base/FilterItem";
+import {getAFilterOperation} from "../../../models/base/FilterItem";
 import PropTypes from "prop-types";
 
 class FilterSection extends Component {

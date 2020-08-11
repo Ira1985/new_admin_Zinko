@@ -110,6 +110,8 @@
         "totalItemsLabel": "результатов",
         "edit": "Редактировать",
         "add": "Добавить",
+        "delete": "Удалить",
+        "addChild": "Добавить дочернюю",
         "monthNames": {
           "january": "Январь",
           "february": "Февраль",
@@ -499,9 +501,41 @@
       "parent": "Родитель",
       "productCnt": "Продуктов",
       "hasAttr": "Модель"
+    },
+    "actions": {
+      "remove": "Удалить",
+      "addChild": "Добавить дочернюю",
+      "edit": "Редактировать",
+      "product": "Продукты",
+      "model": "Модель"
     }
   },
+  "customers": {
+    "breadcrumbs": {
+      "name": "Заказчики"
+    },
+    "plurals": {
+      "first": "заказчиков",
+      "second": "заказчик",
+      "third": "заказчика"
+    },
+    "fields": {
 
+    }
+  },
+  "users": {
+    "breadcrumbs": {
+      "name": "Пользователи"
+    },
+    "plurals": {
+      "first": "пользователей",
+      "second": "пользователь",
+      "third": "пользователя"
+    },
+    "fields": {
+
+    }
+  },
   "exportTemplates": {
     "breadcrumbs": {
       "name": "Экспортные шаблоны"
@@ -634,6 +668,18 @@
       "objectov":"ролей",
       "objects":"роли"
     },
+    "users": {
+      "obj":"пользователь",
+      "objecta":"пользователя",
+      "objectov":"пользователей",
+      "objects":"пользователя"
+    },
+    "categories": {
+      "obj":"категория",
+      "objecta":"категории",
+      "objectov":"категорий",
+      "objects":"категории"
+    },
     "units": {
       "obj": "единица измерения",
       "objecta": "единицы измерения",
@@ -645,6 +691,12 @@
       "objecta":"маппинг един. измер.",
       "objectov":"маппингов един. измер.",
       "objects":"маппинги един. измер."
+    },
+    "customers": {
+      "obj":"заказчик",
+      "objecta":"заказчика",
+      "objectov":"заказчиков",
+      "objects":"заказчика"
     }
   }
 }

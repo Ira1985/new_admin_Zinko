@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './attributes.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Attribute, {AttributeSchema} from "../../models/Attribute";
 import {attributeService} from "../../service/attribute.service";
 import {withTranslation} from "react-i18next";

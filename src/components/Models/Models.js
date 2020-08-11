@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './models.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Model, {ModelSchema} from "../../models/Model";
 import {modelService} from "../../service/model.service";
 import {withTranslation} from "react-i18next";

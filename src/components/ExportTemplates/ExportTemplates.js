@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './exportTemplates.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import ExportTemplate, {ExportTemplateSchema} from "../../models/ExportTemplate";
 import {exportTemplateService} from "../../service/exportTemplate.service";
 import {withTranslation} from "react-i18next";

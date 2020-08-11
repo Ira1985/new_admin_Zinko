@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './families.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Family, {FamilySchema} from "../../models/Family";
 import {familyService} from "../../service/family.service";
 import {withTranslation} from "react-i18next";

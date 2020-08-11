@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './manufacturers.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Manufacturer , {ManufacturerSchema} from "../../models/Manufacturer";
 import {manufacturerService} from "../../service/manufacturer.service";
 import {withTranslation} from "react-i18next";

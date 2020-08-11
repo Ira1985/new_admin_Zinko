@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './unitMappings.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import UnitMapping, {UnitMappingSchema} from "../../models/UnitMapping";
 import {unitMappingService} from "../../service/unitMapping.service";
 import {withTranslation} from "react-i18next";

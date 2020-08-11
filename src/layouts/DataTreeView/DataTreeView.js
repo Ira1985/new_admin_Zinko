@@ -3,15 +3,13 @@ import './dataTreeView.scss';
 import {withTranslation} from "react-i18next";
 import PropTypes from "prop-types";
 import {MultiSelect} from "primereact/multiselect";
-import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
-import BaseLayout from "../BaseLayout/BaseLayout";
 import {Button} from "primereact/button";
-import Paging from "../../../models/base/Paging";
-import Sorter from "../../../models/base/Sorter";
+import Paging from "../../models/base/Paging";
+import Sorter from "../../models/base/Sorter";
 import {TreeTable} from "primereact/treetable";
-import TreeTableItem from "../../../models/base/TreeTableItem";
-import TreeColumn from "../../../models/base/TreeColumn";
+import TreeTableItem from "../../models/base/TreeTableItem";
+import TreeColumn from "../../models/base/TreeColumn";
 import {ContextMenu} from "primereact/contextmenu";
 
 class  DataTreeView extends Component {
@@ -64,15 +62,7 @@ class  DataTreeView extends Component {
 
     buildContexMenu(contextMenuProps) {
         const {t} = this.props;
-        /*
-            showEdit: true,
-            showDelete: true,
-            showChildAdd: true,
-            buttons: [
-                  {label: t("baseLayout.main.other.edit"), command: (item) => console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa',item)},
-                  {label: t("baseLayout.main.other.delete"), command: (item) => console.log(item)}
-            ]
-        */
+
         let buttons = [];
         if(contextMenuProps) {
             if(contextMenuProps.hasOwnProperty('showEdit') && contextMenuProps.showEdit)
@@ -139,6 +129,7 @@ class  DataTreeView extends Component {
             loading: true
             //items: new Map()
         });
+        let parentKey = filtering.hasOwnProperty('parentId')? filtering['parentId']: null;
         this.props.apiService.getList(filtering, sorting, paging)
             .then(response => {
                     if(changingPage) {
@@ -153,32 +144,49 @@ class  DataTreeView extends Component {
                         }
                         this.setState({
                             paging: newPaging,
-                            items: response ? this.transformItems(response.pageItems) : new Map(),
+                            //items: response ? this.transformItems(response.pageItems) : new Map(),
+                            items: this.transformItems(null, response?response.pageItems:null),
                             loading: false
                         });
                     } else
                         this.setState({
-                            items: response ? this.transformItems(response.pageItems) : new Map(),
+                            //items: response ? this.transformItems(response.pageItems) : new Map(),
+                            items: this.transformItems(parentKey, response?response.pageItems:null),
                             loading: false
                         });
                 },
                 error => {
                     this.setState({
-                        items: new Map(),
+                        items: parentKey ? this.state.items: new Map(),
                         loading: false,
                         paging: new Paging()
                     });
                 });
     }
 
-    transformItems(items) {
-        let nodes = new Map();
-        if(items && items.length > 0) {
-            items.forEach((item, index) => {
-                nodes.set(item.id, new TreeTableItem().build(item));
-            });
+    transformItems(parentKey, elems) {
+        const {items} = this.state;
+        let newNodes = new Map(items);
+        if(elems) {
+            let nodes = new Map();
+            if (elems && elems.length > 0) {
+                elems.forEach((item, index) => {
+                    nodes.set(item.id, new TreeTableItem().build(item));
+                });
+            }
+            //newNodes = new Map([...items, ...nodes]);
+            //newNodes = new Map([...items]);
+            if(parentKey) {
+                if (newNodes.has(parentKey))
+                    newNodes.get(parentKey).children = Array.from(nodes.values());
+            }else
+                newNodes = new Map(nodes);
+
+        }  else {
+            if(!parentKey)
+                newNodes = new Map();
         }
-        return nodes;
+        return newNodes;
     }
 
     onColumnAdd(e) {
@@ -246,102 +254,14 @@ class  DataTreeView extends Component {
     }
 
     onExpand(event) {
-        if (!event.node.children) {
-            this.setState({
-                loading: true
-            });
-
-            setTimeout(() => {
-                this.loading = false;
-                let lazyNode = {...event.node};
-                lazyNode.children = [
-                    {
-                        key: lazyNode.key + ' - 0',
-                        data: {
-                            name: lazyNode.data.name + ' - 0',
-                            size: Math.floor(Math.random() * 1000) + 1 + 'kb',
-                            comment: 'File',
-                            presenceAttributes: "No",
-                            parent: lazyNode.key
-                        },
-                        leaf: false
-                    },
-                    {
-                        key: lazyNode.key + ' - 1',
-                        data: {
-                            name: lazyNode.data.name + ' - 1',
-                            size: Math.floor(Math.random() * 1000) + 1 + 'kb',
-                            type: 'File',
-                            parent: lazyNode.key
-                        },
-                        leaf: false
-                    }
-                ];
-
-                let nodes = null;
-
-                let newMap = new Map(this.state.expandedTree);
-                lazyNode.children.map(child => {
-                    newMap.set(child.key, {
-                        key: child.key,
-                        data: child.data,
-                        children: null
-                    })
-                });
-
-                let parent = lazyNode.data.parent;
-
-                let count = 0;
-
-                while(parent !== null) {
-                    ++count;
-                    newMap.get(lazyNode.key).children = lazyNode.children;
-                    if(newMap.has(parent)) {
-                        let parentElem = newMap.get(parent);
-                        let childElem = parentElem.children.map(elem => {
-                            if(elem.key === lazyNode.key) {
-                                elem = lazyNode
-                            }
-                            return elem;
-                        })
-                        lazyNode = newMap.get(parent);
-                        parentElem.children = childElem;
-                        parent = newMap.get(parent).data.parent;
-                    } else {
-                        let parenElem = this.state.items.filter(item => item.key === parent)[0];
-                        parent = null;
-                        lazyNode = newMap.get(lazyNode.key);
-                        let childElem = parenElem.children.map(elem => {
-                            if(elem.key === lazyNode.key) {
-                                elem = lazyNode
-                            }
-                            return elem
-                        });
-                        parenElem.children = childElem;
-                        lazyNode = parenElem;
-                    }
-
-                }
-
-                if(parent === null) {
-                    let key = count ? lazyNode.key : event.node.key;
-                    nodes = this.state.items.map(node => {
-                        if (node.key === key) {
-                            node = lazyNode;
-                        }
-                        return node;
-                    });
-                } else {
-
-                }
-
-                this.setState({
-                    loading: false,
-                    items: nodes,
-                    expandedTree: newMap
-                });
-            }, 250);
-        }
+        const {filters, sorter, paging, selectedColumns, columnCoef} = this.state;
+        let newF = Object.assign({}, filters);
+        console.log(event, event.node.key);
+        newF.parentId = event.node.key;
+        let newPaging = Object.assign({}, paging, {
+            page: 1
+        });
+        this.getList(newF, sorter, newPaging, false);
     }
 
     rebuildColumns(selectedColumns, columnCoef) {

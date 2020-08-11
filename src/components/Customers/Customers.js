@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './customers.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import Customer, {CustomerSchema} from "../../models/Customer";
 import {customerService} from "../../service/customer.service";
 import {withTranslation} from "react-i18next";

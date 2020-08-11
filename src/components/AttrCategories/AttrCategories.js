@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './attrCategories.scss';
-import BaseLayout from "../layouts/BaseLayout/BaseLayout";
+import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import AttrCategory, {AttrCategorySchema} from "../../models/AttrCategory";
 import {attrCategoryService} from "../../service/attrCategory.service";
 import {withTranslation} from "react-i18next";

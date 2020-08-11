@@ -4,7 +4,7 @@ import {withTranslation} from "react-i18next";
 import {Button} from 'primereact/button';
 import {Toolbar} from 'primereact/toolbar';
 import {BreadCrumb} from 'primereact/breadcrumb';
-import DataGridView from "../layouts/DataGridView/DataGridView";
+import DataGridView from "../../layouts/DataGridView/DataGridView";
 import {AutoComplete} from "primereact/autocomplete";
 import {InputText} from "primereact/inputtext";
 import {InputTextarea} from 'primereact/inputtextarea';
@@ -47,6 +47,9 @@ class Profile extends Component {
         let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
 
         let  breadcrumbs = [{ "label": t('profile.breadcrumbs.name')}];
+
+        // bugfix for show dialog
+        const root = document.getElementById('root');
 
         return (<div className={'base-layout'}>
             <div className='main-section'>
@@ -112,7 +115,7 @@ class Profile extends Component {
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.department")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
 
-                                    <AutoComplete value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, departments)} size={30} minLength={1}
+                                    <AutoComplete appendTo={root} value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, departments)} size={30} minLength={1}
                                                   field='name'
                                                   dropdown={true} onChange={(e) => this.onChangeMethod(e, 'department')} />
                                 </div>

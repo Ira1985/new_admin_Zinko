@@ -7,9 +7,9 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import BaseLayout from "../BaseLayout/BaseLayout";
 import {Button} from "primereact/button";
-import Paging from "../../../models/base/Paging";
-import Sorter from "../../../models/base/Sorter";
-import GridColumn from "../../../models/base/GridColumn";
+import Paging from "../../models/base/Paging";
+import Sorter from "../../models/base/Sorter";
+import GridColumn from "../../models/base/GridColumn";
 import {ContextMenu} from "primereact/contextmenu";
 import {TreeTable} from "primereact/treetable";
 
@@ -274,7 +274,7 @@ class  DataGridView extends Component {
                            onPage={(e) => this.onPage(e)}
                            onSort={(e) => this.onSort(e)}
                            loading={loading}
-                           paginatorRight={this.paginatorRight}
+                           paginatorRight={paginatorRight}
                            selection={Array.from(checkedItems.values())}
                            /*frozenValue={Array.from(checkedItems.values())}*/
                            onSelectionChange={e => this.selectItem(e)}
