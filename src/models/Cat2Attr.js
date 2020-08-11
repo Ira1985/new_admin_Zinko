@@ -4,8 +4,8 @@ import {AttrType} from "./Attribute";
 import * as Yup from "yup";
 
 export default class Cat2Attr extends BaseEntity {
-    category = {};
-    attribute = {};
+    category = null;
+    attribute = null;
     groupName = '';
     attrType = AttrType.GLOBAL;
     weight = 0;

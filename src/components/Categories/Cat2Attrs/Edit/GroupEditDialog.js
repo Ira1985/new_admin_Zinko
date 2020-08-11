@@ -40,7 +40,7 @@ class Cat2AttrEditDialog extends Component {
                                     <AutoComplete name="groupName"
                                                   value={props.values.groupName || ''}
                                                   suggestions={filterItems}
-                                                  completeMethod={(e) => filter(e, null, () => groups)}
+                                                  completeMethod={(e) => filter(e, null, () => Array.from(groups))}
                                                   size={30}
                                                   minLength={1}
                                                   field='name'

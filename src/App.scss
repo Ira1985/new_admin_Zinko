@@ -278,6 +278,8 @@ hr {
     .p-autocomplete-panel.p-input-overlay {
       background-color: $primary-back-color;
       border: none;
+      position: relative;
+      top: 0px!important;
       .p-autocomplete-list-item {
         color: $primary-text-color3;
         font-family: Lato;

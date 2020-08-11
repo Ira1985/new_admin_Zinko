@@ -293,7 +293,7 @@ class Cat2Attrs extends Component {
                     style={{width:'620px'}}
                     show={showEditWin || showGrWin}
                     onClose={this.onCloseEdit}
-                    editItem={{}}
+                    editItem={new Cat2Attr()}
                     editComponent={showEditWin ? this.editComponent : this.editGroup}
                     saveItem={(item) => this.saveItem(item)}
                     baseSchema={Cat2AttrSchema}
