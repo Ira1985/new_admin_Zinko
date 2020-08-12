@@ -3,7 +3,7 @@ import {Redirect, Route, Switch, Router} from 'react-router-dom';
 import {withTranslation} from "react-i18next";
 import NavigationBaseMenu from "../../components/Menus/NavigationBaseMenu/NavigationBaseMenu";
 import NavigationTreeMenu from "../../components/Menus/NavigationTreeMenu/NavigationTreeMenu";
-//import AccountMenu from "../../Menus/AccountMenu/AccountMenu";
+import AccountMenu from "../../components/Menus/AccountMenu/AccountMenu";
 import {routes} from "../../routes";
 import {ToastContainer} from "react-toastify";
 import {Growl} from "primereact/growl";
@@ -60,7 +60,7 @@ class DefaultLayout extends Component {
                 </Suspense>
                 <Suspense fallback={this.loading()}>
                     {hideTreeMenu && <NavigationTreeMenu show={activeTreeMenu} onHide={() => this.onHideTreeMenu()}/>}
-                    {/*{activeAccountMenu && <AccountMenu show={activeAccountMenu} showAccountMenu={() => this.showAccountMenu()}/>}*/}
+                    {activeAccountMenu && <AccountMenu show={activeAccountMenu} showAccountMenu={() => this.showAccountMenu()}/>}
                 </Suspense>
                 <div className='main-block'>
                         <Suspense fallback={this.loading()}>

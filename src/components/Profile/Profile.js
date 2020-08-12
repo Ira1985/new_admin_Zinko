@@ -9,17 +9,20 @@ import {AutoComplete} from "primereact/autocomplete";
 import {InputText} from "primereact/inputtext";
 import {InputTextarea} from 'primereact/inputtextarea';
 import logo from '../../assets/img/Rectangle.png'
+import {departmentService} from "../../service/department.service";
 
 class Profile extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            item: {},
-            departments: [],
+            item: {}
         }
+    }
 
-
+    componentDidMount() {
+        let user = JSON.parse(localStorage.getItem("cs2_user"));
+        this.setState({item: user.identity})
     }
 
     toolbarButtons = [
@@ -32,9 +35,44 @@ class Profile extends Component {
         }
     ];
 
+    itemTemplate(item) {
+        const {t} = this.props;
+        const {newName} = this.state;
+        let elem = null;
+        if(item.name === "Empty object") {
+            elem = <Button label={t("baseLayout.main.buttons.buttonAddNew")} className={'button-dop'} onClick={() => this.onEmpty(item)}/>
+            item.name = newName
+        } else
+            elem = (<div className="p-clearfix">
+                <div >{item.name}</div>
+            </div>)
+        return elem;
+    }
+
+    filterItems(event, api, render) {
+        if(api) {
+            api.getCombo(event.query).then(res => {
+                let data = res.pageItems;
+                let results;
+
+                if (event.query.length === 0) {
+                    results = [...data];
+                } else {
+                    results = data.filter((item) => {
+                        return item.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+                if(!results.length)
+                    this.itemTemplate({name: ''})
+                this.setState({ filterItems: results, newName: event.query });
+            })
+        } else
+            this.setState({ filterItems: render() });
+    }
+
     onChangeMethod(e, key) {
         let obj = Object.assign({}, this.state.item);
-        obj[key] = e.value;
+        obj[key] = e.target.value;
         this.setState({ item: obj })
     }
 
@@ -42,7 +80,7 @@ class Profile extends Component {
 
         const {t, dopToolbarButtons} = this.props;
 
-        const {item, departments} = this.state;
+        const {item} = this.state;
 
         let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
 
@@ -75,10 +113,28 @@ class Profile extends Component {
                         <div className='edit-grid-left'>
                             <div className={'edit-grid-main'}>
                                 <div className={'edit-grid-logo'}>
-                                    <img className={'account-logo'} src={logo}  alt={''} />
+                                    <img className={'account-logo'} src={item.avatar ? 'http://185.95.22.17/statics/' + item.avatar : logo}  alt={''} />
+                                    <Button className={'delete-logo'} icon="pi pi-check" />
                                 </div>
-                                <div>
-                                    Admin
+                                <div className={'edit-grid-info'}>
+                                    <p>{item.fullName}</p>
+                                    <span>{item.comment}</span>
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>{t('messages.fields.created')}:</td>
+                                            <td>01.01.2020</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{t('messages.fields.updated')}:</td>
+                                            <td>01.01.2020</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{t('messages.fields.lastLogetIn')}:</td>
+                                            <td>{item.lastLogin}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div className={'edit-grid-password'}>
@@ -108,14 +164,14 @@ class Profile extends Component {
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.login")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
-                                    <InputText value={item.familyName} onChange={(e) => this.onChangeMethod(e, 'login')}/>
+                                    <InputText value={item.username || ''} onChange={(e) => this.onChangeMethod(e, 'username')}/>
                                 </div>
                             </div>
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.department")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
 
-                                    <AutoComplete appendTo={root} value={item.manufacturerName} suggestions={this.state.filteredItems} completeMethod={(e) => this.filterItems(e, departments)} size={30} minLength={1}
+                                    <AutoComplete appendTo={root} value={item.department || ''} suggestions={this.state.filterItems} completeMethod={(e) => this.filterItems(e, departmentService)} size={30} minLength={1}
                                                   field='name'
                                                   dropdown={true} onChange={(e) => this.onChangeMethod(e, 'department')} />
                                 </div>
@@ -123,37 +179,31 @@ class Profile extends Component {
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.comment")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
-                                    <InputTextarea rows={5} cols={30} value={item.comment} onChange={(e) => this.onChangeMethod(e, 'comment')}/>
+                                    <InputTextarea rows={5} cols={30} value={item.comment || ''} onChange={(e) => this.onChangeMethod(e, 'comment')}/>
                                 </div>
                             </div>
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.name")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
-                                    <InputText value={item.familyName} onChange={(e) => this.onChangeMethod(e, 'name')}/>
+                                    <InputText value={item.firstName || ''} onChange={(e) => this.onChangeMethod(e, 'firstName')}/>
                                 </div>
                             </div>
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.secondName")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
-                                    <InputText value={item.seriesName} onChange={(e) => this.onChangeMethod(e, 'secondName')}/>
+                                    <InputText value={item.middleName || ''} onChange={(e) => this.onChangeMethod(e, 'middleName')}/>
                                 </div>
                             </div>
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.lastName")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
-                                    <InputText value={item.modelName} onChange={(e) => this.onChangeMethod(e, 'lastName')}/>
-                                </div>
-                            </div>
-                            <div className='edit-grid-container'>
-                                <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.code")}</label></div>
-                                <div className="p-col-9" style={{padding:'.5em'}}>
-                                    <InputText value={item.comment} onChange={(e) => this.onChangeMethod(e, 'code')} disabled={true}/>
+                                    <InputText value={item.lastName || ''} onChange={(e) => this.onChangeMethod(e, 'lastName')}/>
                                 </div>
                             </div>
                             <div className='edit-grid-container'>
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.e-mail")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
-                                    <InputText value={item.comment} onChange={(e) => this.onChangeMethod(e, 'e-mail')}/>
+                                    <InputText value={item.email || ''} onChange={(e) => this.onChangeMethod(e, 'email')}/>
                                 </div>
                             </div>
                         </div>

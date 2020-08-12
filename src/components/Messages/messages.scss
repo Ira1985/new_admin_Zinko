@@ -1,0 +1,48 @@
+@import "../../styles/variables";
+
+.base-layout {
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  /*position: relative;*/
+
+  .header {
+    //height: 70px;
+    height: calc(70px - 25px);
+    margin: 0px auto;
+    display: table;
+    padding-top: 25px;
+    width: 100%;
+  }
+
+  .message-main-section {
+    flex-basis: auto;
+    flex-grow: 1;
+    /*width: auto;
+    height: 100%;*/
+
+    hr {
+      width: 96%;
+    }
+    .p-paginator-right-content {
+      .p-button {
+        display: none;
+      }
+    }
+    .p-multiselect-trigger {
+      display: none;
+    }
+    .p-datatable-row {
+      .container-in-model {
+        display: flex;
+        .button-in-model {
+          min-width: 32px;
+          background-color: transparent;
+          color: $primary-text-color3;
+        }
+      }
+    }
+  }
+}

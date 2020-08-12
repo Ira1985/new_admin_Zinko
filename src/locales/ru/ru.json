@@ -486,6 +486,23 @@
 
     }
   },
+  "messages": {
+    "breadcrumbs": {
+      "name": "Сообщения"
+    },
+    "button": "Отправить сообщение",
+    "fields": {
+      "send": "Отправлено",
+      "sender": "Отправитель",
+      "group": "Группа",
+      "comment": "Комментарий",
+      "message": "Сообщение",
+      "dateReceipt": "Дата получения",
+      "created": "Создан",
+      "updated": "Обновлен",
+      "lastLogetIn": "Последнее посещение"
+    }
+  },
   "categories": {
     "breadcrumbs": {
       "name": "Категории"

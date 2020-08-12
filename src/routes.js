@@ -17,6 +17,7 @@ const Models = React.lazy(() => import('./components/Models/Models'));
 const AttrCategories = React.lazy(() => import('./components/AttrCategories/AttrCategories'));
 const Attributes = React.lazy(() => import('./components/Attributes/Attributes'));
 const Profile = React.lazy(() => import('./components/Profile/Profile'));
+const Messages = React.lazy(() => import('./components/Messages/Messages'));
 const SubsGroups = React.lazy(() => import('./components/SubsGroups/SubsGroups'));
 const Substitutions = React.lazy(() => import('./components/Substitutions/Substitutions'));
 const Units = React.lazy(() => import('./components/Units/Units'));
@@ -39,6 +40,7 @@ export const routes = [
     { path: '/catalog/:id/preview', exact: true, name: i18n.t('catalogPreview.breadcrumbs.name'), component: CatalogPreview },
     { path: '/catalog/:id/edit', exact: true, name: i18n.t('catalogEdit.breadcrumbs.name'), component: CatalogEdit },
     { path: '/profile', name: i18n.t('profile.breadcrumbs.name'), component: Profile },
+    { path: '/messages', name: i18n.t('messages.breadcrumbs.name'), component: Messages },
     { path: '/categories', exact: true, name: i18n.t('categories.breadcrumbs.name'), component: CategoriesNew},
     { path: '/categories/:id/cat2Attrs', exact: true, name: i18n.t('categories.breadcrumbs.name'), component: Cat2Attrs},
     { path: '/countries', name: i18n.t('countries.breadcrumbs.name'), component:  Countries},

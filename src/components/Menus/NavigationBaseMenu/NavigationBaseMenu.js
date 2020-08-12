@@ -3,6 +3,7 @@ import logo from "../../../assets/img/Rectangle.png";
 import "./navigationBaseMenu.scss"
 import { withTranslation } from 'react-i18next';
 import PropTypes, {instanceOf} from "prop-types";
+import {history} from "../../../App";
 
 class NavigationBaseMenu extends Component {
 
@@ -22,7 +23,7 @@ class NavigationBaseMenu extends Component {
                 </a>
                 <hr/>
                 <div className='menu-items-block'>
-                    <a className='menu-item' onClick={e => {console.log('message')}}>
+                    <a className='menu-item' onClick={e => {history.push('messages')}}>
                         <p className='menu-item-ico messages-img'></p>
                         {/*<svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 14H2V4L10 9L18 4V14ZM10 7L2 2H18L10 7Z" fill="#6D6E77"/>

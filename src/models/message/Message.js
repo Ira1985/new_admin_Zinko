@@ -1,4 +1,10 @@
 import Endpoint from "./Endpoint";
+import FilterItem from "../base/FilterItem";
+import BaseEntity from "../base/BaseEntity";
+import GridColumn from "../base/GridColumn";
+import React from "react";
+import {getValueType} from "../Attribute";
+import {Button} from "primereact/button";
 
 export default class Message {
     id = null;
@@ -52,5 +58,33 @@ export default class Message {
 
     same(msg) {
         return this.id === msg.id;
+    }
+
+    static buildFilters() {
+        let base = [];
+        /*base.push(FilterItem.buildList('attributes.fields.attrType','attrType', true));*/
+        base.push(FilterItem.buildList('messages.fields.group','group', true));
+        base.push(FilterItem.buildText('messages.fields.comment','comment', true));
+        base.push(FilterItem.buildDate('messages.fields.dateReceipt','dateReceipt', true));
+        return base;
+    }
+
+    static buildColumns() {
+        let columns =  [];
+        columns.push(new GridColumn().build({field: 'send', header: 'messages.fields.send', style: {},
+            sortable: true, order: 5, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.send?rowData.send:''}</p>}}));
+        columns.push(new GridColumn().build({field: 'group', header: 'messages.fields.group', style:{},
+            sortable: true, order: 6, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.group?rowData.group:''}</p>}}));
+        columns.push(new GridColumn().build({field: 'sender', header: 'messages.fields.sender', style:{},
+            sortable: true, order: 7, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.sender?rowData.sender:''}</p>}}));
+        columns.push(new GridColumn().build({field: 'message', header: 'messages.fields.message', style:{},
+            sortable: false, order: 8, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.message?rowData.message:''}</p>}}));
+        columns.push(new GridColumn().build({field: '', header: '', style:{},
+            sortable: false, order: 9, default: true, widthCoef: 0.5, renderer: (rowData, column) => {return <div className={'container-in-model'}>
+                <Button className={'button-in-model'} icon="pi pi-check"></Button>
+                <Button className={'button-in-model'} icon="pi pi-times"></Button>
+            </div>}}));
+
+        return columns;
     }
 }

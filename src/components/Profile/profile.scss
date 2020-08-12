@@ -64,12 +64,64 @@
           align-items: center;
           width: 100%;
           height: 223px;
-          .account-logo {
+          .edit-grid-logo {
+            background-image: linear-gradient(transparent 3px, $primary-hr-color 0px),
+            linear-gradient(90deg, $primary-hr-color 1px, transparent 1px, transparent 1px),
+            linear-gradient($primary-hr-color 1px, transparent 1px, transparent 1px),
+            linear-gradient(90deg, transparent 1px, transparent 3px, $primary-hr-color 0.5px);
+            background-size: 5vw 5px, 1px 5vw, 5vw 1px, 5px 5vw;
+            background-position: 0 100%, 0 100%, 100% 0, 100% 0;
+            background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
             width: 178px;
             height: 178px;
-            border-radius: 50em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
             margin-left: 20px;
-            margin-right: 20px;
+            .account-logo {
+              width: 170px;
+              height: 170px;
+              border-radius: 50em;
+              margin-left: 20px;
+              margin-right: 20px;
+            }
+            .delete-logo {
+              align-self: flex-start;
+              position: absolute;
+              min-width: 26px;
+              background-color: transparent;
+              color: $primary-text-color1;
+              .pi.pi-check.p-c.p-button-icon-left:before {
+                content: url("data:image/svg+xml,%3Csvg width='14' height='18' viewBox='0 0 14 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4H1V16ZM3.46 8.88L4.87 7.47L7 9.59L9.12 7.47L10.53 8.88L8.41 11L10.53 13.12L9.12 14.53L7 12.41L4.88 14.53L3.47 13.12L5.59 11L3.46 8.88ZM10.5 1L9.5 0H4.5L3.5 1H0V3H14V1H10.5Z' fill='%23C2C2C4'/%3E%3C/svg%3E ");
+              }
+            }
+          }
+          .edit-grid-info {
+            font-family: Lato;
+            font-style: normal;
+            font-weight: 900;
+            font-size: 14px;
+            line-height: 17px;
+            margin-left: 20px;
+            vertical-align: top;
+            p {
+              color: $primary-text-color3;
+              font-size: 24px;
+              line-height: 29px;
+              margin-bottom: 10px;
+            }
+            span {
+              color: $primary-text-color2;
+              display: inline-block;
+              margin-bottom: 20px;
+            }
+            tr {
+              td {
+                color: $primary-text-color2;
+                padding-right: 5px;
+              }
+            }
           }
         }
 
