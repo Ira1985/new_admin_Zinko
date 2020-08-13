@@ -24,7 +24,7 @@ class Brands extends Component {
     }
 
     mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
-                     reloadListDone, clearChecked, reloadList, contexMenuProps) => {
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
         return (
             <DataGridView minimizeHeight={showCheckedItemsMenu}
                           apiService={brandService}
@@ -39,6 +39,10 @@ class Brands extends Component {
                           reloadListDone={() => reloadListDone()}
                           clearChecked={clearChecked}
                           reloadList={reloadList}
+                          filterInit={filterInit}
+                          sorterInit={sorterInit}
+                          pagingInit={pagingInit}
+                          disableEdit={disableEdit}
                           contexMenuProps={contexMenuProps}
             ></DataGridView>
         )
@@ -60,11 +64,12 @@ class Brands extends Component {
                         baseModel={new Brand()}
                         location={this.props.location}
                         //gridView={this.mainComponent}
-                        gridView={true}
+                        gridView={false}
                         treeView={false}
                         columns={Brand.buildColumns()}
                         editComponent={this.editComponent}
             >
+                {this.mainComponent}
             </BaseLayout>
         );
     }
