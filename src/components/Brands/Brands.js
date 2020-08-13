@@ -5,6 +5,7 @@ import Brand, {BrandSchema} from "../../models/Brand";
 import {withTranslation} from "react-i18next";
 import {brandService} from "../../service/brand.service";
 import BrandEditDialog from "./Edit/BrandEditDialog";
+import DataGridView from "../../layouts/DataGridView/DataGridView";
 import PropTypes from "prop-types";
 
 const plurals = ['brands.plurals.first', 'brands.plurals.second', 'brands.plurals.third'];
@@ -22,6 +23,27 @@ class Brands extends Component {
         );
     }
 
+    mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
+                     reloadListDone, clearChecked, reloadList, contexMenuProps) => {
+        return (
+            <DataGridView minimizeHeight={showCheckedItemsMenu}
+                          apiService={brandService}
+                          location={this.props.location}
+                          columns={Brand.buildColumns()}
+                          updateChecked={updateChecked}
+                          editItem={editItem}
+                          addItem={addItem}
+                          deleteItems={deleteItem}
+                          checkedItems={checkedItems}
+                          clearCheckedDone={() => clearCheckedDone()}
+                          reloadListDone={() => reloadListDone()}
+                          clearChecked={clearChecked}
+                          reloadList={reloadList}
+                          contexMenuProps={contexMenuProps}
+            ></DataGridView>
+        )
+    }
+
     render() {
         const {t} = this.props;
         let  breadcrumbs = [{ "label": t('brands.breadcrumbs.name')}];
@@ -37,6 +59,7 @@ class Brands extends Component {
                         baseSchema={BrandSchema}
                         baseModel={new Brand()}
                         location={this.props.location}
+                        //gridView={this.mainComponent}
                         gridView={true}
                         treeView={false}
                         columns={Brand.buildColumns()}

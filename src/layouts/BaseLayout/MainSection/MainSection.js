@@ -408,6 +408,9 @@ class MainSection extends Component {
 
                 <div className='base-data-section'>
                     {/*{children}*/}
+                    {/*gridView(showCheckedItemsMenu, this.updateChecked,
+                        this.editItem, this.addItem, this.deleteItem, checkedItems,
+                        this.clearCheckedDone, this.reloadListDone, clearChecked, reloadList, contexMenuProps)*/}
                     {gridView && <DataGridView minimizeHeight={showCheckedItemsMenu}
                                                apiService={apiService}
                                                location={location}
