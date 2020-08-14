@@ -5,6 +5,7 @@ import Customer, {CustomerSchema} from "../../models/Customer";
 import {customerService} from "../../service/customer.service";
 import {withTranslation} from "react-i18next";
 import CustomerEditDialog from "./Edit/CustomerEditDialog";
+import DataGridView from "../../layouts/DataGridView/DataGridView";
 
 const plurals = ['customers.plurals.first', 'customers.plurals.second', 'customers.plurals.third'];
 
@@ -19,6 +20,31 @@ class Customers extends Component {
         return (
             <CustomerEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
         );
+    }
+
+    mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
+        return (
+            <DataGridView minimizeHeight={showCheckedItemsMenu}
+                          apiService={customerService}
+                          location={this.props.location}
+                          columns={Customer.buildColumns()}
+                          updateChecked={updateChecked}
+                          editItem={editItem}
+                          addItem={addItem}
+                          deleteItems={deleteItem}
+                          checkedItems={checkedItems}
+                          clearCheckedDone={() => clearCheckedDone()}
+                          reloadListDone={() => reloadListDone()}
+                          clearChecked={clearChecked}
+                          reloadList={reloadList}
+                          filterInit={filterInit}
+                          sorterInit={sorterInit}
+                          pagingInit={pagingInit}
+                          disableEdit={disableEdit}
+                          contexMenuProps={contexMenuProps}
+            ></DataGridView>
+        )
     }
 
     render() {
@@ -36,11 +62,12 @@ class Customers extends Component {
                         baseSchema={CustomerSchema}
                         baseModel={new Customer()}
                         location={this.props.location}
-                        gridView={true}
+                        gridView={false}
                         treeView={false}
                         columns={Customer.buildColumns()}
                         editComponent={this.editComponent}
             >
+                {this.mainComponent}
             </BaseLayout>
         );
     }

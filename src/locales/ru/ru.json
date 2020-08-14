@@ -150,7 +150,10 @@
       "secondName": "Отчество",
       "lastName": "Фамилия",
       "code": "Код",
-      "e-mail": "Почта"
+      "e-mail": "Почта",
+      "created": "Создан",
+      "updated": "Обновлен",
+      "lastLogetIn": "Последнее посещение"
     },
     "previewProduct" : {
       "article": "Артикул",
@@ -497,10 +500,7 @@
       "group": "Группа",
       "comment": "Комментарий",
       "message": "Сообщение",
-      "dateReceipt": "Дата получения",
-      "created": "Создан",
-      "updated": "Обновлен",
-      "lastLogetIn": "Последнее посещение"
+      "dateReceipt": "Дата получения"
     }
   },
   "categories": {

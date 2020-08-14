@@ -5,6 +5,7 @@ import AttrCategory, {AttrCategorySchema} from "../../models/AttrCategory";
 import {attrCategoryService} from "../../service/attrCategory.service";
 import {withTranslation} from "react-i18next";
 import AttrCategoryEditDialog from "./Edit/AttrCategoryEditDialog";
+import DataGridView from "../../layouts/DataGridView/DataGridView";
 
 const plurals = ['attrCategories.plurals.first', 'attrCategories.plurals.second', 'attrCategories.plurals.third'];
 
@@ -19,6 +20,31 @@ class AttrCategories extends Component {
         return (
             <AttrCategoryEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} />
         );
+    };
+
+    mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
+        return (
+            <DataGridView minimizeHeight={showCheckedItemsMenu}
+                          apiService={attrCategoryService}
+                          location={this.props.location}
+                          columns={AttrCategory.buildColumns()}
+                          updateChecked={updateChecked}
+                          editItem={editItem}
+                          addItem={addItem}
+                          deleteItems={deleteItem}
+                          checkedItems={checkedItems}
+                          clearCheckedDone={() => clearCheckedDone()}
+                          reloadListDone={() => reloadListDone()}
+                          clearChecked={clearChecked}
+                          reloadList={reloadList}
+                          filterInit={filterInit}
+                          sorterInit={sorterInit}
+                          pagingInit={pagingInit}
+                          disableEdit={disableEdit}
+                          contexMenuProps={contexMenuProps}
+            ></DataGridView>
+        )
     }
 
     render() {
@@ -36,11 +62,12 @@ class AttrCategories extends Component {
                         baseSchema={AttrCategorySchema}
                         baseModel={new AttrCategory()}
                         location={this.props.location}
-                        gridView={true}
+                        gridView={false}
                         treeView={false}
                         columns={AttrCategory.buildColumns()}
                         editComponent={this.editComponent}
             >
+                {this.mainComponent}
             </BaseLayout>
         );
     }

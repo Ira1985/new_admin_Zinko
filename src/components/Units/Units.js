@@ -9,6 +9,7 @@ import {Button} from "primereact/button";
 import {history} from "../../App";
 import SubsGroup from "../../models/SubsGroup";
 import GridColumn from "../../models/base/GridColumn";
+import DataGridView from "../../layouts/DataGridView/DataGridView";
 
 const plurals = ['units.plurals.first', 'units.plurals.second', 'units.plurals.third'];
 
@@ -50,6 +51,31 @@ class Units extends Component {
         );
     }
 
+    mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
+        return (
+            <DataGridView minimizeHeight={showCheckedItemsMenu}
+                          apiService={unitService}
+                          location={this.props.location}
+                          columns={this.buildColumns()}
+                          updateChecked={updateChecked}
+                          editItem={editItem}
+                          addItem={addItem}
+                          deleteItems={deleteItem}
+                          checkedItems={checkedItems}
+                          clearCheckedDone={() => clearCheckedDone()}
+                          reloadListDone={() => reloadListDone()}
+                          clearChecked={clearChecked}
+                          reloadList={reloadList}
+                          filterInit={filterInit}
+                          sorterInit={sorterInit}
+                          pagingInit={pagingInit}
+                          disableEdit={disableEdit}
+                          contexMenuProps={contexMenuProps}
+            ></DataGridView>
+        )
+    }
+
     render() {
         const {t} = this.props;
         let  breadcrumbs = [{ "label": t('units.breadcrumbs.name')}];
@@ -65,11 +91,12 @@ class Units extends Component {
                         baseSchema={UnitSchema}
                         baseModel={new Unit()}
                         location={this.props.location}
-                        gridView={true}
+                        gridView={false}
                         treeView={false}
                         columns={this.buildColumns()}
                         editComponent={this.editComponent}
             >
+                {this.mainComponent}
             </BaseLayout>
         );
     }

@@ -9,6 +9,8 @@ import {Button} from "primereact/button";
 import CheckedToolbarSection from "../../layouts/BaseLayout/CheckedToolbarSection/CheckedToolbarSection";
 import DataGridView from "../../layouts/DataGridView/DataGridView";
 import {messageService} from "../../service/message.service";
+import {history} from "../../App";
+import GridColumn from "../../models/base/GridColumn";
 
 class Messages extends Component {
     constructor(props) {
@@ -80,6 +82,31 @@ class Messages extends Component {
         }));
     }
 
+    renderActionColumns(rowData, column) {
+        const {t} = this.props;
+        return <div className={'column-button'}>
+            <Button icon="pi pi-check" onClick={() => {
+                history.push('/subsGroups/' + rowData.id + '/values');
+            }} tooltip={t('subsGroups.fields.showSubs')}/>
+            <Button icon="pi p-empty-button times-ico" onClick={() => {
+                console.log("delete message");
+            }} tooltip={t('subsGroups.fields.showSubs')}/>
+        </div>
+    }
+
+    buildColumns() {
+        let columns = Message.buildColumns();
+        columns.push(new GridColumn().build({field: '', header: '', style: {textAlign:'center'}, actionColumn: true,
+            order: 50,
+            actionWidth: 40,
+            default: true,
+            /*widthCoef: 1,*/
+            bodyStyle: {textAlign: 'center'},
+            renderer: (rowData, column) => this.renderActionColumns(rowData, column)}));
+
+        return columns;
+    }
+
     render() {
         const {t} = this.props;
         let  breadcrumbs = [{ "label": t('messages.breadcrumbs.name')}];
@@ -114,7 +141,7 @@ class Messages extends Component {
                         <DataGridView minimizeHeight={showCheckedItemsMenu}
                                                    apiService={messageService}
                                                    location={this.props.location}
-                                                   columns={Message.buildColumns()}
+                                                   columns={this.buildColumns()}
                                                    updateChecked={this.updateChecked}
                                                    deleteItems={this.deleteItem}
                                                    checkedItems={checkedItems}

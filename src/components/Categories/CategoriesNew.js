@@ -10,6 +10,7 @@ import {history} from "../../App";
 import SubsGroup from "../../models/SubsGroup";
 import GridColumn from "../../models/base/GridColumn";
 import ActionButton from "../../models/base/ActionButton";
+import DataTreeView from "../../layouts/DataTreeView/DataTreeView";
 
 const plurals = ['models.plurals.first', 'models.plurals.second', 'models.plurals.third'];
 
@@ -68,6 +69,31 @@ class CategoriesNew extends Component {
         return columns;
     }
 
+    mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
+        return (
+            <DataTreeView minimizeHeight={showCheckedItemsMenu}
+                          apiService={categoryNewService}
+                          location={this.props.location}
+                          columns={this.buildColumns()}
+                          updateChecked={updateChecked}
+                          editItem={editItem}
+                          addItem={addItem}
+                          deleteItems={deleteItem}
+                          checkedItems={checkedItems}
+                          clearCheckedDone={() => clearCheckedDone()}
+                          reloadListDone={() => reloadListDone()}
+                          clearChecked={clearChecked}
+                          reloadList={reloadList}
+                          filterInit={filterInit}
+                          sorterInit={sorterInit}
+                          pagingInit={pagingInit}
+                          disableEdit={disableEdit}
+                          contexMenuProps={contexMenuProps}
+            ></DataTreeView>
+        )
+    }
+
     render() {
         const {t} = this.props;
         let  breadcrumbs = [{ "label": t('categories.breadcrumbs.name')}];
@@ -93,11 +119,12 @@ class CategoriesNew extends Component {
                         baseModel={new Category()}
                         location={this.props.location}
                         gridView={false}
-                        treeView={true}
+                        treeView={false}
                         columns={this.buildColumns()}
                         editComponent={this.editComponent}
                         contexMenuProps={contexMenuProps}
             >
+                {this.mainComponent}
             </BaseLayout>
         );
     }

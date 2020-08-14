@@ -5,6 +5,7 @@ import User, {UserSchema} from "../../models/User";
 import {userService} from "../../service/user.service";
 import {withTranslation} from "react-i18next";
 import UserEditDialog from "./Edit/UserEditDialog";
+import DataGridView from "../../layouts/DataGridView/DataGridView";
 
 const plurals = ['users.plurals.first', 'users.plurals.second', 'users.plurals.third'];
 
@@ -19,6 +20,31 @@ class Users extends Component {
         return (
             <UserEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} />
         );
+    }
+
+    mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
+        return (
+            <DataGridView minimizeHeight={showCheckedItemsMenu}
+                          apiService={userService}
+                          location={this.props.location}
+                          columns={User.buildColumns()}
+                          updateChecked={updateChecked}
+                          editItem={editItem}
+                          addItem={addItem}
+                          deleteItems={deleteItem}
+                          checkedItems={checkedItems}
+                          clearCheckedDone={() => clearCheckedDone()}
+                          reloadListDone={() => reloadListDone()}
+                          clearChecked={clearChecked}
+                          reloadList={reloadList}
+                          filterInit={filterInit}
+                          sorterInit={sorterInit}
+                          pagingInit={pagingInit}
+                          disableEdit={disableEdit}
+                          contexMenuProps={contexMenuProps}
+            ></DataGridView>
+        )
     }
 
     render() {
@@ -36,11 +62,12 @@ class Users extends Component {
                         baseSchema={UserSchema}
                         baseModel={new User()}
                         location={this.props.location}
-                        gridView={true}
+                        gridView={false}
                         treeView={false}
                         columns={User.buildColumns()}
                         editComponent={this.editComponent}
             >
+                {this.mainComponent}
             </BaseLayout>
         );
     }

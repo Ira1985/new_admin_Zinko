@@ -5,6 +5,7 @@ import Country, {CountrySchema} from "../../models/Country";
 import {countryService} from "../../service/country.service";
 import {withTranslation} from "react-i18next";
 import CountryEditDialog from "./Edit/CountryEditDialog";
+import DataGridView from "../../layouts/DataGridView/DataGridView";
 
 const plurals = ['countries.plurals.first', 'countries.plurals.second', 'countries.plurals.third'];
 
@@ -19,6 +20,31 @@ class Countries extends Component {
         return (
             <CountryEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} />
         );
+    }
+
+    mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
+        return (
+            <DataGridView minimizeHeight={showCheckedItemsMenu}
+                          apiService={countryService}
+                          location={this.props.location}
+                          columns={Country.buildColumns()}
+                          updateChecked={updateChecked}
+                          editItem={editItem}
+                          addItem={addItem}
+                          deleteItems={deleteItem}
+                          checkedItems={checkedItems}
+                          clearCheckedDone={() => clearCheckedDone()}
+                          reloadListDone={() => reloadListDone()}
+                          clearChecked={clearChecked}
+                          reloadList={reloadList}
+                          filterInit={filterInit}
+                          sorterInit={sorterInit}
+                          pagingInit={pagingInit}
+                          disableEdit={disableEdit}
+                          contexMenuProps={contexMenuProps}
+            ></DataGridView>
+        )
     }
 
     render() {
@@ -36,11 +62,12 @@ class Countries extends Component {
                         baseSchema={CountrySchema}
                         baseModel={new Country()}
                         location={this.props.location}
-                        gridView={true}
+                        gridView={false}
                         treeView={false}
                         columns={Country.buildColumns()}
                         editComponent={this.editComponent}
             >
+                {this.mainComponent}
             </BaseLayout>
         );
     }

@@ -5,6 +5,7 @@ import Substitution, {SubstitutionSchema} from "../../models/Substitution";
 import {substitutionService} from "../../service/substitution.service";
 import {withTranslation} from "react-i18next";
 import SubstitutionEditDialog from "./Edit/SubstitutionEditDialog";
+import DataGridView from "../../layouts/DataGridView/DataGridView";
 
 const plurals = ['substitutions.plurals.first', 'substitutions.plurals.second', 'substitutions.plurals.third'];
 
@@ -53,6 +54,31 @@ class Substitutions extends Component {
         );
     }
 
+    mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
+        return (
+            <DataGridView minimizeHeight={showCheckedItemsMenu}
+                          apiService={substitutionService}
+                          location={this.props.location}
+                          columns={Substitution.buildColumns()}
+                          updateChecked={updateChecked}
+                          editItem={editItem}
+                          addItem={addItem}
+                          deleteItems={deleteItem}
+                          checkedItems={checkedItems}
+                          clearCheckedDone={() => clearCheckedDone()}
+                          reloadListDone={() => reloadListDone()}
+                          clearChecked={clearChecked}
+                          reloadList={reloadList}
+                          filterInit={filterInit}
+                          sorterInit={sorterInit}
+                          pagingInit={pagingInit}
+                          disableEdit={disableEdit}
+                          contexMenuProps={contexMenuProps}
+            ></DataGridView>
+        )
+    }
+
     render() {
         const {t} = this.props;
         const {dopFilter, subsGroupId} = this.state;
@@ -70,11 +96,12 @@ class Substitutions extends Component {
                         baseSchema={SubstitutionSchema}
                         baseModel={new Substitution()}
                         location={this.props.location}
-                        gridView={true}
+                        gridView={false}
                         treeView={false}
                         columns={Substitution.buildColumns()}
                         editComponent={this.editComponent}
             >
+                {this.mainComponent}
             </BaseLayout>
         );
     }

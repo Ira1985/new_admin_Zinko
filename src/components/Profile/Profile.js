@@ -122,15 +122,15 @@ class Profile extends Component {
                                     <table>
                                         <tbody>
                                         <tr>
-                                            <td>{t('messages.fields.created')}:</td>
+                                            <td>{t('baseLayout.editProfile.created')}:</td>
                                             <td>01.01.2020</td>
                                         </tr>
                                         <tr>
-                                            <td>{t('messages.fields.updated')}:</td>
+                                            <td>{t('baseLayout.editProfile.updated')}:</td>
                                             <td>01.01.2020</td>
                                         </tr>
                                         <tr>
-                                            <td>{t('messages.fields.lastLogetIn')}:</td>
+                                            <td>{t('baseLayout.editProfile.lastLogetIn')}:</td>
                                             <td>{item.lastLogin}</td>
                                         </tr>
                                         </tbody>

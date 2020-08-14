@@ -3,8 +3,6 @@ import FilterItem from "../base/FilterItem";
 import BaseEntity from "../base/BaseEntity";
 import GridColumn from "../base/GridColumn";
 import React from "react";
-import {getValueType} from "../Attribute";
-import {Button} from "primereact/button";
 
 export default class Message {
     id = null;
@@ -79,11 +77,6 @@ export default class Message {
             sortable: true, order: 7, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.sender?rowData.sender:''}</p>}}));
         columns.push(new GridColumn().build({field: 'message', header: 'messages.fields.message', style:{},
             sortable: false, order: 8, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.message?rowData.message:''}</p>}}));
-        columns.push(new GridColumn().build({field: '', header: '', style:{},
-            sortable: false, order: 9, default: true, widthCoef: 0.5, renderer: (rowData, column) => {return <div className={'container-in-model'}>
-                <Button className={'button-in-model'} icon="pi pi-check"></Button>
-                <Button className={'button-in-model'} icon="pi pi-times"></Button>
-            </div>}}));
 
         return columns;
     }
