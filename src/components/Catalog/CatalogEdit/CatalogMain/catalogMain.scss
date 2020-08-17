@@ -40,6 +40,58 @@
 
 .edit-grid {
   display: flex;
+  color: $primary-text-color3;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+
+  .p-inputtext.p-component, .p-autocomplete.p-component {
+    width: 100%;
+    background-color: $primary-color-input;
+    color: $primary-text-color3;
+    border: 0.5px solid $primary-color-input-border!important;
+    border-radius: 3px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    border: none;
+    display: flex;
+    .p-inputtext.p-component {
+      width: calc(100% - 20px);
+      border: none!important;
+    }
+    .p-button.p-component {
+      background-color: $primary-button-color;
+      border: none;
+      min-width: 28px;
+      width: 28px;
+      //margin-top: 3px;
+      span {
+        color: $primary-text-color3;
+      }
+    }
+    .p-autocomplete-panel.p-input-overlay {
+      background-color: $primary-back-color;
+      border: none;
+      .p-autocomplete-list-item {
+        color: $primary-text-color3;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        margin: 5px 0px 5px 0px;
+      }
+      .p-autocomplete-list-item:hover {
+        background-color: $primary-table-header;
+      }
+    }
+
+  }
   .edit-grid-main {
     background-color: $primary-block-back-color!important;
     border-radius: 10px;
@@ -50,24 +102,8 @@
     justify-content: space-around;
     .edit-grid-container {
       display: flex;
-      color: $primary-text-color3;
-      font-family: Lato;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 17px;
-      .p-inputtext.p-component {
-        width: 100%;
-        background-color: $primary-table-body-hover;
-        color: $primary-text-color3;
-        border: 0.5px solid $primary-color-input-border;
-        border-radius: 3px;
-        font-family: Lato;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 17px;
-      }
+
+
       .p-col-6 {
         display: flex;
         padding: 0px;
@@ -84,56 +120,7 @@
     justify-content: space-around;
     .edit-grid-container {
       display: flex;
-      color: $primary-text-color3;
-      font-family: Lato;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 17px;
-      .p-inputtext.p-component, .p-autocomplete.p-component {
-        width: 100%;
-        background-color: $primary-color-input;
-        color: $primary-text-color3;
-        border: 0.5px solid $primary-color-input-border!important;
-        border-radius: 3px;
-        font-family: Lato;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 17px;
-        border: none;
-        .p-inputtext.p-component {
-          width: calc(100% - 20px);
-          border: none!important;
-        }
-        .p-button.p-component {
-          background-color: $primary-button-color;
-          border: none;
-          min-width: 20px;
-          width: 20px;
-          //margin-top: 3px;
-          span {
-            color: $primary-text-color3;
-          }
-        }
-        .p-autocomplete-panel.p-input-overlay {
-          background-color: $primary-back-color;
-          border: none;
-          .p-autocomplete-list-item {
-            color: $primary-text-color3;
-            font-family: Lato;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 17px;
-            margin: 5px 0px 5px 0px;
-          }
-          .p-autocomplete-list-item:hover {
-            background-color: $primary-table-header;
-          }
-        }
 
-      }
       .p-col-6 {
         display: flex;
         padding: 0px;

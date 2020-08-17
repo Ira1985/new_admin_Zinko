@@ -151,7 +151,13 @@ class AttributeEditDialog extends Component {
                                     <AutoComplete name="unit"
                                                   appendTo={root}
                                                   value={props.values.unit || ''}
-                                                  suggestions={filterItems}
+                                                  suggestions={filterItems && filterItems.length ? filterItems :
+                                                      [{
+                                                          name: 'Empty object',
+                                                          emptyLink: '/units?id=0'
+                                                      }]
+                                                  }
+                                                  itemTemplate={itemTemplate}
                                                   completeMethod={(e) => filter(e, unitService)}
                                                   size={30}
                                                   minLength={1}
@@ -191,7 +197,13 @@ class AttributeEditDialog extends Component {
                                     <AutoComplete name="subsGroup"
                                                   appendTo={root}
                                                   value={props.values.subsGroup || ''}
-                                                  suggestions={filterItems}
+                                                  suggestions={filterItems && filterItems.length ? filterItems :
+                                                      [{
+                                                          name: 'Empty object',
+                                                          emptyLink: '/subsGroups?id=0'
+                                                      }]
+                                                  }
+                                                  itemTemplate={itemTemplate}
                                                   completeMethod={(e) => filter(e, subsGroupService)}
                                                   size={30}
                                                   minLength={1}

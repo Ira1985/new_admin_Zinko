@@ -22,7 +22,7 @@ class CustomerEditDialog extends Component {
     }
 
     render() {
-        let {t, editedItem, updateValue, loading, filter, filterItems} = this.props;
+        let {t, editedItem, updateValue, loading, filter, filterItems, itemTemplate} = this.props;
 
         return (
             <>
@@ -46,6 +46,7 @@ class CustomerEditDialog extends Component {
                                         formikHandler={(e) => props.handleChange(e)}
                                         filter={filter}
                                         filterItems={filterItems}
+                                        itemTemplate={itemTemplate}
                                     />
                                 </TabPanel>
                                 <TabPanel header={t("customers.other.contact")}>

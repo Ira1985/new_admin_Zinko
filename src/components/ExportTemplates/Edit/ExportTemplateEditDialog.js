@@ -23,7 +23,7 @@ class ExportTemplateEditDialog extends Component {
     }
 
     render() {
-        let {t, editedItem, updateValue, loading, filter, filterItems} = this.props;
+        let {t, editedItem, updateValue, loading, filter, filterItems, itemTemplate} = this.props;
 
         const root = document.getElementById('root');
 
@@ -105,7 +105,13 @@ class ExportTemplateEditDialog extends Component {
                                     <AutoComplete name="category"
                                                   appendTo={root}
                                                   value={props.values.category || ''}
-                                                  suggestions={filterItems}
+                                                  suggestions={filterItems && filterItems.length ? filterItems :
+                                                      [{
+                                                          name: 'Empty object',
+                                                          emptyLink: '/categories?id=0'
+                                                      }]
+                                                  }
+                                                  itemTemplate={itemTemplate}
                                                   completeMethod={(e) => filter(e, categoryService)}
                                                   size={30}
                                                   minLength={1}
@@ -130,7 +136,13 @@ class ExportTemplateEditDialog extends Component {
                                     <AutoComplete name="customerCategory"
                                                   appendTo={root}
                                                   value={props.values.customerCategory || ''}
-                                                  suggestions={filterItems}
+                                                  suggestions={filterItems && filterItems.length ? filterItems :
+                                                      [{
+                                                          name: 'Empty object',
+                                                          emptyLink: '/customerCategories?id=0'
+                                                      }]
+                                                  }
+                                                  itemTemplate={itemTemplate}
                                         //completeMethod={(e) => filter(e, customerCategoriesService)}
                                                   size={30}
                                                   minLength={1}
@@ -150,7 +162,13 @@ class ExportTemplateEditDialog extends Component {
                                     <AutoComplete name="customer"
                                                   appendTo={root}
                                                   value={props.values.customer || ''}
-                                                  suggestions={filterItems}
+                                                  suggestions={filterItems && filterItems.length ? filterItems :
+                                                      [{
+                                                          name: 'Empty object',
+                                                          emptyLink: '/customers?id=0'
+                                                      }]
+                                                  }
+                                                  itemTemplate={itemTemplate}
                                                   completeMethod={(e) => filter(e, customerService)}
                                                   size={30}
                                                   minLength={1}

@@ -28,7 +28,7 @@ class CustomerEditMain extends Component {
     }
 
     render() {
-        let {t, editedItem, updateValue, formikItem, formikError, formikHandler, filterItems, filter} = this.props;
+        let {t, editedItem, updateValue, formikItem, formikError, formikHandler, filterItems, filter, itemTemplate} = this.props;
 
         // bugfix for show dialog
         const root = document.getElementById('root');
@@ -115,7 +115,13 @@ class CustomerEditMain extends Component {
                                       appendTo={root}
                                       name="parent"
                                       value={formikItem.parent || ''}
-                                      suggestions={filterItems}
+                                      suggestions={filterItems && filterItems.length ? filterItems :
+                                          [{
+                                              name: 'Empty object',
+                                              emptyLink: '/customers?id=0'
+                                          }]
+                                      }
+                                      itemTemplate={itemTemplate}
                                       completeMethod={(e) => filter(e, customerService)}
                                       size={30}
                                       minLength={1}
@@ -135,7 +141,13 @@ class CustomerEditMain extends Component {
                         <AutoComplete name="owner"
                                       appendTo={root}
                                       value={formikItem.owner || ''}
-                                      suggestions={filterItems}
+                                      suggestions={filterItems && filterItems.length ? filterItems :
+                                          [{
+                                              name: 'Empty object',
+                                              emptyLink: '/users?id=0'
+                                          }]
+                                      }
+                                      itemTemplate={itemTemplate}
                                       completeMethod={(e) => filter(e, userService)}
                                       size={30}
                                       minLength={1}

@@ -18,6 +18,8 @@ class Profile extends Component {
         this.state = {
             item: {}
         }
+
+        this.itemTemplate = this.itemTemplate.bind(this);
     }
 
     componentDidMount() {
@@ -47,6 +49,17 @@ class Profile extends Component {
                 <div >{item.name}</div>
             </div>)
         return elem;
+    }
+
+    onEmpty(item){
+        const {onEmptyLink,value} = this.props;
+        const {newName} = this.state;
+        let textValue = newName?newName:'';
+        if(item.emptyLink) {
+            let win = window.open(item.emptyLink + '&name='+textValue, '_blank');
+            win.focus();
+        }
+
     }
 
     filterItems(event, api, render) {
@@ -171,9 +184,21 @@ class Profile extends Component {
                                 <div className="p-col-2" style={{padding:'.75em'}}><label htmlFor="vin">{t("baseLayout.editProfile.department")}</label></div>
                                 <div className="p-col-9" style={{padding:'.5em'}}>
 
-                                    <AutoComplete appendTo={root} value={item.department || ''} suggestions={this.state.filterItems} completeMethod={(e) => this.filterItems(e, departmentService)} size={30} minLength={1}
+                                    <AutoComplete appendTo={root}
+                                                  value={item.department || ''}
+                                                  suggestions={this.state.filterItems && this.state.filterItems.length ? this.state.filterItems :
+                                                      [{
+                                                          name: 'Empty object',
+                                                          emptyLink: '/departments?id=0'
+                                                      }]
+                                                  }
+                                                  itemTemplate={this.itemTemplate}
+                                                  completeMethod={(e) => this.filterItems(e, departmentService)}
+                                                  size={30}
+                                                  minLength={1}
                                                   field='name'
-                                                  dropdown={true} onChange={(e) => this.onChangeMethod(e, 'department')} />
+                                                  dropdown={true}
+                                                  onChange={(e) => this.onChangeMethod(e, 'department')} />
                                 </div>
                             </div>
                             <div className='edit-grid-container'>

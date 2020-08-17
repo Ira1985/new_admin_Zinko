@@ -16,9 +16,9 @@ class ExportTemplates extends Component {
         this.state = {};
     }
 
-    editComponent = (loading, editItem, updateValue, filter, filterItems) => {
+    editComponent = (loading, editItem, updateValue, filter, filterItems, itemTemplate) => {
         return (
-            <ExportTemplateEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} />
+            <ExportTemplateEditDialog loading={loading} editedItem={editItem} updateValue={updateValue} filter={filter} filterItems={filterItems} itemTemplate={itemTemplate} />
         );
     }
 
