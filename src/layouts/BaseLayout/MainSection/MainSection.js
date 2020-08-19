@@ -97,6 +97,7 @@ class MainSection extends Component {
             onClick: (btn) => this.deleteCheckedItems(btn),
             hasApproval: true,
             type: 'checked',
+            inProgress: true,
             approval: {
                 showCount: true,
                 title: 'baseLayout.main.approvals.removeCheck.title',
@@ -180,8 +181,7 @@ class MainSection extends Component {
             let approveButton = Object.assign({}, button);
             this.setState({
                 approveButton: approveButton,
-                showApprovalWin: true,
-                //progressDelete: true,
+                showApprovalWin: true
             });
         } else
             this.approveApprovalWin(button);
@@ -193,8 +193,7 @@ class MainSection extends Component {
             approve.onCancel();
         this.setState({
             approveButton: {},
-            showApprovalWin: false,
-            //progressDelete: false,
+            showApprovalWin: false
         });
     }
 
@@ -207,8 +206,7 @@ class MainSection extends Component {
                     res => {
                         that.setState({
                             approveButton: {},
-                            showApprovalWin: false,
-                            progressDelete: true
+                            showApprovalWin: false
                         });
 
                     },
@@ -219,8 +217,7 @@ class MainSection extends Component {
             } else
                 that.setState({
                     approveButton: {},
-                    showApprovalWin: false,
-                    progressDelete: false
+                    showApprovalWin: false
                 });
         };
 
@@ -403,8 +400,6 @@ class MainSection extends Component {
         let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
         let checkedButs = dopCheckedButtons? Array.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
 
-        checkedButs[1].inProgress = progressDelete;
-
         return <>
             <div className='main-section'>
                 <div className='header'>
@@ -475,6 +470,7 @@ class MainSection extends Component {
                     <CheckedToolbarSection items={checkedItems}
                                            buttons={checkedButs}
                                            show={showCheckedItemsMenu}
+                                           loading={progressDelete}
                                            baseOnClick={(button) => this.onClickCheckedToolbar(button)}
                                            clearChecked={this.clearChecked}>
                     </CheckedToolbarSection>

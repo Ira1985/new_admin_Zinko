@@ -23,7 +23,7 @@ class CheckedToolbarSection extends  Component {
     }
 
     render() {
-        const {t, items, buttons, show, baseOnClick} = this.props;
+        const {t, items, buttons, show, baseOnClick, loading} = this.props;
         const {checked} = this.state;
         return <>
             <div className={show?'checked-toolbar show':'checked-toolbar'}>
@@ -36,9 +36,9 @@ class CheckedToolbarSection extends  Component {
                     buttons.map((button, index) =>
                         <LoadingButton
                             key={'checked_toolbar_bottom_but_' + index}
-                            loading={button.inProgress}
+                            loading={button.inProgress ? loading : false}
                             onClick={() => baseOnClick(button)}
-                            disabled={button.inProgress}
+                            disabled={button.inProgress ? loading : false}
                             label={button.label}
                             className={button.className}
                             tooltip={button.tooltip}
