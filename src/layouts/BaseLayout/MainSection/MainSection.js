@@ -41,7 +41,9 @@ class MainSection extends Component {
             progressCheckedToolBtn: new Map(),
             progressDelete: false,
             clearChecked: false,
-            reloadList: false
+            reloadList: false,
+            reloadReason: null,
+            changedList: []
         };
 
         this.updateChecked = this.updateChecked.bind(this);
@@ -52,6 +54,8 @@ class MainSection extends Component {
         this.deleteCheckedItems = this.deleteCheckedItems.bind(this);
         this.onClickCheckedToolbar = this.onClickCheckedToolbar.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
+        this.clearCheckedDone = this.clearCheckedDone.bind(this);
+        this.reloadListDone = this.reloadListDone.bind(this);
     }
 
     toolbarButtons = [
@@ -176,7 +180,8 @@ class MainSection extends Component {
             let approveButton = Object.assign({}, button);
             this.setState({
                 approveButton: approveButton,
-                showApprovalWin: true
+                showApprovalWin: true,
+                //progressDelete: true,
             });
         } else
             this.approveApprovalWin(button);
@@ -188,7 +193,8 @@ class MainSection extends Component {
             approve.onCancel();
         this.setState({
             approveButton: {},
-            showApprovalWin: false
+            showApprovalWin: false,
+            //progressDelete: false,
         });
     }
 
@@ -201,7 +207,8 @@ class MainSection extends Component {
                     res => {
                         that.setState({
                             approveButton: {},
-                            showApprovalWin: false
+                            showApprovalWin: false,
+                            progressDelete: true
                         });
 
                     },
@@ -212,7 +219,8 @@ class MainSection extends Component {
             } else
                 that.setState({
                     approveButton: {},
-                    showApprovalWin: false
+                    showApprovalWin: false,
+                    progressDelete: false
                 });
         };
 
@@ -238,13 +246,17 @@ class MainSection extends Component {
         apiService.saveItem(item)
             .then(
                 response => {
-                    this.setState(prevState => ({
-                        editItem: this.props.baseModel,
-                        showEditWin: !prevState.showEditWin,
-                        progressSave: false,
-                        reloadList: true
-                    }));
-                    //this.getList(filters,sorter,paging, true);
+                    console.log('saveItem', response);
+                    if(response && response.success) {
+                        this.setState(prevState => ({
+                            editItem: this.props.baseModel,
+                            showEditWin: !prevState.showEditWin,
+                            progressSave: false,
+                            reloadList: true,
+                            reloadReason: 'change',
+                            changedList: response.pageItems
+                        }));
+                    }
                 },
                 error => {
                     this.setState({
@@ -286,7 +298,9 @@ class MainSection extends Component {
 
     reloadListDone() {
         this.setState({
-            reloadList: false
+            reloadList: false,
+            changedList: [],
+            reloadReason: null
         });
     }
 
@@ -311,7 +325,9 @@ class MainSection extends Component {
                                     checkedItems: new Map(),
                                     clearChecked: true,
                                     progressDelete: false,
-                                    reloadList: true
+                                    reloadList: true,
+                                    changedList: checkedItems.keys(),
+                                    reloadReason: 'remove'
                                 });
                                  //this.getList(filters, sorter, paging, true);
                             } else
@@ -382,10 +398,12 @@ class MainSection extends Component {
             children, gridView, treeView, apiService, location, columns, editComponent, baseSchema, baseModel, disableEdit,
             filterInit,sorterInit, pagingInit, contexMenuProps} = this.props;
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem, progressSave,
-            clearChecked, reloadList} = this.state;
+            clearChecked, reloadList, changedList, reloadReason, progressDelete} = this.state;
 
         let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
         let checkedButs = dopCheckedButtons? Array.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
+
+        checkedButs[1].inProgress = progressDelete;
 
         return <>
             <div className='main-section'>
@@ -409,7 +427,7 @@ class MainSection extends Component {
                 <div className='base-data-section'>
                     {(children && children instanceof Function) && children(showCheckedItemsMenu, this.updateChecked,
                         this.editItem, this.addItem, this.deleteItem, checkedItems,
-                        this.clearCheckedDone, this.reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps)}
+                        this.clearCheckedDone, this.reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps, reloadReason, changedList)}
 
                     {gridView && <DataGridView minimizeHeight={showCheckedItemsMenu}
                                                apiService={apiService}
@@ -420,8 +438,8 @@ class MainSection extends Component {
                                                addItem={this.addItem}
                                                deleteItems={this.deleteItem}
                                                checkedItems={checkedItems}
-                                               clearCheckedDone={() => this.clearCheckedDone()}
-                                               reloadListDone={() => this.reloadListDone()}
+                                               clearCheckedDone={this.clearCheckedDone}
+                                               reloadListDone={this.reloadListDone}
                                                clearChecked={clearChecked}
                                                reloadList={reloadList}
                                                filterInit={filterInit}
@@ -439,8 +457,8 @@ class MainSection extends Component {
                                                addItem={this.addItem}
                                                deleteItems={this.deleteItem}
                                                checkedItems={checkedItems}
-                                               clearCheckedDone={() => this.clearCheckedDone()}
-                                               reloadListDone={() => this.reloadListDone()}
+                                               clearCheckedDone={this.clearCheckedDone}
+                                               reloadListDone={this.reloadListDone}
                                                clearChecked={clearChecked}
                                                reloadList={reloadList}
                                                filterInit={filterInit}
@@ -448,6 +466,8 @@ class MainSection extends Component {
                                                pagingInit={pagingInit}
                                                disableEdit={disableEdit}
                                                contexMenuProps={contexMenuProps}
+                                               reloadReason={reloadReason}
+                                               changedList={changedList}
                     ></DataTreeView>}
                 </div>
 

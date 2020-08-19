@@ -44,7 +44,7 @@ class ExportTemplateEditDialog extends Component {
                                     <label htmlFor="name">{t("baseEntity.name")}</label>
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputText id="name" onChange={(e) => {
+                                    <InputText name="name" onChange={(e) => {
                                         props.handleChange(e);
                                         updateValue(e);
                                         //this.updateProperty('name', e.target.value)
@@ -60,7 +60,7 @@ class ExportTemplateEditDialog extends Component {
                                     <label htmlFor="comment">{t("baseEntity.comment")}</label>
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputTextarea id="comment" onChange={(e) => {
+                                    <InputTextarea name="comment" onChange={(e) => {
                                         props.handleChange(e);
                                         updateValue(e)
                                         //this.updateProperty('name', e.target.value)
@@ -71,7 +71,7 @@ class ExportTemplateEditDialog extends Component {
                                     <label htmlFor="description">{t("exportTemplates.fields.description")}</label>
                                 </div>
                                 <div className="p-col-8" style={{padding: '.5em'}}>
-                                    <InputTextarea id="description" onChange={(e) => {
+                                    <InputTextarea name="description" onChange={(e) => {
                                         props.handleChange(e);
                                         updateValue(e)
                                         //this.updateProperty('name', e.target.value)

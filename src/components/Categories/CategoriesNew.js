@@ -70,7 +70,7 @@ class CategoriesNew extends Component {
     }
 
     mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
-                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
+                     reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps, reloadReason, changedList) => {
         return (
             <DataTreeView minimizeHeight={showCheckedItemsMenu}
                           apiService={categoryNewService}
@@ -90,6 +90,8 @@ class CategoriesNew extends Component {
                           pagingInit={pagingInit}
                           disableEdit={disableEdit}
                           contexMenuProps={contexMenuProps}
+                          reloadReason={reloadReason}
+                          changedList={changedList}
             ></DataTreeView>
         )
     }

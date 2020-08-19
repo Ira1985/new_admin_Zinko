@@ -40,7 +40,11 @@ class  DataTreeView extends Component {
 
         this.state = {
             loading: true,
+
             items: new Map(),
+            fullTree: new Map(),
+            visibleItems: new Map(),
+            treePaging: new Map(),
 
             selectedItems: new Map(),
             freezItems: new Map(),
@@ -54,7 +58,8 @@ class  DataTreeView extends Component {
             paging: props.pagingInit? new Paging().build(props.pagingInit): new Paging(),
             filters: Object.assign({},props.filterInit ? props.filterInit:{}),
             activeColumns: [],
-            contextMenuItems: this.buildContexMenu(props.contexMenuProps)
+            contextMenuItems: this.buildContexMenu(props.contexMenuProps),
+            currentNode: null
         };
 
         this.dataGridView = React.createRef();
@@ -92,7 +97,7 @@ class  DataTreeView extends Component {
         if(nextProps.reloadList  && nextProps.hasOwnProperty('reloadListDone')) {
             //const {filters, sorter, paging} = this.state;
             nextProps.reloadListDone();
-            this.getList(nextState.filters, nextState.sorter, nextState.paging, true);
+            this.getList(null, nextState.filters, nextState.sorter, nextState.paging, true);
             return false;
         }
         return true;
@@ -102,6 +107,7 @@ class  DataTreeView extends Component {
         const {editItem, disableEdit} = this.props;
         if(!disableEdit)
             editItem(item);
+
         console.log('editItem', item);
     }
 
@@ -116,21 +122,25 @@ class  DataTreeView extends Component {
     }
 
     componentDidMount() {
-        const {filters, sorter, paging, selectedColumns, columnCoef} = this.state;
-        this.getList(filters, sorter, paging, true);
+        const {filters, sorter, paging, selectedColumns, columnCoef, currentNode} = this.state;
+        this.getList(currentNode, filters, sorter, paging, true);
         this.setState({
-            activeColumns: this.rebuildColumns(selectedColumns,columnCoef)
+            activeColumns: this.rebuildColumns(selectedColumns, columnCoef)
             });
     }
 
-    getList(filtering, sorting, paging, changingPage) {
+    getList(currentNode, filtering, sorting, paging, changingPage) {
 
         this.setState({
             loading: true
-            //items: new Map()
         });
         let parentKey = filtering.hasOwnProperty('parentId')? filtering['parentId']: null;
-        this.props.apiService.getList(filtering, sorting, paging)
+        let newFilters = Object.assign({}, filtering);
+        if(currentNode != null) {
+            newFilters.parentId = currentNode.columnKey;
+        }
+
+        this.props.apiService.getList(newFilters, sorting, paging)
             .then(response => {
                     if(changingPage) {
                         let newPaging = new Paging();
@@ -145,47 +155,38 @@ class  DataTreeView extends Component {
                         this.setState({
                             paging: newPaging,
                             //items: response ? this.transformItems(response.pageItems) : new Map(),
-                            items: this.transformItems(null, response?response.pageItems:null),
+                            items: this.transformItems(currentNode, response?response.pageItems:null),
                             loading: false
                         });
                     } else
                         this.setState({
                             //items: response ? this.transformItems(response.pageItems) : new Map(),
-                            items: this.transformItems(parentKey, response?response.pageItems:null),
+                            items: this.transformItems(currentNode, response?response.pageItems:null),
                             loading: false
                         });
                 },
                 error => {
                     this.setState({
-                        items: parentKey ? this.state.items: new Map(),
+                        //items: parentKey ? this.state.items: new Map(),
                         loading: false,
                         paging: new Paging()
                     });
                 });
     }
 
-    transformItems(parentKey, elems) {
+    transformItems(parent, elems) {
         const {items} = this.state;
         let newNodes = new Map(items);
-        if(elems) {
-            let nodes = new Map();
-            if (elems && elems.length > 0) {
-                elems.forEach((item, index) => {
-                    nodes.set(item.id, new TreeTableItem().build(item));
-                });
-            }
-            //newNodes = new Map([...items, ...nodes]);
-            //newNodes = new Map([...items]);
-            if(parentKey) {
-                if (newNodes.has(parentKey))
-                    newNodes.get(parentKey).children = Array.from(nodes.values());
-            }else
-                newNodes = new Map(nodes);
 
-        }  else {
-            if(!parentKey)
-                newNodes = new Map();
+        let children = new Map(), visible = new Map();
+        if(elems && elems.length > 0) {
+            elems.forEach((item, index) => {
+                children.set(item.id, new TreeTableItem().build(item));
+            })
         }
+
+        newNodes.set((parent ? parent.key : 'root'), children);
+
         return newNodes;
     }
 
@@ -211,7 +212,7 @@ class  DataTreeView extends Component {
     }
 
     onPage(e) {
-        const {filters, sorter, paging} = this.state;
+        const {filters, sorter, paging, currentNode} = this.state;
         let newPaging =  Object.assign({}, paging, {
             page: (e.page + 1),
             limit:e.rows
@@ -219,25 +220,29 @@ class  DataTreeView extends Component {
         this.setState({
             paging: newPaging
         });
-        this.getList(filters, sorter, newPaging, true);
+        this.getList(currentNode, filters, sorter, newPaging, true);
     }
 
     onSort(e) {
-        const {filters, sorter, paging} = this.state;
+        const {filters, sorter, paging, currentNode} = this.state;
 
         let newSorter = new Sorter().build(e.sortField,e.sortOrder === 1?'desc':'asc');
         this.setState({
             sorter: newSorter
         });
-        this.getList(filters, newSorter, paging, false);
+        this.getList(currentNode, filters, newSorter, paging, false);
     }
 
     selectItem(e) {
         let {updateChecked, checkedItems} = this.props;
         let {items, selectedItems} = this.state;
         let newCheckedItems = new Map();
+
+        console.log('e', e);
+
         Object.keys(e.value).forEach(item => {
-            newCheckedItems.set(item, items.get(item));
+            if(e.value[item].checked)
+                newCheckedItems.set(item, items.get(item));
         });
         this.setState({
             selectedItems: e.value
@@ -246,22 +251,25 @@ class  DataTreeView extends Component {
         updateChecked(newCheckedItems);
     }
 
-    onDoubleClick(e) {
-        const {editItem, disableEdit} = this.props;
-        if(!disableEdit)
-            editItem(e.data);
-        //this.setState({item: e.data, visibleAdd: true})
-    }
-
     onExpand(event) {
         const {filters, sorter, paging, selectedColumns, columnCoef} = this.state;
         let newF = Object.assign({}, filters);
-        console.log(event, event.node.key);
+
         newF.parentId = event.node.key;
         let newPaging = Object.assign({}, paging, {
             page: 1
         });
-        this.getList(newF, sorter, newPaging, false);
+
+        this.setState({
+            currentNode: event.node
+        });
+
+        this.getList(event.node, newF, sorter, newPaging, false);
+    }
+
+    onRowClick(event) {
+        console.log('onRow click');
+        console.log(event);
     }
 
     rebuildColumns(selectedColumns, columnCoef) {
@@ -333,9 +341,23 @@ class  DataTreeView extends Component {
         });
     }
 
+    buildItems(elems, parent) {
+        let result = [];
+        if(elems && elems.size > 0) {
+            elems.get(parent).forEach((value, key, map) => {
+                if(elems.has(key))
+                    value.children = this.buildItems(elems, key);
+                result.push(value);
+            });
+        }
+        return result;
+    }
+
     render() {
         const {t, minimizeHeight} = this.props;
-        const {items, loading, selectedColumns, multiColumns, paging, sorter, selectedItems, activeColumns, contextMenuItems} = this.state;
+        const {loading, selectedColumns, multiColumns, paging, sorter, selectedItems, activeColumns, contextMenuItems} = this.state;
+
+        const items = this.buildItems(this.state.items, 'root');
 
         const paginatorRight = <div>
             <Button className={'grid-toolbar-unload'} icon="pi p-empty-button grid-unload-ico" style={{marginRight:'.25em'}} tooltip={t('baseLayout.main.buttons.tooltips.buttonUnload')} tooltipOptions={{position: 'left'}} />
@@ -362,7 +384,11 @@ class  DataTreeView extends Component {
                         /*appendTo={document.body}*/
                         /*appendTo={this.dataGridView.current}*/
                     />
-                    <TreeTable value={Array.from(items.values())}
+                    <TreeTable
+                       value={items}
+                        /*value={Array.from(items.values())}*/
+                       onRowClick={(e)=>this.onRowClick(e)}
+
                        selectionMode="checkbox"
                        //onRowDoubleClick={(e) => this.onDoubleClick(e)}
                        selectionKeys={selectedItems}

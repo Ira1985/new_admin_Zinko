@@ -52,7 +52,7 @@ class CustomerEditMain extends Component {
                         <label htmlFor="name">{t("baseEntity.name")}</label>
                     </div>
                     <div className="p-col-8" style={{padding: '.5em'}}>
-                        <InputText id="name" onChange={(e) => {
+                        <InputText name="name" onChange={(e) => {
                             formikHandler(e);
                             updateValue(e);
                             //this.updateProperty('name', e.target.value)
@@ -68,7 +68,7 @@ class CustomerEditMain extends Component {
                         <label htmlFor="comment">{t("baseEntity.comment")}</label>
                     </div>
                     <div className="p-col-8" style={{padding: '.5em'}}>
-                        <InputTextarea id="comment" onChange={(e) => {
+                        <InputTextarea name="comment" onChange={(e) => {
                             formikHandler(e);
                             updateValue(e)
                             //this.updateProperty('name', e.target.value)
@@ -79,7 +79,7 @@ class CustomerEditMain extends Component {
                         <label htmlFor="description">{t("customers.fields.description")}</label>
                     </div>
                     <div className="p-col-8" style={{padding: '.5em'}}>
-                        <InputTextarea id="description" onChange={(e) => {
+                        <InputTextarea name="description" onChange={(e) => {
                             formikHandler(e);
                             updateValue(e)
                             //this.updateProperty('name', e.target.value)
