@@ -36,9 +36,9 @@ class CheckedToolbarSection extends  Component {
                     buttons.map((button, index) =>
                         <LoadingButton
                             key={'checked_toolbar_bottom_but_' + index}
-                            loading={button.inProgress ? loading : false}
+                            loading={button.inProgress ? loading[index] : false}
                             onClick={() => baseOnClick(button)}
-                            disabled={button.inProgress ? loading : false}
+                            disabled={button.inProgress ? loading[index] : false}
                             label={button.label}
                             className={button.className}
                             tooltip={button.tooltip}

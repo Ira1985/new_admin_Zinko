@@ -97,7 +97,7 @@ class MainSection extends Component {
             onClick: (btn) => this.deleteCheckedItems(btn),
             hasApproval: true,
             type: 'checked',
-            inProgress: true,
+            inProgress: 'progressDelete',
             approval: {
                 showCount: true,
                 title: 'baseLayout.main.approvals.removeCheck.title',
@@ -470,7 +470,7 @@ class MainSection extends Component {
                     <CheckedToolbarSection items={checkedItems}
                                            buttons={checkedButs}
                                            show={showCheckedItemsMenu}
-                                           loading={progressDelete}
+                                           loading={checkedButs.map(but => this.state[but.inProgress])}
                                            baseOnClick={(button) => this.onClickCheckedToolbar(button)}
                                            clearChecked={this.clearChecked}>
                     </CheckedToolbarSection>
