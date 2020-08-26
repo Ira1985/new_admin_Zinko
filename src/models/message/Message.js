@@ -70,7 +70,10 @@ export default class Message {
     static buildColumns() {
         let columns =  [];
         columns.push(new GridColumn().build({field: 'send', header: 'messages.fields.send', style: {},
-            sortable: true, order: 5, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.send?rowData.send:''}</p>}}));
+            sortable: true, order: 5, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <div className='send'>
+                <i className="pi pi-bookmark"></i>
+                <p>{rowData.name?rowData.name:''}</p>
+            </div>}}));
         columns.push(new GridColumn().build({field: 'group', header: 'messages.fields.group', style:{},
             sortable: true, order: 6, default: true, widthCoef: 1.5, renderer: (rowData, column) => {return <p>{rowData.group?rowData.group:''}</p>}}));
         columns.push(new GridColumn().build({field: 'sender', header: 'messages.fields.sender', style:{},

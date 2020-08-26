@@ -95,7 +95,7 @@ class Profile extends Component {
 
         const {item} = this.state;
 
-        let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
+        let toolbarButs = dopToolbarButtons? Array.prototype.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
 
         let  breadcrumbs = [{ "label": t('profile.breadcrumbs.name')}];
 

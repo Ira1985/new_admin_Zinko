@@ -397,8 +397,8 @@ class MainSection extends Component {
         const {showCheckedItemsMenu, checkedItems, showApprovalWin, approveButton, showEditWin, editedItem, progressSave,
             clearChecked, reloadList, changedList, reloadReason, progressDelete} = this.state;
 
-        let toolbarButs = dopToolbarButtons? Array.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
-        let checkedButs = dopCheckedButtons? Array.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
+        let toolbarButs = dopToolbarButtons? Array.prototype.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
+        let checkedButs = dopCheckedButtons? Array.prototype.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
 
         return <>
             <div className='main-section'>

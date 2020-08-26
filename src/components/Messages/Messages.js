@@ -115,7 +115,7 @@ class Messages extends Component {
             clearChecked, reloadList} = this.state;
         const {modelFieldInit, sorterInit, pagingInit, disableEdit, filterInit, dopCheckedButtons} = this.props;
 
-        let checkedButs = dopCheckedButtons? Array.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
+        let checkedButs = dopCheckedButtons? Array.prototype.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
 
         return <>
             <div className={'base-layout'}>
