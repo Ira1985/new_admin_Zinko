@@ -50,7 +50,7 @@ class Cat2Attrs extends Component {
     }
 
     componentDidMount() {
-        const id = window.location.pathname.split('/')[2];
+        const id = this.props.match.params.id;
         cat2AttrsService.getDescList(id).then(res => {
             this.setState({item: res.pageItems, expandedRows: res.pageItems, loading: false})
         });

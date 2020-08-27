@@ -27,6 +27,7 @@ const Roles = React.lazy(() => import('./components/Roles/Roles'));
 const Users = React.lazy(() => import('./components/Users/Users'));
 const Customers = React.lazy(() => import('./components/Customers/Customers'));
 const ExportTemplates = React.lazy(() => import('./components/ExportTemplates/ExportTemplates'));
+const ExportConstructors = React.lazy(() => import('./components/ExportTemplates/ExportConstructors/ExportConstructors'));
 const Cat2Attrs = React.lazy(() => import('./components/Categories/Cat2Attrs/Cat2Attrs'));
 const CustomerModels = React.lazy(() => import('./components/Customers/CustomerModels/CustomerModels'));
 
@@ -59,5 +60,6 @@ export const routes = [
     { path: '/users', name: i18n.t('users.breadcrumbs.name'), component: Users },
     { path: '/customers', name: i18n.t('customers.breadcrumbs.name'), component: Customers },
     { path: '/customerModels', name: i18n.t('customerModels.breadcrumbs.name'), component: CustomerModels },
-    { path: '/exportTemplates', name: i18n.t('exportTemplates.breadcrumbs.name'), component: ExportTemplates }
+    { path: '/exportTemplates', exact: true, name: i18n.t('exportTemplates.breadcrumbs.name'), component: ExportTemplates },
+    { path: '/exportTemplates/:id/constructor', exact: true, name: i18n.t('exportTemplates.breadcrumbs.name'), component: ExportConstructors }
 ];
