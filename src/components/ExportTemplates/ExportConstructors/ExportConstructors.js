@@ -61,6 +61,7 @@ class ExportConstructors extends Component {
             <DataNotLazyTree minimizeHeight={showCheckedItemsMenu}
                           apiService={exportConstructorService}
                           location={this.props.location}
+                          etId={this.props.match.params.id}
                           columns={this.buildColumns()}
                           updateChecked={updateChecked}
                           editItem={editItem}
