@@ -23,7 +23,7 @@ class CustomerEditContact extends Component {
         return (
             <div className="p-grid p-fluid">
                 <div className="p-col-4" style={{padding: '.75em'}}>
-                    <label htmlFor="contact">{t("customers.fields..contact")}</label>
+                    <label htmlFor="contact">{t("customers.fields.contact")}</label>
                 </div>
                 <div className="p-col-8" style={{padding: '.5em'}}>
                     <InputTextarea name="contact" onChange={(e) => {
@@ -34,7 +34,7 @@ class CustomerEditContact extends Component {
                 </div>
 
                 <div className="p-col-4" style={{padding: '.75em'}}>
-                    <label htmlFor="phone">{t("customers.fields..phone")}</label>
+                    <label htmlFor="phone">{t("customers.fields.phone")}</label>
                 </div>
                 <div className="p-col-8" style={{padding: '.5em'}}>
                     <InputMask mask="(999) 999-9999" name="phone" onChange={(e) => {
@@ -45,7 +45,7 @@ class CustomerEditContact extends Component {
                 </div>
 
                 <div className="p-col-4" style={{padding: '.75em'}}>
-                    <label htmlFor="email">{t("customers.fields..email")}</label>
+                    <label htmlFor="email">{t("customers.fields.email")}</label>
                 </div>
                 <div className="p-col-8" style={{padding: '.5em'}}>
                     <InputText name="email" onChange={(e) => {
@@ -56,7 +56,7 @@ class CustomerEditContact extends Component {
                 </div>
 
                 <div className="p-col-4" style={{padding: '.75em'}}>
-                    <label htmlFor="link">{t("customers.fields..link")}</label>
+                    <label htmlFor="link">{t("customers.fields.link")}</label>
                 </div>
                 <div className="p-col-8" style={{padding: '.5em'}}>
                     <InputText name="link" onChange={(e) => {

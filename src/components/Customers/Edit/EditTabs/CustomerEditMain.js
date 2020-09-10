@@ -108,7 +108,7 @@ class CustomerEditMain extends Component {
                     </div>
 
                     <div className="p-col-4">
-                        <label htmlFor="parent">{t("customers.fields..parent")}</label>
+                        <label htmlFor="parent">{t("customers.fields.parent")}</label>
                     </div>
                     <div className="p-col-8">
                         <AutoComplete
@@ -135,7 +135,7 @@ class CustomerEditMain extends Component {
                     </div>
 
                     <div className="p-col-4">
-                        <label htmlFor="owner">{t("customers.fields..owner")}</label>
+                        <label htmlFor="owner">{t("customers.fields.owner")}</label>
                     </div>
                     <div className="p-col-8">
                         <AutoComplete name="owner"

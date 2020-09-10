@@ -105,23 +105,23 @@ export default class Customer extends BaseEntity {
 
     static buildFilters() {
         let filters = BaseEntity.buildFilters();
-        filters.push(FilterItem.buildText('customers.email','email', false));
-        filters.push(FilterItem.buildList('customers.parent','parent', false));
-        filters.push(FilterItem.buildList('customers.owner','owner', false));
-        filters.push(FilterItem.buildList('customers.description','description', false));
+        filters.push(FilterItem.buildText('customers.fields.email','email', false));
+        filters.push(FilterItem.buildList('customers.fields.parent','parent', false));
+        filters.push(FilterItem.buildList('customers.fields.owner','owner', false));
+        filters.push(FilterItem.buildList('customers.fields.description','description', false));
         return filters;
 
     }
 
     static buildColumns() {
         let columns = BaseEntity.buildColumns();
-        columns.push(new GridColumn().build({field: 'email', header: 'customers.email', style:{}, sortable: false,
+        columns.push(new GridColumn().build({field: 'email', header: 'customers.fields.email', style:{}, sortable: false,
             order: 5, default: false, widthCoef:2}));
-        columns.push(new GridColumn().build({field: 'parent', header: 'customers.parent', style:{}, sortable: false,
+        columns.push(new GridColumn().build({field: 'parent', header: 'customers.fields.parent', style:{}, sortable: false,
             order: 6, default: false, widthCoef:2, renderer: (rowData, column) => {return <p>{rowData.parent?rowData.parent.name:''}</p>}}));
-        columns.push(new GridColumn().build({field: 'owner', header: 'customers.owner', style:{}, sortable: false,
+        columns.push(new GridColumn().build({field: 'owner', header: 'customers.fields.owner', style:{}, sortable: false,
             order: 7, default: false, widthCoef:2, renderer: (rowData, column) => {return <p>{rowData.owner?rowData.owner.name:''}</p>}}));
-        columns.push(new GridColumn().build({field: 'description', header: 'customers.description', style:{}, sortable: false,
+        columns.push(new GridColumn().build({field: 'description', header: 'customers.fields.description', style:{}, sortable: false,
             order: 8, default: false, widthCoef:2}));
         return  columns;
     }

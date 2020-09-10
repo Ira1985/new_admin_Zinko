@@ -133,7 +133,7 @@ class CustomerEditSetting extends Component {
                         checked={formikItem.hasLinking}
                     ></Checkbox>
                     {" "}
-                    <label htmlFor="hasLinking">{t("customers.fields..hasLinking")}</label>
+                    <label htmlFor="hasLinking">{t("customers.fields.hasLinking")}</label>
                 </div>
 
                 <div className="p-col-6" style={{padding: '.75em'}}>

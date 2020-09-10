@@ -30,7 +30,7 @@ function baseResponse(res) {
 function getList(filters, sorter, paging) {
     return baseService.getList(BASE_API_URL, filters, sorter, paging, consts)
         .then(res => {
-            return baseResponse(res);
+            return {pageItems: [{name: "a", comment: "aa"}]};
         }).catch(error => {
             console.log('Something wrong in exportTemplate service getList', error);
             return null;

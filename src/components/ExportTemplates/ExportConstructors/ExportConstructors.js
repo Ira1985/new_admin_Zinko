@@ -16,7 +16,10 @@ class ExportConstructors extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        let exportTemplatesId = this.props.match.params.id;
+        this.state = {
+            etId: exportTemplatesId
+        };
     }
 
     editComponent = (loading, editItem, updateValue, filter, filterItems) => {
@@ -85,7 +88,8 @@ class ExportConstructors extends Component {
 
     render() {
         const {t} = this.props;
-        let  breadcrumbs = [{ "label": t('categories.breadcrumbs.name')}];
+        let {etId} = this.state;
+        let  breadcrumbs = [{ "label": (t('exportTemplates.breadcrumbs.name') + ' (' + etId + ')'), url: '/exportTemplates'},{ "label": t('exportConstructors.breadcrumbs.name')}];
 
         let contexMenuProps = {
             showEdit: true,

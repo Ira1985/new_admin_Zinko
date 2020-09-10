@@ -319,6 +319,16 @@
       "third": "модели"
     }
   },
+  "marketplaces": {
+    "breadcrumbs": {
+      "name": "Маркетплейсы"
+    },
+    "plurals": {
+      "first": "маркетплейсов",
+      "second": "маркетплейс",
+      "third": "маркетплейса"
+    }
+  },
   "catalog": {
     "breadcrumbs": {
       "name": "Каталог"
@@ -405,6 +415,10 @@
         "country": "Страна",
         "substitution": "Значение с списка",
         "productContent": "Ссылка на контент"
+      },
+      "types": {
+        "global": "Глобальный",
+        "system": "Системный"
       }
     }
   },
@@ -537,7 +551,38 @@
       "third": "заказчика"
     },
     "fields": {
-
+      "description": "Описание",
+      "owner": "Ответственные менеджер",
+      "parent": "Владелец",
+      "type": "Тип",
+      "phone": "Телефон",
+      "email": "Почта",
+      "contact": "Контакты",
+      "link": "Ссылка",
+      "hasWatermark": "Использовать водяной знак",
+      "hasMapping": "Использовать маппинг",
+      "hasModel": "Можно создавать дерево категорий",
+      "hasLinking": "Использовать линковку",
+      "hasImages": "Отдавать фото",
+      "hasInstructions": "Отдавать инструкции",
+      "hasVideos": "Отдавать видео",
+      "hasCertificate": "Отдавать сертификат",
+      "resultFormat": "Формат отдачи",
+      "width": "Ширина фото в (px)",
+      "height": "Высота фото в (px)",
+      "watermarkFileLink": "Водяной знак",
+      "requirementsDesc": "Описание",
+      "requirementsFileLink": "Привязать файл",
+      "types": {
+        "external": "Внешний",
+        "internal": "Внутренний"
+      }
+    },
+    "other": {
+      "basic": "Основные",
+      "contact": "Контакты",
+      "setting": "Настройки",
+      "demand": "Требования"
     }
   },
   "users": {
@@ -569,7 +614,51 @@
       "type": "Тип",
       "customer": "Заказчик",
       "changePlain": "Смена числа",
-      "useBaseGroup": "Базовая группа"
+      "useBaseGroup": "Базовая группа",
+      "exportConstructor": "Конструктор шаблона",
+      "link": "Линковка",
+      "types": {
+        "card": "Карточка",
+        "autoName": "Авто. имя",
+        "notAssigned": "Не указан",
+        "text": "Текст"
+      }
+    }
+  },
+
+  "exportConstructors": {
+    "breadcrumbs": {
+      "name": "Конструкторы экспортного шаблона"
+    },
+    "plurals": {
+      "first": "конструкторов экспортных шаблонов",
+      "second": "конструктор экспортного шаблона",
+      "third": "конструктора экспортных шаблонов"
+    },
+    "fields": {
+      "groupName": "Группа",
+      "attribute": "Аттрибут",
+      "type": "Тип",
+      "absPrefix": "Абс. преф.",
+      "prefix": "Префикс",
+      "absSuffix": "Абс. суф.",
+      "suffix": "Суфикс",
+      "toUnit": "Юнит",
+      "outputType": "Отображение",
+      "comment": "Комментарий",
+      "types": {
+        "group": "Группа",
+        "attribute": "Атрибут",
+        "value": "Значение",
+        "unit": "Юнит",
+        "quantificator": "Квант."
+      },
+      "outputTypes": {
+        "value": "Значение",
+        "name": "Имя",
+        "quantificator": "Квант.",
+        "mathValue": "Мат. выраж."
+      }
     }
   },
 
@@ -617,6 +706,12 @@
       "objecta":"бренда",
       "objectov":"брендов",
       "objects":"бренды"
+    },
+    "exportConstructors": {
+      "obj":"конструктор экспортного шаблона",
+      "objecta":"конструктора экспортного шаблона",
+      "objectov":"конструкторов экспортного шаблона",
+      "objects":"конструкторы экспортного шаблона"
     },
     "manufacturers": {
       "obj":"производитель",
