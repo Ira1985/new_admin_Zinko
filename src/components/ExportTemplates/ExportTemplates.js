@@ -6,6 +6,9 @@ import {exportTemplateService} from "../../service/exportTemplate.service";
 import {withTranslation} from "react-i18next";
 import ExportTemplateEditDialog from "./Edit/ExportTemplateEditDialog";
 import DataGridView from "../../layouts/DataGridView/DataGridView";
+import {Button} from "primereact/button";
+import {history} from "../../App";
+import GridColumn from "../../models/base/GridColumn";
 
 const plurals = ['exportTemplates.plurals.first', 'exportTemplates.plurals.second', 'exportTemplates.plurals.third'];
 
@@ -22,13 +25,38 @@ class ExportTemplates extends Component {
         );
     }
 
+    renderActionColumns(rowData, column) {
+        const {t} = this.props;
+        return <div className={'column-button'}>
+            <Button icon="pi p-empty-button list-ico" onClick={() => {
+                history.push('/exportTemplates/' + rowData.id + '/constructor');
+            }} tooltip={t('exportTemplates.fields.constr')}/>
+            <Button icon="pi p-empty-button chain-ico" onClick={() => {
+                console.log("link");
+            }} tooltip={t('exportTemplates.fields.link')}/>
+        </div>
+    }
+
+    buildColumns() {
+        let columns = ExportTemplate.buildColumns();
+        columns.push(new GridColumn().build({field: '', header: '', style: {textAlign:'center'}, actionColumn: true,
+            order: 50,
+            actionWidth: 40,
+            default: true,
+            /*widthCoef: 1,*/
+            bodyStyle: {textAlign: 'center'},
+            renderer: (rowData, column) => this.renderActionColumns(rowData, column)}));
+
+        return columns;
+    }
+
     mainComponent = (showCheckedItemsMenu, updateChecked, editItem, addItem, deleteItem, checkedItems, clearCheckedDone,
                      reloadListDone, clearChecked, reloadList, filterInit, sorterInit, pagingInit, disableEdit, contexMenuProps) => {
         return (
             <DataGridView minimizeHeight={showCheckedItemsMenu}
                           apiService={exportTemplateService}
                           location={this.props.location}
-                          columns={ExportTemplate.buildColumns()}
+                          columns={this.buildColumns()}
                           updateChecked={updateChecked}
                           editItem={editItem}
                           addItem={addItem}

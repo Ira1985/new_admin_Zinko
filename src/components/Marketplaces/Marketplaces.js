@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import BaseLayout from "../../layouts/BaseLayout/BaseLayout";
 import './marketplaces.scss';
-import Marketplace, {MarketplaceSchema} from "../../../models/Marketplace";
+import Marketplace, {MarketplaceSchema} from "../../models/Marketplace";
 import {withTranslation} from "react-i18next";
-import {marketplaceService} from "../../../service/marketplace.service";
+import {marketplaceService} from "../../service/marketplace.service";
 import MarketplaceEditDialog from "./Edit/MarketplaceEditDialog";
 import DataGridView from "../../layouts/DataGridView/DataGridView";
 import PropTypes from "prop-types";

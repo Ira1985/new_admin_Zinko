@@ -30,12 +30,14 @@ const ExportTemplates = React.lazy(() => import('./components/ExportTemplates/Ex
 const ExportConstructors = React.lazy(() => import('./components/ExportTemplates/ExportConstructors/ExportConstructors'));
 const Cat2Attrs = React.lazy(() => import('./components/Categories/Cat2Attrs/Cat2Attrs'));
 const CustomerModels = React.lazy(() => import('./components/Customers/CustomerModels/CustomerModels'));
+const Marketplaces = React.lazy(() => import('./components/Marketplaces/Marketplaces'));
 
 export const routes = [
     //{ path: '/', name: i18n.t('baseLayout.main.main'), component: DefaultLayout },
     { path: '/', name: '', component: DefaultLayout },
     { path: '/brands', name: i18n.t('brands.breadcrumbs.name'), component: Brands },
     { path: '/manufacturers', name: i18n.t('manufacturers.breadcrumbs.name'), component: Manufacturers },
+    { path: '/marketplaces', name: i18n.t('marketplaces.breadcrumbs.name'), component: Marketplaces },
     { path: '/series', name: i18n.t('series.breadcrumbs.name'), component: Series },
     { path: '/catalog', exact: true, name: i18n.t('catalog.breadcrumbs.name'), component: Catalog },
     { path: '/catalog/:id/preview', exact: true, name: i18n.t('catalogPreview.breadcrumbs.name'), component: CatalogPreview },

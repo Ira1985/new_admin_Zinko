@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {InputText} from "primereact/inputtext";
 import {InputTextarea} from 'primereact/inputtextarea';
 import {Formik, useFormik} from 'formik';
-import Marketplace, {MarketplaceSchema} from "../../../../models/Marketplace";
+import Marketplace, {MarketplaceSchema} from "../../../models/Marketplace";
 import {withTranslation} from "react-i18next";
 import {ProgressSpinner} from "primereact/progressspinner";
 

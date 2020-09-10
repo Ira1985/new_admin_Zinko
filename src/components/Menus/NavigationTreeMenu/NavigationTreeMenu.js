@@ -73,7 +73,8 @@ const menuItem = [
         "label": "Экспорт",
         'leaf': false,
         "children": [
-            { "key": "4-0", "label": "Экспортные шаблоны", 'leaf': true, 'path':'/exportTemplates' }]
+            { "key": "4-0", "label": "Экспортные шаблоны", 'leaf': true, 'path':'/exportTemplates' },
+            { "key": "4-1", "label": "Маркетплейсы", 'leaf': true, 'path':'/marketplaces' }]
     },
     {
         "key": "5",
