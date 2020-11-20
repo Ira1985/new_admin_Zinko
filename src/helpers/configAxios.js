@@ -6,7 +6,7 @@ import i18n from "../i18n";
 
 export const API = axios.create({
       //baseURL: 'http://localhost:8083/content',
-      baseURL: 'http://185.95.22.17:8083/content',
+      baseURL: 'http://185.95.22.17:8084/content',
       timeout: 1000000
 });
 

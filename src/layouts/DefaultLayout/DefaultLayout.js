@@ -6,7 +6,7 @@ import NavigationTreeMenu from "../../components/Menus/NavigationTreeMenu/Naviga
 import AccountMenu from "../../components/Menus/AccountMenu/AccountMenu";
 import {routes} from "../../routes";
 import {ToastContainer} from "react-toastify";
-import {Growl} from "primereact/growl";
+import {Toast} from "primereact/toast";
 import {informer} from "../../App";
 
 class DefaultLayout extends Component {
@@ -53,7 +53,7 @@ class DefaultLayout extends Component {
             <div className='cs-admin-main'>
                 <div className="animated">
                     {/*<ToastContainer position="bottom-right" autoClose={2000} style={{zIndex:2000}}/>*/}
-                    <Growl ref={informer} position="bottomright" baseZIndex={2000}/>
+                    <Toast ref={informer} position="bottomright" baseZIndex={2000}/>
                 </div>
                 <Suspense fallback={this.loading()}>
                     <NavigationBaseMenu activeTreeMenu={activeTreeMenu} activeAccountMenu={activeAccountMenu} baseMenuFunc={() => this.showTreeMenu()} showAccountMenu={() => this.showAccountMenu()}/>
