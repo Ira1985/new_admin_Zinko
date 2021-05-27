@@ -400,21 +400,26 @@ class MainSection extends Component {
         let toolbarButs = dopToolbarButtons? Array.prototype.concat(this.toolbarButtons, dopToolbarButtons): this.toolbarButtons;
         let checkedButs = dopCheckedButtons? Array.prototype.concat(this.checkedButtons, dopCheckedButtons): this.checkedButtons;
 
+        const leftContents = (
+            <React.Fragment>
+                <BreadCrumb model={breadcrumbs} home={{label: 'Главная', icon: 'pi pi-home', url: '/'}} />
+            </React.Fragment>
+        );
+
+        const rightContents = (
+            <React.Fragment>
+                {(toolbarButs && toolbarButs.length > 0) &&
+                toolbarButs.map((button, index) =>
+                    <Button key={'toolbar_but_' + index} label={t(button.label)} className={button.className}  onClick={(e) => button.onClick(e, this)} tooltip={button.tooltip}/>
+                )}
+
+            </React.Fragment>
+        );
+
         return <>
             <div className='main-section'>
                 <div className='header'>
-                    <Toolbar>
-                        <div className="p-toolbar-group-left">
-                            <BreadCrumb model={breadcrumbs} home={{label: 'Главная', icon: 'pi pi-home', url: '/'}} />
-                        </div>
-                        <div className="p-toolbar-group-right">
-                            {(toolbarButs && toolbarButs.length > 0) &&
-                                toolbarButs.map((button, index) =>
-                                    <Button key={'toolbar_but_' + index} label={t(button.label)} className={button.className}  onClick={(e) => button.onClick(e, this)} tooltip={button.tooltip}/>
-                                )}
-
-                        </div>
-                    </Toolbar>
+                    <Toolbar left={leftContents} right={rightContents} />
                 </div>
 
                 <hr/>

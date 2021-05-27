@@ -73,28 +73,34 @@ hr {
 }
 
 .p-breadcrumb {
-  .p-menuitem-link {
+  padding: .5em;
+  ul li {
+    display: inline-block;
+    margin: 0 .25em;
+    .p-menuitem-link {
 
-    .pi-home {
-      color: $primary-text-color3;
+      .pi-home {
+        color: $primary-text-color3;
 
-      &:before {
-        content: "\e925";
+        &:before {
+          content: "\e925";
+        }
+        &:hover {
+          color: $primary-color-active;
+        }
       }
-      &:hover {
-        color: $primary-color-active;
-      }
-    }
 
-    .p-menuitem-text {
-      color: $primary-text-color3;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 14px;
+      .p-menuitem-text {
+        color: $primary-text-color3;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+        vertical-align: middle;
 
-      &:hover {
-        color: $primary-color-active;
+        &:hover {
+          color: $primary-color-active;
+        }
       }
     }
   }
@@ -116,7 +122,7 @@ hr {
     color: $primary-back-color;
   }
 
-  .p-button-text {
+  .p-button-label {
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -227,7 +233,7 @@ hr {
     }
   }
 
-  .p-dialog-titlebar {
+  .p-dialog-header {
     color: $primary-text-color3;
     font-style: normal;
     font-weight: 900;
@@ -238,7 +244,7 @@ hr {
     padding: 12px 15px;
     margin-bottom: 10px;
 
-    .p-dialog-titlebar-close-icon {
+    .p-dialog-header-close-icon {
       color: $primary-text-color3;
     }
   }
@@ -279,6 +285,7 @@ hr {
 
   .p-dialog-footer {
     padding: 20px 24px;
+    text-align: right;
 
     div:first-child {
       padding: 0px;
@@ -311,21 +318,24 @@ hr {
 }
 
 /* For all drop down panel */
-.p-autocomplete-panel.p-input-overlay {
+.p-autocomplete-panel {
   background-color: $primary-back-color;
   border: none;
 
-  .p-autocomplete-list-item {
-    color: $primary-text-color3;
-    font-family: Lato;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    margin: 5px 0px 5px 0px;
-  }
-  .p-autocomplete-list-item:hover {
-    background-color: $primary-table-header;
+  .p-autocomplete-items {
+    padding: .4em;
+    .p-autocomplete-item {
+      color: $primary-text-color3;
+      font-family: Lato;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      margin: 5px 0px 5px 0px;
+    }
+    .p-autocomplete-item:hover {
+      background-color: $primary-table-header;
+    }
   }
 }
 
@@ -346,11 +356,16 @@ hr {
 
 /* For all tooltip */
 .p-tooltip {
+  background-color: $primary-tooltip-back-color;
+  color: $primary-text-color3;
+  border-radius: 4px;
+  //top: 50%;
   .p-tooltip-arrow {
+    margin: -4px -4px;
+    border-left-color: $primary-tooltip-back-color;
+    border-right-color: $primary-tooltip-back-color;
     .p-tooltip-text {
-      background-color: $primary-block-back-color;
-      margin: 10px;
-      border-radius: 4px;
+      padding: .125em .5em;
     }
   }
 }
@@ -373,6 +388,7 @@ hr {
 .column-button {
   display: flex;
   justify-content: space-between;
+
   width: 100%;
 
   button {
@@ -447,27 +463,47 @@ hr {
   }
 }
 
-.p-growl {
+.p-toast {
   opacity: 0.8;
+  width: 20em;
 
-  .p-growl-item-container {
+  .p-toast-message {
     padding: 5px 5px ;
     box-shadow: 0 0 15px $primary-back-color;
     color: $primary-back-color;
+    margin: 0px 0px 10px 0px;
+    .p-toast-message-content {
+      padding: .5em 1em;
+      position: relative;
+      .p-toast-message-text {
+        margin-left: 1em;
+        .p-toast-summary {
+          display: block;
+          font-weight: bold;
+        }
+        .p-toast-detail {
+          margin-top: .5em;
+        }
+      }
+      .p-toast-message-icon {
+        font-size: 2em;
+      }
+    }
 
-    &.p-growl-message-error {
+
+    &.p-toast-message-error {
       background-color: $informer-error;
     }
 
-    &.p-growl-message-success {
+    &.p-gtoast-message-success {
       background-color: $informer-success;
     }
 
-    &.p-growl-message-warn {
+    &.p-toast-message-warn {
       background-color: $informer-warn;
     }
 
-    &.p-growl-message-info {
+    &.p-toast-message-info {
       background-color: $informer-info;
     }
   }

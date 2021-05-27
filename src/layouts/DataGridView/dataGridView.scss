@@ -34,6 +34,10 @@
       height: 40px;
       border: none !important;
       padding-top: 5px;
+      display: block;
+      text-align: center;
+      padding-left: .125em;
+      padding-right: .125em;
 
       .p-paginator-pages {
         margin: 0px;
@@ -46,13 +50,16 @@
       .p-paginator-current {
         color: $primary-text-color2;
         font-style: normal;
+
         font-weight: bold;
         font-size: 16px;
         line-height: 19px;
         float: left;
+        margin-left: 1em;
       }
 
       .p-paginator-first {
+
         border-top-left-radius: 4px;
         border-bottom-left-radius: 4px;
       }
@@ -95,6 +102,9 @@
           .p-dropdown-trigger-icon {
             margin-top: -0.5em;
             margin-left: -1em;
+            position: absolute;
+            right: 15%;
+            top: 50%;
           }
         }
 
@@ -109,6 +119,7 @@
       }
 
       .p-paginator-right-content {
+        float: right;
 
         button {
           width: 36px;
@@ -211,6 +222,7 @@
                 font-size: 14px;
                 line-height: 17px;
 
+
                 &:first-child {
                   border-top-left-radius: 5px !important;
                   border-bottom-left-radius: 5px !important;
@@ -249,6 +261,10 @@
             border-spacing: 0px 5px;
 
             tbody {
+
+              td {
+                padding: .25em .65em;
+              }
               //width: 100%;
 
               //> .p-datatable-row {
@@ -312,7 +328,7 @@
     position: absolute;
     z-index: 1 !important;
     right: 16px;
-    top: 80px;
+    top: 72px;
 
     .p-multiselect-label {
       display: none;

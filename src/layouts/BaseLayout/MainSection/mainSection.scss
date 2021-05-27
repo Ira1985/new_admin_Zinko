@@ -12,11 +12,11 @@
       width: 96%;
 
       .p-toolbar {
-        display: table-cell;
+        display: flex;
         border: none !important;
         //width: 96%;
         vertical-align: middle;
-        padding: 0px;
+        padding: .25em 0;
         margin: 0px;
 
         .p-toolbar-group-right {

@@ -53,7 +53,7 @@ class DefaultLayout extends Component {
             <div className='cs-admin-main'>
                 <div className="animated">
                     {/*<ToastContainer position="bottom-right" autoClose={2000} style={{zIndex:2000}}/>*/}
-                    <Toast ref={informer} position="bottomright" baseZIndex={2000}/>
+                    <Toast ref={informer} position="bottom-right" baseZIndex={2000}/>
                 </div>
                 <Suspense fallback={this.loading()}>
                     <NavigationBaseMenu activeTreeMenu={activeTreeMenu} activeAccountMenu={activeAccountMenu} baseMenuFunc={() => this.showTreeMenu()} showAccountMenu={() => this.showAccountMenu()}/>

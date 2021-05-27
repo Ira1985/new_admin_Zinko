@@ -25,7 +25,7 @@ class Units extends Component {
         return <div className={'column-button'}>
             <Button icon="pi p-empty-button chain-ico" onClick={() => {
                 history.push('/units/' + rowData.id + '/mapping');
-            }} tooltip={t('units.fields.showMapping')} />
+            }} tooltip={t('units.fields.showMapping')} tooltipOptions={{position: 'left'}} />
         </div>
     }
 

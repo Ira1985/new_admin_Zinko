@@ -288,7 +288,7 @@ class  DataGridView extends Component {
                 >
                     <Column key={'data-table-selection-key'} selectionMode="multiple" style={{width:'50px'}} />
                     {activeColumns}
-                    <Column style={{width:'30px'}} />
+                    <Column />
                 </DataTable>
 
             </div>

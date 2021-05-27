@@ -30,10 +30,10 @@ class ExportTemplates extends Component {
         return <div className={'column-button'}>
             <Button icon="pi p-empty-button list-ico" onClick={() => {
                 history.push('/exportTemplates/' + rowData.id + '/constructor');
-            }} tooltip={t('exportTemplates.fields.exportConstructor')}/>
+            }} tooltip={t('exportTemplates.fields.exportConstructor')} tooltipOptions={{position: 'left'}}/>
             <Button icon="pi p-empty-button chain-ico" onClick={() => {
                 console.log("link");
-            }} tooltip={t('exportTemplates.fields.link')}/>
+            }} tooltip={t('exportTemplates.fields.link')} tooltipOptions={{position: 'left'}}/>
         </div>
     }
 

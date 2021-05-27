@@ -60,6 +60,10 @@ $primary-tree-toggler-down-active: url("data:image/svg+xml,%3Csvg width='20' hei
       border: none;
       outline: none;
 
+      .p-treenode-children{
+        margin-left: 11px;
+      }
+
       .p-treenode-content {
         height: 48px;
         align-items: center;
@@ -74,13 +78,14 @@ $primary-tree-toggler-down-active: url("data:image/svg+xml,%3Csvg width='20' hei
 
         .p-tree-toggler {
           margin: 0px 7px 0px 9px;
+          padding: 1px 6px;
 
-          &-icon.pi-caret-right:before {
+          &-icon.pi-chevron-right:before {
             // content: "\e902";
             content: $primary-tree-toggler-right;
           }
 
-          &-icon.pi-caret-down:before {
+          &-icon.pi-chevron-down:before {
             //content: "\e903";
             content: $primary-tree-toggler-down;
           }
@@ -91,12 +96,12 @@ $primary-tree-toggler-down-active: url("data:image/svg+xml,%3Csvg width='20' hei
           background-color: $primary-menu-hover;
 
           .p-tree-toggler {
-            &-icon.pi-caret-right:before {
+            &-icon.pi-chevron-right:before {
               // content: "\e902";
               content: $primary-tree-toggler-right;
             }
 
-            &-icon.pi-caret-down:before {
+            &-icon.pi-chevron-down:before {
               //content: "\e903";
               content: $primary-tree-toggler-down;
             }
@@ -106,11 +111,11 @@ $primary-tree-toggler-down-active: url("data:image/svg+xml,%3Csvg width='20' hei
         &.nav-tree-item-active {
           color: $primary-color-active;
 
-          .p-tree-toggler-icon.pi-caret-right:before {
+          .p-tree-toggler-icon.pi-chevron-right:before {
             content: $primary-tree-toggler-right-active;
           }
 
-          .p-tree-toggler-icon.pi-caret-down:before {
+          .p-tree-toggler-icon.pi-chevron-down:before {
             content: $primary-tree-toggler-down-active;
           }
         }

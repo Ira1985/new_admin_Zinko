@@ -31,7 +31,7 @@ class SubsGroups extends Component {
         return <div className={'column-button'}>
             <Button icon="pi p-empty-button chain-ico" onClick={() => {
                 history.push('/subsGroups/' + rowData.id + '/values');
-            }} tooltip={t('subsGroups.fields.showSubs')}/>
+            }} tooltip={t('subsGroups.fields.showSubs')} tooltipOptions={{position: 'left'}}/>
         </div>
     }
 

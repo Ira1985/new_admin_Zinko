@@ -98,6 +98,9 @@
             .p-dropdown-trigger-icon {
               margin-top: -0.5em;
               margin-left: -1em;
+              position: absolute;
+              right: 15%;
+              top: 50%;
             }
           }
 
@@ -317,7 +320,7 @@
       position: absolute;
       z-index: 1 !important;
       right: 16px;
-      top: 80px;
+      top: 72px;
 
       .p-multiselect-label {
         display: none;
